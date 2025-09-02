@@ -1,0 +1,7 @@
+{
+  "name": "ion-atraproto",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
