@@ -1,0 +1,22 @@
+.modal-overlay {
+  padding: 1rem;
+  position: fixed;
+  align-content: center;
+  top: 15%;
+  left: 20vh;
+  width: 80vw;
+  max-height: 80vh;
+  background: var(--background);
+  background-image: url("https://cdn.pixabay.com/photo/2016/08/10/18/41/cosmos-1584031_1280.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 5px;
+  z-index: 10000;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 10);
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}

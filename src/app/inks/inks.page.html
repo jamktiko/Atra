@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="atra">ATRA</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2>Hey, {{user.firstname}}</h2>
+
+
+  <ion-button tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Public library</ion-button>
+  <ion-button tab="inks/publiclibrary" href="/tabs/inks">Own library</ion-button>
+
+  <h2>Find all your inks here</h2>
+  <input type="search" placeholder="Search here"> <br />
+  <ion-button>Add new</ion-button>
+  <div *ngFor="let ink of allInks">
+    <h3>{{ink.name}}</h3>
+    <img src="{{ink.imageUrl}}" />
+  </div>
+
+</ion-content>

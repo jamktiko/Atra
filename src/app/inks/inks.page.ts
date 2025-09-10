@@ -1,0 +1,38 @@
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButton,
+} from '@ionic/angular/standalone';
+import { Tiina, userInks } from 'src/temporarydata';
+import { User, UserInk } from 'src/interface';
+
+@Component({
+  selector: 'app-inks',
+  templateUrl: './inks.page.html',
+  styleUrls: ['./inks.page.scss'],
+  standalone: true,
+  imports: [
+    IonContent,
+    CommonModule,
+    FormsModule,
+    IonButton,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+  ],
+})
+export class InksPage implements OnInit {
+  ink: UserInk | null = null;
+  allInks: UserInk[] = userInks;
+  user: User = Tiina;
+
+  constructor() {}
+
+  ngOnInit() {}
+}

@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="atra">ATRA</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h2>Customers</h2>
+
+  <div class="box" *ngFor="let customer of allcustomers">
+    <h3>{{customer.lastname}}, {{customer.firstname}}</h3>
+    <p>{{customer.email}}</p>
+  </div>
+
+</ion-content>

@@ -1,0 +1,15 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="atra">ATRA</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <h2>Entries</h2>
+
+  <div class="box" *ngFor="let entry of allentries">
+    <h3>{{entry.customer}}</h3>
+    <p>{{entry.appointment_date}}</p>
+  </div>
+
+</ion-content>
