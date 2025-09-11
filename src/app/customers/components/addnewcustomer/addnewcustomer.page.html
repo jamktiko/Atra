@@ -1,7 +1,26 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">addnewcustomer</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list-header collapse="condense">
+    Adding a new customer
+  </ion-list-header>
+  <ion-list>
+    <ion-item>
+      <ion-input label="First Name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Last Name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Email address" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Phone number" type="tel"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-button tab="tabs/customers" href="tabs/customers">Back</ion-button> <ion-button
+    id="open-modal">Continue</ion-button>
 </ion-content>

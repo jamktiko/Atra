@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../services/api.service';
 
 import {
   IonContent,
@@ -10,7 +11,7 @@ import {
   IonButton,
 } from '@ionic/angular/standalone';
 import { Tiina, userInks } from 'src/temporarydata';
-import { User, UserInk } from 'src/interface';
+import { PublicInk, User, UserInk } from 'src/interface';
 
 @Component({
   selector: 'app-inks',
@@ -31,8 +32,18 @@ export class InksPage implements OnInit {
   ink: UserInk | null = null;
   allInks: UserInk[] = userInks;
   user: User = Tiina;
+  apiInk: PublicInk[] | null = null;
 
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // this.apiService.getAllInks().subscribe({
+    //   next: (data) => {
+    //     this.apiInk = data;
+    //   },
+    //   error: (err) => {
+    //     console.error('Jodain meni bieleen: ', err);
+    //   },
+    // });
+  }
 }

@@ -197,49 +197,42 @@ export const entries: Entry[] = [
 
 export const customers: Customer[] = [
   {
-    id: 1,
     firstname: 'Alice',
     lastname: 'Johnson',
     email: 'alice.johnson@example.com',
     phonenumber: '+1 555-123-4567',
   },
   {
-    id: 2,
     firstname: 'Bob',
     lastname: 'Smith',
     email: 'bob.smith@example.com',
     phonenumber: '+1 555-987-6543',
   },
   {
-    id: 3,
     firstname: 'Clara',
     lastname: 'Lopez',
     email: 'clara.lopez@example.com',
     phonenumber: '+1 555-234-5678',
   },
   {
-    id: 4,
     firstname: 'David',
     lastname: 'Kim',
     email: 'david.kim@example.com',
     phonenumber: '+1 555-345-6789',
   },
   {
-    id: 5,
     firstname: 'Emma',
     lastname: 'Brown',
     email: 'emma.brown@example.com',
     phonenumber: '+1 555-456-7890',
   },
   {
-    id: 6,
     firstname: 'Frank',
     lastname: 'Miller',
     email: 'frank.miller@example.com',
     phonenumber: '+1 555-567-8901',
   },
   {
-    id: 7,
     firstname: 'Grace',
     lastname: 'Davis',
     email: 'grace.davis@example.com',

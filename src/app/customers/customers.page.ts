@@ -5,6 +5,7 @@ import {
   IonContent,
   IonHeader,
   IonTitle,
+  IonButton,
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { Customer } from 'src/interface';
@@ -20,6 +21,7 @@ import { customers } from 'src/temporarydata';
     IonHeader,
     IonTitle,
     IonToolbar,
+    IonButton,
     CommonModule,
     FormsModule,
   ],
