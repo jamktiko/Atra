@@ -3,16 +3,12 @@
   position: fixed;
   align-content: center;
   top: 15%;
-  left: 20vh;
-  width: 80vw;
-  max-height: 80vh;
-  background: var(--background);
-  background-color: aliceblue;
+  background-color: rgb(0, 0, 0);
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 5px;
   z-index: 10000;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 10);
+  box-shadow: 100px 28px 48px rgba(0, 0, 0, 0.4);
   color: white;
   text-align: center;
   display: flex;

@@ -7,19 +7,23 @@
 <ion-content>
   <h2>Hey, {{user.firstname}}</h2>
 
-
-  <ion-button tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Public library</ion-button>
-  <ion-button tab="inks/publiclibrary" href="/tabs/inks">Own library</ion-button>
+  <ion-button tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog</ion-button>
+  <ion-button tab="inks/publiclibrary" href="/tabs/inks">Your inks</ion-button>
 
   <h2>Find all your inks here</h2>
+  <p>Or access application ink catalog at Public Library</p>
 
   <input type="search" placeholder="Search here"> <br />
 
-  <ion-button> Add new </ion-button>
+  <ion-button tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new </ion-button>
 
-  <div *ngFor="let ink of allInks">
-    <h3>{{ink.name}}</h3>
+  @for (ink of apiInk; track ink.productname) {
+  <div class="box">
+    <h3>{{ink.productname}}</h3>
     <img src="{{ink.imageUrl}}" />
+    <p>{{ink.color}}</p>
   </div>
+  }
+
 
 </ion-content>

@@ -16,7 +16,7 @@ import { PublicInk, User, UserInk } from 'src/interface';
 @Component({
   selector: 'app-inks',
   templateUrl: './inks.page.html',
-  styleUrls: ['./inks.page.scss'],
+  styleUrls: ['./inks.page.css'],
   standalone: true,
   imports: [
     IonContent,
@@ -37,13 +37,13 @@ export class InksPage implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    // this.apiService.getAllInks().subscribe({
-    //   next: (data) => {
-    //     this.apiInk = data;
-    //   },
-    //   error: (err) => {
-    //     console.error('Jodain meni bieleen: ', err);
-    //   },
-    // });
+    this.apiService.getAllInks().subscribe({
+      next: (data) => {
+        this.apiInk = data;
+      },
+      error: (err) => {
+        console.error('Jodain meni bieleen: ', err);
+      },
+    });
   }
 }
