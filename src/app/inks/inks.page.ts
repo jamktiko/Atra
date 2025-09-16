@@ -37,13 +37,13 @@ export class InksPage implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getAllInks().subscribe({
-      next: (data) => {
-        this.apiInk = data;
-      },
-      error: (err) => {
-        console.error('Jodain meni bieleen: ', err);
-      },
-    });
+    // this.apiService.getAllInks().subscribe({
+    //   next: (data) => {
+    //     this.apiInk = data;
+    //   },
+    //   error: (err) => {
+    //     console.error('Jodain meni bieleen: ', err);
+    //   },
+    // });
   }
 }

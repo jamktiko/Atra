@@ -10,7 +10,7 @@ import { Customer } from 'src/interface';
 })
 export class ApiService {
   private apiUrl =
-    'https://ogco0iemlc.execute-api.eu-north-1.amazonaws.com/test/inks';
+    'https://ogco0iemlc.execute-api.eu-north-1.amazonaws.com/test/';
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +24,10 @@ export class ApiService {
 
   getAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(``);
+  }
+
+  getTables(): Observable<Object> {
+    return this.http.get<Object>(`${this.apiUrl}`);
   }
 
   addNewCustomer() {}

@@ -9,6 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { User } from 'src/interface';
 import { Tiina } from 'src/temporarydata';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -26,7 +27,18 @@ import { Tiina } from 'src/temporarydata';
 })
 export class MainpagePage implements OnInit {
   user: User = Tiina;
-  constructor() {}
+  data!: any;
+  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.apiService.getTables().subscribe({
+      next: (data) => {
+        this.data = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Jodain meni bieleen: ', err);
+      },
+    });
+  }
 }

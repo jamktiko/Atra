@@ -6,7 +6,7 @@ import { IonContent, IonButton } from '@ionic/angular/standalone';
 @Component({
   selector: 'app-user',
   templateUrl: './user.page.html',
-  styleUrls: ['./user.page.scss'],
+  styleUrls: ['./user.page.css'],
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule, IonButton],
 })

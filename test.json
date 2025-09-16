@@ -1,0 +1,8 @@
+{
+  "statusCode": 200,
+  "headers": {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  },
+  "body": "{\"message\":\"Tables in database\",\"tables\":[{\"Tables_in_atratestdb\":\"Appointment\"},{\"Tables_in_atratestdb\":\"Customer\"},{\"Tables_in_atratestdb\":\"PublicInk\"},{\"Tables_in_atratestdb\":\"User\"},{\"Tables_in_atratestdb\":\"UserInk\"},{\"Tables_in_atratestdb\":\"UserInk_has_Appointment\"}]}"
+}

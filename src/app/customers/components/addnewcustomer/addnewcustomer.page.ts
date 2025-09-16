@@ -1,6 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ViewChild } from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  Validators,
+  NgForm,
+} from '@angular/forms';
 import {
   IonContent,
   IonInput,
@@ -10,6 +17,7 @@ import {
   IonListHeader,
   IonModal,
   IonLabel,
+  IonText,
 } from '@ionic/angular/standalone';
 import { Customer } from 'src/interface';
 import { ModalcustomerPage } from '../modalcustomer/modalcustomer.page';
@@ -29,15 +37,35 @@ import { ModalcustomerPage } from '../modalcustomer/modalcustomer.page';
     FormsModule,
     IonButton,
     ModalcustomerPage,
+    IonLabel,
+    IonText,
   ],
 })
 export class AddnewcustomerPage {
+  @ViewChild('customerForm') customerForm!: NgForm;
+
   customer: Customer = {
     firstname: '',
     lastname: '',
     email: '',
     phonenumber: '',
   };
+  //Validators-form validation > jos siirrytään tähän
+  // customerForm = new FormGroup({
+  //   firstname: new FormControl(this.customer.firstname, [
+  //     Validators.required,
+  //     Validators.minLength(2),
+  //   ]),
+  //   lastname: new FormControl(this.customer.lastname, [
+  //     Validators.required,
+  //     Validators.minLength(2),
+  //   ]),
+  //   email: new FormControl(this.customer.email, [
+  //     Validators.required,
+  //     Validators.email,
+  //   ]),
+  //   phonenumber: new FormControl(this.customer.phonenumber),
+  // });
 
   openModal: boolean = false;
 
@@ -47,13 +75,14 @@ export class AddnewcustomerPage {
 
   closeModal() {
     this.openModal = false;
+    this.customerForm.resetForm();
   }
 
   handleConfirm(data: Customer) {
     console.log('Customer added: ', data);
     this.addNewCustomer(data);
     this.resetForm();
-    this.openModal = false;
+    this.closeModal();
   }
 
   handleCancel() {
@@ -69,6 +98,8 @@ export class AddnewcustomerPage {
       phonenumber: '',
     };
   }
+
+  constructor() {}
 
   addNewCustomer(data: Customer) {
     //   this.apiService.addNewCustomer(customer).subscribe({
