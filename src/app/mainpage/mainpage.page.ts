@@ -31,14 +31,14 @@ export class MainpagePage implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getTables().subscribe({
-      next: (data) => {
-        this.data = data;
-        console.log(data);
-      },
-      error: (err) => {
-        console.error('Jodain meni bieleen: ', err);
-      },
-    });
+    // this.apiService.getTables().subscribe({
+    //   next: (data) => {
+    //     this.data = data;
+    //     console.log(data);
+    //   },
+    //   error: (err) => {
+    //     console.error('Jodain meni bieleen: ', err);
+    //   },
+    // });
   }
 }

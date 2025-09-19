@@ -6,6 +6,7 @@
 
 <ion-content>
   <h2>Hey, {{user.firstname}}</h2>
+  <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button>
 
   <ion-button tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog</ion-button>
   <ion-button tab="inks/publiclibrary" href="/tabs/inks">Your inks</ion-button>
@@ -13,11 +14,11 @@
   <h2>Find all your inks here</h2>
   <p>Or access application ink catalog at Public Library</p>
 
-  <input type="search" placeholder="Search here"> <br />
+  <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
 
   <ion-button tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new </ion-button>
 
-  <!-- @for (ink of apiInk; track ink.productname) {
+  <!-- @for (ink of userInk; track ink.productname) {
   <div class="box">
     <h3>{{ink.productname}}</h3>
     <img src="{{ink.imageUrl}}" />

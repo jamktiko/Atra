@@ -10,7 +10,7 @@ export const Tiina: User = {
 export const publicInks: PublicInk[] = [
   {
     id: 1,
-    productname: 'Eternal Ink – Bright Red',
+    product_name: 'Eternal Ink',
     manufacturer: 'Eternal Ink',
     color: 'Bright Red',
     recalled: false,
@@ -21,7 +21,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 2,
-    productname: 'Dynamic Black',
+    product_name: 'Dynamic Black',
     manufacturer: 'Dynamic Color Co.',
     color: 'Deep Black',
     recalled: false,
@@ -32,7 +32,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 3,
-    productname: 'Fusion Ink – Arctic Blue',
+    product_name: 'Fusion Ink',
     manufacturer: 'Fusion Ink',
     color: 'Arctic Blue',
     recalled: false,
@@ -43,7 +43,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 4,
-    productname: 'Intenze – Lemon Yellow',
+    product_name: 'Intenze',
     manufacturer: 'Intenze',
     color: 'Lemon Yellow',
     recalled: false,
@@ -54,7 +54,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 5,
-    productname: 'World Famous – Paris Green',
+    product_name: 'World Famous',
     manufacturer: 'World Famous Tattoo Ink',
     color: 'Paris Green',
     recalled: false,
@@ -65,7 +65,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 6,
-    productname: 'Kuro Sumi Outlining Ink',
+    product_name: 'Kuro Sumi Outlining Ink',
     manufacturer: 'Kuro Sumi',
     color: 'Outlining Black',
     recalled: false,
@@ -76,7 +76,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 7,
-    productname: 'StarBrite – Bubblegum Pink',
+    product_name: 'StarBrite',
     manufacturer: 'StarBrite Colors',
     color: 'Bubblegum Pink',
     recalled: true,
@@ -87,7 +87,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 8,
-    productname: 'Eternal Ink – White',
+    product_name: 'Eternal Ink',
     manufacturer: 'Eternal Ink',
     color: 'White',
     recalled: false,
@@ -98,7 +98,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 9,
-    productname: 'Solid Ink – Olive Green',
+    product_name: 'Solid Ink',
     manufacturer: 'Solid Ink',
     color: 'Olive Green',
     recalled: false,
@@ -109,7 +109,7 @@ export const publicInks: PublicInk[] = [
 
   {
     id: 10,
-    productname: 'Fusion Ink – Power Purple',
+    product_name: 'Fusion Ink',
     manufacturer: 'Fusion Ink',
     color: 'Power Purple',
     recalled: false,
@@ -122,7 +122,7 @@ export const publicInks: PublicInk[] = [
 export const userInks: UserInk[] = [
   {
     id: 1,
-    name: 'Eternal Ink – Bright Red',
+    name: 'Eternal Ink',
     batchnumber: 'ET-BR-2023-09-A1',
     openedAt: new Date('2023-09-15'),
     expiresAt: new Date('2025-09-15'),
@@ -142,7 +142,7 @@ export const userInks: UserInk[] = [
   },
   {
     id: 3,
-    name: 'Fusion Ink – Arctic Blue',
+    name: 'Fusion Ink',
     batchnumber: 'FU-AB-2023-06-C4',
     openedAt: new Date('2023-06-01'),
     expiresAt: new Date('2025-06-01'),
@@ -152,7 +152,7 @@ export const userInks: UserInk[] = [
   },
   {
     id: 4,
-    name: 'Intenze – Lemon Yellow',
+    name: 'Intenze',
     batchnumber: 'IN-LY-2022-11-D9',
     openedAt: new Date('2022-11-20'),
     expiresAt: new Date('2024-11-20'),

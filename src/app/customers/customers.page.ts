@@ -10,6 +10,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Customer } from 'src/interface';
 import { customers } from 'src/temporarydata';
+import { IonSearchbar } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-customers',
@@ -24,6 +25,7 @@ import { customers } from 'src/temporarydata';
     IonButton,
     CommonModule,
     FormsModule,
+    IonSearchbar,
   ],
 })
 export class CustomersPage implements OnInit {

@@ -8,6 +8,7 @@
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
   <h2>Customers</h2>
+  <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
   <ion-button tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </ion-button>
   <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
   <div class="box" *ngFor="let customer of allcustomers">

@@ -10,7 +10,9 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
+  IonSearchbar,
 } from '@ionic/angular/standalone';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-publiclibrary',
@@ -25,12 +27,23 @@ import {
     CommonModule,
     FormsModule,
     IonButton,
+    IonSearchbar,
   ],
 })
 export class PubliclibraryPage implements OnInit {
-  allInks: PublicInk[] = publicInks;
+  allInks!: PublicInk[];
 
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.apiService.getAllInks().subscribe({
+      next: (data) => {
+        this.allInks = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
+  }
 }

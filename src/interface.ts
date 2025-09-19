@@ -10,7 +10,7 @@ interface UserInk {
 
 interface PublicInk {
   id: number;
-  productname: string;
+  product_name: string;
   manufacturer: string;
   color: string;
   recalled: boolean;
@@ -39,4 +39,9 @@ interface Customer {
   phonenumber: string;
 }
 
-export { UserInk, PublicInk, User, Entry, Customer };
+interface InkTest {
+  id: number;
+  batchnumber: string;
+  publicinkId: number;
+}
+export { UserInk, PublicInk, User, Entry, Customer, InkTest };

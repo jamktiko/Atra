@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
+import { IonSearchbar } from '@ionic/angular/standalone';
+import { publicInks } from 'src/temporarydata';
 
 import {
   IonContent,
@@ -26,24 +28,48 @@ import { PublicInk, User, UserInk } from 'src/interface';
     IonHeader,
     IonToolbar,
     IonTitle,
+    IonSearchbar,
   ],
 })
 export class InksPage implements OnInit {
-  ink: UserInk | null = null;
-  allInks: UserInk[] = userInks;
+  // ink: UserInk | null = null;
+  userInks: UserInk[] = userInks;
   user: User = Tiina;
-  apiInk: PublicInk[] | null = null;
+  allInks!: UserInk[];
+  @ViewChild('ink') ink!: PublicInk | null;
+
+  @Output() showAddNewForm: boolean = false;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    // this.apiService.getAllInks().subscribe({
-    //   next: (data) => {
-    //     this.apiInk = data;
-    //   },
-    //   error: (err) => {
-    //     console.error('Jodain meni bieleen: ', err);
-    //   },
-    // });
+    this.apiService.getUserInks().subscribe({
+      next: (data) => {
+        this.allInks = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Jodain meni bieleen: ', err);
+      },
+    });
+  }
+
+  testAdd(publicID: number, batchnumber: string) {
+    console.log('Sending ink:', {
+      public_ink_id: publicID,
+      batch_number: batchnumber,
+    });
+    this.apiService.addNewInk(publicID, batchnumber).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Pieleen män, ', err);
+      },
+    });
+  }
+
+  showModal() {
+    this.showAddNewForm = true;
   }
 }

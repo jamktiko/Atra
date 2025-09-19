@@ -11,13 +11,14 @@
   <ion-button tab="inks/publiclibrary" href="/tabs/inks">Your inks</ion-button>
 
   <h2>Ink catalog</h2>
-  <input type="search" placeholder="Search here"> <br />
+  <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
 
-  @for (ink of allInks; track ink.productname) {
+  @for (ink of allInks; track ink.product_name) {
   <div>
-    <h3>{{ink.productname}}</h3>
+    <h3>{{ink.product_name}}</h3>
     <img src="{{ink.imageUrl}}" />
   </div>
   }
+  <!--temporarydata -->
 
 </ion-content>

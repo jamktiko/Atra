@@ -122,6 +122,25 @@ export const routes: Routes = [
         loadComponent: () =>
           import('../mainpage/mainpage.page').then((m) => m.MainpagePage),
       },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('../firstpage/components/login/login.page').then(
+            (m) => m.LoginPage
+          ),
+      },
+      {
+        path: 'firstpage',
+        loadComponent: () =>
+          import('../firstpage/firstpage.page').then((m) => m.FirstpagePage),
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('../firstpage/components/register/register.page').then(
+            (m) => m.RegisterPage
+          ),
+      },
 
       {
         path: '',
