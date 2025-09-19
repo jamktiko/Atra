@@ -1,0 +1,19 @@
+Creating a branch:
+git branch <branch-name-here>
+git checkout <branch-name-here>
+
+In development branch:
+git add .
+git commit -m '<message>'
+git push -u origin <branch-name-here>
+
+When merging to main:
+git checkout main
+git pull origin main
+git merge <branch-name-here>
+git push origin main
+
+This triggers Github actions:
+deploy hosting-folder into atra-front S3-bucket
+trigger cdk (check with diff, if resources/configs have changed) -> creates/updates resources
+build app and upload it into atra-front S3-bucket
