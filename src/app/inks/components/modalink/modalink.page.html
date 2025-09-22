@@ -1,8 +1,19 @@
-<ion-content [fullscreen]="true">
+<ion-content class="modal-overlay" [fullscreen]="true">
   <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="medium">Review</ion-title>
-      <ion-text>Look and check</ion-text>
-    </ion-toolbar>
+
+    <h2>Review</h2>
+    <ion-text>Look and check</ion-text>
+
   </ion-header>
+
+  @for (ink of inksToReview; track ink) {
+  <div>
+    <input type="text" placeholder="Insert lot number" />
+    <button>Delete</button>
+  </div>
+  }
+
+  <ion-button (click)="sendCancel()">Cancel</ion-button>
+  <ion-button (click)="sendConfirm()">Confirm</ion-button>
+  <ion-button>Nevermmind</ion-button>
 </ion-content>
