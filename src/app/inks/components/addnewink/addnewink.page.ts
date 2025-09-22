@@ -74,4 +74,16 @@ export class AddnewinkPage implements OnInit {
   handleCancel() {
     this.showReview = false;
   }
+
+  handleDelete(inkId: number) {
+    const inks = this.inkGroup.get('chosenInks') as FormArray;
+
+    const index = inks.value.indexOf(inkId);
+
+    if (index > -1) {
+      //angular equivalent of splice
+      inks.removeAt(index);
+      console.log('Removed ink: ', inkId, 'New chosenInks: ', inks.value);
+    }
+  }
 }

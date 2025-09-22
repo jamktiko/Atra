@@ -34,6 +34,7 @@ import { PublicInk } from 'src/interface';
 export class ModalinkPage implements OnInit {
   @Input() chosenInks!: AbstractControl | null;
   @Output() cancel = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<any>();
   //id:t taulukkona numeroina
   inksToReview: any[] = [];
   inksData: PublicInk[] = publicInks;
@@ -41,21 +42,22 @@ export class ModalinkPage implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.inksToReview = this.chosenInks!.value;
-
-    this.getInksData(this.inksData, this.inksToReview);
+    this.getInksData();
   }
 
-  //TEE TÄMÄ MAANANTAINA JA TARKISTA SÄÄNNÖT
-  getInksData(inksData: PublicInk[], inksToReview: any[]) {
-    for (let i = 0; i++; i = inksToReview.length - 1) {
-      inksData.forEach((ink) => ink.id === inksToReview[i]);
-    }
+  getInksData() {
+    this.inksToReview = this.chosenInks!.value;
+  }
+
+  sendDelete(id: number) {
+    this.delete.emit(id);
+    this.getInksData();
   }
 
   sendCancel() {
     this.cancel.emit();
   }
 
+  //tämän pitäisi lähettää confirm > push to own inks apiservien kautta tietokantaan
   sendConfirm() {}
 }

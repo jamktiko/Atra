@@ -1,7 +1,8 @@
 <ion-content>
 
   <!--MODALINK tarvitsee form arrayn tiedot => lähetettävä sille kopio formarraysta-->
-  @if (showReview) { <app-modalink [chosenInks]="inkGroup.get('chosenInks')" (cancel)="handleCancel()"></app-modalink>
+  @if (showReview) { <app-modalink [chosenInks]="inkGroup.get('chosenInks')" (cancel)="handleCancel()"
+    (delete)="handleDelete($event)"></app-modalink>
   }
   <h1>Adding a new ink to your library</h1>
 

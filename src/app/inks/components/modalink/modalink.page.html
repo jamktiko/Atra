@@ -9,11 +9,11 @@
   @for (ink of inksToReview; track ink) {
   <div>
     <input type="text" placeholder="Insert lot number" />
-    <button>Delete</button>
+    <button (click)="sendDelete(ink)">Delete</button>
   </div>
   }
 
   <ion-button (click)="sendCancel()">Cancel</ion-button>
   <ion-button (click)="sendConfirm()">Confirm</ion-button>
-  <ion-button>Nevermmind</ion-button>
+
 </ion-content>
