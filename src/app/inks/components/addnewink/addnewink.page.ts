@@ -1,15 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormControl, FormGroup, FormArray } from '@angular/forms';
-import {
-  IonContent,
-  IonButton,
-  IonList,
-  IonHeader,
-  IonToolbar,
-  IonListHeader,
-  IonSelect,
-} from '@ionic/angular/standalone';
+import { IonContent, IonButton } from '@ionic/angular/standalone';
 import { ModalinkPage } from '../modalink/modalink.page';
 import { PublicInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
@@ -26,9 +18,7 @@ import { publicInks } from 'src/temporarydata';
     FormsModule,
     IonButton,
     IonSearchbar,
-    IonList,
     IonSearchbar,
-
     ModalinkPage,
   ],
 })
@@ -36,7 +26,7 @@ export class AddnewinkPage implements OnInit {
   publicInks: PublicInk[] = publicInks; //apiservicestä kun on oikeat datat!
   searchItem: string = '';
   showReview: boolean = false;
-  //inkGroup alustaa sen,
+
   inkGroup = new FormGroup({
     chosenInks: new FormArray([]),
   });
@@ -49,8 +39,9 @@ export class AddnewinkPage implements OnInit {
     this.showReview = true;
   }
 
-  filteredInks(): PublicInk[] {
+  filteredInks(): any {
     const search = this.searchItem.toLowerCase();
+
     return this.publicInks.filter(
       (ink) =>
         ink.product_name.toLowerCase().includes(search) ||
@@ -81,7 +72,7 @@ export class AddnewinkPage implements OnInit {
     const index = inks.value.indexOf(inkId);
 
     if (index > -1) {
-      //angular equivalent of splice
+      //angular equivalent of splice: removes item in array where index matches
       inks.removeAt(index);
       console.log('Removed ink: ', inkId, 'New chosenInks: ', inks.value);
     }

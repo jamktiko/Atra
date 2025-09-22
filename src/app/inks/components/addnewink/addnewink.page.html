@@ -4,21 +4,24 @@
   @if (showReview) { <app-modalink [chosenInks]="inkGroup.get('chosenInks')" (cancel)="handleCancel()"
     (delete)="handleDelete($event)"></app-modalink>
   }
-  <h1>Adding a new ink to your library</h1>
+  <div class="box2">
+    <h1>Adding a new ink to your library</h1>
 
-  <h3>Start by searching for inks</h3>
-  <ion-list>
+    <h3>Start by searching for inks</h3>
+
+
     <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+  </div>
 
-    @for (ink of filteredInks(); track ink.id) {
-    <div class="b">{{ink.product_name}} - <small>{{ink.manufacturer}} - {{ink.color}}
-      </small><input type="button" value="Choose ink" (click)="chooseInk(ink)">
-    </div>
-    }
+  @for (ink of filteredInks(); track ink.id) {
+  <div class="box">{{ink.product_name}} - <small>{{ink.manufacturer}} - {{ink.color}}
+    </small><input type="button" value="Choose ink" (click)="chooseInk(ink)">
+  </div>
+  }
 
-  </ion-list>
-
-  <ion-button tab="tabs/inks" href="tabs/inks">Cancel</ion-button>
-  <ion-button (click)="review()">Continue</ion-button>
+  <div class="box2">
+    <ion-button tab="tabs/inks" href="tabs/inks" color="danger">Cancel</ion-button>
+    <ion-button (click)="review()">Continue</ion-button>
+  </div>
 
 </ion-content>

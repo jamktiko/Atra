@@ -1,5 +1,5 @@
 <ion-content class="modal-overlay" [fullscreen]="true">
-  <ion-header collapse="condense">
+  <ion-header class="box2" collapse="condense">
 
     <h2>Review</h2>
     <ion-text>Look and check</ion-text>
@@ -7,13 +7,16 @@
   </ion-header>
 
   @for (ink of inksToReview; track ink) {
-  <div>
+  <div class="box">
     <input type="text" placeholder="Insert lot number" />
     <button (click)="sendDelete(ink)">Delete</button>
   </div>
   }
 
-  <ion-button (click)="sendCancel()">Cancel</ion-button>
-  <ion-button (click)="sendConfirm()">Confirm</ion-button>
+  <div class="box2">
+    <h3>Got everything you need?</h3>
+    <ion-button color="danger" (click)="sendCancel()">No, go back</ion-button>
+    <ion-button (click)="sendConfirm()">Yes, continue</ion-button>
+  </div>
 
 </ion-content>
