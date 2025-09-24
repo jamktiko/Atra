@@ -28,7 +28,7 @@ import { publicInks } from 'src/temporarydata';
     IonSearchbar,
     IonList,
     IonSearchbar,
-    IonHeader,
+
     ModalinkPage,
   ],
 })
@@ -69,5 +69,9 @@ export class AddnewinkPage implements OnInit {
       console.log('Ink already chosen: ', ink.id);
       console.log(inks.value);
     }
+  }
+
+  handleCancel() {
+    this.showReview = false;
   }
 }
