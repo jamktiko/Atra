@@ -5,7 +5,7 @@ on:
     branches:
       - prod
 jobs:
-  Explore-GitHub-Actions:
+  Deploy-Prod:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -18,7 +18,5 @@ jobs:
           aws-region: eu-north-1
       - name: Deploy frontend to S3
         run: |
-          aws s3 sync ./hosting s3://atra-front --delete
-      - name: Check out repository code
-        uses: actions/checkout@v5
+          aws s3 sync ./hosting s3://atra-front --delete --exact-timestamps
       - run: echo "This job's status is ${{ job.status }}."
