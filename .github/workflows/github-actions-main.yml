@@ -10,8 +10,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      #- name: Set up Node.js
+      #  uses: actions/setup-node@v3
+      #  with:
+      #    node-version: "20"
       #- name: Install dependencies
-      #  run: npm install
-      #- name: Run tests
+      #  run: npm ci
+      #- name: Install Ionic CLI
+      #  run: npm install -g @ionic/cli
+      #- name: Build Ionic projects
+      #  run: ionic build
+      #- name: Serve built app
+      #  run: |
+      #    npx serve www &
+      #    sleep 5
+      #- name: Run unit tests
       #  run: npm test
-      - run: echo "This job's status is ${{ job.status }}."
+      #- name: Run Cypress tests
+      #  uses: cypress-io/github-action@v6
+      #  with:
+      #    wait-on: http://localhost:3000
+      #    wait-on-timeout: 60
+      - name: Final status
+        run: echo "This job's status is ${{ job.status }}."
