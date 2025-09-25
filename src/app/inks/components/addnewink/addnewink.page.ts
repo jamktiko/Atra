@@ -1,7 +1,12 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, FormControl, FormGroup, FormArray } from '@angular/forms';
-import { IonContent, IonButton } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonButton,
+  IonBadge,
+  IonLabel,
+} from '@ionic/angular/standalone';
 import { ModalinkPage } from '../modalink/modalink.page';
 import { PublicInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
@@ -20,6 +25,8 @@ import { publicInks } from 'src/temporarydata';
     IonSearchbar,
     IonSearchbar,
     ModalinkPage,
+    IonBadge,
+    IonLabel,
   ],
 })
 export class AddnewinkPage implements OnInit {
@@ -50,15 +57,39 @@ export class AddnewinkPage implements OnInit {
     );
   }
 
-  chooseInk(ink: PublicInk) {
-    const inks = this.inkGroup.get('chosenInks') as FormArray;
+  getChosenInks(): FormArray {
+    return this.inkGroup.get('chosenInks') as FormArray;
+  }
 
-    if (!inks.value.includes(ink.id)) {
-      inks.push(new FormControl(ink.id));
+  chooseInk(ink: PublicInk) {
+    const inks = this.getChosenInks();
+
+    if (!inks.value.some((chosenInk: any) => chosenInk.id === ink.id)) {
+      inks.push(
+        new FormGroup({
+          id: new FormControl(ink.id),
+          product_name: new FormControl(ink.product_name),
+          manufacturer: new FormControl(ink.manufacturer),
+          color: new FormControl(ink.color),
+          recalled: new FormControl(ink.recalled),
+          imageUrl: new FormControl(ink.imageUrl),
+          size: new FormControl(ink.size),
+          batchnumber: new FormControl(''),
+        })
+      );
+
       console.log(inks.value);
     } else {
       console.log('Ink already chosen: ', ink.id);
       console.log(inks.value);
+    }
+  }
+  inkIsEmpty() {
+    const inks = this.getChosenInks();
+    if (inks.length > 0) {
+      return true;
+    } else {
+      return false;
     }
   }
 

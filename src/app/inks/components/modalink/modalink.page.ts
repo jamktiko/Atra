@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import {
   FormsModule,
   FormArray,
+  FormControl,
   AbstractControl,
   FormGroup,
 } from '@angular/forms';
@@ -14,8 +16,6 @@ import {
   IonText,
   IonButton,
 } from '@ionic/angular/standalone';
-import { publicInks } from 'src/temporarydata';
-import { PublicInk } from 'src/interface';
 
 @Component({
   selector: 'app-modalink',
@@ -29,24 +29,30 @@ import { PublicInk } from 'src/interface';
     CommonModule,
     FormsModule,
     IonButton,
+    ReactiveFormsModule,
   ],
 })
 export class ModalinkPage implements OnInit {
   @Input() chosenInks!: AbstractControl | null;
   @Output() cancel = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
-  //id:t taulukkona numeroina
+
+  //ottaa kaikki musteet ja niiden tiedot choseninks.value avulla
   inksToReview: any[] = [];
-  inksData: PublicInk[] = publicInks;
+
+  //record: constructs an object type whose property keys are Keys and whose property values are Type
+  //HUOM. ANGULAR CHANGE DETECTION NOT WORKING rethink this Sally
+  // batchNumbers: Record<number, string> = {};
 
   constructor() {}
 
   ngOnInit() {
     this.getInksData();
+    console.log('Inks to review: ', this.inksToReview);
   }
 
   getInksData() {
-    this.inksToReview = this.chosenInks!.value;
+    return (this.inksToReview = this.chosenInks!.value);
   }
 
   sendDelete(id: number) {
@@ -58,6 +64,11 @@ export class ModalinkPage implements OnInit {
     this.cancel.emit();
   }
 
+  disableButton() {}
+
   //tämän pitäisi lähettää confirm > push to own inks apiservien kautta tietokantaan
-  sendConfirm() {}
+  sendConfirm() {
+    console.log('Inks added successfully: ');
+    console.log(this.getInksData());
+  }
 }

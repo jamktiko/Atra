@@ -63,60 +63,60 @@ export const publicInks: PublicInk[] = [
     size: '30ml',
   },
 
-  // {
-  //   id: 6,
-  //   product_name: 'Kuro Sumi Outlining Ink',
-  //   manufacturer: 'Kuro Sumi',
-  //   color: 'Outlining Black',
-  //   recalled: false,
-  //   imageUrl:
-  //     'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
-  //   size: '120ml',
-  // },
+  {
+    id: 6,
+    product_name: 'Kuro Sumi Outlining Ink',
+    manufacturer: 'Kuro Sumi',
+    color: 'Outlining Black',
+    recalled: false,
+    imageUrl:
+      'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
+    size: '120ml',
+  },
 
-  // {
-  //   id: 7,
-  //   product_name: 'StarBrite',
-  //   manufacturer: 'StarBrite Colors',
-  //   color: 'Bubblegum Pink',
-  //   recalled: true,
-  //   imageUrl:
-  //     'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
-  //   size: '30ml',
-  // },
+  {
+    id: 7,
+    product_name: 'StarBrite',
+    manufacturer: 'StarBrite Colors',
+    color: 'Bubblegum Pink',
+    recalled: true,
+    imageUrl:
+      'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
+    size: '30ml',
+  },
 
-  // {
-  //   id: 8,
-  //   product_name: 'Eternal Ink',
-  //   manufacturer: 'Eternal Ink',
-  //   color: 'White',
-  //   recalled: false,
-  //   imageUrl:
-  //     'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
-  //   size: '120ml',
-  // },
+  {
+    id: 8,
+    product_name: 'Eternal Ink',
+    manufacturer: 'Eternal Ink',
+    color: 'White',
+    recalled: false,
+    imageUrl:
+      'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
+    size: '120ml',
+  },
 
-  // {
-  //   id: 9,
-  //   product_name: 'Solid Ink',
-  //   manufacturer: 'Solid Ink',
-  //   color: 'Olive Green',
-  //   recalled: false,
-  //   imageUrl:
-  //     'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
-  //   size: '60ml',
-  // },
+  {
+    id: 9,
+    product_name: 'Solid Ink',
+    manufacturer: 'Solid Ink',
+    color: 'Olive Green',
+    recalled: false,
+    imageUrl:
+      'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
+    size: '60ml',
+  },
 
-  // {
-  //   id: 10,
-  //   product_name: 'Fusion Ink',
-  //   manufacturer: 'Fusion Ink',
-  //   color: 'Power Purple',
-  //   recalled: false,
-  //   imageUrl:
-  //     'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
-  //   size: '30ml',
-  // },
+  {
+    id: 10,
+    product_name: 'Fusion Ink',
+    manufacturer: 'Fusion Ink',
+    color: 'Power Purple',
+    recalled: false,
+    imageUrl:
+      'https://kurosumi.com/cdn/shop/products/KSFGY.75-Kuro-Sumi-Fugiyama_Pink-.75oz.png?v=1656006504&width=600',
+    size: '30ml',
+  },
 ];
 
 export const userInks: UserInk[] = [

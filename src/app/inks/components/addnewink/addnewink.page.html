@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content fullscreen="true">
 
   <!--MODALINK tarvitsee form arrayn tiedot => lähetettävä sille kopio formarraysta-->
   @if (showReview) { <app-modalink [chosenInks]="inkGroup.get('chosenInks')" (cancel)="handleCancel()"
@@ -13,13 +13,22 @@
     <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem" />
   </div>
 
-  @for (ink of filteredInks(); track ink.id) {
-  <div class="box">{{ink.product_name}} - <small>{{ink.manufacturer}} - {{ink.color}}
-    </small><input type="button" value="Choose ink" (click)="chooseInk(ink)">
+  <!--LUODAAN TÄSTÄ VISUAL SCROLLING css sijaan! renders when scrolled-->
+  <div class="scrollable">
+    @for (ink of filteredInks(); track ink.id) {
+    <div class="box">
+      <img src="{{ink.imageUrl}}" width="20%" />
+      {{ink.product_name}} - <small>{{ink.manufacturer}} - {{ink.color}}
+      </small><input class="btn" type="button" value="Choose ink" (click)="chooseInk(ink)">
+    </div>
+    }
   </div>
-  }
 
-  <div class="box2">
+  <div class="box3">
+    @if (getChosenInks().length > 0 ) {
+    <div><ion-badge>{{getChosenInks().length}}</ion-badge><ion-label> Inks chosen</ion-label></div>
+    }
+
     <ion-button tab="tabs/inks" href="tabs/inks" color="danger">Cancel</ion-button>
     <ion-button (click)="review()">Continue</ion-button>
   </div>
