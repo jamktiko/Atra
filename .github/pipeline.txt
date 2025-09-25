@@ -17,7 +17,6 @@ git push origin main
 When pushing to production:
 git checkout prod
 git pull origin main
-git merge main
 git push origin prod
 
 To visualize branches, remember "a dog":
