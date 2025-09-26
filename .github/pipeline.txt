@@ -1,0 +1,30 @@
+Creating a branch:
+git branch <branch-name-here>
+git checkout <branch-name-here>
+
+In development branch:
+git add .
+git commit -m '<message>'
+git push -u origin <branch-name-here> // first time
+git push // normally
+
+When merging to main:
+git checkout main
+git pull origin main
+git merge <branch-name-here>
+git push origin main
+
+When pushing to production:
+git checkout prod
+git pull origin main
+git push origin prod
+
+To visualize branches, remember "a dog":
+git log --all --decorate --oneline --graph
+
+This triggers Github actions:
+deploy hosting-folder into atra-front S3-bucket
+deploy lambda-functions into atra-lambda S3-bucket
+trigger cdk (check with diff, if resources/configs have changed) -> creates/updates resources
+build app and upload it into atra-front S3-bucket
+run tests; cypress for end-to-end, jasmine or vitest for unit testing
