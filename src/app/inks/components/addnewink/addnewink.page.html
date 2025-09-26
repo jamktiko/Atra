@@ -1,7 +1,7 @@
 <ion-content fullscreen="true">
 
   <!--MODALINK tarvitsee form arrayn tiedot => lähetettävä sille kopio formarraysta-->
-  @if (showReview) { <app-modalink [chosenInks]="inkGroup.get('chosenInks')" (cancel)="handleCancel()"
+  @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()"
     (delete)="handleDelete($event)"></app-modalink>
   }
   <div class="box2">

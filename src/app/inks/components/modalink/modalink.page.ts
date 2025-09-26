@@ -33,16 +33,15 @@ import {
   ],
 })
 export class ModalinkPage implements OnInit {
-  @Input() chosenInks!: AbstractControl | null;
+  @Input() chosenInks!: FormArray;
   @Output() cancel = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
 
-  //ottaa kaikki musteet ja niiden tiedot choseninks.value avulla
+  //Ottaa kaikki musteet ja niiden tiedot choseninks.value avulla muodossa
+  // choseninks = FormArray[({FormGroup: ink}, {FG: ink}, {FG: ink} ...)]
   inksToReview: any[] = [];
 
-  //record: constructs an object type whose property keys are Keys and whose property values are Type
-  //HUOM. ANGULAR CHANGE DETECTION NOT WORKING rethink this Sally
-  // batchNumbers: Record<number, string> = {};
+  batchnumber: string = '';
 
   constructor() {}
 
@@ -64,7 +63,11 @@ export class ModalinkPage implements OnInit {
     this.cancel.emit();
   }
 
-  disableButton() {}
+  disableButton() {
+    return this.inksToReview.every(
+      (ink) => ink.batchnumber && ink.batchnumber.trim() !== ''
+    );
+  }
 
   //tämän pitäisi lähettää confirm > push to own inks apiservien kautta tietokantaan
   sendConfirm() {

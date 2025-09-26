@@ -7,14 +7,21 @@
   </ion-header>
 
   @if (inksToReview.length > 0) {
-  @for (ink of inksToReview; track ink) {
+
+  @for (ink of inksToReview; let i = $index; track i) {
   <div class="box">
 
     <p>{{ink.product_name}} - {{ink.size}}
       {{ink.manufacturer}} - {{ink.color}} </p>
 
     <img src="{{ink.imageUrl}}" width="25%" />
-    <input type="text" placeholder="Insert batchnumber" [(ngModel)]="ink.batchnumber" required />
+    <input type="text" placeholder="Insert batchnumber" [(ngModel)]="ink.batchnumber" required
+      #batchnumberCtrl="ngModel" />
+    @if (batchnumberCtrl.invalid && batchnumberCtrl.touched) {
+    <div>
+      <p>Batch number is required.</p>
+    </div>
+    }
     <button class="btn" (click)="sendDelete(ink)">Delete</button>
   </div>
 
@@ -23,16 +30,19 @@
   <div class="box2">
     <h3>Got everything you need?</h3>
     <ion-button color="danger" (click)="sendCancel()">No, go back</ion-button>
-    <ion-button (click)="sendConfirm()">Yes, continue</ion-button>
+    <ion-button (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</ion-button>
   </div>
-  } @else {
+  }
+
+  @else {
   <div class="box2">
     <h2>No inks chosen.</h2>
   </div>
   <div class="box2">
     <h3>At least one ink has to be chosen to proceed. </h3>
     <ion-button color="danger" (click)="sendCancel()">Go back</ion-button>
-    <ion-button (click)="sendConfirm()" [disabled]="disableButton">Continue</ion-button>
+    <ion-button (click)="sendConfirm()" [disabled]="true">Continue</ion-button>
+
   </div>
   }
 

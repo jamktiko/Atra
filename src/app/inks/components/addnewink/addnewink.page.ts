@@ -1,6 +1,12 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, FormControl, FormGroup, FormArray } from '@angular/forms';
+import {
+  FormsModule,
+  FormControl,
+  FormGroup,
+  FormArray,
+  Validators,
+} from '@angular/forms';
 import {
   IonContent,
   IonButton,
@@ -74,7 +80,7 @@ export class AddnewinkPage implements OnInit {
           recalled: new FormControl(ink.recalled),
           imageUrl: new FormControl(ink.imageUrl),
           size: new FormControl(ink.size),
-          batchnumber: new FormControl(''),
+          batchnumber: new FormControl('', Validators.required),
         })
       );
 
