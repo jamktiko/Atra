@@ -13,9 +13,12 @@
 
     <ion-button tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </ion-button>
   </div><!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
-  <div class="box" *ngFor="let customer of allcustomers">
+
+  @for (customer of allcustomers; track customer.firstname) {
+  <div class="box">
     <h3>{{customer.lastname}}, {{customer.firstname}}</h3>
     <p>{{customer.email}}</p>
   </div>
+  }
 
 </ion-content>

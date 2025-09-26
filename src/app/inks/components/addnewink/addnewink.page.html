@@ -14,6 +14,7 @@
   </div>
 
   <!--LUODAAN TÄSTÄ VISUAL SCROLLING css sijaan! renders when scrolled-->
+  <!--Käy musteet läpi for-loopissa käyttämällä filteredInks()-funktiota, eli vain hakutulosta vastaavat -->
   <div class="scrollable">
     @for (ink of filteredInks(); track ink.id) {
     <div class="box">
@@ -30,7 +31,7 @@
     }
 
     <ion-button tab="tabs/inks" href="tabs/inks" color="danger">Cancel</ion-button>
-    <ion-button (click)="review()">Continue</ion-button>
+    <ion-button (click)="review()" [disabled]="getChosenInks().length < 1">Continue</ion-button>
   </div>
 
 </ion-content>

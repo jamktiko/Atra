@@ -35,15 +35,16 @@ export class PubliclibraryPage implements OnInit {
 
   constructor(private apiService: ApiService) {}
 
+  //Hakee mustetiedot tietokannasta renderöintivaiheessa
   ngOnInit() {
-    this.apiService.getAllInks().subscribe({
-      next: (data) => {
-        this.allInks = data;
-        console.log(data);
-      },
-      error: (err) => {
-        console.error('Something went wrong: ', err);
-      },
-    });
+    //   this.apiService.getAllInks().subscribe({
+    //     next: (data) => {
+    //       this.allInks = data;
+    //       console.log(data);
+    //     },
+    //     error: (err) => {
+    //       console.error('Something went wrong: ', err);
+    //     },
+    //   });
   }
 }
