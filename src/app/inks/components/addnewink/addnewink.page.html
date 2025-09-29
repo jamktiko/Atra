@@ -4,18 +4,21 @@
   @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()"
     (delete)="handleDelete($event)"></app-modalink>
   }
+
   <div class="box2">
+
     <h1>Adding a new ink to your library</h1>
 
     <h3>Start by searching for inks</h3>
 
-
     <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+
   </div>
 
   <!--LUODAAN TÄSTÄ VISUAL SCROLLING css sijaan! renders when scrolled-->
   <!--Käy musteet läpi for-loopissa käyttämällä filteredInks()-funktiota, eli vain hakutulosta vastaavat -->
   <div class="scrollable">
+
     @for (ink of filteredInks(); track ink.id) {
     <div class="box">
       <img src="{{ink.imageUrl}}" width="20%" />
@@ -23,11 +26,15 @@
       </small><input class="btn" type="button" value="Choose ink" (click)="chooseInk(ink)">
     </div>
     }
+
   </div>
 
   <div class="box3">
     @if (getChosenInks().length > 0 ) {
-    <div><ion-badge>{{getChosenInks().length}}</ion-badge><ion-label> Inks chosen</ion-label></div>
+    <div>
+      <ion-badge>{{getChosenInks().length}}</ion-badge>
+      <ion-label> Inks chosen</ion-label>
+    </div>
     }
 
     <ion-button tab="tabs/inks" href="tabs/inks" color="danger">Cancel</ion-button>
