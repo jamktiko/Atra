@@ -21,7 +21,7 @@ jobs:
       - name: Build Ionic projects
         run: ionic build
       - name: Run unit tests
-        run: npm test
+        run: npm test -- --watch=false --browsers=ChromeHeadless
       #- name: Serve built app
       #  run: |
       #    npx serve hosting &
