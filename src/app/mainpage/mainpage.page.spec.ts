@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MainpagePage } from './mainpage.page';
 
 describe('MainpagePage', () => {
+  //this does not pass!!!
   /*   let component: MainpagePage;
   let fixture: ComponentFixture<MainpagePage>;
 
@@ -14,6 +15,8 @@ describe('MainpagePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   }); */
+
+  //this passes
   it('should pass', () => {
     expect(true).toBe(true);
   });

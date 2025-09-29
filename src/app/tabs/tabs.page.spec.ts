@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 describe('TabsPage', () => {
-  /*   let component: TabsPage;
+  let component: TabsPage;
   let fixture: ComponentFixture<TabsPage>;
 
   beforeEach(async () => {
@@ -22,8 +22,5 @@ describe('TabsPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  }); */
-  it('should pass', () => {
-    expect(true).toBe(true);
   });
 });

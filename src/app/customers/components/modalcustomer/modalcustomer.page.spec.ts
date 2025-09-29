@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalcustomerPage } from './modalcustomer.page';
 
 describe('ModalcustomerPage', () => {
-  /*   let component: ModalcustomerPage;
+  let component: ModalcustomerPage;
   let fixture: ComponentFixture<ModalcustomerPage>;
 
   beforeEach(() => {
@@ -13,8 +13,5 @@ describe('ModalcustomerPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  }); */
-  it('should pass', () => {
-    expect(true).toBe(true);
   });
 });

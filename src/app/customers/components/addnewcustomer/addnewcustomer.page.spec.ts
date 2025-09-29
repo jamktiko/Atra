@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddnewcustomerPage } from './addnewcustomer.page';
 
 describe('AddnewcustomerPage', () => {
-  /*   let component: AddnewcustomerPage;
+  let component: AddnewcustomerPage;
   let fixture: ComponentFixture<AddnewcustomerPage>;
 
   beforeEach(() => {
@@ -13,8 +13,5 @@ describe('AddnewcustomerPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  }); */
-  it('should pass', () => {
-    expect(true).toBe(true);
   });
 });

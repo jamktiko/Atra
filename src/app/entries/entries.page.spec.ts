@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EntriesPage } from './entries.page';
 
 describe('EntriesPage', () => {
-  /*   let component: EntriesPage;
+  let component: EntriesPage;
   let fixture: ComponentFixture<EntriesPage>;
 
   beforeEach(() => {
@@ -13,8 +13,5 @@ describe('EntriesPage', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  }); */
-  it('should pass', () => {
-    expect(true).toBe(true);
   });
 });
