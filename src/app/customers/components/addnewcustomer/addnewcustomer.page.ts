@@ -25,7 +25,7 @@ import { ModalcustomerPage } from '../modalcustomer/modalcustomer.page';
 @Component({
   selector: 'app-addnewcustomer',
   templateUrl: './addnewcustomer.page.html',
-  styleUrls: ['./addnewcustomer.page.scss'],
+  styleUrls: ['./addnewcustomer.page.css'],
   standalone: true,
   imports: [
     IonContent,
@@ -42,31 +42,20 @@ import { ModalcustomerPage } from '../modalcustomer/modalcustomer.page';
   ],
 })
 export class AddnewcustomerPage {
+  //ViewChild mahdollistaa sen, että HTML-templaatissa määritelty muuttuja voidaan ottaa ts-tiedostossa käyttöön
+  //Tässä tapauksessa form-tagissa määritelty customerForm => mahdollista käyttää tämän tiedoston funktioissa kyseistä formia
   @ViewChild('customerForm') customerForm!: NgForm;
 
+  //Alustaa lomakkeen tyhjänä asiakkaana
   customer: Customer = {
     firstname: '',
     lastname: '',
     email: '',
     phonenumber: '',
   };
-  //Validators-form validation > jos siirrytään tähän
-  // customerForm = new FormGroup({
-  //   firstname: new FormControl(this.customer.firstname, [
-  //     Validators.required,
-  //     Validators.minLength(2),
-  //   ]),
-  //   lastname: new FormControl(this.customer.lastname, [
-  //     Validators.required,
-  //     Validators.minLength(2),
-  //   ]),
-  //   email: new FormControl(this.customer.email, [
-  //     Validators.required,
-  //     Validators.email,
-  //   ]),
-  //   phonenumber: new FormControl(this.customer.phonenumber),
-  // });
 
+  //Hallitsee modalcustomerin näkyvyyttä
+  // HTML-templaatissa  @if (openModal) {<app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel()" [openModal]="openModal"></app-modalcustomer>}
   openModal: boolean = false;
 
   showModal() {
@@ -78,6 +67,9 @@ export class AddnewcustomerPage {
     this.customerForm.resetForm();
   }
 
+  //Lisää asiakkaan: saa modalcustomerilta Outputina tiedon cancel-EventEmitteristä
+  //HTML-templaatissa annettu modalcustomerille propsina: (cancel)="handleCancel()"
+  //Tarkoitus myöhemmin, että lisää asiakkaan apiservicen kautta
   handleConfirm(data: Customer) {
     console.log('Customer added: ', data);
     this.addNewCustomer(data);
@@ -85,11 +77,14 @@ export class AddnewcustomerPage {
     this.closeModal();
   }
 
+  //Sulkee modaalin: saa modalcustomerilta Outputina tiedon cancel-EventEmitteristä
+  //Tarkoituksena että käyttäjä voi vielä muokata asiakkaan tietoja (cancel)="handleCancel()"
+  //
   handleCancel() {
     this.openModal = false;
-    this.resetForm();
   }
 
+  //Nollaa asiakaslomakkeen sekä cancel että confirm-tapauksissa
   resetForm() {
     this.customer = {
       firstname: '',
@@ -101,6 +96,7 @@ export class AddnewcustomerPage {
 
   constructor() {}
 
+  //Käsittelee apiservicen kautta uuden asiakkaan lisäämisen, kun siirrytään oikean datan liikkumiseen
   addNewCustomer(data: Customer) {
     //   this.apiService.addNewCustomer(customer).subscribe({
     //     next: (addcustomer) => {
