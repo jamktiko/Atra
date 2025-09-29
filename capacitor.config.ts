@@ -3,7 +3,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
   appName: 'ion-atraproto',
-  webDir: 'www'
+  webDir: 'hosting',
 };
 
 export default config;

@@ -7,13 +7,18 @@
 
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
-  <h2>Customers</h2>
-  <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
-  <ion-button tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </ion-button>
-  <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
-  <div class="box" *ngFor="let customer of allcustomers">
+  <div class="box2">
+    <h2>Customers</h2>
+    <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
+
+    <ion-button tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </ion-button>
+  </div><!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
+
+  @for (customer of allcustomers; track customer.firstname) {
+  <div class="box">
     <h3>{{customer.lastname}}, {{customer.firstname}}</h3>
     <p>{{customer.email}}</p>
   </div>
+  }
 
 </ion-content>

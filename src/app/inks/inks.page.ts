@@ -34,42 +34,39 @@ import { PublicInk, User, UserInk } from 'src/interface';
 export class InksPage implements OnInit {
   // ink: UserInk | null = null;
   userInks: UserInk[] = userInks;
+  //Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa feikkidata
   user: User = Tiina;
   allInks!: UserInk[];
-  @ViewChild('ink') ink!: PublicInk | null;
-
-  @Output() showAddNewForm: boolean = false;
+  // @ViewChild('ink') ink!: PublicInk | null;
 
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    this.apiService.getUserInks().subscribe({
-      next: (data) => {
-        this.allInks = data;
-        console.log(data);
-      },
-      error: (err) => {
-        console.error('Jodain meni bieleen: ', err);
-      },
-    });
+    //TOISTAISEKSI KOMMENTOITU POIS, hakee renderöintivaiheessa musteet apiservicen kautta
+    // this.apiService.getUserInks().subscribe({
+    //   next: (data) => {
+    //     this.allInks = data;
+    //     console.log(data);
+    //   },
+    //   error: (err) => {
+    //     console.error('Jodain meni bieleen: ', err);
+    //   },
+    // });
   }
 
-  testAdd(publicID: number, batchnumber: string) {
-    console.log('Sending ink:', {
-      public_ink_id: publicID,
-      batch_number: batchnumber,
-    });
-    this.apiService.addNewInk(publicID, batchnumber).subscribe({
-      next: (data) => {
-        console.log(data);
-      },
-      error: (err) => {
-        console.error('Pieleen män, ', err);
-      },
-    });
-  }
-
-  showModal() {
-    this.showAddNewForm = true;
-  }
+  //Testi tietokantaan lisäystä varten
+  // testAdd(publicID: number, batchnumber: string) {
+  //   console.log('Sending ink:', {
+  //     public_ink_id: publicID,
+  //     batch_number: batchnumber,
+  //   });
+  //   this.apiService.addNewInk(publicID, batchnumber).subscribe({
+  //     next: (data) => {
+  //       console.log(data);
+  //     },
+  //     error: (err) => {
+  //       console.error('Pieleen män, ', err);
+  //     },
+  //   });
+  // }
 }

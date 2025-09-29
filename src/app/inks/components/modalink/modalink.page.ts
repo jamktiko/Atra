@@ -1,21 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  FormArray,
-  AbstractControl,
-  FormGroup,
-} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, FormArray } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
-  IonTitle,
-  IonToolbar,
   IonText,
   IonButton,
 } from '@ionic/angular/standalone';
-import { publicInks } from 'src/temporarydata';
-import { PublicInk } from 'src/interface';
 
 @Component({
   selector: 'app-modalink',
@@ -29,33 +21,60 @@ import { PublicInk } from 'src/interface';
     CommonModule,
     FormsModule,
     IonButton,
+    ReactiveFormsModule,
   ],
 })
 export class ModalinkPage implements OnInit {
-  @Input() chosenInks!: AbstractControl | null;
+  @Input() chosenInks!: FormArray;
   @Output() cancel = new EventEmitter<any>();
-  //id:t taulukkona numeroina
+  @Output() delete = new EventEmitter<any>();
+
+  //Ottaa kaikki musteet ja niiden tiedot choseninks.value avulla tässä muodossa:
+  // choseninks = FormArray[({FormGroup: {ink}}, {FormGroup: {ink}}, ...)]
   inksToReview: any[] = [];
-  inksData: PublicInk[] = publicInks;
+
+  // batchnumber: string = '';
 
   constructor() {}
 
   ngOnInit() {
-    this.inksToReview = this.chosenInks!.value;
-
-    this.getInksData(this.inksData, this.inksToReview);
+    //Renderöintivaiheessa kutsuu getInksData, jotta inksReview alustetaan + tulostaa konsoliin
+    this.getInksData();
+    console.log('Inks to review: ', this.inksToReview);
   }
 
-  //TEE TÄMÄ MAANANTAINA JA TARKISTA SÄÄNNÖT
-  getInksData(inksData: PublicInk[], inksToReview: any[]) {
-    for (let i = 0; i++; i = inksToReview.length - 1) {
-      inksData.forEach((ink) => ink.id === inksToReview[i]);
-    }
+  //Alustaa inksToReview-muuttujan chosenInks.value-arvolla
+  getInksData() {
+    return (this.inksToReview = this.chosenInks!.value);
   }
 
+  //Lähettää Angularin Outputin avulla EventEmitterin äitikomponentille
+  //Käskee toteuttamaan delete-toimintoon sidotun funktion äitikomponentilla: tässä tapauksessa handleDelete()
+  // Tarkoituksena poistaa yksittäinen muste review-vaiheessa ja tulostaa päivitetty inksToReview
+  sendDelete(id: number) {
+    this.delete.emit(id);
+    this.getInksData();
+  }
+
+  //Lähettää Angularin Outputin avulla EventEmitterin äitikomponentille
+  //Käskee toteuttamaan cancel-toimintoon sidotun funktion äitikomponentilla: tässä tapauksessa handleCancel()
+  //Tarkoituksena sulkea modalink-komponentti ja palata addnewink-komponentille
   sendCancel() {
     this.cancel.emit();
   }
 
-  sendConfirm() {}
+  //Käsittelee continue-nappulan disabloinnin, mikäli yksikin inksToReview-taulukon batchnumber on tyhjä merkkijono
+  //Palauttaa true, mikäli yhdessäkin batchnumberissa on tyhjä merkkijono. Muussa tapauksessa false => ei disabloitu
+  disableButton() {
+    return this.inksToReview.every(
+      (ink) => ink.batchnumber && ink.batchnumber.trim() !== ''
+    );
+  }
+
+  //tämän pitäisi lähettää confirm > push to own inks apiservien kautta tietokantaan
+  //Tässä vaiheessa tulostaa päivitetyn inksToReviewn, jossa mukana uudet batchnumberit
+  sendConfirm() {
+    console.log('Inks added successfully: ');
+    console.log(this.getInksData());
+  }
 }

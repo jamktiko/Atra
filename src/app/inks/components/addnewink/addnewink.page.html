@@ -1,23 +1,44 @@
-<ion-content>
+<ion-content fullscreen="true">
 
   <!--MODALINK tarvitsee form arrayn tiedot => lähetettävä sille kopio formarraysta-->
-  @if (showReview) { <app-modalink [chosenInks]="inkGroup.get('chosenInks')" (cancel)="handleCancel()"></app-modalink>
+  @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()"
+    (delete)="handleDelete($event)"></app-modalink>
   }
-  <h1>Adding a new ink to your library</h1>
 
-  <h3>Start by searching for inks</h3>
-  <ion-list>
+  <div class="box2">
+
+    <h1>Adding a new ink to your library</h1>
+
+    <h3>Start by searching for inks</h3>
+
     <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem" />
 
+  </div>
+
+  <!--LUODAAN TÄSTÄ VISUAL SCROLLING css sijaan! renders when scrolled-->
+  <!--Käy musteet läpi for-loopissa käyttämällä filteredInks()-funktiota, eli vain hakutulosta vastaavat -->
+  <div class="scrollable">
+
     @for (ink of filteredInks(); track ink.id) {
-    <div class="b">{{ink.product_name}} - <small>{{ink.manufacturer}} - {{ink.color}}
-      </small><input type="button" value="Choose ink" (click)="chooseInk(ink)">
+    <div class="box">
+      <img src="{{ink.imageUrl}}" width="20%" />
+      {{ink.product_name}} - <small>{{ink.manufacturer}} - {{ink.color}}
+      </small><input class="btn" type="button" value="Choose ink" (click)="chooseInk(ink)">
     </div>
     }
 
-  </ion-list>
+  </div>
 
-  <ion-button tab="tabs/inks" href="tabs/inks">Cancel</ion-button>
-  <ion-button (click)="review()">Continue</ion-button>
+  <div class="box3">
+    @if (getChosenInks().length > 0 ) {
+    <div>
+      <ion-badge>{{getChosenInks().length}}</ion-badge>
+      <ion-label> Inks chosen</ion-label>
+    </div>
+    }
+
+    <ion-button tab="tabs/inks" href="tabs/inks" color="danger">Cancel</ion-button>
+    <ion-button (click)="review()" [disabled]="getChosenInks().length < 1">Continue</ion-button>
+  </div>
 
 </ion-content>

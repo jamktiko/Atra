@@ -1,19 +1,62 @@
-<ion-content class="modal-overlay" [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content [fullscreen]="true">
+  <ion-header class="box2" collapse="condense">
 
     <h2>Review</h2>
     <ion-text>Look and check</ion-text>
 
   </ion-header>
 
-  @for (ink of inksToReview; track ink) {
-  <div>
-    <input type="text" placeholder="Insert lot number" />
-    <button>Delete</button>
+  <!--If-lohko hallinnoimassa näkymää: jos musteita ei valittu, näytetään else-osio -->
+  @if (inksToReview.length > 0) {
+
+  <!-- Käy inkstoreview-taulukon eli kaikki valitut musteet läpi for-loopilla-->
+  @for (ink of inksToReview; let i = $index; track i) {
+  <div class="box">
+
+    <p>{{ink.product_name}} - {{ink.size}}
+      {{ink.manufacturer}} - {{ink.color}} </p>
+
+    <img src="{{ink.imageUrl}}" width="25%" />
+
+    <!--FormControlissa määritelty ink.batchnumber alustetaan tässä vaiheessa ngModelilla template form-tyylisesti,
+    eli muuttujan kaksisuuntainen sitominen. Tieto päivittyy sekä modalink että addnewink-komponentilla.
+    Komponenttien välillä voi liikkua, musteita voi poistaa ja lisätä, ja jo lisätyt batchnumberit jäävät paikalleen,
+    vaikka käyttäjä muuttaa valikoimaa kesken-->
+    <input type="text" placeholder="Insert batchnumber" [(ngModel)]="ink.batchnumber" required #batchnumber="ngModel" />
+
+    <!-- Tässä käytetään FormControlia varmistamaan Validatorsin avulla, että batchnumber on täytetty
+     Huomaa addnewink.ts, jossa batchnumber: new FormControl('', Validators.required) => täytyy olla täytetty, jotta
+     Validators katsoo, että ok. Angular tekee tämän controlstaten avulla ja reagoi reaktiivisesti -->
+    @if (batchnumber.invalid && batchnumber.touched) {
+    <div>
+      <p>Batch number is required.</p>
+    </div>
+    }
+    <button class="btn" (click)="sendDelete(ink)">Delete</button>
+  </div>
+
+
+  }
+  <div class="box2">
+    <h3>Got everything you need?</h3>
+    <ion-button color="danger" (click)="sendCancel()">No, go back</ion-button>
+    <ion-button (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</ion-button>
   </div>
   }
 
-  <ion-button (click)="sendCancel()">Cancel</ion-button>
-  <ion-button (click)="sendConfirm()">Confirm</ion-button>
-  <ion-button>Nevermmind</ion-button>
+  @else {
+  <div class="box2">
+    <h2>No inks chosen.</h2>
+  </div>
+  <div class="box2">
+    <h3>At least one ink has to be chosen to proceed. </h3>
+    <ion-button color="danger" (click)="sendCancel()">Go back</ion-button>
+    <!-- <ion-button (click)="sendConfirm()" [disabled]="true">Continue</ion-button> -->
+
+  </div>
+  }
+
+
+
+
 </ion-content>

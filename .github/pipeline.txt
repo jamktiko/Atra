@@ -14,9 +14,16 @@ git pull origin main
 git merge <branch-name-here>
 git push origin main
 
+When pushing to production:
+git checkout prod
+git pull origin main
+git push origin prod
+
+To visualize branches, remember "a dog":
+git log --all --decorate --oneline --graph
+
 This triggers Github actions:
 deploy hosting-folder into atra-front S3-bucket
-deploy lambda-functions into atra-lambda S3-bucket
 trigger cdk (check with diff, if resources/configs have changed) -> creates/updates resources
 build app and upload it into atra-front S3-bucket
-run tests; cypress for end-to-end, jasmine or vitest for unit testing
+run tests; cypress for end-to-end, jasmine for unit testing
