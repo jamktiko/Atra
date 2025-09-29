@@ -9,13 +9,22 @@ enum ParameterNames {
   rdsProxyEndpoint = '/rds/proxy/endpoint',
   rdsSecurityGroupId = '/sg/rds',
   lambdaSecurityGroupId = '/sg/lambda',
+  distributionDomainName = '/frontend/distributionDomainName',
 }
 
 export default class Parameters {
   constructor(private scope: Construct) {}
 
+  //private getParameter(name: ParameterNames) {
+  //return ssm.StringParameter.valueFromLookup(this.scope, name);
+  //}
+
   private getParameter(name: ParameterNames) {
-    return ssm.StringParameter.valueFromLookup(this.scope, name);
+    return ssm.StringParameter.fromStringParameterName(
+      this.scope,
+      `GetParam${name}`,
+      name
+    ).stringValue;
   }
 
   private setParameter(name: ParameterNames, value: string) {
@@ -63,5 +72,13 @@ export default class Parameters {
 
   public get lambdaSecurityGroupId() {
     return this.getParameter(ParameterNames.lambdaSecurityGroupId);
+  }
+
+  public set distributionDomainName(value: string) {
+    this.setParameter(ParameterNames.distributionDomainName, value);
+  }
+
+  public get distributionDomainName() {
+    return this.getParameter(ParameterNames.distributionDomainName);
   }
 }

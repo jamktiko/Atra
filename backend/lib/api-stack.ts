@@ -31,7 +31,7 @@ export class ApiStack extends Stack {
     super(scope, id, props);
 
     const ssm = new Parameters(this);
-
+    const frontendDomain = ssm.distributionDomainName;
     const { vpc, rdsSecretName } = props;
     this.vpc = vpc;
     this.rdsSecretName = rdsSecretName;
@@ -49,20 +49,26 @@ export class ApiStack extends Stack {
     );
 
     // Kutsutaan apin luontimetodia ja reittien metodia
-    this.api = this.createApi('AtraApi', cognitoUserPool, ssm.cognitoClientId);
+    this.api = this.createApi(
+      'AtraApi',
+      cognitoUserPool,
+      ssm.cognitoClientId,
+      frontendDomain
+    );
     this.callsRoute();
   }
 
   private createApi(
     name: string,
     cognitoUserPool: cognito.IUserPool,
-    cognitoClientId: string
+    cognitoClientId: string,
+    frontendDomain: string
   ) {
     const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
     // JWT authorizer Cognito User Poolia varten
     // Authorizer tarkistaa, että token on validi ja peräisin oikeasta user poolista
     // Audience on client ID, eli siis sovellus, joka käyttää kyseistä user poolia
-    const authorizer = new HttpJwtAuthorizer('CogntioAuthorizer', issuer, {
+    const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
       jwtAudience: [cognitoClientId],
     });
     const api = new apigw2.HttpApi(this, 'AtraApi', {
@@ -79,7 +85,7 @@ export class ApiStack extends Stack {
           apigw2.CorsHttpMethod.PUT,
           apigw2.CorsHttpMethod.DELETE,
         ],
-        //allowOrigins: ['https://OUR_CLOUDFRONT_DOMAIN'],
+        allowOrigins: [`https://${frontendDomain}`],
       },
     });
     return api;
