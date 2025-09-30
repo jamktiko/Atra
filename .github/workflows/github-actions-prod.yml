@@ -20,18 +20,18 @@ jobs:
         run: npm install -g @ionic/cli
       - name: Build Ionic projects
         run: ionic build
+      - name: Install AWS CDK
+        run: npm install -g aws-cdk
+      - name: Deploy backend with CDK
+        run: |
+          cd backend
+          cdk deploy --all --require-approval never
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.ACCESSKEY }}
           aws-secret-access-key: ${{ secrets.SECRETACCESSKEY }}
           aws-region: eu-north-1
-      # - name: Install AWS CDK
-      #  run: npm install -g aws-cdk
-      #- name: Deploy backend with CDK
-      #  run: |
-      #    cd backend
-      #    cdk deploy --all --require-approval never
       - name: Deploy frontend to S3
         run: |
           aws s3 sync ./hosting s3://atra-front --delete --exact-timestamps
