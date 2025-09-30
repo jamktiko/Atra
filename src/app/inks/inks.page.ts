@@ -11,7 +11,7 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
-  IonRouterLink,
+  IonModal,
 } from '@ionic/angular/standalone';
 import { Tiina, userInks } from 'src/temporarydata';
 import { PublicInk, User, UserInk } from 'src/interface';
@@ -25,14 +25,16 @@ import { PublicInk, User, UserInk } from 'src/interface';
     IonContent,
     CommonModule,
     FormsModule,
-    IonButton,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonSearchbar,
+    IonModal,
   ],
 })
 export class InksPage implements OnInit {
+  isModalOpen: boolean = false;
+  selectedInk: any = null;
   // ink: UserInk | null = null;
   userInks: UserInk[] = userInks;
   //Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa feikkidata
@@ -41,6 +43,15 @@ export class InksPage implements OnInit {
   // @ViewChild('ink') ink!: PublicInk | null;
 
   constructor(private apiService: ApiService) {}
+
+  chooseInk(isOpen: boolean, ink: any) {
+    this.isModalOpen = isOpen;
+    this.selectedInk = ink;
+  }
+
+  setClosed(isOpen: boolean) {
+    this.isModalOpen = false;
+  }
 
   ngOnInit() {
     //TOISTAISEKSI KOMMENTOITU POIS, hakee renderöintivaiheessa musteet apiservicen kautta

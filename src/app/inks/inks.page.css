@@ -1,9 +1,19 @@
-.box {
-  background-color: rgb(64, 68, 129);
-  padding: 0.5em;
-  margin: 1em;
+ion-modal#example-modal .wrapper {
+  margin-bottom: 10px;
 }
 
-.button {
-  background-color: black;
+ion-modal#example-modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+.box {
+  background: rgb(0, 0, 93);
 }

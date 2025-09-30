@@ -9,26 +9,53 @@
   <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
   <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
 
-  <ion-button tab="inks/publiclibrary" href="/tabs/inks/publiclibrary"
-    >Ink catalog</ion-button
-  >
-  <ion-button tab="inks/publiclibrary" href="/tabs/inks">Your inks</ion-button>
+  <button class="bg-white mx-2">
+    <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog </a>
+  </button>
+
+  <button class="bg-white mx-2">
+    <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
+  </button>
+
 
   <h2>Find all your inks here</h2>
 
   <p>Or access application ink catalog at Public Library</p>
+  <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+  <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"></ion-searchbar>
 
-  <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
+  <button class="bg-black text-xl">
+    <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
+  </button>
 
-  <ion-button tab="inks/addnewink" href="/tabs/inks/addnewink">
-    Add new
-  </ion-button>
+  @for (ink of userInks; track ink.name) {
 
-  <!-- @for (ink of userInk; track ink.productname) {
   <div class="box">
-    <h3>{{ink.productname}}</h3>
-    <img src="{{ink.imageUrl}}" />
-    <p>{{ink.color}}</p>
+    <h3>{{ink.name}}</h3>
+
+    <img src="{{ink.imageUrl}}" width="20%" />
+    <p>{{ink.batchnumber}}</p>
+    <button> <a (click)="chooseInk(true, ink)">Open </a></button>
   </div>
-  } -->
+  }
 </ion-content>
+
+
+<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+  <ng-template>
+
+    <!--Tähän saa Milja tehtyä tyylit sekä elementteihin yksittäisenä-->
+    <div class="wrapper">
+
+      <img src="{{selectedInk.imageUrl}}" width="20%" />
+      <h1>{{selectedInk.name}}</h1>
+      <p>Colour: (fetched from database later!) </p>
+      <p>Batchnumber: {{selectedInk.batchnumber}}</p>
+      <p>Opened: {{selectedInk.openedAt}}</p>
+      <p>Expires: {{selectedInk.expiresAt}}</p>
+      <button class="bg-blue-600"> <a (click)="setClosed(false)">Close</a></button>
+
+    </div>
+
+  </ng-template>
+</ion-modal>
