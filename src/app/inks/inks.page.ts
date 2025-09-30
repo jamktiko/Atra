@@ -11,6 +11,7 @@ import {
   IonTitle,
   IonToolbar,
   IonButton,
+  IonRouterLink,
 } from '@ionic/angular/standalone';
 import { Tiina, userInks } from 'src/temporarydata';
 import { PublicInk, User, UserInk } from 'src/interface';

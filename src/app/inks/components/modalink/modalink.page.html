@@ -9,38 +9,44 @@
   <!--If-lohko hallinnoimassa näkymää: jos musteita ei valittu, näytetään else-osio -->
   @if (inksToReview.length > 0) {
 
-  <!-- Käy inkstoreview-taulukon eli kaikki valitut musteet läpi for-loopilla-->
-  @for (ink of inksToReview; let i = $index; track i) {
-  <div class="box">
+  <!--MILJA älä koske scrollable :)-->
+  <div class="scrollable">
+    <!-- Käy inkstoreview-taulukon eli kaikki valitut musteet läpi for-loopilla-->
 
-    <p>{{ink.product_name}} - {{ink.size}}
-      {{ink.manufacturer}} - {{ink.color}} </p>
+    @for (ink of inksToReview; let i = $index; track i) {
+    <div class="bg-blue-800 my-2">
 
-    <img src="{{ink.imageUrl}}" width="25%" />
+      <p>{{ink.product_name}} - {{ink.size}}
+        {{ink.manufacturer}} - {{ink.color}} </p>
 
-    <!--FormControlissa määritelty ink.batchnumber alustetaan tässä vaiheessa ngModelilla template form-tyylisesti,
+      <img src="{{ink.imageUrl}}" width="25%" />
+
+      <!--FormControlissa määritelty ink.batchnumber alustetaan tässä vaiheessa ngModelilla template form-tyylisesti,
     eli muuttujan kaksisuuntainen sitominen. Tieto päivittyy sekä modalink että addnewink-komponentilla.
     Komponenttien välillä voi liikkua, musteita voi poistaa ja lisätä, ja jo lisätyt batchnumberit jäävät paikalleen,
     vaikka käyttäjä muuttaa valikoimaa kesken-->
-    <input type="text" placeholder="Insert batchnumber" [(ngModel)]="ink.batchnumber" required #batchnumber="ngModel" />
+      <input class="bg-blue-400 mx-2" type="text" placeholder="Insert batchnumber" [(ngModel)]="ink.batchnumber"
+        required #batchnumber="ngModel" />
 
-    <!-- Tässä käytetään FormControlia varmistamaan Validatorsin avulla, että batchnumber on täytetty
+      <!-- Tässä käytetään FormControlia varmistamaan Validatorsin avulla, että batchnumber on täytetty
      Huomaa addnewink.ts, jossa batchnumber: new FormControl('', Validators.required) => täytyy olla täytetty, jotta
      Validators katsoo, että ok. Angular tekee tämän controlstaten avulla ja reagoi reaktiivisesti -->
-    @if (batchnumber.invalid && batchnumber.touched) {
-    <div>
-      <p>Batch number is required.</p>
+      @if (batchnumber.invalid && batchnumber.touched) {
+      <div>
+        <p>Batch number is required.</p>
+      </div>
+      }
+
+      <button class="bg-blue-400 mx-2" (click)="sendDelete(ink)">Delete</button>
     </div>
+
+
     }
-    <button class="btn" (click)="sendDelete(ink)">Delete</button>
   </div>
-
-
-  }
   <div class="box2">
     <h3>Got everything you need?</h3>
-    <ion-button color="danger" (click)="sendCancel()">No, go back</ion-button>
-    <ion-button (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</ion-button>
+    <button class="bg-blue-400 mx-2" (click)="sendCancel()">No, go back</button>
+    <button class="bg-blue-400 mx-2" (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</button>
   </div>
   }
 
@@ -50,7 +56,7 @@
   </div>
   <div class="box2">
     <h3>At least one ink has to be chosen to proceed. </h3>
-    <ion-button color="danger" (click)="sendCancel()">Go back</ion-button>
+    <button class="bg-white mx-2" (click)="sendCancel()">Go back</button>
     <!-- <ion-button (click)="sendConfirm()" [disabled]="true">Continue</ion-button> -->
 
   </div>
