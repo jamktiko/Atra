@@ -25,7 +25,11 @@ jobs:
       - name: Deploy backend with CDK
         run: |
           cd backend
-          cdk deploy --all --require-approval never
+          cdk deploy vpc --require-approval never
+          cdk deploy database --require-approval never
+          cdk deploy frontend --require-approval never
+          cdk deploy cognito --require-approval never
+          cdk deploy api --require-approval never
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:
