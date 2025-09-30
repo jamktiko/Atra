@@ -22,16 +22,28 @@ import { IonSearchbar } from '@ionic/angular/standalone';
     IonHeader,
     IonTitle,
     IonToolbar,
-    IonButton,
     CommonModule,
     FormsModule,
     IonSearchbar,
   ],
 })
 export class CustomersPage implements OnInit {
+  searchItem: string = '';
   allcustomers: Customer[] = customers;
 
   constructor() {}
+
+  filteredCustomers() {
+    const search = this.searchItem!.toLowerCase();
+
+    return this.allcustomers.filter(
+      (customer) =>
+        customer.firstname.toLowerCase().includes(search) ||
+        customer.lastname.toLowerCase().includes(search) ||
+        customer.email.toLocaleLowerCase().includes(search) ||
+        customer.phonenumber.includes(search)
+    );
+  }
 
   ngOnInit() {}
 }
