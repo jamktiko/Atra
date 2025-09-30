@@ -52,4 +52,6 @@ describe('InksPage', () => {
     const searchbar = compiled.querySelector('ion-searchbar');
     expect(searchbar).toBeTruthy();
   });
+
+  //TODO: test if the list of inks is rendered correctly
 });
