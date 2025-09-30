@@ -46,7 +46,10 @@ describe('InksPage', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  //test if the search bar is rendered correctly
+  it('should render a search bar', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const searchbar = compiled.querySelector('ion-searchbar');
+    expect(searchbar).toBeTruthy();
   });
 });
