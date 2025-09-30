@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { ComponentFixture } from '@angular/core/testing';
 
 describe('AppComponent', () => {
-  //Declare testbed variable
+  //Declare testbed variables
   let fixture: ComponentFixture<AppComponent>;
 
   beforeEach(async () => {
@@ -22,5 +22,12 @@ describe('AppComponent', () => {
   it('should create the app', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
+  });
+
+  //test is to check if the ion-router-outlet is rendered
+  it('should render ion-router-outlet', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const title = compiled.querySelector('ion-router-outlet');
+    expect(title).toBeTruthy();
   });
 });
