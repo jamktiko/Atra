@@ -24,6 +24,11 @@ jobs:
         run: |
           npm install -g aws-cdk
           npm ci  # or yarn install
+      - name: Install CDK dependencies
+        run: |
+          cd backend
+          npm install aws-cdk-lib constructs
+          npm install --save-dev @types/node
       - name: CDK Destroy
         run: |
           cd backend
