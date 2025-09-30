@@ -27,7 +27,7 @@ import { publicInks } from 'src/temporarydata';
     IonContent,
     CommonModule,
     FormsModule,
-    IonButton,
+
     IonSearchbar,
     IonSearchbar,
     ModalinkPage,

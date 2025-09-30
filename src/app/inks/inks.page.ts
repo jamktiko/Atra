@@ -33,6 +33,7 @@ import { PublicInk, User, UserInk } from 'src/interface';
   ],
 })
 export class InksPage implements OnInit {
+  searchItem: string = '';
   isModalOpen: boolean = false;
   selectedInk: any = null;
   // ink: UserInk | null = null;
@@ -51,6 +52,15 @@ export class InksPage implements OnInit {
 
   setClosed(isOpen: boolean) {
     this.isModalOpen = false;
+  }
+
+  filteredSearch() {
+    const search = this.searchItem!.toLowerCase();
+
+    return this.userInks.filter((ink) =>
+      //päivitetään apiservicen vaiheessa myös publicinkistä tulevia attribuutteja
+      ink.name.toLowerCase().includes(search)
+    );
   }
 
   ngOnInit() {
