@@ -8,10 +8,12 @@ export class CognitoStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const userPool = this.createUserPool();
-    const userPoolClient = this.createUserPoolClient(userPool);
-
     const ssm = new Parameters(this);
+    const frontendDomain = ssm.distributionDomainName;
+
+    const userPool = this.createUserPool();
+    const userPoolClient = this.createUserPoolClient(userPool, frontendDomain);
+
     ssm.cognitoUserPoolId = userPool.userPoolId;
     ssm.cognitoClientId = userPoolClient.userPoolClientId;
   }
@@ -46,7 +48,7 @@ export class CognitoStack extends Stack {
   // client on se, joka hoitaa kirjautumisen ja tokenien hallinnan
   // clientin kautta käyttäjät voi kirjautua sisään ja saada JWT tokenit,
   // joita API GW voi sitten validoida
-  createUserPoolClient(userPool: cognito.UserPool) {
+  createUserPoolClient(userPool: cognito.UserPool, frontendDomain: string) {
     const client = userPool.addClient('cognitoClient', {
       userPoolClientName: 'AtraAppClient',
       // salli nämä auth flowt = tavat kirjautua:
@@ -70,8 +72,8 @@ export class CognitoStack extends Stack {
         // callbackUrl: mihin Cognito palauttaa käyttäjän kirjautumisen jälkeen
         // logoutUrl: mihin käyttäjä ohjataan uloskirjautumisen jälkeen
         // !!!!!!! REPLACE WITH CLOUDFRONT DOMAIN !!!!!!!!!!!!
-        callbackUrls: ['https://OUR_CLOUDFRONT_DOMAIN/*'],
-        logoutUrls: ['https://OUR_CLOUDFRONT_DOMAIN/logout'],
+        callbackUrls: [`https://${frontendDomain}/*`],
+        logoutUrls: [`https://${frontendDomain}/logout`],
       },
     });
     return client;

@@ -1,3 +1,3 @@
 export * from './utils';
-export * from './aws';
+export * from './db';
 export * as aws from './aws';
