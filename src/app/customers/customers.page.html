@@ -7,15 +7,16 @@
 
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
-  <div class="box2">
+  <div class="bg-blue-800 my-2">
     <h2>Customers</h2>
-    <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
+    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+    <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"></ion-searchbar>
 
-    <ion-button tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </ion-button>
+    <button> <a tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </a> </button>
   </div><!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
 
   @for (customer of allcustomers; track customer.firstname) {
-  <div class="box">
+  <div class="bg-blue-800 my-2">
     <h3>{{customer.lastname}}, {{customer.firstname}}</h3>
     <p>{{customer.email}}</p>
   </div>

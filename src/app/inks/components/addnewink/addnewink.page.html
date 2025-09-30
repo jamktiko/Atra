@@ -10,26 +10,31 @@
     <h1>Adding a new ink to your library</h1>
 
     <h3>Start by searching for inks</h3>
-
-    <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+    <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
+      [(ngModel)]="searchItem" />
 
   </div>
 
   <!--LUODAAN TÄSTÄ VISUAL SCROLLING css sijaan! renders when scrolled-->
   <!--Käy musteet läpi for-loopissa käyttämällä filteredInks()-funktiota, eli vain hakutulosta vastaavat -->
+  <!-- Milja! Älä koske tähän kohtaan :)-->
   <div class="scrollable">
 
     @for (ink of filteredInks(); track ink.id) {
-    <div class="box">
+    <!--Tätä voi muokata-->
+    <div class="bg-blue-800 my-2">
       <img src="{{ink.imageUrl}}" width="20%" />
-      {{ink.product_name}} - <small>{{ink.manufacturer}} - {{ink.color}}
-      </small><input class="btn" type="button" value="Choose ink" (click)="chooseInk(ink)">
+
+      {{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}}
+
+      <input class="bg-blue-400 mx-2" type="button" value="Choose ink" (click)="chooseInk(ink)">
     </div>
     }
 
   </div>
 
-  <div class="box3">
+  <div>
     @if (getChosenInks().length > 0 ) {
     <div>
       <ion-badge>{{getChosenInks().length}}</ion-badge>
@@ -37,8 +42,11 @@
     </div>
     }
 
-    <ion-button tab="tabs/inks" href="tabs/inks" color="danger">Cancel</ion-button>
-    <ion-button (click)="review()" [disabled]="getChosenInks().length < 1">Continue</ion-button>
+    <button class="bg-blue-800 mx-2">
+      <a tab="tabs/inks" href="tabs/inks">Cancel</a>
+    </button>
+
+    <button class="bg-blue-800 mx-2" (click)="review()" [disabled]="getChosenInks().length < 1">Continue</button>
   </div>
 
 </ion-content>

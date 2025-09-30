@@ -9,16 +9,24 @@
   <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
   <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
 
-  <ion-button tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog</ion-button>
-  <ion-button tab="inks/publiclibrary" href="/tabs/inks">Your inks</ion-button>
+  <button class="bg-white mx-2">
+    <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog </a>
+  </button>
+
+  <button class="bg-white mx-2">
+    <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
+  </button>
+
 
   <h2>Find all your inks here</h2>
 
   <p>Or access application ink catalog at Public Library</p>
+  <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+  <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"></ion-searchbar>
 
-  <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
-
-  <ion-button tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new </ion-button>
+  <button>
+    <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
+  </button>
 
   <!-- @for (ink of userInk; track ink.productname) {
   <div class="box">
