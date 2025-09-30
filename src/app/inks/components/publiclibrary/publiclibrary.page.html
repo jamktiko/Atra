@@ -20,13 +20,33 @@
   <h2>Ink catalog</h2>
   <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
 
-  <!--Musteiden läpikäynti, kommentoitu pois toistaiseksi-->
-  <!-- @for (ink of allInks; track ink.product_name) {
-  <div>
+  <!-- Musteiden läpikäynti, kommentoitu pois toistaiseksi-->
+  @for (ink of filteredSearch(); track ink.id) {
+  <div class="box">
     <h3>{{ink.product_name}}</h3>
-    <img src="{{ink.imageUrl}}" />
-  </div>
-  } -->
-  <!--temporarydata -->
+    <img src="{{ink.imageUrl}}" width="20%" />
 
+    <button> <a (click)="chooseInk(true, ink)">Open </a></button>
+  </div>
+  }
 </ion-content>
+
+
+<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+  <ng-template>
+
+    <!--Tähän saa Milja tehtyä tyylit sekä elementteihin yksittäisenä-->
+    <div class="wrapper">
+
+      <img src="{{selectedInk.imageUrl}}" width="20%" />
+      <h1>{{selectedInk.name}}</h1>
+      <p>Colour: (fetched from database later!) </p>
+      <p>Batchnumber: {{selectedInk.batchnumber}}</p>
+      <p>Opened: {{selectedInk.openedAt}}</p>
+      <p>Expires: {{selectedInk.expiresAt}}</p>
+      <button class="bg-blue-600"> <a (click)="setClosed(false)">Close</a></button>
+
+    </div>
+
+  </ng-template>
+</ion-modal>
