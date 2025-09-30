@@ -23,6 +23,7 @@ export class FrontendStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY, // tuotantoon ei
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     });
+
     // CloudFront distribution to serve the frontend
     this.distribution = new cloudfront.Distribution(this, 'Distribution', {
       defaultBehavior: {
