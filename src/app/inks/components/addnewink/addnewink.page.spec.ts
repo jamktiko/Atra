@@ -33,4 +33,24 @@ describe('AddnewinkPage', () => {
     const inkElements = compiled.querySelectorAll(inkclass);
     expect(inkElements.length).toBeGreaterThan(0);
   });
+
+  //test if adding an ink is successful
+  //inkGroup holds the form group for the new inks,
+  //use chooseInk() to add an ink to the form array
+  //use getChosenInks() to get the array of chosen inks, check length
+  it('should add an ink to chosenInks', () => {
+    const initialLength = component.getChosenInks().length;
+    const testInk = {
+      id: 99,
+      product_name: 'Test Ink',
+      manufacturer: 'Test Co.',
+      color: 'Blue',
+      recalled: false,
+      imageUrl: 'test.jpg',
+      size: '30ml',
+    };
+    component.chooseInk(testInk);
+    const newLength = component.getChosenInks().length;
+    expect(newLength).toBe(initialLength + 1);
+  });
 });
