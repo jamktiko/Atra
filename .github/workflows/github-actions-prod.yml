@@ -20,6 +20,10 @@ jobs:
         run: npm install -g @ionic/cli
       - name: Build Ionic projects
         run: ionic build
+      - name: Install AWS CDK dependencies
+        run: |
+          cd backend
+          npm install
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:
