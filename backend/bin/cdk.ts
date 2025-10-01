@@ -6,6 +6,7 @@ import { VpcStack } from '../lib/vpc-stack';
 import { DatabaseStack } from '../lib/database-stack';
 import { CognitoStack } from '../lib/cognito-stack';
 import { ApiStack } from '../lib/api-stack';
+import { FrontendStack } from '../lib/frontend-stack';
 
 const { CDK_DEFAULT_ACCOUNT } = process.env;
 const env = { region: 'eu-north-1', account: CDK_DEFAULT_ACCOUNT };
@@ -27,4 +28,8 @@ new ApiStack(app, 'api', {
   env: env,
   vpc: vpc.vpc,
   rdsSecretName: 'AtraRdsSecret',
+});
+
+new FrontendStack(app, 'frontend', {
+  env: env,
 });
