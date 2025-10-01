@@ -1,5 +1,14 @@
-.atra {
-  color: rgb(237, 247, 255);
-  text-align: center;
-  align-content: center;
+ion-tab-bar {
+  --color: oklch(55.4% 0.046 257.417); /* Default tab button text/icon color */
+  --color-selected: oklch(97% 0 0); /* Selected tab color */
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  min-height: 7%;
+}
+
+ion-tab-bar ion-icon {
+  width: 50%;
+  height: 50%;
 }
