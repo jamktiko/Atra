@@ -7,6 +7,7 @@ import {
   IonTitle,
   IonButton,
   IonToolbar,
+  IonModal,
 } from '@ionic/angular/standalone';
 import { Customer } from 'src/interface';
 import { customers } from 'src/temporarydata';
@@ -22,16 +23,40 @@ import { IonSearchbar } from '@ionic/angular/standalone';
     IonHeader,
     IonTitle,
     IonToolbar,
-    IonButton,
     CommonModule,
     FormsModule,
     IonSearchbar,
+    IonModal,
   ],
 })
 export class CustomersPage implements OnInit {
+  searchItem: string = '';
   allcustomers: Customer[] = customers;
+  chosenCustomer: any;
+  isModalOpen: boolean = false;
 
   constructor() {}
+
+  filteredCustomers() {
+    const search = this.searchItem!.toLowerCase();
+
+    return this.allcustomers.filter(
+      (customer) =>
+        customer.firstname.toLowerCase().includes(search) ||
+        customer.lastname.toLowerCase().includes(search) ||
+        customer.email.toLocaleLowerCase().includes(search) ||
+        customer.phonenumber.includes(search)
+    );
+  }
+
+  chooseCustomer(isOpen: boolean, customer: any) {
+    this.isModalOpen = isOpen;
+    this.chosenCustomer = customer;
+  }
+
+  setClosed(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
 
   ngOnInit() {}
 }

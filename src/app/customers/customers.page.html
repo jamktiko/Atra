@@ -10,16 +10,38 @@
   <div class="bg-blue-800 my-2">
     <h2>Customers</h2>
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-    <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"></ion-searchbar>
+    <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
+      [(ngModel)]="searchItem"></ion-searchbar>
 
     <button> <a tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </a> </button>
   </div><!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
 
-  @for (customer of allcustomers; track customer.firstname) {
+  @for (customer of filteredCustomers(); track customer.firstname) {
   <div class="bg-blue-800 my-2">
     <h3>{{customer.lastname}}, {{customer.firstname}}</h3>
     <p>{{customer.email}}</p>
+
+    <button> <a (click)="chooseCustomer(true, customer)">Open </a></button>
   </div>
   }
-
 </ion-content>
+
+
+<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+  <ng-template>
+
+    <!--Tähän saa Milja tehtyä tyylit sekä elementteihin yksittäisenä-->
+    <div class="wrapper">
+
+      <h1>{{chosenCustomer.lastname}}, {{chosenCustomer.firstname}}</h1>
+      <p>Email: {{chosenCustomer.email}}</p>
+      <p>Phonenumber: {{chosenCustomer.phonenumber}}</p>
+
+      <p>Related entries:</p>
+      <li>List here!</li>
+      <button class="bg-blue-600"> <a (click)="setClosed(false)">Close</a></button>
+
+    </div>
+
+  </ng-template>
+</ion-modal>

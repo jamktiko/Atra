@@ -22,13 +22,14 @@
 
   <p>Or access application ink catalog at Public Library</p>
   <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-  <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"></ion-searchbar>
+  <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
+    [(ngModel)]="searchItem"></ion-searchbar>
 
   <button class="bg-black text-xl">
     <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
   </button>
 
-  @for (ink of userInks; track ink.name) {
+  @for (ink of filteredSearch(); track ink.name) {
 
   <div class="box">
     <h3>{{ink.name}}</h3>
