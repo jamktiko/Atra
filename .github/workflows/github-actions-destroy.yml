@@ -19,7 +19,7 @@ jobs:
       - name: Delete S3 objects
         continue-on-error: true
         run: |
-          aws s3 rm s3://atra-front --recursive
+          aws s3 rm s3://atra-frontend-bucket --recursive
       - name: Install dependencies
         run: |
           npm install -g aws-cdk

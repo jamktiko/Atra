@@ -35,8 +35,7 @@ describe('AddnewinkPage', () => {
   });
 
   //test if adding an ink is successful
-  //inkGroup holds the form group for the new inks,
-  //use chooseInk() to add an ink to the form array
+  //inkGroup holds the form group for the new inks, use chooseInk() to add an ink to the form array,
   //use getChosenInks() to get the array of chosen inks, check length
   it('should add an ink to chosenInks', () => {
     const initialLength = component.getChosenInks().length;
