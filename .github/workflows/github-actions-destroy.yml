@@ -16,6 +16,13 @@ jobs:
           aws-access-key-id: ${{ secrets.ACCESSKEY }}
           aws-secret-access-key: ${{ secrets.SECRETACCESSKEY}}
           aws-region: ${{ env.AWS_REGION }}
+      #- name: Destroy Cloudwatch log groups
+      #  run: |
+      #    LOG_GROUPS=$(aws logs describe-log-groups --query "logGroups[].logGroupName" --output text)
+      #    for LOG_GROUP in $LOG_GROUPS; do
+      #      echo "Deleting $LOG_GROUP"
+      #      aws logs delete-log-group --log-group-name "$LOG_GROUP"
+      #    done
       - name: Delete S3 objects
         continue-on-error: true
         run: |
