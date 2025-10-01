@@ -18,7 +18,7 @@
 
 
   <h2>Ink catalog</h2>
-  <ion-searchbar animated="true" placeholder="Search"></ion-searchbar>
+  <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
   <!-- Musteiden läpikäynti, kommentoitu pois toistaiseksi-->
   @for (ink of filteredSearch(); track ink.id) {
