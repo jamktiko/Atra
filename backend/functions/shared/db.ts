@@ -21,6 +21,8 @@ export async function getPool() {
     password: dbSecret.password,
     port: dbSecret.port,
     ssl: { rejectUnauthorized: false },
+    // voi lisätä monta CREATE TABLE tms.
+    multipleStatements: true,
   });
   return pool;
 }

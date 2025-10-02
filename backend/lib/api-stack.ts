@@ -127,7 +127,6 @@ export class ApiStack extends Stack {
     //.build();
 
     const migrationsFn = new LambdaBuilder(this, 'migrations')
-      .addNodeModules(['mysql2', '@aws-sdk/client-secrets-manager'])
       .setDescription('Run DB migrations and seed test data')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
