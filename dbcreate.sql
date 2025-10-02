@@ -22,7 +22,6 @@ USE `atratestdb` ;
 CREATE TABLE IF NOT EXISTS `atratestdb`.`User` (
   `user_id` VARCHAR(255) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(255) NOT NULL,
   `first_name` VARCHAR(25) NOT NULL,
   `last_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`user_id`),
@@ -151,7 +150,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 USE atratestdb;
 
-INSERT INTO User (user_id, email, password, first_name, last_name) VALUES ('f08c996c-f081-7001-76e0-bfe9e4956901', 'example@email.com','password', 'Pekka', 'Pekkanen');
+INSERT INTO User (user_id, email, first_name, last_name) VALUES ('f08c996c-f081-7001-76e0-bfe9e4956901', 'example@email.com', 'Pekka', 'Pekkanen');
 
 INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('yes@email.com', 'Aku', 'Asiakas', 'f08c996c-f081-7001-76e0-bfe9e4956901');
 INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('maybe@email.com', 'Anneli', 'Asiakaspalvelija', 'f08c996c-f081-7001-76e0-bfe9e4956901');

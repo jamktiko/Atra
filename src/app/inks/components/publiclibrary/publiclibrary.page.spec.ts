@@ -48,4 +48,9 @@ describe('PubliclibraryPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  //test if at least one ink is loaded
+  it('should have at least one ink', () => {
+    expect(component.allInks.length).toBeGreaterThan(0);
+  });
 });
