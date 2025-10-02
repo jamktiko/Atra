@@ -20,7 +20,7 @@ export async function getPool() {
     database: dbSecret.dbname,
     password: dbSecret.password,
     port: dbSecret.port,
-    ssl: { rejectUnauthorized: true },
+    ssl: { rejectUnauthorized: false },
   });
   return pool;
 }
