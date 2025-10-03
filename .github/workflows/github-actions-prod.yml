@@ -24,9 +24,6 @@ jobs:
         run: |
           cd backend
           npm install
-      #- name: Run CDK bootstrap
-      #  run: |
-      #    cdk bootstrap
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:

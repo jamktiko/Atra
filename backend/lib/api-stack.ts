@@ -9,6 +9,7 @@ import { HttpJwtAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2-authorizers';
 import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations';
 import { Construct } from 'constructs';
 import { LambdaBuilder, Parameters } from '../helpers';
+import * as cdk from 'aws-cdk-lib';
 
 // Props välitetään stackin konstruktoriin.
 // Interface määrittelee vaaditut propsit.
@@ -112,6 +113,32 @@ export class ApiStack extends Stack {
       path: '/calls',
       methods: [apigw2.HttpMethod.ANY],
       integration,
+    });
+
+    //const migrationsFn = new LambdaBuilder(this, 'migrations')
+    //.addNodeModules(['mysql2', '@aws-sdk/client-secrets-manager'])
+    //.setDescription('Run DB migrations and seed test data')
+    //.setEnv({
+    //  RDS_SECRET_NAME: this.rdsSecretName,
+    //  RDS_PROXY_HOST: this.rdsProxyEndpoint,
+    //})
+    //.allowSecretsManager()
+    //.connectVPC(this.vpc, this.lambdaSecurityGroup)
+    //.build();
+
+    const migrationsFn = new LambdaBuilder(this, 'migrations')
+      .setDescription('Run DB migrations and seed test data')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    new cdk.CfnOutput(this, 'MigrationsFnArn', {
+      value: migrationsFn.functionArn,
+      exportName: 'MigrationsFnArn',
     });
 
     /* Tänne loput reitit */

@@ -14,4 +14,12 @@ describe('CustomersPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // test if button to add new customer is present
+  it('should have a button to choose customer', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const button = compiled.querySelector('button');
+    expect(button).toBeTruthy();
+    expect(button?.textContent).toContain('Add new');
+  });
 });

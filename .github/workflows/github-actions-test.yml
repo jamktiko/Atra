@@ -1,0 +1,38 @@
+name: Test Workflow
+run-name: ${{ github.actor }} is testing a workflow
+on:
+  workflow_dispatch:
+jobs:
+  cleanup-test:
+    runs-on: ubuntu-latest
+    env:
+      AWS_REGION: eu-north-1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.ACCESSKEY }}
+          aws-secret-access-key: ${{ secrets.SECRETACCESSKEY}}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Test Cognito & CloudWatch cleanup (dry run)
+        run: |
+          echo "=== CloudWatch log groups ==="
+          LOG_GROUPS=$(aws logs describe-log-groups --query "logGroups[].logGroupName" --output text)
+          for LOG_GROUP in $LOG_GROUPS; do
+          echo "[DRY RUN] Would delete log group: $LOG_GROUP"
+          done
+
+          echo "=== Cognito user pool ==="
+          USER_POOLS=$(aws cognito-idp list-user-pools --max-results 10 --query "UserPools[].Id" --output text)
+          for POOL_ID in $USER_POOLS; do
+          echo "[DRY RUN] Processing user pool: $POOL_ID"
+
+          USERS=$(aws cognito-idp list-users --user-pool-id $POOL_ID --query "Users[].Username" --output text)
+          for USERNAME in $USERS; do
+          echo "[DRY RUN] Would delete user: $USERNAME from pool: $POOL_ID"
+          done
+
+          echo "[DRY RUN] Would delete user pool: $POOL_ID"
+          done
