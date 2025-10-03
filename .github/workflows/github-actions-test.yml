@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} is testing a workflow
 on:
   workflow_dispatch:
 jobs:
-  destroy:
+  cleanup-test:
     runs-on: ubuntu-latest
     env:
       AWS_REGION: eu-north-1
