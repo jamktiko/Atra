@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { User } from 'src/interface';
 import { Tiina } from 'src/temporarydata';
-import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -26,19 +26,19 @@ import { ApiService } from '../services/api.service';
   ],
 })
 export class MainpagePage implements OnInit {
+  /**
+   * Hakee käyttäjätiedot myöhemmin AuthServicen avulla tietokannasta, mutta tässä vaiheessa
+   * kovakoodattu käyttäjädata temporarydata.ts-tiedostosta
+   */
   user: User = Tiina;
-  data!: any;
-  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {
-    // this.apiService.getTables().subscribe({
-    //   next: (data) => {
-    //     this.data = data;
-    //     console.log(data);
-    //   },
-    //   error: (err) => {
-    //     console.error('Jodain meni bieleen: ', err);
-    //   },
-    // });
-  }
+  /**
+   * Tervehdys, joka käyttäjälle generoidaan etusivulle. Ottaa src-kansiossa olevan greet.js-tiedoston
+   * funktion ja toteuttaa sen greetings.json välittämällä datalla
+   */
+  greeting: string = '';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {}
 }

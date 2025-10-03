@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <h2>Hey, {{user.firstname}}</h2>
+  <h2>TÄMÄ ON USER LIBRARY</h2>
   <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
   <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
 
@@ -17,10 +17,8 @@
     <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
   </button>
 
+  <p>We keep all your inks in this library.</p>
 
-  <h2>Find all your inks here</h2>
-
-  <p>Or access application ink catalog at Public Library</p>
   <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
   <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
     [(ngModel)]="searchItem"></ion-searchbar>
@@ -29,6 +27,7 @@
     <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
   </button>
 
+  <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
   @for (ink of filteredSearch(); track ink.name) {
 
   <div class="box">
@@ -45,7 +44,8 @@
 <ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
   <ng-template>
 
-    <!--Tähän saa Milja tehtyä tyylit sekä elementteihin yksittäisenä-->
+    <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
+    jotka voi ottaa pois -->
     <div class="wrapper">
 
       <img src="{{selectedInk.imageUrl}}" width="20%" />

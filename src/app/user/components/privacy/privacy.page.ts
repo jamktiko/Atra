@@ -8,7 +8,7 @@ import { IonContent, IonButton } from '@ionic/angular/standalone';
   templateUrl: './privacy.page.html',
   styleUrls: ['./privacy.page.scss'],
   standalone: true,
-  imports: [IonContent, IonButton, CommonModule, FormsModule],
+  imports: [IonContent, CommonModule, FormsModule],
 })
 export class PrivacyPage implements OnInit {
   constructor() {}

@@ -1,3 +1,9 @@
+/**
+ * Tabs-komponentti toimii Ionicin tabs-reitityksen ytimenä
+ * Angular-routerissa otetaan sisälle tabs.routes.ts, jonka kautta sovelluksen reititys rakennetaan
+ * Tärkeää, että tämän komponentin sisältöihin ei koske muut kuin käyttöliittymädevaajat!
+ */
+
 import { Component, EnvironmentInjector, inject } from '@angular/core';
 import {
   IonTabs,

@@ -1,6 +1,6 @@
 # README file for Atra-frontend implementation
 
-This README-file will give step-by-step instructions on how to set up Angular/Ionic frontend-environment. When installations are through, clone git repository to your computer to run locally.
+This README-file will give step-by-step instructions on how to set up Angular/Ionic frontend-environment.
 
 ## Copy repository locally
 
@@ -12,7 +12,9 @@ Before downloading Ionic and Angular, update Node.js (requires v.20.19.0 or newe
 
 - node --version
 
-If less than verison 20, you need to update. Go to https://nodejs.org/en/download/package-manager/all#nvm and download install script. Run the nvm-setup.exe-file and coplete installation. After, check for version and verify installation with
+### NOTE: This is not necessary if npm install goes through without nvm! Try with - npm install -g npm
+
+If less than version 20, you need to update. Go to https://nodejs.org/en/download/package-manager/all#nvm and download install script. Run the nvm-setup.exe-file and coplete installation. After, check for version and verify installation with
 
 - nvm -v
 
