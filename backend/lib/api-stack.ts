@@ -56,9 +56,13 @@ export class ApiStack extends Stack {
       ssm.cognitoClientId,
       frontendDomain
     );
-    this.customerRoute();
+
     // ei tarpeellinen tässä vaiheessa
     this.migrationsRoute();
+
+    this.customerRoute();
+    this.publicInkRoute();
+    this.userInkRoute();
   }
 
   private createApi(
@@ -136,6 +140,64 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/customer/{id}',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    /* Tänne loput reitit */
+  }
+
+  private publicInkRoute() {
+    const fn = new LambdaBuilder(this, 'api-publicInk-calls')
+      .setDescription('CRUD operations for getting public ink(s)')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /publicInk kutsutaan
+    const integration = new HttpLambdaIntegration('publicInkCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/publicInk',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/publicInk/{id}',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    /* Tänne loput reitit */
+  }
+
+  private userInkRoute() {
+    const fn = new LambdaBuilder(this, 'api-userInk-calls')
+      .setDescription('CRUD operations for managing user ink(s)')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /userInk kutsutaan
+    const integration = new HttpLambdaIntegration('userInkCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/userInk',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/userInk/{id}',
       methods: [apigw2.HttpMethod.ANY],
       integration,
     });
