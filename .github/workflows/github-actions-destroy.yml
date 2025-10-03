@@ -23,6 +23,20 @@ jobs:
       #      echo "Deleting $LOG_GROUP"
       #      aws logs delete-log-group --log-group-name "$LOG_GROUP"
       #    done
+      #- name: Delete Cognito users and user pools
+      #  run: |
+      #    USER_POOLS=$(aws cognito-idp list-user-pools --query "UserPools[].Id" --output text)
+      #    for POOL_ID in $USER_POOLS; do
+      #      echo "Processing user pool: $POOL_ID"
+      #
+      #      USERS=$(aws cognito-idp list-users --user-pool-id $POOL_ID --query "Users[].Username" --output text)
+      #      for USERNAME in $USERS; do
+      #        echo "Deleting user: $USERNAME from pool: $POOL_ID"
+      #        aws cognito-idp admin-delete-user --user-pool-id $POOL_ID --username $USERNAME
+      #      done
+      #      echo "Deleting user pool: $POOL_ID"
+      #      aws cognito-idp delete-user-pool --user-pool-id $POOL_ID
+      #    done
       - name: Delete S3 objects
         continue-on-error: true
         run: |
