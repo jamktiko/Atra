@@ -56,7 +56,9 @@ export class ApiStack extends Stack {
       ssm.cognitoClientId,
       frontendDomain
     );
-    this.callsRoute();
+    this.customerRoute();
+    // ei tarpeellinen tässä vaiheessa
+    this.migrationsRoute();
   }
 
   private createApi(
@@ -92,40 +94,7 @@ export class ApiStack extends Stack {
     return api;
   }
 
-  // Reitti CRUD operaatioille: /calls
-  // Integraationa Lambda funktio
-  // Funktio on rakennettu erillisellä builderilla (helpers kansiossa)
-  private callsRoute() {
-    const fn = new LambdaBuilder(this, 'api-calls')
-      .setDescription('CRUD operations')
-      .setEnv({
-        RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
-      })
-      .allowSecretsManager()
-      .connectVPC(this.vpc, this.lambdaSecurityGroup)
-      .build();
-
-    // API GW kutsuu tätä funktiota kun reittiä /calls kutsutaan
-    const integration = new HttpLambdaIntegration('CallsFn', fn);
-
-    this.api.addRoutes({
-      path: '/calls',
-      methods: [apigw2.HttpMethod.ANY],
-      integration,
-    });
-
-    //const migrationsFn = new LambdaBuilder(this, 'migrations')
-    //.addNodeModules(['mysql2', '@aws-sdk/client-secrets-manager'])
-    //.setDescription('Run DB migrations and seed test data')
-    //.setEnv({
-    //  RDS_SECRET_NAME: this.rdsSecretName,
-    //  RDS_PROXY_HOST: this.rdsProxyEndpoint,
-    //})
-    //.allowSecretsManager()
-    //.connectVPC(this.vpc, this.lambdaSecurityGroup)
-    //.build();
-
+  private migrationsRoute() {
     const migrationsFn = new LambdaBuilder(this, 'migrations')
       .setDescription('Run DB migrations and seed test data')
       .setEnv({
@@ -140,13 +109,37 @@ export class ApiStack extends Stack {
       value: migrationsFn.functionArn,
       exportName: 'MigrationsFnArn',
     });
+  }
+
+  // Reitti CRUD operaatioille
+  // Integraationa Lambda funktio
+  // Funktio on rakennettu erillisellä builderilla (helpers kansiossa)
+  private customerRoute() {
+    const fn = new LambdaBuilder(this, 'api-customer-calls')
+      .setDescription('CRUD operations for customer management')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /customer kutsutaan
+    const integration = new HttpLambdaIntegration('CustomerCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/customer',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/customer/{id}',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
 
     /* Tänne loput reitit */
-
-    //this.api.addRoutes({
-    //path: '/calls/{id}',
-    //methods: [apigw2.HttpMethod.ANY],
-    //integration,
-    //});
   }
 }
