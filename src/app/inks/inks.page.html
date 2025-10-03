@@ -9,11 +9,11 @@
   <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
   <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
 
-  <button class="bg-white mx-2">
+  <button class="p-2 bg-blue-600 mx-4">
     <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog </a>
   </button>
 
-  <button class="bg-white mx-2">
+  <button class="p-2 bg-blue-600 mx-2">
     <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
   </button>
 
@@ -35,7 +35,7 @@
 
     <img src="{{ink.imageUrl}}" width="20%" />
     <p>{{ink.batchnumber}}</p>
-    <button> <a (click)="chooseInk(true, ink)">Open </a></button>
+    <button class="m-2"> <a (click)="chooseInk(true, ink)">Open </a></button>
   </div>
   }
 </ion-content>

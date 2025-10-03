@@ -39,11 +39,13 @@ export class AddnewinkPage implements OnInit {
   publicInks: PublicInk[] = publicInks; //apiservicestä kun on oikeat datat!
   searchItem: string = '';
 
-  //Muuttuja, jonka avulla ylläpidetään app-modalink-komponentin näkyvyyttä
+  /* Muuttuja, jonka avulla ylläpidetään app-modalink-komponentin näkyvyyttä */
   showReview: boolean = false;
 
-  //FormGroup, johon tallennetaan valitut musteet eli chosenInks FormArrayna FormGroupeja
-  // Eli chosenInks: new FormArray([FormGroup: {inkid: value, productname: value...}])
+  /**
+   * FormGroup, johon tallennetaan valitut musteet eli chosenInks FormArraynaFormGroupeja
+   * Eli chosenInks: new FormArray([FormGroup: {inkid: value, productname: value...}])
+   * */
   inkGroup = new FormGroup({
     chosenInks: new FormArray([]),
   });
