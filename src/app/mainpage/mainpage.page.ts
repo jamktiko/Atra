@@ -26,19 +26,19 @@ import { ApiService } from '../services/api.service';
   ],
 })
 export class MainpagePage implements OnInit {
+  /**
+   * Hakee käyttäjätiedot myöhemmin AuthServicen avulla tietokannasta, mutta tässä vaiheessa
+   * kovakoodattu käyttäjädata temporarydata.ts-tiedostosta
+   */
   user: User = Tiina;
-  data!: any;
+
+  /**
+   * Tervehdys, joka käyttäjälle generoidaan etusivulle. Ottaa src-kansiossa olevan greet.js-tiedoston
+   * funktion ja toteuttaa sen greetings.json välittämällä datalla
+   */
+  greeting: string = '';
+
   constructor(private apiService: ApiService) {}
 
-  ngOnInit() {
-    // this.apiService.getTables().subscribe({
-    //   next: (data) => {
-    //     this.data = data;
-    //     console.log(data);
-    //   },
-    //   error: (err) => {
-    //     console.error('Jodain meni bieleen: ', err);
-    //   },
-    // });
-  }
+  ngOnInit() {}
 }

@@ -35,7 +35,6 @@ import { ModalcustomerPage } from '../modalcustomer/modalcustomer.page';
     IonItem,
     CommonModule,
     FormsModule,
-    IonButton,
     ModalcustomerPage,
     IonLabel,
     IonText,
@@ -84,7 +83,7 @@ export class AddnewcustomerPage {
     this.openModal = false;
   }
 
-  //Nollaa asiakaslomakkeen sekä cancel että confirm-tapauksissa
+  //Nollaa asiakaslomakkeen
   resetForm() {
     this.customer = {
       firstname: '',

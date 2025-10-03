@@ -20,7 +20,6 @@ import {
     IonText,
     CommonModule,
     FormsModule,
-    IonButton,
     ReactiveFormsModule,
   ],
 })
@@ -71,7 +70,7 @@ export class ModalinkPage implements OnInit {
     );
   }
 
-  //tämän pitäisi lähettää confirm > push to own inks apiservien kautta tietokantaan
+  //tämän pitäisi lähettää confirm > push to own inks apiservien kautta tietokantaan myöhemmässä vaiheessa
   //Tässä vaiheessa tulostaa päivitetyn inksToReviewn, jossa mukana uudet batchnumberit
   sendConfirm() {
     console.log('Inks added successfully: ');
