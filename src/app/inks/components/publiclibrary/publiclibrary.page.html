@@ -16,11 +16,10 @@
     <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
   </button>
 
-
-  <h2>Ink catalog</h2>
+  <p>Here is where you can find our ink library. Browse, admire, or find something new to try.</p>
   <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
-  <!-- Musteiden läpikäynti, kommentoitu pois toistaiseksi-->
+  <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
   @for (ink of filteredSearch(); track ink.id) {
   <div class="box">
     <h3>{{ink.product_name}}</h3>
@@ -35,7 +34,7 @@
 <ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
   <ng-template>
 
-    <!--Tähän saa Milja tehtyä tyylit sekä elementteihin yksittäisenä-->
+    <!--Tähän saa Milja tehtyä tyylit, HUOM. väliaikaiset tyylit publiclibrary.page.css jotka saa ottaa pois-->
     <div class="wrapper">
 
       <img src="{{selectedInk.imageUrl}}" width="20%" />

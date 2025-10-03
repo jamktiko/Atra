@@ -32,22 +32,42 @@ import { ApiService } from 'src/app/services/api.service';
   ],
 })
 export class PubliclibraryPage implements OnInit {
+  /**
+   * allInks-arvo saadaan tässävaiheessa kovakoodatusta feikkidatasta temporarydata.ts-tiedostosta.
+   * Myöhemmässä vaiheessa allInks alustetaan apiServicen kautta tulemaan tietokannasta.
+   */
   allInks: PublicInk[] = publicInks;
+
+  /**
+   * Hallinnoi ionmodalin näkyvyyttä: true näyttää, false ei. ChooseInk & setClosed-metodien avulla
+   * muutetaan booleanin arvoa.
+   */
   isModalOpen: boolean = false;
   searchItem: string = '';
   selectedInk: any;
 
   constructor(private apiService: ApiService) {}
 
+  /**
+   * Hoitaa yksittäisen musteen valitsemisen, ja ottaa parametreiksiin isOpen ja ink-arvot.
+   * Hallinnoi modaalin näkyvyyttä sekä välittää modaalille datan yksittäisen musteen osalta.
+   */
   chooseInk(isOpen: boolean, ink: any) {
     this.isModalOpen = isOpen;
     this.selectedInk = ink;
   }
 
+  /**
+   * Ottaa parametrikseen booleanin, ja asettaa isModalOpen-arvon kyseiseen booleaniin.
+   */
   setClosed(isOpen: boolean) {
     this.isModalOpen = false;
   }
 
+  /**
+   * Käsittelee hakukentän arvon filtteröinnin: etsii musteista vain niitä, joiden nimi,
+   * valmistaja tai väri sisältää hakukentän arvon.
+   */
   filteredSearch() {
     const search = this.searchItem!.toLowerCase();
 

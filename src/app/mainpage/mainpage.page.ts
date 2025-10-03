@@ -9,7 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { User } from 'src/interface';
 import { Tiina } from 'src/temporarydata';
-import { ApiService } from '../services/api.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -38,7 +38,7 @@ export class MainpagePage implements OnInit {
    */
   greeting: string = '';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {}
 }
