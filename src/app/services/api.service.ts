@@ -56,7 +56,7 @@ export class ApiService {
    * Backend-kutsu getCustomer
    *
    * */
-  getCustomer(customerId: Customer): Observable<Customer> {
+  getCustomer(customerId: number): Observable<Customer> {
     return this.http.get<Customer>(`${this.apiUrl}/customer/${customerId}`);
   }
 
