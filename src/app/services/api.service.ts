@@ -4,7 +4,6 @@ import { PublicInk, UserInk } from 'src/interface';
 import { Observable } from 'rxjs';
 import { Entry } from 'src/interface';
 import { Customer } from 'src/interface';
-import { InkTest } from 'src/interface';
 
 @Injectable({
   providedIn: 'root',

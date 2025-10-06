@@ -16,9 +16,9 @@
     <button> <a tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </a> </button>
   </div><!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
 
-  @for (customer of filteredCustomers(); track customer.firstname) {
+  @for (customer of filteredCustomers(); track customer.customer_id) {
   <div class="bg-blue-800 my-2">
-    <h3>{{customer.lastname}}, {{customer.firstname}}</h3>
+    <h3>{{customer.last_name}}, {{customer.first_name}}</h3>
     <p>{{customer.email}}</p>
 
     <button> <a (click)="chooseCustomer(true, customer)">Open </a></button>
