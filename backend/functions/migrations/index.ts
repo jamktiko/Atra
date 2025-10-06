@@ -92,12 +92,12 @@ export const handler: Handler = async (event, ctx) => {
 
     await conn.query(`
       INSERT INTO User (user_id, email, password, first_name, last_name)
-      VALUES ('f08c996c-f081-7001-76e0-bfe9e4956901', 'testi.testaaja@testaajat.com', 'Testi', 'Testaaja');`);
+      VALUES ('demo-user-123', 'testi.testaaja@testaajat.com', 'Testi', 'Testaaja');`);
 
     await conn.query(`
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('yes@email.com', 'Aku', 'Asiakas', 'f08c996c-f081-7001-76e0-bfe9e4956901');
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('maybe@email.com', 'Anneli', 'Asiakaspalvelija', 'f08c996c-f081-7001-76e0-bfe9e4956901');
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('no@email.com', 'Jaakko', 'Jaakkonen', 'f08c996c-f081-7001-76e0-bfe9e4956901');`);
+      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('yes@email.com', 'Aku', 'Asiakas', 'demo-user-123');
+      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('maybe@email.com', 'Anneli', 'Asiakaspalvelija', 'demo-user-123');
+      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('no@email.com', 'Jaakko', 'Jaakkonen', 'demo-user-123');`);
 
     await conn.query(`
       INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Tattoo Finish', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
@@ -150,18 +150,18 @@ export const handler: Handler = async (event, ctx) => {
       `);
 
     await conn.query(`
-      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('123456', DATE("2025-01-01"), DATE("2026-01-01"), 0, 5, 'f08c996c-f081-7001-76e0-bfe9e4956901');
-      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('ABC123', DATE("2025-01-01"), DATE("2026-01-01"), 1, 10, 'f08c996c-f081-7001-76e0-bfe9e4956901');
-      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('123-01', DATE("2025-01-01"), DATE("2026-01-01"), 1, 1, 'f08c996c-f081-7001-76e0-bfe9e4956901');
-      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('98765', DATE("2025-01-01"), DATE("2026-01-01"), 0, 20, 'f08c996c-f081-7001-76e0-bfe9e4956901');
-      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('HJKL011', DATE("2025-01-01"), DATE("2026-01-01"), 1, 2, 'f08c996c-f081-7001-76e0-bfe9e4956901');`);
+      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('123456', DATE("2025-01-01"), DATE("2026-01-01"), 0, 5, 'demo-user-123');
+      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('ABC123', DATE("2025-01-01"), DATE("2026-01-01"), 1, 10, 'demo-user-123');
+      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('123-01', DATE("2025-01-01"), DATE("2026-01-01"), 1, 1, 'demo-user-123');
+      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('98765', DATE("2025-01-01"), DATE("2026-01-01"), 0, 20, 'demo-user-123');
+      INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('HJKL011', DATE("2025-01-01"), DATE("2026-01-01"), 1, 2, 'demo-user-123');`);
 
     await conn.query(`
-      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-06-06"), 'eka', 'f08c996c-f081-7001-76e0-bfe9e4956901', 1);
-      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-07"), 'toka', 'f08c996c-f081-7001-76e0-bfe9e4956901', 1);
-      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-09"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 2);
-      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-10-06"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 3);
-      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-12-12"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 2);`);
+      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-06-06"), 'eka', 'demo-user-123', 1);
+      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-07"), 'toka', 'demo-user-123', 1);
+      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-09"), '', 'demo-user-123', 2);
+      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-10-06"), '', 'demo-user-123', 3);
+      INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-12-12"), '', 'demo-user-123', 2);`);
 
     await conn.query(`
       INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (1, 1);
