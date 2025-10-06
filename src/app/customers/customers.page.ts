@@ -9,7 +9,6 @@ import {
   IonModal,
 } from '@ionic/angular/standalone';
 import { Customer } from 'src/interface';
-import { customers } from 'src/temporarydata';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 

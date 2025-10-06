@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PublicInk, UserInk } from 'src/interface';
+import { CustomerCreation, PublicInk, UserInk } from 'src/interface';
 import { Observable } from 'rxjs';
 import { Entry } from 'src/interface';
 import { Customer } from 'src/interface';
@@ -69,7 +69,10 @@ export class ApiService {
   /**
    * Backend-kutsu addCustomer
    */
-  addNewCustomer(customerData: Customer): Observable<Customer> {
-    return this.http.post<Customer>(`${this.apiUrl}/customer`, customerData);
+  addNewCustomer(customerData: CustomerCreation): Observable<CustomerCreation> {
+    return this.http.post<CustomerCreation>(
+      `${this.apiUrl}/customer`,
+      customerData
+    );
   }
 }

@@ -20,10 +20,10 @@
   <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
   <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
-  @for (ink of filteredSearch(); track ink.id) {
+  @for (ink of filteredSearch(); track ink.ink_id) {
   <div class="box">
     <h3>{{ink.product_name}}</h3>
-    <img src="{{ink.imageUrl}}" width="20%" />
+    <img src="{{ink.image_url}}" width="20%" />
 
     <button> <a (click)="chooseInk(true, ink)">Open </a></button>
   </div>
@@ -38,12 +38,12 @@
     <!--Tähän saa Milja tehtyä tyylit, HUOM. väliaikaiset tyylit publiclibrary.page.css jotka saa ottaa pois-->
     <div class="wrapper">
 
-      <img src="{{selectedInk.imageUrl}}" width="20%" />
-      <h1>{{selectedInk.name}}</h1>
+      <img src="{{selectedInk.image_url}}" width="20%" />
+      <h1>{{selectedInk.product_name}}</h1>
       <p>Colour: (fetched from database later!) </p>
-      <p>Batchnumber: {{selectedInk.batchnumber}}</p>
-      <p>Opened: {{selectedInk.openedAt}}</p>
-      <p>Expires: {{selectedInk.expiresAt}}</p>
+      <p>Batchnumber: {{selectedInk.batch_number}}</p>
+      <p>Opened: {{selectedInk.opened_at}}</p>
+      <p>Expires: {{selectedInk.expires_at}}</p>
       <button class="bg-blue-600"> <a (click)="setClosed(false)">Close</a></button>
 
     </div>

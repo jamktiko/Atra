@@ -49,4 +49,11 @@ interface Customer {
   User_user_id: string;
 }
 
-export { UserInk, PublicInk, User, Entry, Customer };
+interface CustomerCreation {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+}
+
+export { UserInk, PublicInk, User, Entry, Customer, CustomerCreation };

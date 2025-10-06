@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PublicInk } from 'src/interface';
-import { publicInks } from 'src/temporarydata';
 
 import {
   IonContent,
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonButton,
   IonSearchbar,
   IonModal,
 } from '@ionic/angular/standalone';
@@ -36,7 +34,7 @@ export class PubliclibraryPage implements OnInit {
    * allInks-arvo saadaan tässävaiheessa kovakoodatusta feikkidatasta temporarydata.ts-tiedostosta.
    * Myöhemmässä vaiheessa allInks alustetaan apiServicen kautta tulemaan tietokannasta.
    */
-  allInks: PublicInk[] = publicInks;
+  allInks!: PublicInk[];
 
   /**
    * Hallinnoi ionmodalin näkyvyyttä: true näyttää, false ei. ChooseInk & setClosed-metodien avulla
@@ -61,7 +59,7 @@ export class PubliclibraryPage implements OnInit {
    * Ottaa parametrikseen booleanin, ja asettaa isModalOpen-arvon kyseiseen booleaniin.
    */
   setClosed(isOpen: boolean) {
-    this.isModalOpen = false;
+    this.isModalOpen = isOpen;
   }
 
   /**
@@ -82,14 +80,14 @@ export class PubliclibraryPage implements OnInit {
 
   //Hakee mustetiedot tietokannasta renderöintivaiheessa
   ngOnInit() {
-    //   this.apiService.getAllInks().subscribe({
-    //     next: (data) => {
-    //       this.allInks = data;
-    //       console.log(data);
-    //     },
-    //     error: (err) => {
-    //       console.error('Something went wrong: ', err);
-    //     },
-    //   });
+    this.apiService.getAllPublicInks().subscribe({
+      next: (data) => {
+        this.allInks = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
   }
 }
