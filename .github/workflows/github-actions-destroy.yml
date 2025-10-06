@@ -25,7 +25,7 @@ jobs:
           done
       - name: Delete Cognito users and user pools
         run: |
-          USER_POOLS=$(aws cognito-idp list-user-pools --query "UserPools[].Id" --output text)
+          USER_POOLS=$(aws cognito-idp list-user-pools --max-results 10 --query "UserPools[].Id" --output text)
           for POOL_ID in $USER_POOLS; do
             echo "Processing user pool: $POOL_ID"
 

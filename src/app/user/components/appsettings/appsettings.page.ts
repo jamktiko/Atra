@@ -8,7 +8,7 @@ import { IonContent, IonButton } from '@ionic/angular/standalone';
   templateUrl: './appsettings.page.html',
   styleUrls: ['./appsettings.page.scss'],
   standalone: true,
-  imports: [IonContent, IonButton, CommonModule, FormsModule],
+  imports: [IonContent, CommonModule, FormsModule],
 })
 export class AppsettingsPage implements OnInit {
   constructor() {}

@@ -43,43 +43,52 @@ export class ApiStack extends Stack {
       'LambdaSG',
       ssm.lambdaSecurityGroupId
     );
-    const cognitoUserPool = cognito.UserPool.fromUserPoolId(
-      this,
-      'UserPool',
-      ssm.cognitoUserPoolId
-    );
+    //const cognitoUserPool = cognito.UserPool.fromUserPoolId(
+    //this,
+    //'UserPool',
+    //ssm.cognitoUserPoolId
+    //);
 
     // Kutsutaan apin luontimetodia ja reittien metodia
     this.api = this.createApi(
       'AtraApi',
-      cognitoUserPool,
-      ssm.cognitoClientId,
+      //cognitoUserPool,
+      //ssm.cognitoClientId,
       frontendDomain
     );
-    this.callsRoute();
+
+    // ei tarpeellinen tässä vaiheessa
+    this.migrationsRoute();
+
+    this.customerRoute();
+    this.publicInkRoute();
+    this.userInkRoute();
   }
 
   private createApi(
     name: string,
-    cognitoUserPool: cognito.IUserPool,
-    cognitoClientId: string,
+    //cognitoUserPool: cognito.IUserPool,
+    //cognitoClientId: string,
     frontendDomain: string
   ) {
-    const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
+    //const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
+
     // JWT authorizer Cognito User Poolia varten
     // Authorizer tarkistaa, että token on validi ja peräisin oikeasta user poolista
     // Audience on client ID, eli siis sovellus, joka käyttää kyseistä user poolia
-    const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
-      jwtAudience: [cognitoClientId],
-    });
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! kommentoitu pois authorizer demoa varten!!
+    //const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
+    //jwtAudience: [cognitoClientId],
+    //});
     const api = new apigw2.HttpApi(this, 'AtraApi', {
       apiName: name,
-      defaultAuthorizer: authorizer,
+      //defaultAuthorizer: authorizer,
+
       // tässä määritellään CORS asetukset, eli sallitut domainit, metodit ja headerit
       // jotta frontti voi tehdä pyyntöjä apille
       // Muista lisätä frontin domaini allowOrigins:iin !!!!
       corsPreflight: {
-        allowHeaders: ['Authorization', 'Content-Type'],
+        allowHeaders: ['Content-Type'], // <-- lisää 'Authorization' takas!
         allowMethods: [
           apigw2.CorsHttpMethod.GET,
           apigw2.CorsHttpMethod.POST,
@@ -92,40 +101,7 @@ export class ApiStack extends Stack {
     return api;
   }
 
-  // Reitti CRUD operaatioille: /calls
-  // Integraationa Lambda funktio
-  // Funktio on rakennettu erillisellä builderilla (helpers kansiossa)
-  private callsRoute() {
-    const fn = new LambdaBuilder(this, 'api-calls')
-      .setDescription('CRUD operations')
-      .setEnv({
-        RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
-      })
-      .allowSecretsManager()
-      .connectVPC(this.vpc, this.lambdaSecurityGroup)
-      .build();
-
-    // API GW kutsuu tätä funktiota kun reittiä /calls kutsutaan
-    const integration = new HttpLambdaIntegration('CallsFn', fn);
-
-    this.api.addRoutes({
-      path: '/calls',
-      methods: [apigw2.HttpMethod.ANY],
-      integration,
-    });
-
-    //const migrationsFn = new LambdaBuilder(this, 'migrations')
-    //.addNodeModules(['mysql2', '@aws-sdk/client-secrets-manager'])
-    //.setDescription('Run DB migrations and seed test data')
-    //.setEnv({
-    //  RDS_SECRET_NAME: this.rdsSecretName,
-    //  RDS_PROXY_HOST: this.rdsProxyEndpoint,
-    //})
-    //.allowSecretsManager()
-    //.connectVPC(this.vpc, this.lambdaSecurityGroup)
-    //.build();
-
+  private migrationsRoute() {
     const migrationsFn = new LambdaBuilder(this, 'migrations')
       .setDescription('Run DB migrations and seed test data')
       .setEnv({
@@ -140,13 +116,96 @@ export class ApiStack extends Stack {
       value: migrationsFn.functionArn,
       exportName: 'MigrationsFnArn',
     });
+  }
+
+  // Reitti CRUD operaatioille
+  // Integraationa Lambda funktio
+  // Funktio on rakennettu erillisellä builderilla (helpers kansiossa)
+  private customerRoute() {
+    const fn = new LambdaBuilder(this, 'api-customer-calls')
+      .setDescription('CRUD operations for customer management')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        DEMO_USER_ID: 'demo-user-123', // DEMOA VARTEN !!!!
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /customer kutsutaan
+    const integration = new HttpLambdaIntegration('CustomerCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/customer',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/customer/{id}',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
 
     /* Tänne loput reitit */
+  }
 
-    //this.api.addRoutes({
-    //path: '/calls/{id}',
-    //methods: [apigw2.HttpMethod.ANY],
-    //integration,
-    //});
+  private publicInkRoute() {
+    const fn = new LambdaBuilder(this, 'api-publicInk-calls')
+      .setDescription('CRUD operations for getting public ink(s)')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /publicInk kutsutaan
+    const integration = new HttpLambdaIntegration('publicInkCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/publicInk',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/publicInk/{id}',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    /* Tänne loput reitit */
+  }
+
+  private userInkRoute() {
+    const fn = new LambdaBuilder(this, 'api-userInk-calls')
+      .setDescription('CRUD operations for managing user ink(s)')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /userInk kutsutaan
+    const integration = new HttpLambdaIntegration('userInkCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/userInk',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/userInk/{id}',
+      methods: [apigw2.HttpMethod.ANY],
+      integration,
+    });
+
+    /* Tänne loput reitit */
   }
 }
