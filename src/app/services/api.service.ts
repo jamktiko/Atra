@@ -42,14 +42,14 @@ export class ApiService {
    * Backend-kutsu getUserInk()
    */
   getOneUserInk(userInkId: number): Observable<UserInk> {
-    return this.http.get<UserInk>(`${this.apiUrl}/userink/${userInkId}`);
+    return this.http.get<UserInk>(`${this.apiUrl}/userInk/${userInkId}`);
   }
 
   /**
    * Backend-kutsu addUserInk()
    */
   addNewUserInk(userInkData: UserInk): Observable<UserInk> {
-    return this.http.post<UserInk>(`${this.apiUrl}`, userInkData);
+    return this.http.post<UserInk>(`${this.apiUrl}/userInk`, userInkData);
   }
 
   /**
