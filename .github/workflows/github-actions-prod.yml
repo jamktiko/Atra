@@ -38,7 +38,7 @@ jobs:
           cdk deploy vpc --require-approval never
           cdk deploy database --require-approval never
           cdk deploy frontend --require-approval never
-          cdk deploy cognito --require-approval never
+          # cdk deploy cognito --require-approval never # Temporarily disabled
           cdk deploy api --require-approval never
       - name: Deploy frontend to S3
         run: |
