@@ -24,7 +24,7 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
 
   if (httpMethod === 'GET' && routeKey === '/userInk/{id}') {
     if (!pathParameters?.id) return clientErrorResponse('Missing id');
-    return userInk.getUserInk(userId, pathParameters.id);
+    return userInk.getUserInk(pathParameters.id, userId);
   }
 
   if (httpMethod === 'POST' && routeKey === '/userInk') {

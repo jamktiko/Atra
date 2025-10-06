@@ -91,7 +91,7 @@ export const handler: Handler = async (event, ctx) => {
       ) ENGINE=InnoDB;`);
 
     await conn.query(`
-      INSERT INTO User (user_id, email, password, first_name, last_name)
+      INSERT INTO User (user_id, email, first_name, last_name)
       VALUES ('demo-user-123', 'testi.testaaja@testaajat.com', 'Testi', 'Testaaja');`);
 
     await conn.query(`
