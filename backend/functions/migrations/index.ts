@@ -53,7 +53,6 @@ export const handler: Handler = async (event, ctx) => {
         user_ink_id INT NOT NULL AUTO_INCREMENT,
         batch_number VARCHAR(40),
         opened_at DATE,
-        image_url VARCHAR(255),
         expires_at DATE,
         favorite TINYINT,
         PublicInk_ink_id INT NOT NULL,
