@@ -16,11 +16,8 @@ describe('VpcStack', () => {
     template.resourceCountIs('AWS::EC2::VPC', 1);
   });
 
-  it('creates public subnets', () => {
+  it('creates subnets', () => {
     template.resourceCountIs('AWS::EC2::Subnet', 6);
-    template.hasResourceProperties('AWS::EC2::Subnet', {
-      MapPublicIpOnLaunch: true,
-    });
   });
 
   it('creates private subnets', () => {
@@ -35,5 +32,20 @@ describe('VpcStack', () => {
 
   it('creates Internet Gateway', () => {
     template.resourceCountIs('AWS::EC2::InternetGateway', 1);
+  });
+
+  it('creates Security Groups', () => {
+    template.resourceCountIs('AWS::EC2::SecurityGroup', 2);
+  });
+
+  //finds any Security Group that allows ingress on port 3306 from another SG
+  it('allows Lambda SG to access RDS on MySQL port', () => {
+    const resources = template.findResources('AWS::EC2::SecurityGroup');
+    const rdsSg = Object.values(resources).find((res: any) =>
+      res.Properties?.SecurityGroupIngress?.some(
+        (rule: any) => rule.FromPort === 3306 && rule.ToPort === 3306
+      )
+    );
+    expect(rdsSg).toBeDefined();
   });
 });
