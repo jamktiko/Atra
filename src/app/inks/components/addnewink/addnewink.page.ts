@@ -16,7 +16,7 @@ import {
 import { ModalinkPage } from '../modalink/modalink.page';
 import { PublicInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
-import { publicInks } from 'src/temporarydata';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-addnewink',
@@ -36,7 +36,8 @@ import { publicInks } from 'src/temporarydata';
   ],
 })
 export class AddnewinkPage implements OnInit {
-  publicInks: PublicInk[] = publicInks; //apiservicestä kun on oikeat datat!
+  publicInks!: PublicInk[];
+
   searchItem: string = '';
 
   /* Muuttuja, jonka avulla ylläpidetään app-modalink-komponentin näkyvyyttä */
@@ -50,13 +51,22 @@ export class AddnewinkPage implements OnInit {
     chosenInks: new FormArray([]),
   });
 
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.apiService.getAllPublicInks().subscribe({
+      next: (data) => {
+        this.publicInks = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
+  }
 
   // Käsittelee showReview-muuttujan näkyvyyden muuttamalla sen trueksi
   // HTML-templaatissa @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()" (delete)="handleDelete($event)"></app-modalink>}
-
   review() {
     this.showReview = true;
   }
@@ -88,15 +98,15 @@ export class AddnewinkPage implements OnInit {
     //Tässä alustetaan FormGroup, jotka muodostavat FormArrayn
     //Eli jokaisessa FormGroupissa on yksittäinen FormControl id, product_name, manufacturer, color, recalled, imageUrl, size & batchnumber
     //Jokainen FormGroup sitten laitetaan push-metodilla FormArrayhin vain, jos kyseistä mustetta ei ole vielä lisätty: if-ehto tarkistaa, löytyykö kyseisellä id:llä jo mustetta taulukosta
-    if (!inks.value.some((chosenInk: any) => chosenInk.id === ink.id)) {
+    if (!inks.value.some((chosenInk: any) => chosenInk.id === ink.ink_id)) {
       inks.push(
         new FormGroup({
-          id: new FormControl(ink.id),
+          ink_id: new FormControl(ink.ink_id),
           product_name: new FormControl(ink.product_name),
           manufacturer: new FormControl(ink.manufacturer),
           color: new FormControl(ink.color),
           recalled: new FormControl(ink.recalled),
-          imageUrl: new FormControl(ink.imageUrl),
+          image_url: new FormControl(ink.image_url),
           size: new FormControl(ink.size),
           batchnumber: new FormControl('', Validators.required),
         })
@@ -104,7 +114,7 @@ export class AddnewinkPage implements OnInit {
 
       console.log(inks.value);
     } else {
-      console.log('Ink already chosen: ', ink.id);
+      console.log('Ink already chosen: ', ink.ink_id);
       console.log(inks.value);
     }
   }

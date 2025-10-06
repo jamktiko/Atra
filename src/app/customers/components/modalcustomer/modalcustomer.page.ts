@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UniversalmodalPage } from 'src/app/shared/universalmodal/universalmodal.page';
-import { Customer } from 'src/interface';
+import { Customer, CustomerCreation } from 'src/interface';
 
 import {
   IonButton,
@@ -32,9 +32,9 @@ import {
   ],
 })
 export class ModalcustomerPage implements OnInit {
-  @Input() newcustomer?: Customer;
+  @Input() newcustomer?: CustomerCreation;
   @Input() openModal!: boolean;
-  @Output() confirm = new EventEmitter<Customer>();
+  @Output() confirm = new EventEmitter<CustomerCreation>();
   @Output() cancel = new EventEmitter<void>();
 
   sendConfirm() {

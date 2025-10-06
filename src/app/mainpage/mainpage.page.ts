@@ -8,7 +8,6 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { User } from 'src/interface';
-import { Tiina } from 'src/temporarydata';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -30,7 +29,7 @@ export class MainpagePage implements OnInit {
    * Hakee käyttäjätiedot myöhemmin AuthServicen avulla tietokannasta, mutta tässä vaiheessa
    * kovakoodattu käyttäjädata temporarydata.ts-tiedostosta
    */
-  user: User = Tiina;
+  // user!: User;
 
   /**
    * Tervehdys, joka käyttäjälle generoidaan etusivulle. Ottaa src-kansiossa olevan greet.js-tiedoston
