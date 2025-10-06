@@ -15,5 +15,8 @@ ion-modal#example-modal h1 {
 }
 
 .box {
-  background: rgb(0, 0, 93);
+  background: #070a22;
+  margin: 1em;
+  border-radius: 10px;
+  padding: 5px;
 }

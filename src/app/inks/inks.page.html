@@ -5,39 +5,41 @@
 </ion-header>
 
 <ion-content>
-  <h2>TÄMÄ ON USER LIBRARY</h2>
-  <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
-  <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
+  <div class="bg-#2a3e3c">
+    < <h2>TÄMÄ ON USER LIBRARY</h2>
+      <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
+      <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
 
-  <button class="bg-white mx-2">
-    <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog </a>
-  </button>
+      <button class="p-2 bg-blue-600 mx-4">
+        <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog </a>
+      </button>
 
-  <button class="bg-white mx-2">
-    <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
-  </button>
+      <button class="p-2 bg-blue-600 mx-2">
+        <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
+      </button>
 
-  <p>We keep all your inks in this library.</p>
+      <p>We keep all your inks in this library.</p>
 
-  <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-  <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
-    [(ngModel)]="searchItem"></ion-searchbar>
+      <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+      <ion-searchbar style="--background: #071747; --color: white;" animated="true" placeholder="Search"
+        [(ngModel)]="searchItem"></ion-searchbar>
 
-  <button class="bg-black text-xl">
-    <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
-  </button>
+      <button class="bg-black text-xl">
+        <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
+      </button>
 
-  <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
-  @for (ink of filteredSearch(); track ink.name) {
+      <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
+      @for (ink of filteredSearch(); track ink.name) {
 
-  <div class="box">
-    <h3>{{ink.name}}</h3>
+      <div class="box">
+        <h3>{{ink.name}}</h3>
 
-    <img src="{{ink.imageUrl}}" width="20%" />
-    <p>{{ink.batchnumber}}</p>
-    <button> <a (click)="chooseInk(true, ink)">Open </a></button>
+        <img src="{{ink.imageUrl}}" width="20%" />
+        <p>{{ink.batchnumber}}</p>
+        <button class="m-2"> <a (click)="chooseInk(true, ink)">Open </a></button>
+      </div>
+      }
   </div>
-  }
 </ion-content>
 
 
