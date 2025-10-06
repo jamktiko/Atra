@@ -12,3 +12,13 @@ ion-tab-bar ion-icon {
   width: 50%;
   height: 50%;
 }
+
+@media only screen and (min-width: 431px) {
+  ion-label {
+    font-size: medium;
+  }
+
+  ion-tab-bar {
+    min-height: 8.5%;
+  }
+}
