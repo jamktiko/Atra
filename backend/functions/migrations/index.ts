@@ -16,7 +16,6 @@ export const handler: Handler = async (event, ctx) => {
       CREATE TABLE IF NOT EXISTS User (
         user_id VARCHAR(255) NOT NULL,
         email VARCHAR(45) NOT NULL,
-        password VARCHAR(255) NOT NULL,
         first_name VARCHAR(25) NOT NULL,
         last_name VARCHAR(45) NOT NULL,
         PRIMARY KEY (user_id),
