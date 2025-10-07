@@ -88,12 +88,13 @@ export class ApiStack extends Stack {
       // jotta frontti voi tehdä pyyntöjä apille
       // Muista lisätä frontin domaini allowOrigins:iin !!!!
       corsPreflight: {
-        allowHeaders: ['Content-Type'], // <-- lisää 'Authorization' takas!
+        allowHeaders: ['Content-Type', 'Authorization'],
         allowMethods: [
           apigw2.CorsHttpMethod.GET,
           apigw2.CorsHttpMethod.POST,
           apigw2.CorsHttpMethod.PUT,
           apigw2.CorsHttpMethod.DELETE,
+          apigw2.CorsHttpMethod.OPTIONS,
         ],
         allowOrigins: [`https://${frontendDomain}`],
       },
@@ -138,13 +139,13 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/customer',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.OPTIONS],
       integration,
     });
 
     this.api.addRoutes({
       path: '/customer/{id}',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.OPTIONS],
       integration,
     });
 

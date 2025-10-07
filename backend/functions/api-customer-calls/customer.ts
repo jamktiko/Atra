@@ -44,9 +44,9 @@ export async function addCustomer(userId: string, body: string) {
   }
 
   const [result] = await pool.query(
-    `INSERT INTO Customer (email, first_name, last_name, User_user_id) 
+    `INSERT INTO Customer (User_user_id, email, first_name, last_name) 
     VALUES (?, ?, ?, ?)`,
-    [data.email, data.firstName, data.lastName, userId]
+    [userId, data.email, data.firstName, data.lastName]
   );
   return successResponse({ insertedId: (result as any).insertId });
 }
