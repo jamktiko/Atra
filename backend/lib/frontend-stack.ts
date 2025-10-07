@@ -25,6 +25,17 @@ export class FrontendStack extends Stack {
     });
 
     // CloudFront distribution to serve the frontend
+    //this.distribution = new cloudfront.Distribution(this, 'Distribution', {
+    //defaultBehavior: {
+    //  origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
+    //  viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+    //  allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+    //  cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+    //},
+    //defaultRootObject: 'index.html',
+    //comment: `Frontend distribution for ${id}`,
+    //});
+
     this.distribution = new cloudfront.Distribution(this, 'Distribution', {
       defaultBehavior: {
         origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
@@ -34,6 +45,20 @@ export class FrontendStack extends Stack {
       },
       defaultRootObject: 'index.html',
       comment: `Frontend distribution for ${id}`,
+      errorResponses: [
+        {
+          httpStatus: 403,
+          responseHttpStatus: 200,
+          responsePagePath: '/index.html',
+          ttl: cdk.Duration.seconds(0),
+        },
+        {
+          httpStatus: 404,
+          responseHttpStatus: 200,
+          responsePagePath: '/index.html',
+          ttl: cdk.Duration.seconds(0),
+        },
+      ],
     });
 
     this.distributionDomainName = this.distribution.distributionDomainName;

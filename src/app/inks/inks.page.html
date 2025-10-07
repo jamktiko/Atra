@@ -6,39 +6,39 @@
 
 <ion-content>
   <div class="bg-#2a3e3c">
-    < <h2>TÄMÄ ON USER LIBRARY</h2>
-      <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
-      <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
+    <h2>TÄMÄ ON USER LIBRARY</h2>
+    <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
+    <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
 
-      <button class="p-2 bg-blue-600 mx-4">
-        <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog </a>
-      </button>
+    <button class="p-2 bg-blue-600 mx-4">
+      <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog </a>
+    </button>
 
-      <button class="p-2 bg-blue-600 mx-2">
-        <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
-      </button>
+    <button class="p-2 bg-blue-600 mx-2">
+      <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
+    </button>
 
-      <p>We keep all your inks in this library.</p>
+    <p>We keep all your inks in this library.</p>
 
-      <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-      <ion-searchbar style="--background: #071747; --color: white;" animated="true" placeholder="Search"
-        [(ngModel)]="searchItem"></ion-searchbar>
+    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+    <ion-searchbar style="--background: #071747; --color: white;" animated="true" placeholder="Search"
+      [(ngModel)]="searchItem"></ion-searchbar>
 
-      <button class="bg-black text-xl">
-        <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
-      </button>
+    <button class="bg-black text-xl">
+      <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
+    </button>
 
-      <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
-      @for (ink of filteredSearch(); track ink.user_ink_id) {
+    <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
+    @for (ink of userInks; track ink.user_ink_id) {
 
-      <div class="box">
-        <h3>{{ink.product_name}}</h3>
+    <div class="box">
+      <h3>{{ink.product_name}}</h3>
 
-        <img src="{{ink.image_url}}" width="20%" />
-        <p>{{ink.batch_number}}</p>
-        <button class="m-2"> <a (click)="chooseInk(true, ink)">Open </a></button>
-      </div>
-      }
+      <img src="{{ink.image_url}}" width="20%" />
+      <p>{{ink.batch_number}}</p>
+      <button class="m-2"> <a (click)="chooseInk(true, ink)">Open </a></button>
+    </div>
+    }
   </div>
 </ion-content>
 
