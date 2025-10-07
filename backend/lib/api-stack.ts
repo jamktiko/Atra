@@ -96,7 +96,7 @@ export class ApiStack extends Stack {
           apigw2.CorsHttpMethod.DELETE,
           apigw2.CorsHttpMethod.OPTIONS,
         ],
-        allowOrigins: [`https://${frontendDomain}`],
+        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`],
       },
     });
     return api;
@@ -139,13 +139,13 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/customer',
-      methods: [apigw2.HttpMethod.OPTIONS],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
     this.api.addRoutes({
       path: '/customer/{id}',
-      methods: [apigw2.HttpMethod.OPTIONS],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
@@ -168,13 +168,13 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/publicInk',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.GET],
       integration,
     });
 
     this.api.addRoutes({
       path: '/publicInk/{id}',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.GET],
       integration,
     });
 
@@ -197,13 +197,13 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/userInk',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
     this.api.addRoutes({
       path: '/userInk/{id}',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
