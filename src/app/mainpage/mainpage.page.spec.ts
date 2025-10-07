@@ -16,15 +16,10 @@ describe('MainpagePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  //this passes
-  it('should pass', () => {
-    expect(true).toBe(true);
-  });
 }); */
 
 // This test works
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { MainpagePage } from './mainpage.page';
@@ -55,21 +50,4 @@ describe('MainpagePage', () => {
     const title = compiled.querySelector('ion-title');
     expect(title?.textContent?.trim()).toBe('ATRA');
   });
-
-  //test if greeting contains mock user first name
-  //commented out temproararily
-  it('should greet the user by first name', () => {
-    component.user = {
-      firstname: 'Juuso',
-      lastname: 'Testaaja',
-      email: 'juuso@testaaja.com',
-      id: 1,
-    }; // mock user
-    fixture.detectChanges();
-
-    const compiled = fixture.nativeElement as HTMLElement;
-    const greeting = compiled.querySelector('h2');
-    expect(greeting?.textContent).toContain('Juuso');
-  });
 });
- */

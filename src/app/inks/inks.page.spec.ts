@@ -17,16 +17,10 @@ describe('InksPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  //this passes
-  it('should pass', () => {
-    expect(true).toBe(true);
-  });
 });
  */
 
-//working test
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { InksPage } from './inks.page';
@@ -53,4 +47,3 @@ describe('InksPage', () => {
     expect(searchbar).toBeTruthy();
   });
 });
- */
