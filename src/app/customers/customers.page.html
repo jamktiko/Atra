@@ -7,23 +7,44 @@
 
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
-  <div class="bg-blue-800 my-2">
-    <h2>Customers</h2>
-    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-    <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
-      [(ngModel)]="searchItem"></ion-searchbar>
+  <div class="bg-slate-950">
+    <div>
+      <h2>Customers</h2>
+      <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+      <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
+        [(ngModel)]="searchItem"></ion-searchbar>
 
-    <button> <a tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">Add new </a> </button>
-  </div><!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
+      <button
+        class="flex items-center gap-2 px-4 py-2 bg-slate-600 text-white font-lato border border-neutral-50 rounded-full hover:bg-slate-800 transition">
+        <a tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">
+          <span class="text-l">
+            +
+          </span>
+          <span>Add new
+          </span>
+        </a>
 
-  @for (customer of allcustomers; track customer.customer_id) {
-  <div class="bg-blue-800 my-2">
-    <h3>{{customer.last_name}}, {{customer.first_name}}</h3>
-    <p>{{customer.email}}</p>
+      </button>
 
-    <button> <a (click)="chooseCustomer(true, customer)">Open </a></button>
+
+    </div>
+
+    <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
+    @for (customer of allcustomers; track customer.customer_id) {
+    <div class="flex flex-col bg-slate-950 border border-neutral-50/60 rounded-xl my-5">
+      <div class="p-3 md:p-5">
+        <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{customer.last_name}}, {{customer.first_name}}
+        </h3>
+        <p class="mt-2 font-lato text-gray-500 dark:text-neutral-400">{{customer.email}}</p>
+      </div>
+      <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
+        <a (click)="chooseCustomer(true, customer)">Open </a></button>
+    </div>
+    }
+    <div
+      class="pointer-events-none absolute bottom-0 left-0 right-0 h-30 bg-gradient-to-t from-neutral-950 to-transparent z-0">
+    </div>
   </div>
-  }
 </ion-content>
 
 

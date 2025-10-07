@@ -6,16 +6,16 @@
 
 <ion-content>
   <div class="bg-#2a3e3c">
-    <h2>TÄMÄ ON USER LIBRARY</h2>
+    <h2 class="text-xl font-lato text-neutral-50 dark:text-white">USER LIBRARY</h2>
     <!--Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois-->
     <!-- <ion-button (click)="testAdd(5, 'josTääToimiiNiiSeOIhme123')">TESTAA TÄSTÄ </ion-button> -->
 
-    <button class="p-2 bg-blue-600 mx-4">
-      <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink catalog
-      </a>
+    <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-5 ">
+      <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink
+        catalog </a>
     </button>
 
-    <button class="p-2 bg-blue-600 mx-2">
+    <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-5">
       <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
     </button>
 
@@ -32,11 +32,12 @@
     <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
     @for (ink of userInks; track ink.user_ink_id) {
     <div class="box">
-      <h3>{{ink.product_name}}</h3>
+      <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{ink.product_name}}</h3>
 
       <img src="{{ink.image_url}}" width="20%" />
-      <p>{{ink.batch_number}}</p>
-      <button class="m-2"><a (click)="chooseInk(true, ink)">Open </a></button>
+      <p class="mt-2 font-lato text-gray-500 dark:text-neutral-400">{{ink.batch_number}}</p>
+      <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"><a
+          (click)="chooseInk(true, ink)">Open </a></button>
     </div>
     }
   </div>
@@ -47,12 +48,12 @@
     <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
     jotka voi ottaa pois -->
     <div class="wrapper">
-      <img src="{{selectedInk.imageUrl}}" width="20%" />
+      <img src="{{selectedInk.image_url}}" width="20%" />
       <h1>{{selectedInk.name}}</h1>
-      <p>Colour: (fetched from database later!)</p>
-      <p>Batchnumber: {{selectedInk.batchnumber}}</p>
-      <p>Opened: {{selectedInk.openedAt}}</p>
-      <p>Expires: {{selectedInk.expiresAt}}</p>
+      <p>Colour: {{selectedInk.color}}</p>
+      <p>Batchnumber: {{selectedInk.batch_number}}</p>
+      <p>Opened: {{selectedInk.opened_at}}</p>
+      <p>Expires: {{selectedInk.expires_at}}</p>
       <button class="bg-blue-600">
         <a (click)="setClosed(false)">Close</a>
       </button>
