@@ -5,14 +5,14 @@
 </ion-header>
 
 <ion-content>
-  <h2>TÄMÄ ON PUBLIC LIBRARY</h2>
+  <h2 class="text-xl font-lato text-neutral-50 dark:text-white">PUBLIC LIBRARY</h2>
 
-  <button class="p-2 bg-blue-600 mx-2">
+  <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-5 ">
     <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink
       catalog </a>
   </button>
 
-  <button class="p-2 bg-blue-600 mx-2">
+  <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-5">
     <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
   </button>
 
@@ -22,10 +22,11 @@
   <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
   @for (ink of allInks; track ink.ink_id) {
   <div class="box">
-    <h3>{{ink.product_name}}</h3>
+    <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{ink.product_name}}</h3>
     <img src="{{ink.image_url}}" width="20%" />
 
-    <button> <a (click)="chooseInk(true, ink)">Open </a></button>
+    <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
+      <a (click)="chooseInk(true, ink)">Open </a></button>
   </div>
   }
 
@@ -38,12 +39,11 @@
     <!--Tähän saa Milja tehtyä tyylit, HUOM. väliaikaiset tyylit publiclibrary.page.css jotka saa ottaa pois-->
     <div class="wrapper">
 
-      <img src="{{selectedInk.image_url}}" width="20%" />
       <h1>{{selectedInk.product_name}}</h1>
-      <p>Colour: (fetched from database later!) </p>
-      <p>Batchnumber: {{selectedInk.batch_number}}</p>
-      <p>Opened: {{selectedInk.opened_at}}</p>
-      <p>Expires: {{selectedInk.expires_at}}</p>
+      <img src="{{selectedInk.image_url}}" width="20%" />
+      <p>Manufacturer: {{selectedInk.manufacturer}}</p>
+      <p>Colour: {{selectedInk.color}}</p>
+
       <button class="bg-blue-600"> <a (click)="setClosed(false)">Close</a></button>
 
     </div>
