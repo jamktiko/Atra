@@ -1,4 +1,4 @@
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UsersettingsPage } from './usersettings.page';
 
 describe('UsersettingsPage', () => {
@@ -14,8 +14,4 @@ describe('UsersettingsPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should pass', () => {
-    expect(true).toBe(true);
-  });
 });
- */

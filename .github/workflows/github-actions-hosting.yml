@@ -1,5 +1,5 @@
-name: Production Deploy
-run-name: ${{ github.actor }} is deploying to production
+name: Hosting Deployment
+run-name: ${{ github.actor }} is deploying app to S3
 on:
   push:
     branches:

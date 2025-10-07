@@ -1,4 +1,4 @@
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UniversalmodalPage } from './universalmodal.page';
 
 describe('UniversalmodalPage', () => {
@@ -15,4 +15,3 @@ describe('UniversalmodalPage', () => {
     expect(component).toBeTruthy();
   });
 });
- */
