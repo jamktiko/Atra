@@ -20,11 +20,12 @@ describe('AddnewinkPage', () => {
     // Mock the filteredInks function to return one ink
     spyOn(component, 'filteredInks').and.returnValue([
       {
-        id: 1,
+        ink_id: '123abc',
         product_name: 'Test Ink',
         manufacturer: 'Test Co.',
         color: 'Blue',
         imageUrl: 'test.jpg',
+        image_url: 'test.jpg',
       },
     ]);
     const inkclass = 'div.bg-blue-800'; // Change this to the actual class used for ink items
@@ -40,12 +41,13 @@ describe('AddnewinkPage', () => {
   it('should add an ink to chosenInks', () => {
     const initialLength = component.getChosenInks().length;
     const testInk = {
-      id: 99,
+      ink_id: 99,
       product_name: 'Test Ink',
       manufacturer: 'Test Co.',
       color: 'Blue',
       recalled: false,
       imageUrl: 'test.jpg',
+      image_url: 'test.jpg',
       size: '30ml',
     };
     component.chooseInk(testInk);
