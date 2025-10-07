@@ -19,8 +19,9 @@ import {
   IonLabel,
   IonText,
 } from '@ionic/angular/standalone';
-import { Customer } from 'src/interface';
+import { CustomerCreation } from 'src/interface';
 import { ModalcustomerPage } from '../modalcustomer/modalcustomer.page';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-addnewcustomer',
@@ -46,11 +47,11 @@ export class AddnewcustomerPage {
   @ViewChild('customerForm') customerForm!: NgForm;
 
   //Alustaa lomakkeen tyhjänä asiakkaana
-  customer: Customer = {
-    firstname: '',
-    lastname: '',
+  customer: CustomerCreation = {
+    first_name: '',
+    last_name: '',
     email: '',
-    phonenumber: '',
+    phone: '',
   };
 
   //Hallitsee modalcustomerin näkyvyyttä
@@ -69,9 +70,9 @@ export class AddnewcustomerPage {
   //Lisää asiakkaan: saa modalcustomerilta Outputina tiedon cancel-EventEmitteristä
   //HTML-templaatissa annettu modalcustomerille propsina: (cancel)="handleCancel()"
   //Tarkoitus myöhemmin, että lisää asiakkaan apiservicen kautta
-  handleConfirm(data: Customer) {
+  handleConfirm(data: CustomerCreation) {
     console.log('Customer added: ', data);
-    this.addNewCustomer(data);
+    this.addNewCustomer();
     this.resetForm();
     this.closeModal();
   }
@@ -86,25 +87,24 @@ export class AddnewcustomerPage {
   //Nollaa asiakaslomakkeen
   resetForm() {
     this.customer = {
-      firstname: '',
-      lastname: '',
+      first_name: '',
+      last_name: '',
       email: '',
-      phonenumber: '',
+      phone: '',
     };
   }
 
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
-  //Käsittelee apiservicen kautta uuden asiakkaan lisäämisen, kun siirrytään oikean datan liikkumiseen
-  addNewCustomer(data: Customer) {
-    //   this.apiService.addNewCustomer(customer).subscribe({
-    //     next: (addcustomer) => {
-    //       console.log('Customer added successfully');
-    //     },
-    //     error: (err) => {
-    //       console.error('Something went wrong: ', err);
-    //     },
-    //   });
-    // }
+  /** */
+  addNewCustomer() {
+    this.apiService.addNewCustomer(this.customer).subscribe({
+      next: (data) => {
+        this.customer = data;
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
   }
 }

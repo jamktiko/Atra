@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PublicInk, UserInk } from 'src/interface';
+import { CustomerCreation, PublicInk, UserInk } from 'src/interface';
 import { Observable } from 'rxjs';
 import { Entry } from 'src/interface';
 import { Customer } from 'src/interface';
-import { InkTest } from 'src/interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,39 +14,65 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getAllInks(): Observable<PublicInk[]> {
-    return this.http.get<PublicInk[]>(
-      `https://ogco0iemlc.execute-api.eu-north-1.amazonaws.com/test/public`
-    );
+  /**
+   * Backend-kutsu listPublicInks()
+   *
+   */
+  getAllPublicInks(): Observable<PublicInk[]> {
+    return this.http.get<PublicInk[]>(`${this.apiUrl}/publicInk`);
   }
 
-  getUserInks(): Observable<UserInk[]> {
-    return this.http.get<UserInk[]>(
-      `https://ogco0iemlc.execute-api.eu-north-1.amazonaws.com/test/user`
-    );
+  /**
+   * Backend-kutsu getPublicInk
+   *
+   */
+  getOnePublicInk(publicInkId: number): Observable<PublicInk> {
+    return this.http.get<PublicInk>(`${this.apiUrl}/publicInk/${publicInkId}`);
   }
 
-  addNewInk(public_ink_id: number, batch_number: string): Observable<InkTest> {
-    return this.http.post<InkTest>(
-      `https://ogco0iemlc.execute-api.eu-north-1.amazonaws.com/test/user`,
-      {
-        inks: [{ public_ink_id, batch_number }],
-      },
-      { headers: { 'Content-Type': 'application/json' } }
-    );
+  /**
+   * Backend-kutsu listOwnInks()
+   */
+  getAllUserInks(): Observable<UserInk[]> {
+    return this.http.get<UserInk[]>(`${this.apiUrl}`);
   }
 
-  getAllEntries(): Observable<Entry[]> {
-    return this.http.get<Entry[]>(``);
+  /**
+   * Backend-kutsu getUserInk()
+   */
+  getOneUserInk(userInkId: number): Observable<UserInk> {
+    return this.http.get<UserInk>(`${this.apiUrl}/userInk/${userInkId}`);
   }
 
+  /**
+   * Backend-kutsu addUserInk()
+   */
+  addNewUserInk(userInkData: UserInk): Observable<UserInk> {
+    return this.http.post<UserInk>(`${this.apiUrl}/userInk`, userInkData);
+  }
+
+  /**
+   * Backend-kutsu getCustomer
+   *
+   * */
+  getCustomer(customerId: number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiUrl}/customer/${customerId}`);
+  }
+
+  /**
+   * Backend-kutsu listCustomers
+   * */
   getAllCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(``);
+    return this.http.get<Customer[]>(`${this.apiUrl}/customer`);
   }
 
-  getTables(): Observable<Object> {
-    return this.http.get<Object>(`${this.apiUrl}`);
+  /**
+   * Backend-kutsu addCustomer
+   */
+  addNewCustomer(customerData: CustomerCreation): Observable<CustomerCreation> {
+    return this.http.post<CustomerCreation>(
+      `${this.apiUrl}/customer`,
+      customerData
+    );
   }
-
-  addNewCustomer() {}
 }

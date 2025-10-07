@@ -7,7 +7,7 @@
     <ion-list>
 
       <ion-label>First name</ion-label>
-      <ion-item> <ion-input type="text" id="firstname" [(ngModel)]="customer.firstname" #firstname="ngModel"
+      <ion-item> <ion-input type="text" id="firstname" [(ngModel)]="customer.first_name" #firstname="ngModel"
           name="firstname" minlength="2" pattern="^[A-Za-z]+$" required></ion-input>
 
         @if (firstname.invalid && (firstname.touched )) {
@@ -19,7 +19,7 @@
 
       <ion-label>Last name</ion-label>
       <ion-item>
-        <ion-input type="text" id="lastname" [(ngModel)]="customer.lastname" #lastname="ngModel" name="lastname"
+        <ion-input type="text" id="lastname" [(ngModel)]="customer.last_name" #lastname="ngModel" name="lastname"
           minlength="2" pattern="^[A-Za-z]+$" required></ion-input>
 
         @if (lastname.invalid && lastname.touched) {
@@ -47,7 +47,7 @@
 
       <ion-label>Phone number</ion-label>
       <ion-item>
-        <ion-input type="tel" id="tel" [(ngModel)]="customer.phonenumber" #phonenumber="ngModel" name="phonenumber"
+        <ion-input type="tel" id="tel" [(ngModel)]="customer.phone" #phonenumber="ngModel" name="phonenumber"
           pattern="^\+?[0-9]{1,3}([\- ]?[0-9]{1,4}){2,3}$"></ion-input>
         @if (phonenumber.invalid && phonenumber.touched) {
         <ion-text color="danger">

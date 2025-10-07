@@ -1,28 +1,35 @@
 interface UserInk {
-  id: number;
-  name: string;
-  batchnumber: string;
-  openedAt: Date;
-  expiresAt: Date;
-  imageUrl: string;
+  user_ink_id: number;
+  batch_number: string;
+  opened_at: Date;
+  expires_at: Date;
   favorite: boolean;
-}
-
-interface PublicInk {
-  id: number;
+  publicink_ink_id: number;
   product_name: string;
   manufacturer: string;
   color: string;
   recalled: boolean;
-  imageUrl: string;
+  image_url: string;
+  size: string;
+  User_user_id: string;
+}
+
+interface PublicInk {
+  ink_id: number;
+  product_name: string;
+  manufacturer: string;
+  color: string;
+  recalled: boolean;
+  image_url: string;
   size: string;
 }
 
 interface User {
-  id: number;
+  user_id: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  password: string;
+  first_name: string;
+  last_name: string;
 }
 
 interface Entry {
@@ -33,15 +40,20 @@ interface Entry {
 }
 
 interface Customer {
-  firstname: string;
-  lastname: string;
+  customer_id: number;
   email: string;
-  phonenumber: string;
+  phone: string;
+  first_name: string;
+  last_name: string;
+  notes: string;
+  User_user_id: string;
 }
 
-interface InkTest {
-  id: number;
-  batchnumber: string;
-  publicinkId: number;
+interface CustomerCreation {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
 }
-export { UserInk, PublicInk, User, Entry, Customer, InkTest };
+
+export { UserInk, PublicInk, User, Entry, Customer, CustomerCreation };

@@ -16,7 +16,6 @@ export const handler: Handler = async (event, ctx) => {
       CREATE TABLE IF NOT EXISTS User (
         user_id VARCHAR(255) NOT NULL,
         email VARCHAR(45) NOT NULL,
-        password VARCHAR(255) NOT NULL,
         first_name VARCHAR(25) NOT NULL,
         last_name VARCHAR(45) NOT NULL,
         PRIMARY KEY (user_id),
@@ -53,7 +52,6 @@ export const handler: Handler = async (event, ctx) => {
         user_ink_id INT NOT NULL AUTO_INCREMENT,
         batch_number VARCHAR(40),
         opened_at DATE,
-        image_url VARCHAR(255),
         expires_at DATE,
         favorite TINYINT,
         PublicInk_ink_id INT NOT NULL,
@@ -91,7 +89,7 @@ export const handler: Handler = async (event, ctx) => {
       ) ENGINE=InnoDB;`);
 
     await conn.query(`
-      INSERT INTO User (user_id, email, password, first_name, last_name)
+      INSERT INTO User (user_id, email, first_name, last_name)
       VALUES ('demo-user-123', 'testi.testaaja@testaajat.com', 'Testi', 'Testaaja');`);
 
     await conn.query(`

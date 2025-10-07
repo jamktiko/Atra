@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { IonSearchbar } from '@ionic/angular/standalone';
-import { publicInks } from 'src/temporarydata';
-
 import {
   IonContent,
   IonHeader,
@@ -13,8 +11,8 @@ import {
   IonButton,
   IonModal,
 } from '@ionic/angular/standalone';
-import { Tiina, userInks } from 'src/temporarydata';
-import { PublicInk, User, UserInk } from 'src/interface';
+
+import { User, UserInk } from 'src/interface';
 
 @Component({
   selector: 'app-inks',
@@ -47,11 +45,10 @@ export class InksPage implements OnInit {
 
   /* Tuotantovaiheessa hakee mustedatan apiservicen perusteeella, tässä vaiheessa kovakoodattu feikkidata
    */
-  userInks: UserInk[] = userInks;
+  userInks!: UserInk[];
 
   /*Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa kovakoodattu feikkidata
    */
-  user: User = Tiina;
 
   /* Constructorissa otetaan käyttöön apiservice */
   constructor(private apiService: ApiService) {}
@@ -74,7 +71,7 @@ export class InksPage implements OnInit {
    * klikkaamiseen, jolloin templaatissa käsketään toteuttamaan setClosed-metodi
    */
   setClosed(isOpen: boolean) {
-    this.isModalOpen = false;
+    this.isModalOpen = isOpen;
   }
 
   /**
@@ -87,36 +84,19 @@ export class InksPage implements OnInit {
 
     return this.userInks.filter((ink) =>
       //päivitetään apiservicen vaiheessa tarkistamaan myös publicinkistä tulevia attribuutteja: color, manufacturer etc.
-      ink.name.toLowerCase().includes(search)
+      ink.product_name.toLowerCase().includes(search)
     );
   }
 
   ngOnInit() {
-    //TOISTAISEKSI KOMMENTOITU POIS, hakee renderöintivaiheessa musteet apiservicen kautta
-    // this.apiService.getUserInks().subscribe({
-    //   next: (data) => {
-    //     this.allInks = data;
-    //     console.log(data);
-    //   },
-    //   error: (err) => {
-    //     console.error('Jodain meni bieleen: ', err);
-    //   },
-    // });
+    this.apiService.getAllUserInks().subscribe({
+      next: (data) => {
+        this.userInks = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Jodain meni bieleen: ', err);
+      },
+    });
   }
-
-  //Testi tietokantaan lisäystä varten, kommentoitu toistaiseksi pois
-  // testAdd(publicID: number, batchnumber: string) {
-  //   console.log('Sending ink:', {
-  //     public_ink_id: publicID,
-  //     batch_number: batchnumber,
-  //   });
-  //   this.apiService.addNewInk(publicID, batchnumber).subscribe({
-  //     next: (data) => {
-  //       console.log(data);
-  //     },
-  //     error: (err) => {
-  //       console.error('Pieleen män, ', err);
-  //     },
-  //   });
-  // }
 }

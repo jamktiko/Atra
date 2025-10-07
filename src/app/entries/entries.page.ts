@@ -8,7 +8,6 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { Entry } from 'src/interface';
-import { entries } from 'src/temporarydata';
 
 @Component({
   selector: 'app-entries',
@@ -25,7 +24,6 @@ import { entries } from 'src/temporarydata';
   ],
 })
 export class EntriesPage implements OnInit {
-  allentries: Entry[] = entries;
   constructor() {}
 
   ngOnInit() {}
