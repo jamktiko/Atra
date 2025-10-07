@@ -1,4 +1,4 @@
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PrivacyPage } from './privacy.page';
 
 describe('PrivacyPage', () => {
@@ -14,8 +14,4 @@ describe('PrivacyPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  it('should pass', () => {
-    expect(true).toBe(true);
-  });
 });
- */

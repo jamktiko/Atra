@@ -11,11 +11,6 @@ describe('AddnewcustomerPage', () => {
     fixture.detectChanges();
   });
 
-  it('should pass', () => {
-    expect(true).toBeTruthy();
-  });
-
-  //temporarily commented out
   it('should create', () => {
     expect(component).toBeTruthy();
   });

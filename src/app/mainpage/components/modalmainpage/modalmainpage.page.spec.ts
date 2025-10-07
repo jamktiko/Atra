@@ -1,4 +1,4 @@
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ModalmainpagePage } from './modalmainpage.page';
 
 describe('ModalmainpagePage', () => {
@@ -15,4 +15,3 @@ describe('ModalmainpagePage', () => {
     expect(component).toBeTruthy();
   });
 });
- */

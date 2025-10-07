@@ -13,13 +13,9 @@ describe('ModalinkPage', () => {
     fixture.detectChanges();
   });
 
+  //can't test modal
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  //this passes
-  it('should pass', () => {
-    expect(true).toBe(true);
   });
 });
  */
