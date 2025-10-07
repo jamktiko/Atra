@@ -20,7 +20,7 @@
   <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
   <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
-  @for (ink of filteredSearch(); track ink.ink_id) {
+  @for (ink of allInks; track ink.ink_id) {
   <div class="box">
     <h3>{{ink.product_name}}</h3>
     <img src="{{ink.image_url}}" width="20%" />

@@ -29,7 +29,7 @@
       </button>
 
       <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
-      @for (ink of filteredSearch(); track ink.user_ink_id) {
+      @for (ink of userInks; track ink.user_ink_id) {
 
       <div class="box">
         <h3>{{ink.product_name}}</h3>
