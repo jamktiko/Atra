@@ -35,8 +35,13 @@
       <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
     </button>
 
+<<<<<<< HEAD
     <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
     @for (ink of filteredSearch(); track ink.name) {
+=======
+      <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
+      @for (ink of userInks; track ink.user_ink_id) {
+>>>>>>> frontend
 
     <div class="box">
       <h3>{{ink.name}}</h3>
