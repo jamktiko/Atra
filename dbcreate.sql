@@ -74,7 +74,6 @@ CREATE TABLE IF NOT EXISTS `atratestdb`.`UserInk` (
   `user_ink_id` INT NOT NULL AUTO_INCREMENT,
   `batch_number` VARCHAR(40) NULL,
   `opened_at` DATE NULL,
-  `image_url` VARCHAR(255) NULL,
   `expires_at` DATE NULL,
   `favorite` TINYINT NULL,
   `PublicInk_ink_id` INT NOT NULL,
