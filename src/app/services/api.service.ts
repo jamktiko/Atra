@@ -33,7 +33,7 @@ export class ApiService {
    * Backend-kutsu listOwnInks()
    */
   getAllUserInks(): Observable<UserInk[]> {
-    return this.http.get<UserInk[]>(`${this.apiUrl}`);
+    return this.http.get<UserInk[]>(`${this.apiUrl}/userInk`);
   }
 
   /**
