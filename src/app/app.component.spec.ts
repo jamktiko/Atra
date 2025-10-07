@@ -1,4 +1,4 @@
-/* import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AppComponent } from './app.component';
 import { IonicModule } from '@ionic/angular';
@@ -31,4 +31,3 @@ describe('AppComponent', () => {
     expect(title).toBeTruthy();
   });
 });
- */
