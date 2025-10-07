@@ -5,48 +5,89 @@
 </ion-header>
 
 <ion-content>
-  <h2 class="text-xl font-lato text-neutral-50 dark:text-white">PUBLIC LIBRARY</h2>
+  <h2 class="text-xl font-lato text-neutral-50 dark:text-white">
+    PUBLIC LIBRARY
+  </h2>
 
-  <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-5 ">
+  <label
+    class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
+    style="margin: 1em; padding: 0.3em"
+  >
+    <input type="checkbox" class="sr-only peer" checked />
+    <!-- Liukuva tausta -->
+    <div
+      class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full"
+    ></div>
+    <!-- Own -->
+    <a
+      tab="inks"
+      href="/tabs/inks"
+      class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-300 block"
+    >
+      Own
+    </a>
+    <!-- Public -->
+    <a
+      tab="inks/publiclibrary"
+      href="/tabs/inks/publiclibrary"
+      class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-50 block"
+    >
+      Public
+    </a>
+  </label>
+
+  <!--   <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-5 ">
     <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary">Ink
       catalog </a>
   </button>
 
   <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-5">
     <a tab="inks/publiclibrary" href="/tabs/inks">Your inks</a>
-  </button>
+  </button> -->
 
-  <p>Here is where you can find our ink library. Browse, admire, or find something new to try.</p>
-  <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
+  <p>
+    Here is where you can find our ink library. Browse, admire, or find
+    something new to try.
+  </p>
+  <ion-searchbar
+    animated="true"
+    placeholder="Search"
+    [(ngModel)]="searchItem"
+  ></ion-searchbar>
 
   <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
   @for (ink of allInks; track ink.ink_id) {
   <div class="box">
-    <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{ink.product_name}}</h3>
+    <h3 class="text-lg font-lato text-neutral-50 dark:text-white">
+      {{ink.product_name}}
+    </h3>
     <img src="{{ink.image_url}}" width="20%" />
 
-    <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
-      <a (click)="chooseInk(true, ink)">Open </a></button>
+    <button
+      class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30"
+    >
+      <a (click)="chooseInk(true, ink)">Open </a>
+    </button>
   </div>
   }
-
 </ion-content>
 
-
-<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+<ion-modal
+  id="example-modal"
+  [isOpen]="isModalOpen"
+  (didDismiss)="setClosed(false)"
+>
   <ng-template>
-
     <!--Tähän saa Milja tehtyä tyylit, HUOM. väliaikaiset tyylit publiclibrary.page.css jotka saa ottaa pois-->
     <div class="wrapper">
-
       <h1>{{selectedInk.product_name}}</h1>
       <img src="{{selectedInk.image_url}}" width="20%" />
       <p>Manufacturer: {{selectedInk.manufacturer}}</p>
       <p>Colour: {{selectedInk.color}}</p>
 
-      <button class="bg-blue-600"> <a (click)="setClosed(false)">Close</a></button>
-
+      <button class="bg-blue-600">
+        <a (click)="setClosed(false)">Close</a>
+      </button>
     </div>
-
   </ng-template>
 </ion-modal>
