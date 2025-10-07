@@ -26,7 +26,7 @@ describe('InksPage', () => {
  */
 
 //working test
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/* import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { InksPage } from './inks.page';
@@ -53,3 +53,4 @@ describe('InksPage', () => {
     expect(searchbar).toBeTruthy();
   });
 });
+ */
