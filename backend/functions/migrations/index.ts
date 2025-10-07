@@ -93,9 +93,9 @@ export const handler: Handler = async (event, ctx) => {
       VALUES ('demo-user-123', 'testi.testaaja@testaajat.com', 'Testi', 'Testaaja');`);
 
     await conn.query(`
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('yes@email.com', 'Aku', 'Asiakas', 'demo-user-123');
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('maybe@email.com', 'Anneli', 'Asiakaspalvelija', 'demo-user-123');
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('no@email.com', 'Jaakko', 'Jaakkonen', 'demo-user-123');`);
+      INSERT INTO Customer (email, first_name, last_name, phone, User_user_id) VALUES ('yes@email.com', 'Aku', 'Asiakas', '0442005678', 'demo-user-123');
+      INSERT INTO Customer (email, first_name, last_name, phone, User_user_id) VALUES ('maybe@email.com', 'Anneli', 'Asiakaspalvelija', '0506789534', 'demo-user-123');
+      INSERT INTO Customer (email, first_name, last_name, phone, User_user_id) VALUES ('no@email.com', 'Jaakko', 'Jaakkonen', '0446753478', 'demo-user-123');`);
 
     await conn.query(`
       INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES

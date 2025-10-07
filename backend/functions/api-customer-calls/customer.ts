@@ -31,7 +31,12 @@ export async function getCustomer(userId: string, customerId: string) {
 
 export async function addCustomer(userId: string, body: string) {
   const pool = await getPool();
-  let data: { email: string; firstName: string; lastName: string };
+  let data: {
+    email: string;
+    first_name: string;
+    last_name: string;
+    phone?: string;
+  };
 
   try {
     data = JSON.parse(body);
@@ -39,14 +44,14 @@ export async function addCustomer(userId: string, body: string) {
     return clientErrorResponse('Invalid jason body');
   }
 
-  if (!data.email || !data.firstName || !data.lastName) {
+  if (!data.email || !data.first_name || !data.last_name) {
     return clientErrorResponse('Missing some required fields');
   }
 
   const [result] = await pool.query(
-    `INSERT INTO Customer (User_user_id, email, first_name, last_name) 
-    VALUES (?, ?, ?, ?)`,
-    [userId, data.email, data.firstName, data.lastName]
+    `INSERT INTO Customer (User_user_id, email, first_name, last_name, phone) 
+    VALUES (?, ?, ?, ?, ?)`,
+    [userId, data.email, data.first_name, data.last_name, data.phone ?? null]
   );
   return successResponse({ insertedId: (result as any).insertId });
 }
