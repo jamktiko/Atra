@@ -33,7 +33,7 @@ jobs:
           npm install -g cypress
           ionic serve --no-open --no-interactive --port=8100 & #runs ionic serve in the background
           SERVER_PID=$!
-          sleep 20
+          sleep 5
           npx cypress run --headless --browser chrome
           sleep 5
           kill $SERVER_PID
