@@ -2,17 +2,17 @@
 
   <!--MODALINK tarvitsee form arrayn tiedot => lähetettävä sille kopio formarraysta-->
   @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()"
-    (delete)="handleDelete($event)"></app-modalink>
+    (delete)="handleDelete($event)" (confirm)="handleConfirm()"></app-modalink>
   }
 
-  <div class="box2">
+  <div class="">
+    <div class="flex-1 p-6 text-neutral-50 text-center space-y-3">
+      <h1 class="text-4xl font-pt-serif">Adding a new ink to your library</h1>
 
-    <h1>Adding a new ink to your library</h1>
-
-    <h3>Start by searching for inks</h3>
+      <h3 class="font-lato">Start by searching for inks</h3>
+    </div>
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-    <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
-      [(ngModel)]="searchItem" />
+    <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem" />
 
   </div>
 
@@ -21,32 +21,36 @@
   <!-- Milja! Älä koske tähän kohtaan :)-->
   <div class="scrollable">
 
-    @for (ink of filteredInks(); track ink.id) {
+    @for (ink of filteredInks(); track ink.ink_id) {
     <!--Tätä voi muokata-->
-    <div class="bg-blue-800 my-2">
+    <div class="bg-slate-950 my-2 p-3">
       <img src="{{ink.image_url}}" width="20%" />
 
       {{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}}
 
-      <input class="bg-blue-400 mx-2" type="button" value="Choose ink" (click)="chooseInk(ink)">
+      <input class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl" type="button"
+        value="Select" (click)="chooseInk(ink)">
     </div>
     }
 
   </div>
 
-  <div>
+  <div class="flex-1 p-6 text-neutral-50 text-center">
     @if (getChosenInks().length > 0 ) {
     <div>
-      <ion-badge>{{getChosenInks().length}}</ion-badge>
-      <ion-label> Inks chosen</ion-label>
+      <ion-badge
+        style="--background: rgb(0, 0, 0); padding: 10px; color: white; border-color: white; border-width: 2px; ">{{getChosenInks().length}}</ion-badge>
+      <span class="text-2xl font-pt-serif"> Inks chosen</span>
+
     </div>
     }
 
-    <button class="bg-blue-800 mx-2">
+    <button class="bg-slate-600 hover:bg-slate-700 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1">
       <a tab="tabs/inks" href="tabs/inks">Cancel</a>
     </button>
 
-    <button class="bg-blue-800 mx-2" (click)="review()" [disabled]="getChosenInks().length < 1">Continue</button>
+    <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1"
+      (click)="review()" [disabled]="getChosenInks().length < 1">Continue</button>
   </div>
 
 </ion-content>

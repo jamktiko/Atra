@@ -46,7 +46,7 @@ export class ApiService {
   /**
    * Backend-kutsu addUserInk()
    */
-  addNewUserInk(userInkData: UserInk): Observable<UserInk> {
+  addNewUserInk(userInkData: any): Observable<UserInk> {
     return this.http.post<UserInk>(`${this.apiUrl}/userInk`, userInkData);
   }
 

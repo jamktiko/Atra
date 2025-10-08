@@ -12,7 +12,7 @@ import { IonContent, IonHeader, IonText } from '@ionic/angular/standalone';
   imports: [
     IonContent,
     IonHeader,
-    IonText,
+
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -22,6 +22,7 @@ export class ModalinkPage implements OnInit {
   @Input() chosenInks!: FormArray;
   @Output() cancel = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();
+  @Output() confirm = new EventEmitter<any>();
 
   /**
    * Ottaa kaikki musteet ja niiden tiedot choseninks.value avulla tässä muodossa:
@@ -86,5 +87,6 @@ export class ModalinkPage implements OnInit {
   sendConfirm() {
     console.log('Inks added successfully: ');
     console.log(this.getInksData());
+    this.confirm.emit();
   }
 }
