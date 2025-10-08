@@ -88,14 +88,15 @@ export class ApiStack extends Stack {
       // jotta frontti voi tehdä pyyntöjä apille
       // Muista lisätä frontin domaini allowOrigins:iin !!!!
       corsPreflight: {
-        allowHeaders: ['Content-Type'], // <-- lisää 'Authorization' takas!
+        allowHeaders: ['Content-Type', 'Authorization'],
         allowMethods: [
           apigw2.CorsHttpMethod.GET,
           apigw2.CorsHttpMethod.POST,
           apigw2.CorsHttpMethod.PUT,
           apigw2.CorsHttpMethod.DELETE,
+          apigw2.CorsHttpMethod.OPTIONS,
         ],
-        allowOrigins: [`https://${frontendDomain}`],
+        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`],
       },
     });
     return api;
@@ -138,13 +139,13 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/customer',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
     this.api.addRoutes({
       path: '/customer/{id}',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
@@ -167,13 +168,13 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/publicInk',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.GET],
       integration,
     });
 
     this.api.addRoutes({
       path: '/publicInk/{id}',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.GET],
       integration,
     });
 
@@ -196,13 +197,13 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/userInk',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
     this.api.addRoutes({
       path: '/userInk/{id}',
-      methods: [apigw2.HttpMethod.ANY],
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
       integration,
     });
 
