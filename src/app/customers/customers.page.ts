@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -12,7 +12,7 @@ import { Customer } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { routes } from '../tabs/tabs.routes';
-import { Route, Routes, RoutesRecognized } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -44,9 +44,13 @@ export class CustomersPage implements OnInit {
   chosenCustomer: any;
   isModalOpen: boolean = false;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
+    this.loadCustomers();
+  }
+
+  loadCustomers() {
     this.apiService.getAllCustomers().subscribe({
       next: (data) => {
         this.allcustomers = data;
@@ -76,4 +80,6 @@ export class CustomersPage implements OnInit {
   setClosed(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
+
+  handleUpdate() {}
 }
