@@ -101,7 +101,7 @@ export class AddnewcustomerPage {
     this.apiService.addNewCustomer(this.customer).subscribe({
       next: (data) => {
         this.customer = data;
-        this.router.navigate(['/tabs/customers'], { state: { refresh: true } });
+        this.router.navigate(['/tabs/customers']);
       },
       error: (err) => {
         console.error('Something went wrong: ', err);

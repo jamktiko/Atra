@@ -12,7 +12,8 @@ import { Customer } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { routes } from '../tabs/tabs.routes';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customers',
@@ -48,6 +49,14 @@ export class CustomersPage implements OnInit {
 
   ngOnInit() {
     this.loadCustomers();
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/tabs/customers') {
+          this.loadCustomers();
+        }
+      });
   }
 
   loadCustomers() {
@@ -80,8 +89,6 @@ export class CustomersPage implements OnInit {
   setClosed(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
-
-  handleUpdate() {}
 
   addNew() {
     this.router.navigate(['/tabs/customers/addnewcustomer']);
