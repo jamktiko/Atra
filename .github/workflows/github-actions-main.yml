@@ -31,8 +31,11 @@ jobs:
           npm install -g @ionic/cli
           npm install -g @angular/cli
           npm install -g cypress
-          ionic serve --no-open --no-interactive
+          ionic serve --no-open --no-interactive --port=8100 & #runs ionic serve in the background
+          SERVER_PID=$!
           sleep 20
           npx cypress run --headless --browser chrome
+          sleep 5
+          kill $SERVER_PID
       - name: Final status
         run: echo "This job's status is ${{ job.status }}."
