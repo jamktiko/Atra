@@ -45,12 +45,12 @@
     </div>
     }
 
-    <button class="bg-slate-600 hover:bg-slate-700 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1">
+    <button class="bg-slate-600 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1">
       <a tab="tabs/inks" href="tabs/inks">Cancel</a>
     </button>
 
-    <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1"
-      (click)="review()" [disabled]="getChosenInks().length < 1">Continue</button>
+    <button class="bg-slate-800 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1" (click)="review()"
+      [disabled]="getChosenInks().length < 1">Continue</button>
   </div>
 
 </ion-content>

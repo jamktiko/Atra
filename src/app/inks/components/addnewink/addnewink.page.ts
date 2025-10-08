@@ -18,6 +18,7 @@ import { PublicInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-addnewink',
@@ -51,14 +52,18 @@ export class AddnewinkPage implements OnInit {
     chosenInks: new FormArray([]),
   });
 
-  constructor(
-    private apiService: ApiService,
-    private navCtrl: NavigationEnd,
-    private router: Router
-  ) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.getInks();
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/tabs/customers') {
+          this.getInks();
+        }
+      });
   }
 
   getInks() {
@@ -149,14 +154,14 @@ export class AddnewinkPage implements OnInit {
     }
   }
 
-  handleConfirm() {
+  getInksToAdd() {
     const inks = this.inkGroup.get('chosenInks') as FormArray;
 
-    const addedInks: { publicink_ink_id: number; batch_number: string }[] = [];
+    const addedInks: { PublicInk_ink_id: number; batch_number: string }[] = [];
 
     inks.value.forEach((ink: any) => {
       addedInks.push({
-        publicink_ink_id: ink.publicink_ink_id,
+        PublicInk_ink_id: ink.ink_id,
         batch_number: ink.batch_number,
       });
     });
@@ -164,8 +169,9 @@ export class AddnewinkPage implements OnInit {
     return addedInks;
   }
 
-  addNewToUser() {
-    const inkData = this.handleConfirm();
+  handleConfirm() {
+    const inkData = this.getInksToAdd();
+    console.log('Postin to backend: ', inkData);
 
     this.apiService.addNewUserInk(inkData).subscribe({
       next: (data) => {

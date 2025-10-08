@@ -2,7 +2,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule, FormArray } from '@angular/forms';
-import { IonContent, IonHeader, IonText } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonText,
+  IonButton,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-modalink',
@@ -12,7 +17,7 @@ import { IonContent, IonHeader, IonText } from '@ionic/angular/standalone';
   imports: [
     IonContent,
     IonHeader,
-
+    IonButton,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -72,11 +77,11 @@ export class ModalinkPage implements OnInit {
 
   /**
    * Käsittelee continue-nappulan disabloinnin, mikäli yksikin inksToReview-taulukon batchnumber on tyhjä merkkijono
-   *Palauttaa true, mikäli yhdessäkin batchnumberissa on tyhjä merkkijono. Muussa tapauksessa false => ei disabloitu
+   * Palauttaa true, mikäli yhdessäkin batchnumberissa on tyhjä merkkijono. Muussa tapauksessa false => ei disabloitu
    */
   disableButton() {
     return this.inksToReview.every(
-      (ink) => ink.batchnumber && ink.batchnumber.trim() !== ''
+      (ink) => ink.batch_number && ink.batch_number.trim() !== ''
     );
   }
 
@@ -85,8 +90,6 @@ export class ModalinkPage implements OnInit {
    * Tässä vaiheessa tulostaa päivitetyn inksToReviewn, jossa mukana uudet batchnumberit
    */
   sendConfirm() {
-    console.log('Inks added successfully: ');
-    console.log(this.getInksData());
     this.confirm.emit();
   }
 }
