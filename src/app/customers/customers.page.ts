@@ -11,6 +11,8 @@ import {
 import { Customer } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
+import { routes } from '../tabs/tabs.routes';
+import { Route, Routes, RoutesRecognized } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -37,33 +39,12 @@ export class CustomersPage implements OnInit {
    *
    */
 
-  allcustomers!: Customer[];
+  allcustomers: Customer[] = [];
 
   chosenCustomer: any;
   isModalOpen: boolean = false;
 
   constructor(private apiService: ApiService) {}
-
-  filteredCustomers() {
-    const search = this.searchItem!.toLowerCase();
-
-    return this.allcustomers.filter(
-      (customer) =>
-        customer.first_name.toLowerCase().includes(search) ||
-        customer.last_name.toLowerCase().includes(search) ||
-        customer.email.toLocaleLowerCase().includes(search) ||
-        customer.phone.includes(search)
-    );
-  }
-
-  chooseCustomer(isOpen: boolean, customer: any) {
-    this.isModalOpen = isOpen;
-    this.chosenCustomer = customer;
-  }
-
-  setClosed(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-  }
 
   ngOnInit() {
     this.apiService.getAllCustomers().subscribe({
@@ -74,5 +55,25 @@ export class CustomersPage implements OnInit {
         console.error('Pieleen män, ', err);
       },
     });
+  }
+
+  filteredCustomers() {
+    const search = this.searchItem!.toLowerCase() ?? '';
+
+    return this.allcustomers.filter(
+      (customer) =>
+        customer.first_name.toLowerCase().includes(search) ||
+        customer.last_name.toLowerCase().includes(search) ||
+        customer.email.toLowerCase().includes(search)
+    );
+  }
+
+  chooseCustomer(isOpen: boolean, customer: any) {
+    this.isModalOpen = isOpen;
+    this.chosenCustomer = customer;
+  }
+
+  setClosed(isOpen: boolean) {
+    this.isModalOpen = isOpen;
   }
 }
