@@ -82,4 +82,8 @@ export class CustomersPage implements OnInit {
   }
 
   handleUpdate() {}
+
+  addNew() {
+    this.router.navigate(['/tabs/customers/addnewcustomer']);
+  }
 }

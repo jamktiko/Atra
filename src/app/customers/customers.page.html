@@ -14,15 +14,14 @@
       <ion-searchbar style="--background: #0b244d; --color: white;" placeholder="Search"
         [(ngModel)]="searchItem"></ion-searchbar>
 
-      <button
+      <button (click)="addNew()"
         class="flex items-center gap-2 px-4 py-2 bg-slate-600 text-white font-lato border border-neutral-50 rounded-full hover:bg-slate-800 transition">
-        <a tab="customers/addnewcustomer" href="tabs/customers/addnewcustomer">
-          <span class="text-l">
-            +
-          </span>
-          <span>Add new
-          </span>
-        </a>
+
+        <span class="text-l">
+          +
+        </span>
+        <span>Add new
+        </span>
 
       </button>
 

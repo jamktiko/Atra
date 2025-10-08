@@ -108,4 +108,8 @@ export class AddnewcustomerPage {
       },
     });
   }
+
+  back() {
+    this.router.navigate(['/tabs/customers']);
+  }
 }
