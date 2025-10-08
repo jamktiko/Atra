@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { UniversalmodalPage } from 'src/app/shared/universalmodal/universalmodal.page';
 import { Customer, CustomerCreation } from 'src/interface';
 
 import {
