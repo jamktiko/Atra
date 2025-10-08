@@ -45,7 +45,7 @@ export class InksPage implements OnInit {
 
   /* Tuotantovaiheessa hakee mustedatan apiservicen perusteeella
    */
-  userInks!: UserInk[];
+  userInks: UserInk[] = [];
 
   /*Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa kovakoodattu feikkidata
    */

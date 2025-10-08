@@ -58,6 +58,8 @@ export class AddnewcustomerPage {
   // HTML-templaatissa  @if (openModal) {<app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel()" [openModal]="openModal"></app-modalcustomer>}
   openModal: boolean = false;
 
+  constructor(private apiService: ApiService) {}
+
   showModal() {
     this.openModal = true;
   }
@@ -93,8 +95,6 @@ export class AddnewcustomerPage {
       phone: '',
     };
   }
-
-  constructor(private apiService: ApiService) {}
 
   /** */
   addNewCustomer() {

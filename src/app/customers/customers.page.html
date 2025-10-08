@@ -11,7 +11,7 @@
     <div>
       <h2>Customers</h2>
       <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-      <ion-searchbar style="--background: #3b82f6; --color: white;" animated="true" placeholder="Search"
+      <ion-searchbar style="--background: #0b244d; --color: white;" placeholder="Search"
         [(ngModel)]="searchItem"></ion-searchbar>
 
       <button
@@ -30,7 +30,7 @@
     </div>
 
     <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
-    @for (customer of allcustomers; track customer.customer_id) {
+    @for (customer of filteredCustomers(); track customer.email) {
     <div class="flex flex-col bg-slate-950 border border-neutral-50/60 rounded-xl my-5">
       <div class="p-3 md:p-5">
         <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{customer.last_name}}, {{customer.first_name}}
@@ -41,9 +41,7 @@
         <a (click)="chooseCustomer(true, customer)">Open </a></button>
     </div>
     }
-    <div
-      class="pointer-events-none absolute bottom-0 left-0 right-0 h-30 bg-gradient-to-t from-neutral-950 to-transparent z-0">
-    </div>
+
   </div>
 </ion-content>
 
