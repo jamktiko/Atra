@@ -1,5 +1,5 @@
-describe("Temporary basic truthiness test", () => {
-  it("true is true", () => {
-    expect(true).to.equal(true);
+describe("Basic app existence test", () => {
+  it("Can find app", () => {
+    cy.visit("http://localhost:8100"); // Adjust the URL as needed
   });
 });
