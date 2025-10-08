@@ -8,7 +8,7 @@ import { getPool } from '../shared/db';
 export async function listCustomers(userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT c.first_name, c.last_name, c.email FROM Customer c WHERE User_user_id = ?`,
+    `SELECT c.customer_id, c.first_name, c.last_name, c.email FROM Customer c WHERE User_user_id = ?`,
     [userId]
   );
   return successResponse(rows);
@@ -17,7 +17,7 @@ export async function listCustomers(userId: string) {
 export async function getCustomer(userId: string, customerId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT c.first_name, c.last_name, c.email
+    `SELECT c.customer_id, c.first_name, c.last_name, c.email
     FROM Customer c
     WHERE c.customer_id = ? AND c.User_user_id = ?`,
     [customerId, userId]

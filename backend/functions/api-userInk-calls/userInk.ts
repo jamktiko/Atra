@@ -10,7 +10,7 @@ export async function listOwnInks(userId: string) {
   const [rows] = await pool.query(
     `SELECT  
     pi.product_name, pi.manufacturer, pi.color, pi.size, ui.batch_number, ui.opened_at, 
-    ui.expires_at, ui.favorite, pi.recalled, pi.image_url  
+    ui.expires_at, ui.favorite, ui.user_ink_id, pi.recalled, pi.image_url  
     FROM UserInk ui
     INNER JOIN PublicInk pi
     ON ui.PublicInk_ink_id = pi.ink_id  
@@ -23,7 +23,7 @@ export async function listOwnInks(userId: string) {
 export async function getUserInk(userInkId: string, userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT ui.user_ink_id, ui.batch_number, ui.opened_at, ui.expires_at, ui.favorite,
+    `SELECT ui.user_ink_id, ui.batch_number, ui.opened_at, ui.expires_at, ui.favorite, ui.user_ink_id,
     pi.ink_id, pi.product_name, pi.manufacturer, pi.color, pi.size
     FROM UserInk ui
     JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
