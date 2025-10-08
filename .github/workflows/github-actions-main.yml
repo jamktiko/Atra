@@ -26,14 +26,12 @@ jobs:
           cd backend
           npm install
           npm test
-      #- name: Serve built app
-      #  run: |
-      #    npx serve hosting &
-      #    sleep 5
-      #- name: Run Cypress tests
-      #  uses: cypress-io/github-action@v6
-      #  with:
-      #    wait-on: http://localhost:3000
-      #    wait-on-timeout: 60
+      - name: Run e2e tests
+        run: |
+          npm install -g @ionic/cli
+          npm install -g @angular/cli
+          npm install -g cypress
+          # ionic build # might be necessary
+          npx cypress run --headless --browser chrome
       - name: Final status
         run: echo "This job's status is ${{ job.status }}."

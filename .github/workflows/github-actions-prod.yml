@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - prod
+  workflow_dispatch: #Manual triggering
 jobs:
   Deploy-Prod:
     runs-on: ubuntu-latest
