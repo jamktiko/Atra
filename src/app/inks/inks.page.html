@@ -62,28 +62,30 @@
         {{ink.batch_number}}
       </p>
       <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
-        <a (click)="chooseInk(true, ink)">Open </a>
-      </button>
+        <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
+          <a (click)="chooseInk(true, ink)">Open </a>
+        </button>
     </div>
     }
   </div>
 </ion-content>
 
 <ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
-  <ng-template>
-    <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
+  <ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+    <ng-template>
+      <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
     jotka voi ottaa pois -->
-    <div class="wrapper">
-      <img src="{{selectedInk.image_url}}" width="20%" />
-      <h1>{{selectedInk.product_name}}</h1>
-      <p>Colour: {{selectedInk.color}}</p>
-      <p>Size: {{selectedInk.size}}</p>
-      <p>Batchnumber: {{selectedInk.batch_number}}</p>
-      <p>Opened: {{selectedInk.opened_at}}</p>
-      <p>Expires: {{selectedInk.expires_at}}</p>
-      <button class="bg-blue-600">
-        <a (click)="setClosed(false)">Close</a>
-      </button>
-    </div>
-  </ng-template>
-</ion-modal>
+      <div class="wrapper">
+        <img src="{{selectedInk.image_url}}" width="20%" />
+        <h1>{{selectedInk.product_name}}</h1>
+        <p>Colour: {{selectedInk.color}}</p>
+        <p>Size: {{selectedInk.size}}</p>
+        <p>Batchnumber: {{selectedInk.batch_number}}</p>
+        <p>Opened: {{selectedInk.opened_at}}</p>
+        <p>Expires: {{selectedInk.expires_at}}</p>
+        <button class="bg-blue-600">
+          <a (click)="setClosed(false)">Close</a>
+        </button>
+      </div>
+    </ng-template>
+  </ion-modal>
