@@ -31,7 +31,8 @@ jobs:
           npm install -g @ionic/cli
           npm install -g @angular/cli
           npm install -g cypress
-          # ionic build # might be necessary
+          ionic build # might be necessary
+          sleep 20
           npx cypress run --headless --browser chrome
       - name: Final status
         run: echo "This job's status is ${{ job.status }}."
