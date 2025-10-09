@@ -9,8 +9,7 @@ import { Customer } from 'src/interface';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl =
-    'https://lfpqr457ka.execute-api.eu-north-1.amazonaws.com/customer';
+  private apiUrl = 'https://lfpqr457ka.execute-api.eu-north-1.amazonaws.com';
 
   constructor(private http: HttpClient) {}
 

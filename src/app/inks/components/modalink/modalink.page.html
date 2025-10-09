@@ -48,7 +48,9 @@
     <h3 class="text-2xl font-pt-serif">Got everything you need?</h3>
     <button class="bg-slate-600 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1" (click)="sendCancel()">No, go
       back</button>
-    <ion-button (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</ion-button>
+    <button
+      class="bg-slate-800 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1 disabled:bg-slate-9850 disabled:text-gray-500"
+      (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</button>
   </div>
   }
 
