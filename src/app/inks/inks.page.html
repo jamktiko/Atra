@@ -11,49 +11,34 @@
       <h2 class="text-4xl font-pt-serif">Your Library</h2>
       <h3 class="font-lato">We keep all your inks in this library.</h3>
 
-      <label
-        class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
-        style="margin: 1em; padding: 0.3em"
-      >
+      <label class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
+        style="margin: 1em; padding: 0.3em">
         <input type="checkbox" class="sr-only peer" />
         <!-- Liukuva tausta -->
         <div
-          class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full"
-        ></div>
+          class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
+        </div>
         <!-- Own -->
-        <a
-          tab="inks"
-          href="/tabs/inks"
-          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block"
-        >
+        <a tab="inks" href="/tabs/inks"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block">
           Own
         </a>
         <!-- Public -->
-        <a
-          tab="inks/publiclibrary"
-          href="/tabs/inks/publiclibrary"
-          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block"
-        >
+        <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block">
           Public
         </a>
       </label>
-
-      <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
     </div>
 
-    <ion-searchbar
-      animated="true"
-      placeholder="Search"
-      [(ngModel)]="searchItem"
-    ></ion-searchbar>
+    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+    <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
     <div class="flex items-center justify-content">
       <button
-        class="flex items-center my-2 gap-2 px-4 py-2 bg-slate-600 text-white font-lato border border-neutral-50 rounded-full hover:bg-slate-800 transition"
-      >
+        class="flex items-center my-2 gap-2 px-4 py-2 bg-slate-600 text-white font-lato border border-neutral-50 rounded-full hover:bg-slate-800 transition">
         <a tab="inks/addnewink" href="/tabs/inks/addnewink">
-          <span class="text-l"> + </span> Add new</a
-        >
+          <span class="text-l"> + </span> Add new</a>
       </button>
     </div>
 
@@ -69,9 +54,7 @@
         {{ink.batch_number}}
       </p>
 
-      <button
-        class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
-      >
+      <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
         <a (click)="chooseInk(true, ink)">Open </a>
       </button>
     </div>
@@ -79,31 +62,23 @@
   </div>
 </ion-content>
 
-<ion-modal
-  id="example-modal"
-  [isOpen]="isModalOpen"
-  (didDismiss)="setClosed(false)"
->
-  <ion-modal
-    id="example-modal"
-    [isOpen]="isModalOpen"
-    (didDismiss)="setClosed(false)"
-  >
-    <ng-template>
-      <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
+<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+
+  <ng-template>
+    <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
     jotka voi ottaa pois -->
-      <div class="wrapper">
-        <img src="{{selectedInk.image_url}}" width="20%" />
-        <h1>{{selectedInk.product_name}}</h1>
-        <p>Colour: {{selectedInk.color}}</p>
-        <p>Size: {{selectedInk.size}}</p>
-        <p>Batchnumber: {{selectedInk.batch_number}}</p>
-        <p>Opened: {{selectedInk.opened_at}}</p>
-        <p>Expires: {{selectedInk.expires_at}}</p>
-        <button class="bg-blue-600">
-          <a (click)="setClosed(false)">Close</a>
-        </button>
-      </div>
-    </ng-template>
-  </ion-modal></ion-modal
->
+    <div class="wrapper">
+      <img src="{{selectedInk.image_url}}" width="20%" />
+      <h1>{{selectedInk.product_name}}</h1>
+      <p>Colour: {{selectedInk.color}}</p>
+      <p>Size: {{selectedInk.size}}</p>
+      <p>Batchnumber: {{selectedInk.batch_number}}</p>
+      <p>Opened: {{selectedInk.opened_at}}</p>
+      <p>Expires: {{selectedInk.expires_at}}</p>
+      <button class="bg-blue-600">
+        <a (click)="setClosed(false)">Close</a>
+      </button>
+    </div>
+  </ng-template>
+
+</ion-modal>
