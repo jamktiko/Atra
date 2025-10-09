@@ -36,7 +36,7 @@
 
     <div class="flex items-center justify-content">
       <button
-        class="flex items-center my-2 gap-2 px-4 py-2 bg-slate-600 text-white font-lato border border-neutral-50 rounded-full hover:bg-slate-800 transition">
+        class="flex items-center my-2 gap-2 px-4 py-2 bg-slate-600 text-white font-lato border border-neutral-50 rounded-full bg-slate-800 transition">
         <a tab="inks/addnewink" href="/tabs/inks/addnewink">
           <span class="text-l"> + </span> Add new</a>
       </button>
@@ -54,7 +54,7 @@
         {{ink.batch_number}}
       </p>
 
-      <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
+      <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
         <a (click)="chooseInk(true, ink)">Open </a>
       </button>
     </div>
@@ -67,7 +67,7 @@
   <ng-template>
     <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
     jotka voi ottaa pois -->
-    <div class="wrapper">
+    <div class="bg-slate-950 my-2 p-3">
       <img src="{{selectedInk.image_url}}" width="20%" />
       <h1>{{selectedInk.product_name}}</h1>
       <p>Colour: {{selectedInk.color}}</p>
@@ -75,9 +75,11 @@
       <p>Batchnumber: {{selectedInk.batch_number}}</p>
       <p>Opened: {{selectedInk.opened_at}}</p>
       <p>Expires: {{selectedInk.expires_at}}</p>
-      <button class="bg-blue-600">
+
+      <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
         <a (click)="setClosed(false)">Close</a>
       </button>
+
     </div>
   </ng-template>
 
