@@ -1,9 +1,10 @@
 <ion-content [fullscreen]="true">
   <ion-header class="box2" collapse="condense">
 
-    <h2>Review</h2>
-    <ion-text>Look and check</ion-text>
-
+    <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
+      <h2 class="text-4xl font-pt-serif">Review</h2>
+      <h3 class="text-lg">Please check your selections and <strong>insert batchnumbers.</strong></h3>
+    </div>
   </ion-header>
 
   <!--If-lohko hallinnoimassa näkymää: jos musteita ei valittu, näytetään else-osio -->
@@ -13,20 +14,19 @@
   <div class="scrollable">
     <!-- Käy inkstoreview-taulukon eli kaikki valitut musteet läpi for-loopilla-->
 
-    @for (ink of inksToReview; let i = $index; track i) {
-    <div class="bg-blue-800 my-2">
+    @for (ink of inksToReview; track ink.ink_id) {
+    <div class="bg-slate-900 my-2 p-3 mx-2">
 
-      <p>{{ink.product_name}} - {{ink.size}}
-        {{ink.manufacturer}} - {{ink.color}} </p>
+      <p>{{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}} </p>
 
-      <img src="{{ink.imageUrl}}" width="25%" />
+      <img src="{{ink.image_url}}" width="25%" />
 
       <!--FormControlissa määritelty ink.batchnumber alustetaan tässä vaiheessa ngModelilla template form-tyylisesti,
     eli muuttujan kaksisuuntainen sitominen. Tieto päivittyy sekä modalink että addnewink-komponentilla.
     Komponenttien välillä voi liikkua, musteita voi poistaa ja lisätä, ja jo lisätyt batchnumberit jäävät paikalleen,
     vaikka käyttäjä muuttaa valikoimaa kesken-->
-      <input class="bg-blue-400 mx-2" type="text" placeholder="Insert batchnumber" [(ngModel)]="ink.batchnumber"
-        required #batchnumber="ngModel" />
+      <input class="bg-slate-700 mx-1 my-1 py-1 px-2" type="text" placeholder="Insert batchnumber"
+        [(ngModel)]="ink.batch_number" required #batchnumber="ngModel" />
 
       <!-- Tässä käytetään FormControlia varmistamaan Validatorsin avulla, että batchnumber on täytetty
      Huomaa addnewink.ts, jossa batchnumber: new FormControl('', Validators.required) => täytyy olla täytetty, jotta
@@ -37,27 +37,29 @@
       </div>
       }
 
-      <button class="bg-blue-400 mx-2" (click)="sendDelete(ink)">Delete</button>
+      <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+        (click)="sendDelete(ink)">Delete</button>
     </div>
 
 
     }
   </div>
-  <div class="box2">
-    <h3>Got everything you need?</h3>
-    <button class="bg-blue-400 mx-2" (click)="sendCancel()">No, go back</button>
-    <button class="bg-blue-400 mx-2" (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</button>
+  <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
+    <h3 class="text-2xl font-pt-serif">Got everything you need?</h3>
+    <button class="bg-slate-600 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1" (click)="sendCancel()">No, go
+      back</button>
+    <ion-button (click)="sendConfirm()" [disabled]="!disableButton()">Yes, continue</ion-button>
   </div>
   }
 
   @else {
-  <div class="box2">
+  <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
     <h2>No inks chosen.</h2>
   </div>
   <div class="box2">
     <h3>At least one ink has to be chosen to proceed. </h3>
     <button class="bg-white mx-2" (click)="sendCancel()">Go back</button>
-    <!-- <ion-button (click)="sendConfirm()" [disabled]="true">Continue</ion-button> -->
+    <button (click)="sendConfirm()" [disabled]="true">Continue</button>
 
   </div>
   }

@@ -8,7 +8,7 @@ import { getPool } from '../shared/db';
 export async function listPublicInks() {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT ink_id, manufacturer, color, product_name
+    `SELECT ink_id, product_name, manufacturer, color, recalled, image_url, size
     FROM PublicInk
     ORDER BY manufacturer`
   );
@@ -18,7 +18,7 @@ export async function listPublicInks() {
 export async function getPublicInk(ink_id: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT manufacturer, color, product_name
+    `SELECT ink_id, product_name, manufacturer, color, recalled, image_url, size
     FROM PublicInk
     WHERE ink_id = ?`,
     [ink_id]

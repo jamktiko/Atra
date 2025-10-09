@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/* import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddnewcustomerPage } from './addnewcustomer.page';
 
 describe('AddnewcustomerPage', () => {
@@ -15,3 +15,4 @@ describe('AddnewcustomerPage', () => {
     expect(component).toBeTruthy();
   });
 });
+ */

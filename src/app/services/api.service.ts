@@ -9,8 +9,7 @@ import { Customer } from 'src/interface';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl =
-    'https://ogco0iemlc.execute-api.eu-north-1.amazonaws.com/test/';
+  private apiUrl = 'https://b23a0j2ar5.execute-api.eu-north-1.amazonaws.com';
 
   constructor(private http: HttpClient) {}
 
@@ -34,7 +33,7 @@ export class ApiService {
    * Backend-kutsu listOwnInks()
    */
   getAllUserInks(): Observable<UserInk[]> {
-    return this.http.get<UserInk[]>(`${this.apiUrl}`);
+    return this.http.get<UserInk[]>(`${this.apiUrl}/userInk`);
   }
 
   /**
@@ -47,7 +46,7 @@ export class ApiService {
   /**
    * Backend-kutsu addUserInk()
    */
-  addNewUserInk(userInkData: UserInk): Observable<UserInk> {
+  addNewUserInk(userInkData: any): Observable<UserInk> {
     return this.http.post<UserInk>(`${this.apiUrl}/userInk`, userInkData);
   }
 

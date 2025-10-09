@@ -93,59 +93,32 @@ export const handler: Handler = async (event, ctx) => {
       VALUES ('demo-user-123', 'testi.testaaja@testaajat.com', 'Testi', 'Testaaja');`);
 
     await conn.query(`
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('yes@email.com', 'Aku', 'Asiakas', 'demo-user-123');
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('maybe@email.com', 'Anneli', 'Asiakaspalvelija', 'demo-user-123');
-      INSERT INTO Customer (email, first_name, last_name, User_user_id) VALUES ('no@email.com', 'Jaakko', 'Jaakkonen', 'demo-user-123');`);
+      INSERT INTO Customer (email, first_name, last_name, phone, User_user_id) VALUES ('yes@email.com', 'Aku', 'Asiakas', '0442005678', 'demo-user-123');
+      INSERT INTO Customer (email, first_name, last_name, phone, User_user_id) VALUES ('maybe@email.com', 'Anneli', 'Asiakaspalvelija', '0506789534', 'demo-user-123');
+      INSERT INTO Customer (email, first_name, last_name, phone, User_user_id) VALUES ('no@email.com', 'Jaakko', 'Jaakkonen', '0446753478', 'demo-user-123');`);
 
     await conn.query(`
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Tattoo Finish', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Violet', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('London Fog', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Bright Orange', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Shadow Ink', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Black Gold', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Miami Blue', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Sydney Sky', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Paris Green', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Snow White Opaque', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Berlin Gray', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Sunset Orange', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('White', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Canary Yellow', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Barcelona Brown', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Lemon Yellow', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Tokyo Pink', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('True Magenta', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Liner Ink', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Dark Sumy', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Jet Black', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Mint Green', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Golden Yellow', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Black', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Velvet Black', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Bright Red', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('XXX Tribal Black', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Coral', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Deep Black', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Lavender', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Light Sumy', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Smooth Black', 'Panthera Ink', 'Panthera Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Rio Yellow', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Jungle Green', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Crimson Red', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Turquoise', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Peach', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Zuper Black', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Slate Blue', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Light Purple', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Sky Blue', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Moscow Red', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('True Blue', 'Eternal Ink', 'Eternal Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Sienna', 'Intenze', 'Intenze', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('New York Black', 'World Famous Ink', 'World Famous Ink', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Royal Blue', 'Radiant', 'Radiant', 0, '', '30ml');
-      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES ('Aqua', 'Intenze', 'Intenze', 0, '', '30ml');
-      `);
+      INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size) VALUES
+      ('Panthera Black', 'Panthera Ink', 'Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Panthera Shadow', 'Panthera Ink', 'Dark Gray', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Eternal Jet Black', 'Eternal Ink', 'Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Eternal Chocolate Brown', 'Eternal Ink', 'Brown', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('World Famous London Fog', 'World Famous Ink', 'Gray', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('World Famous Mint Green', 'World Famous Ink', 'Green', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '180ml'),
+      ('Intenze Chrome Yellow', 'Intenze', 'Yellow', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '22ml'),
+      ('Intenze Purple Rain', 'Intenze', 'Purple', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Radiant Bright Orange', 'Radiant Ink', 'Orange', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Radiant Deep Turquoise', 'Radiant Ink', 'Turquoise', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Dynamic Black', 'Dynamic', 'Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Dynamic Light Gray', 'Dynamic', 'Light Gray', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Kuro Sumi Carbon', 'Kuro Sumi', 'Carbon Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '44ml'),
+      ('Kuro Sumi Gray Wash', 'Kuro Sumi', 'Gray Wash', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Cosmoink Violet', 'Cosmoink', 'Violet', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Cosmoink Midnight Blue', 'Cosmoink', 'Blue', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Panthera Velvet Black', 'Panthera Ink', 'Velvet Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Panthera Bright Red', 'Panthera Ink', 'Red', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '88ml'),
+      ('Quantum Ink Silver', 'Quantum Ink', 'Silver', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
+      ('Quantum Ink Rose Pink', 'Quantum Ink', 'Pink', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml');`);
 
     await conn.query(`
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('123456', DATE("2025-01-01"), DATE("2026-01-01"), 0, 5, 'demo-user-123');

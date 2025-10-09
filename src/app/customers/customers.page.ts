@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -11,6 +11,9 @@ import {
 import { Customer } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
+import { routes } from '../tabs/tabs.routes';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customers',
@@ -37,22 +40,44 @@ export class CustomersPage implements OnInit {
    *
    */
 
-  allcustomers!: Customer[];
+  allcustomers: Customer[] = [];
 
   chosenCustomer: any;
   isModalOpen: boolean = false;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
+
+  ngOnInit() {
+    this.loadCustomers();
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/tabs/customers') {
+          this.loadCustomers();
+        }
+      });
+  }
+
+  loadCustomers() {
+    this.apiService.getAllCustomers().subscribe({
+      next: (data) => {
+        this.allcustomers = data;
+      },
+      error: (err) => {
+        console.error('Pieleen män, ', err);
+      },
+    });
+  }
 
   filteredCustomers() {
-    const search = this.searchItem!.toLowerCase();
+    const search = this.searchItem!.toLowerCase() ?? '';
 
     return this.allcustomers.filter(
       (customer) =>
         customer.first_name.toLowerCase().includes(search) ||
         customer.last_name.toLowerCase().includes(search) ||
-        customer.email.toLocaleLowerCase().includes(search) ||
-        customer.phone.includes(search)
+        customer.email.toLowerCase().includes(search)
     );
   }
 
@@ -65,14 +90,7 @@ export class CustomersPage implements OnInit {
     this.isModalOpen = isOpen;
   }
 
-  ngOnInit() {
-    this.apiService.getAllCustomers().subscribe({
-      next: (data) => {
-        this.allcustomers = data;
-      },
-      error: (err) => {
-        console.error('Pieleen män, ', err);
-      },
-    });
+  addNew() {
+    this.router.navigate(['/tabs/customers/addnewcustomer']);
   }
 }

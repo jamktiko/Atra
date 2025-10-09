@@ -17,6 +17,8 @@ import { ModalinkPage } from '../modalink/modalink.page';
 import { PublicInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-addnewink',
@@ -27,17 +29,16 @@ import { ApiService } from 'src/app/services/api.service';
     IonContent,
     CommonModule,
     FormsModule,
-
     IonSearchbar,
     IonSearchbar,
     ModalinkPage,
     IonBadge,
-    IonLabel,
   ],
 })
 export class AddnewinkPage implements OnInit {
-  publicInks!: PublicInk[];
+  publicInks: PublicInk[] = [];
 
+  inksToAdd: any = [];
   searchItem: string = '';
 
   /* Muuttuja, jonka avulla ylläpidetään app-modalink-komponentin näkyvyyttä */
@@ -51,9 +52,21 @@ export class AddnewinkPage implements OnInit {
     chosenInks: new FormArray([]),
   });
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
+    this.getInks();
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/tabs/customers') {
+          this.getInks();
+        }
+      });
+  }
+
+  getInks() {
     this.apiService.getAllPublicInks().subscribe({
       next: (data) => {
         this.publicInks = data;
@@ -74,7 +87,7 @@ export class AddnewinkPage implements OnInit {
   //Hoitaa musteiden filtteröinnin: validoi toLowerCasella ja tarkistaa, että search-muuttujan sisältö on product_name, color tai manufacturer-tiedoissa
   //HTML-templaatissa @for (ink of filteredInks(); track ink.id)
   filteredInks(): any {
-    const search = this.searchItem.toLowerCase();
+    const search = this.searchItem.toLowerCase() ?? '';
 
     return this.publicInks.filter(
       (ink) =>
@@ -139,5 +152,35 @@ export class AddnewinkPage implements OnInit {
       inks.removeAt(index);
       console.log('Removed ink: ', inkId, 'New chosenInks: ', inks.value);
     }
+  }
+
+  getInksToAdd() {
+    const inks = this.inkGroup.get('chosenInks') as FormArray;
+
+    const addedInks: { PublicInk_ink_id: number; batch_number: string }[] = [];
+
+    inks.value.forEach((ink: any) => {
+      addedInks.push({
+        PublicInk_ink_id: ink.ink_id,
+        batch_number: ink.batch_number,
+      });
+    });
+
+    return addedInks;
+  }
+
+  handleConfirm() {
+    const inkData = this.getInksToAdd();
+    console.log('Postin to backend: ', inkData);
+
+    this.apiService.addNewUserInk(inkData).subscribe({
+      next: (data) => {
+        console.log('Added successfully: ', data);
+        this.router.navigate(['/tabs/inks']);
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
   }
 }

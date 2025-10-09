@@ -34,7 +34,7 @@ export class PubliclibraryPage implements OnInit {
    * allInks-arvo saadaan tässävaiheessa kovakoodatusta feikkidatasta temporarydata.ts-tiedostosta.
    * Myöhemmässä vaiheessa allInks alustetaan apiServicen kautta tulemaan tietokannasta.
    */
-  allInks!: PublicInk[];
+  allInks: PublicInk[] = [];
 
   /**
    * Hallinnoi ionmodalin näkyvyyttä: true näyttää, false ei. ChooseInk & setClosed-metodien avulla

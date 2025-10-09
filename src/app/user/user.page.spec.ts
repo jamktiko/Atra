@@ -14,7 +14,4 @@ describe('UserPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  /*   it('should pass', () => {
-    expect(true).toBe(true);
-  }); */
 });

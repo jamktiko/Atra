@@ -43,15 +43,27 @@ export class InksPage implements OnInit {
   /* Määrittelee chooseInk-metodin avulla valitun musteen, jonka tiedot välitetään ionmodalille */
   selectedInk: any = null;
 
-  /* Tuotantovaiheessa hakee mustedatan apiservicen perusteeella, tässä vaiheessa kovakoodattu feikkidata
+  /* Tuotantovaiheessa hakee mustedatan apiservicen perusteeella
    */
-  userInks!: UserInk[];
+  userInks: UserInk[] = [];
 
   /*Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa kovakoodattu feikkidata
    */
 
   /* Constructorissa otetaan käyttöön apiservice */
   constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getAllUserInks().subscribe({
+      next: (data) => {
+        this.userInks = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Jodain meni bieleen: ', err);
+      },
+    });
+  }
 
   /**
    * Chooseink-metodi valitsee tietyn musteen, ja ottaa parametriksi booleanin ja ink-datan,
@@ -86,17 +98,5 @@ export class InksPage implements OnInit {
       //päivitetään apiservicen vaiheessa tarkistamaan myös publicinkistä tulevia attribuutteja: color, manufacturer etc.
       ink.product_name.toLowerCase().includes(search)
     );
-  }
-
-  ngOnInit() {
-    this.apiService.getAllUserInks().subscribe({
-      next: (data) => {
-        this.userInks = data;
-        console.log(data);
-      },
-      error: (err) => {
-        console.error('Jodain meni bieleen: ', err);
-      },
-    });
   }
 }

@@ -3,6 +3,7 @@
   <h2>You're adding a new customer.</h2>
 
   <ion-list>
+
     <ion-label>
       <ion-item>{{newcustomer?.first_name}}</ion-item>
     </ion-label>
@@ -18,8 +19,10 @@
     <ion-label>
       <ion-item>{{newcustomer?.phone}}</ion-item>
     </ion-label>
+
     <p>Please check customer information before confirming.</p>
     <ion-button (click)="sendCancel()" type="button">Cancel</ion-button>
     <ion-button (click)="sendConfirm()" type="button">Confirm</ion-button>
   </ion-list>
+
 </ion-content>
