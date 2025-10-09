@@ -10,21 +10,29 @@
       USER LIBRARY
     </h2>
 
-    <label class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
-      style="margin: 1em; padding: 0.3em">
+    <label
+      class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
+      style="margin: 1em; padding: 0.3em"
+    >
       <input type="checkbox" class="sr-only peer" />
       <!-- Liukuva tausta -->
       <div
-        class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
-      </div>
+        class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full"
+      ></div>
       <!-- Own -->
-      <a tab="inks" href="/tabs/inks"
-        class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block">
+      <a
+        tab="inks"
+        href="/tabs/inks"
+        class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block"
+      >
         Own
       </a>
       <!-- Public -->
-      <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary"
-        class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block">
+      <a
+        tab="inks/publiclibrary"
+        href="/tabs/inks/publiclibrary"
+        class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block"
+      >
         Public
       </a>
     </label>
@@ -41,8 +49,12 @@
     <p>We keep all your inks in this library.</p>
 
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-    <ion-searchbar style="--background: #071747; --color: white" animated="true" placeholder="Search"
-      [(ngModel)]="searchItem"></ion-searchbar>
+    <ion-searchbar
+      style="--background: #071747; --color: white"
+      animated="true"
+      placeholder="Search"
+      [(ngModel)]="searchItem"
+    ></ion-searchbar>
 
     <button class="bg-black text-xl">
       <a tab="inks/addnewink" href="/tabs/inks/addnewink"> Add new</a>
@@ -59,7 +71,9 @@
       <p class="mt-2 font-lato text-gray-500 dark:text-neutral-400">
         {{ink.batch_number}}
       </p>
-      <button class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
+      <button
+        class="bg-slate-800 hover:bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+      >
         <a (click)="chooseInk(true, ink)">Open </a>
       </button>
     </div>
@@ -67,7 +81,11 @@
   </div>
 </ion-content>
 
-<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+<ion-modal
+  id="example-modal"
+  [isOpen]="isModalOpen"
+  (didDismiss)="setClosed(false)"
+>
   <ng-template>
     <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
     jotka voi ottaa pois -->
