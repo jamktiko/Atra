@@ -37,14 +37,14 @@
 
     <div class="flex">
       <button
-        class="flex-1 items-center gap-2 px-4 py-4 mx-36 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
+        class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
         <a tab="inks/addnewink" href="/tabs/inks/addnewink">
           <span class="text-l"> + </span> Add new</a>
       </button>
     </div>
 
     <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
-    @for (ink of userInks; track ink.user_ink_id) {
+    @for (ink of filteredSearch(); track ink.user_ink_id) {
     <div class="bg-slate-900 px-2 mx-4 my-4 py-2 rounded-2xl">
       <h3 class="text-lg font-lato text-neutral-50 dark:text-white">
         {{ink.product_name}}

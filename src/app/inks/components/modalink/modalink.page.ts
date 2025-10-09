@@ -17,7 +17,6 @@ import {
   imports: [
     IonContent,
     IonHeader,
-    IonButton,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

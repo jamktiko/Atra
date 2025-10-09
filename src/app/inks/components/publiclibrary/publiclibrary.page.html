@@ -45,7 +45,7 @@
   <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
   <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
-  @for (ink of allInks; track ink.ink_id) {
+  @for (ink of filteredSearch(); track ink.ink_id) {
   <div class="bg-slate-900 px-2 mx-4 my-4 py-2 rounded-2xl">
     <h3 class="text-lg font-lato text-neutral-50 dark:text-white">
       {{ink.product_name}}

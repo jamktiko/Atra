@@ -8,44 +8,42 @@
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
   <!--Menee myös asiakasboksien ympärille-->
-  <div class="">
 
-    <div class="flex-1 p-6 text-neutral-950 text-center space-y-2 ">
-      <h2 class="text-4xl font-pt-serif text-neutral-50">Customers</h2>
-      <h3 class="font-lato text-neutral-50">Your customers and their information</h3>
+  <div class="flex-1 p-6 text-neutral-950 text-center space-y-2 ">
+    <h2 class="text-4xl font-pt-serif text-neutral-50">Customers</h2>
+    <h3 class="font-lato text-neutral-50">Your customers and their information</h3>
 
-      <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-      <ion-searchbar style=" --color: white;" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
-
-    </div>
-
-    <div class="flex">
-      <button (click)="addNew()"
-        class="flex-1 items-center gap-2 px-4 py-4 mx-36 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
-
-        <span class="text-l">
-          +
-        </span>
-        <span>Add new
-        </span>
-
-      </button>
-    </div>
-
-    <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
-    @for (customer of filteredCustomers(); track customer.email) {
-    <div class="flex flex-col bg-slate-950 border border-neutral-50/60 rounded-xl my-4 ">
-      <div class="p-3 md:p-5 ">
-        <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{customer.last_name}}, {{customer.first_name}}
-        </h3>
-        <p class="mt-2 font-lato text-gray-500 dark:text-neutral-400">{{customer.email}}</p>
-      </div>
-      <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
-        <a (click)="chooseCustomer(true, customer)">Open </a></button>
-    </div>
-    }
+    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
+    <ion-searchbar style=" --color: white;" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
   </div>
+
+  <div class="flex">
+    <button (click)="addNew()"
+      class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
+
+      <span class="text-l">
+        +
+      </span>
+      <span>Add new
+      </span>
+
+    </button>
+  </div>
+
+  <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
+  @for (customer of filteredCustomers(); track customer.email) {
+  <div class="flex flex-col bg-slate-950 border border-neutral-50/60 rounded-xl my-4 ">
+    <div class="p-3 md:p-5 ">
+      <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{customer.last_name}}, {{customer.first_name}}
+      </h3>
+      <p class="mt-2 font-lato text-gray-500 dark:text-neutral-400">{{customer.email}}</p>
+    </div>
+    <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
+      <a (click)="chooseCustomer(true, customer)">Open </a></button>
+  </div>
+  }
+
 </ion-content>
 
 
