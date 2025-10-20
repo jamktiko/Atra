@@ -9,7 +9,7 @@ placeholder_image_url = 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/
 max_name_length = 45
 ink_amount = 0
 page_number = 1
-seen = set()
+seen = set() # TODO: save sets for future use, preventing creating Inserts for inks already in DB
 sql_values = []
 
 # add pages as needed; running takes ~6-7 seconds per page -> ~5 minutes total
