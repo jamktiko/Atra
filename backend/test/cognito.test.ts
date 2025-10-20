@@ -23,4 +23,8 @@ describe('CognitoStack', () => {
   test('Creates SSM parameters for User Pool ID and Client ID', () => {
     template.resourceCountIs('AWS::SSM::Parameter', 2);
   });
+
+  // TODO: implement test if users would be created in the user pool automatically
+  /*   test('Creates a User in the User Pool', () => {
+  }) */
 });
