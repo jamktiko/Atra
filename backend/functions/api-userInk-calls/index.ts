@@ -30,6 +30,15 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   if (httpMethod === 'POST' && routeKey === '/userInk') {
     return userInk.addUserInk(userId, JSON.parse(event.body || '{}'));
   }
+
+  if (httpMethod === 'DELETE' && routeKey === '/userInk/{id}') {
+    return userInk.deleteUserInk(pathParameters!.id!);
+  }
+
+  if (httpMethod === 'PUT' && routeKey === '/userInk/{id}') {
+    return userInk.updateUserInk(pathParameters!.id!, userId!, event.body!);
+  }
+
   return notAllowedResponse();
 
   /* lisää reitityksiä */

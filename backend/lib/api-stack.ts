@@ -145,7 +145,12 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/customer/{id}',
-      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
+      methods: [
+        apigw2.HttpMethod.POST,
+        apigw2.HttpMethod.GET,
+        apigw2.HttpMethod.DELETE,
+        apigw2.HttpMethod.PUT,
+      ],
       integration,
     });
 
@@ -203,7 +208,12 @@ export class ApiStack extends Stack {
 
     this.api.addRoutes({
       path: '/userInk/{id}',
-      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
+      methods: [
+        apigw2.HttpMethod.POST,
+        apigw2.HttpMethod.GET,
+        apigw2.HttpMethod.DELETE,
+        apigw2.HttpMethod.PUT,
+      ],
       integration,
     });
 
