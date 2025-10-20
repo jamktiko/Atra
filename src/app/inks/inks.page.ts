@@ -8,7 +8,6 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
-  IonButton,
   IonModal,
 } from '@ionic/angular/standalone';
 

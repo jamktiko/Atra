@@ -33,12 +33,16 @@ In /helpers we have some helper functions the stack can use.
 - /parameters.ts handles saving and retrieving to/from SSM Parameter Store.
 - /index.ts exports the handlers for others to use.
 
-functions folder consists of two sub-folders: api-calls and shared.
+functions folder consists of sub-folders: shared and all the different api-calls.
 
-api-calls:
+api-customer-calls, api-publicInk-calls, api-userInk-calls and migrations. All of these have two files:
+the main file named after the table in the database and index.ts.
 
-- /calls.ts has all the different querys the lambdas make to the database.
+- /tablename.ts has all the different querys the lambdas make to the database.
 - /index.ts routes the calls to the right handler.
+
+migrations is a folder that has one file: index.ts. It's a lambda function that's called when we create the tables and seed test data into the database.
+The function is called from Github Actions after CDK deployments.
 
 shared:
 
