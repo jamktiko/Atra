@@ -20,13 +20,13 @@ describe('VpcStack', () => {
     template.resourceCountIs('AWS::EC2::Subnet', 6);
   });
 
-  it('creates private subnets', () => {
+  it('creates at least one private subnet', () => {
     template.hasResourceProperties('AWS::EC2::Subnet', {
       MapPublicIpOnLaunch: false,
     });
   });
 
-  it('creates NAT Gateways for private subnets', () => {
+  it('creates NAT Gateway for private subnet', () => {
     template.resourceCountIs('AWS::EC2::NatGateway', 1);
   });
 
