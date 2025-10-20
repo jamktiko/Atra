@@ -13,6 +13,7 @@ describe('FrontendStack', () => {
   test('S3 bucket is created with correct properties', () => {
     template.hasResourceProperties('AWS::S3::Bucket', {
       BucketName: 'atra-frontend-bucket',
+      //add more properties in the test?
     });
   });
 
