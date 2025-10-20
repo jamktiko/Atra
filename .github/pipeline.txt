@@ -27,3 +27,4 @@ deploy hosting-folder into atra-front S3-bucket
 trigger cdk (check with diff, if resources/configs have changed) -> creates/updates resources
 build app and upload it into atra-front S3-bucket
 run tests; cypress for end-to-end, jasmine for unit testing
+
