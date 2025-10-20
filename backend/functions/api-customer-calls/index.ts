@@ -23,7 +23,15 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   }
 
   if (httpMethod === 'GET' && routeKey === '/customer/{id}') {
-    return customer.getCustomer(userId, pathParameters!.id!);
+    return customer.getCustomer(pathParameters!.id!);
+  }
+
+  if (httpMethod === 'PUT' && routeKey === '/customer/{id}') {
+    return customer.updateCustomer(pathParameters!.id!, event.body!);
+  }
+
+  if (httpMethod === 'DELETE' && routeKey === 'customer/{id}') {
+    return customer.deleteCustomer(pathParameters!.id!);
   }
 
   if (httpMethod === 'POST' && routeKey === '/customer') {
