@@ -61,4 +61,95 @@ export async function addUserInk(userId: string, body: any) {
   });
 }
 
+export async function deleteUserInk(user_ink_id: string) {
+  try {
+    const pool = await getPool();
+    const [result] = await pool.query(
+      'DELETE FROM UserInk WHERE user_ink_id = ?',
+      [user_ink_id]
+    );
+    const { affectedRows } = result as any;
+
+    if (affectedRows === 0) {
+      return notFoundResponse('Ink not found');
+    }
+
+    return successResponse({ message: 'User ink deleted successfully' });
+  } catch (err) {
+    return clientErrorResponse('Delete failed');
+  }
+}
+
+// Sama kuin Customer update --> tämä on erittäin kömpleö ja huono tapa
+export async function updateUserInk(
+  user_ink_id: string,
+  user_id: string,
+  body: string | null
+) {
+  const pool = await getPool();
+  let data: {
+    batch_number?: string;
+    opened_at?: string | null;
+    expires_at?: string | null;
+    favorite?: boolean | number;
+  };
+
+  try {
+    data = body ? JSON.parse(body) : {};
+  } catch {
+    return clientErrorResponse('Invalid jason body');
+  }
+
+  // Vain sallitut kentät, vältetään kaikella tavalla public inkiin koskemista
+  const allowedFields = ['batch_number', 'opened_at', 'expires_at', 'favorite'];
+  const fields: string[] = [];
+  const values: any[] = [];
+
+  for (const key of allowedFields) {
+    if (data[key as keyof typeof data] !== undefined) {
+      fields.push(`${key} = ?`);
+
+      if (key === 'favorite') {
+        values.push(data.favorite ? 1 : 0);
+      } else {
+        values.push(data[key as keyof typeof data]);
+      }
+    }
+  }
+
+  if (fields.length === 0) {
+    return clientErrorResponse('No valid fields to update');
+  }
+
+  // WHERE parametrit
+  values.push(user_ink_id, user_id);
+
+  const [result] = await pool.query(
+    `UPDATE UserInk
+     SET ${fields.join(', ')}
+     WHERE user_ink_id = ? AND User_user_id = ?`,
+    values
+  );
+
+  const { affectedRows } = result as any;
+  if (affectedRows === 0) {
+    return notFoundResponse('User ink not found or not owned by user');
+  }
+
+  // Palautetaan päivitetty
+  const [rows] = await pool.query(
+    `SELECT user_ink_id, batch_number, opened_at, expires_at, favorite, PublicInk_ink_id
+     FROM UserInk
+     WHERE user_ink_id = ? AND User_user_id = ?`,
+    [user_ink_id, user_id]
+  );
+
+  const updatedInk = (rows as any[])[0];
+
+  return successResponse({
+    message: 'User ink updated successfully',
+    ink: updatedInk,
+  });
+}
+
 /* More calls */
