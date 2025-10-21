@@ -86,6 +86,19 @@ export class CustomersPage implements OnInit {
     this.chosenCustomer = customer;
   }
 
+  //saako oikean chosenCustomer-arvon > selvitä
+  deleteCustomer() {
+    this.apiService.deleteCustomer(this.chosenCustomer.customerId);
+  }
+
+  //ottaako päivitetyn vai ns. vanhan chosenCustomer-arvon > selvitä
+  updateCustomer() {
+    this.apiService.updateCustomer(
+      this.chosenCustomer.customerId,
+      this.chosenCustomer
+    );
+  }
+
   setClosed(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }

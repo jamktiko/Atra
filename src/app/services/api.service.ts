@@ -9,13 +9,12 @@ import { Customer } from 'src/interface';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://clm40y4tg0.execute-api.eu-north-1.amazonaws.com';
+  private apiUrl = 'https://png76kg48h.execute-api.eu-north-1.amazonaws.com';
 
   constructor(private http: HttpClient) {}
 
   /**
    * Backend-kutsu listPublicInks()
-   *
    */
   getAllPublicInks(): Observable<PublicInk[]> {
     return this.http.get<PublicInk[]>(`${this.apiUrl}/publicInk`);
@@ -23,7 +22,6 @@ export class ApiService {
 
   /**
    * Backend-kutsu getPublicInk
-   *
    */
   getOnePublicInk(publicInkId: number): Observable<PublicInk> {
     return this.http.get<PublicInk>(`${this.apiUrl}/publicInk/${publicInkId}`);
@@ -51,16 +49,36 @@ export class ApiService {
   }
 
   /**
+   * Backend-kutsu deleteUserInk
+   */
+  deleteUserInk(userInkId: string): Observable<UserInk> {
+    return this.http.delete<UserInk>(`${this.apiUrl}/${userInkId}`);
+  }
+
+  /**
+   * Backend-kutsu updateUserInk
+   */
+  updateUserInk(
+    userInkId: string,
+    userId: string,
+    userInkData: UserInk
+  ): Observable<UserInk> {
+    return this.http.put<UserInk>(
+      `${this.apiUrl}/userInk/${userInkId}`,
+      userInkData
+    );
+  }
+
+  /**
    * Backend-kutsu getCustomer
-   *
-   * */
+   */
   getCustomer(customerId: number): Observable<Customer> {
     return this.http.get<Customer>(`${this.apiUrl}/customer/${customerId}`);
   }
 
   /**
    * Backend-kutsu listCustomers
-   * */
+   */
   getAllCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.apiUrl}/customer`);
   }
@@ -71,6 +89,27 @@ export class ApiService {
   addNewCustomer(customerData: CustomerCreation): Observable<CustomerCreation> {
     return this.http.post<CustomerCreation>(
       `${this.apiUrl}/customer`,
+      customerData
+    );
+  }
+
+  /**
+   * Backend-kutsu deleteCustomer
+   */
+  deleteCustomer(customerId: number): Observable<Customer> {
+    return this.http.delete<Customer>(`${this.apiUrl}/${customerId}`);
+  }
+
+  /**
+   * Backend-kutsu updateCustomer
+   */
+
+  updateCustomer(
+    customerId: number,
+    customerData: Customer
+  ): Observable<Customer> {
+    return this.http.put<Customer>(
+      `${this.apiUrl}/${customerId}`,
       customerData
     );
   }
