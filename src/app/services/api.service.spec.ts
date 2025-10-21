@@ -15,7 +15,7 @@ import {
 describe('ApiService', () => {
   let service: ApiService;
   let httpMock: HttpTestingController;
-  const apiUrl = 'https://clm40y4tg0.execute-api.eu-north-1.amazonaws.com'; //from api.service.ts
+  const apiUrl = 'https://png76kg48h.execute-api.eu-north-1.amazonaws.com'; //from api.service.ts
   const mockPublicInk: PublicInk = {
     ink_id: 0,
     recalled: false,
