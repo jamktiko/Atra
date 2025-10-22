@@ -65,7 +65,7 @@ export class CustomersPage implements OnInit {
         this.allcustomers = data;
       },
       error: (err) => {
-        console.error('Pieleen män, ', err);
+        console.error('Something went wrong: ', err);
       },
     });
   }
@@ -86,17 +86,32 @@ export class CustomersPage implements OnInit {
     this.chosenCustomer = customer;
   }
 
-  //saako oikean chosenCustomer-arvon > selvitä
+  //405 Not Allowed: selvitä Lotan kanssa
   deleteCustomer() {
-    this.apiService.deleteCustomer(this.chosenCustomer.customerId);
+    const customerId = this.chosenCustomer.customer_id;
+    console.log(customerId);
+    this.apiService.deleteCustomer(customerId).subscribe({
+      next: () => {
+        console.log('Customer deleted successfully!');
+        this.setClosed(false);
+      },
+      error: (err) => {
+        console.error('No success: ', err);
+      },
+    });
   }
 
-  //ottaako päivitetyn vai ns. vanhan chosenCustomer-arvon > selvitä
   updateCustomer() {
-    this.apiService.updateCustomer(
-      this.chosenCustomer.customerId,
-      this.chosenCustomer
-    );
+    const customerId = this.chosenCustomer.customer_id;
+    const customerData = this.chosenCustomer;
+    this.apiService.updateCustomer(customerId, customerData).subscribe({
+      next: (data) => {
+        console.log('Customer updated: ', data);
+      },
+      error: (err) => {
+        console.error('No success: '), err;
+      },
+    });
   }
 
   setClosed(isOpen: boolean) {

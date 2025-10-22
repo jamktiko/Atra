@@ -29,23 +29,16 @@ import { Router } from '@angular/router';
   templateUrl: './addnewcustomer.page.html',
   styleUrls: ['./addnewcustomer.page.css'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonInput,
-    IonItem,
-    CommonModule,
-    FormsModule,
-    ModalcustomerPage,
-    IonLabel,
-    IonText,
-  ],
+  imports: [IonContent, CommonModule, FormsModule, ModalcustomerPage, IonText],
 })
 export class AddnewcustomerPage {
   //ViewChild mahdollistaa sen, että HTML-templaatissa määritelty muuttuja voidaan ottaa ts-tiedostossa käyttöön
   //Tässä tapauksessa form-tagissa määritelty customerForm => mahdollista käyttää tämän tiedoston funktioissa kyseistä formia
   @ViewChild('customerForm') customerForm!: NgForm;
+
+  isCustomerformValid() {
+    return this.customerForm.valid;
+  }
 
   //Alustaa lomakkeen tyhjänä asiakkaana
   customer: CustomerCreation = {

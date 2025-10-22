@@ -155,7 +155,7 @@ export class ApiService {
    * Backend-kutsu deleteCustomer
    */
   deleteCustomer(customerId: number): Observable<Customer> {
-    return this.http.delete<Customer>(`${this.apiUrl}/${customerId}`);
+    return this.http.delete<Customer>(`${this.apiUrl}/customer/${customerId}`);
   }
 
   /**
@@ -167,7 +167,7 @@ export class ApiService {
     customerData: Customer
   ): Observable<Customer> {
     return this.http.put<Customer>(
-      `${this.apiUrl}/${customerId}`,
+      `${this.apiUrl}/customer/${customerId}`,
       customerData
     );
   }
