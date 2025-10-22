@@ -1,0 +1,10 @@
+name: Check status
+run-name: ${{ github.actor }} is checking status
+on:
+  workflow_dispatch: #Manual triggering
+jobs:
+  checkstatus:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print GitHub context
+        run: echo '${{ toJSON(github) }}'
