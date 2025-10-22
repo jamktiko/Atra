@@ -22,7 +22,7 @@ jobs:
       #- name: Install Ionic CLI
       #  run: npm install -g @ionic/cli
       #- name: Build Ionic projects
-      #  run: ionic build
+      #  run: ionic build --prod
       - name: Install AWS CDK dependencies
         run: |
           cd backend
