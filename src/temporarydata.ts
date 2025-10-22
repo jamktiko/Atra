@@ -1,5 +1,97 @@
-// import { UserInk, PublicInk, User, Entry, Customer } from './interface';
+import {
+  UserInk,
+  PublicInk,
+  User,
+  Entry,
+  Customer,
+  CustomerCreation,
+} from './interface';
 
+const mockImageA =
+  'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/6290/AF57/6C16/A84A/5F39/0A28/1066/1F1F/DV30UNION_m.jpg';
+const mockImageB =
+  'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/66EA/7821/6590/F930/BEFB/0A32/0E09/BE45/ECLIPSE150_m.jpg';
+
+export const mockUserInks: UserInk[] = [
+  {
+    user_ink_id: 1,
+    batch_number: 'BN-001',
+    opened_at: new Date('2025-01-01'),
+    expires_at: new Date('2026-01-01'),
+    favorite: true,
+    publicink_ink_id: 101,
+    product_name: 'Ocean Blue',
+    manufacturer: 'InkWell Co.',
+    color: 'Blue',
+    recalled: false,
+    image_url: 'https://example.com/ink/ocean-blue.jpg',
+    size: '30ml',
+    User_user_id: 'user-123',
+  },
+];
+
+export const mockPublicInks: PublicInk[] = [
+  {
+    ink_id: 101,
+    product_name: 'Ocean Blue',
+    manufacturer: 'InkWell Co.',
+    color: 'Blue',
+    recalled: false,
+    image_url: 'https://example.com/ink/ocean-blue.jpg',
+    size: '30ml',
+  },
+  {
+    ink_id: 102,
+    product_name: 'Sunset Red',
+    manufacturer: 'ColorSplash',
+    color: 'Red',
+    recalled: true,
+    image_url: 'https://example.com/ink/sunset-red.jpg',
+    size: '50ml',
+  },
+];
+
+export const mockUsers: User[] = [
+  {
+    user_id: 'user-123',
+    email: 'jane.doe@example.com',
+    password: 'hashedpassword123',
+    first_name: 'Jane',
+    last_name: 'Doe',
+  },
+];
+
+export const mockEntries: Entry[] = [
+  {
+    id: 1,
+    customer: 'John Smith',
+    appointment_date: new Date('2025-10-25T14:00:00'),
+    notes: 'Discussed ink preferences and allergies.',
+  },
+];
+
+export const mockCustomers: Customer[] = [
+  {
+    customer_id: 1,
+    email: 'john.smith@example.com',
+    phone: '+358401234567',
+    first_name: 'John',
+    last_name: 'Smith',
+    notes: 'Prefers blue tones.',
+    User_user_id: 'user-123',
+  },
+];
+
+export const mockCustomerCreations: CustomerCreation[] = [
+  {
+    first_name: 'Alice',
+    last_name: 'Johnson',
+    email: 'alice.j@example.com',
+    phone: '+358409876543',
+  },
+];
+
+//older mock data
 // export const Tiina: User = {
 //   id: 1,
 //   email: 'tiinanmaili@gmail.com',

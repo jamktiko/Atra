@@ -13,6 +13,9 @@ import {
 
 import { User, UserInk } from 'src/interface';
 
+const isProd = process.env['GIT_BRANCH'];
+console.log(isProd);
+
 @Component({
   selector: 'app-inks',
   templateUrl: './inks.page.html',

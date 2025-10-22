@@ -11,35 +11,48 @@
       <h2 class="text-4xl font-pt-serif">Your Library</h2>
       <h3 class="font-lato">We keep all your inks in this library.</h3>
 
-      <label class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
-        style="margin: 1em; padding: 0.3em">
+      <label
+        class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
+        style="margin: 1em; padding: 0.3em"
+      >
         <input type="checkbox" class="sr-only peer" />
         <!-- Liukuva tausta -->
         <div
-          class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
-        </div>
+          class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full"
+        ></div>
         <!-- Own -->
-        <a tab="inks" href="/tabs/inks"
-          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block">
+        <a
+          tab="inks"
+          href="/tabs/inks"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block"
+        >
           Own
         </a>
         <!-- Public -->
-        <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary"
-          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block">
+        <a
+          tab="inks/publiclibrary"
+          href="/tabs/inks/publiclibrary"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block"
+        >
           Public
         </a>
       </label>
     </div>
 
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-    <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
-
+    <ion-searchbar
+      animated="true"
+      placeholder="Search"
+      [(ngModel)]="searchItem"
+    ></ion-searchbar>
 
     <div class="flex">
       <button
-        class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
+        class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+      >
         <a tab="inks/addnewink" href="/tabs/inks/addnewink">
-          <span class="text-l"> + </span> Add new</a>
+          <span class="text-l"> + </span> Add new</a
+        >
       </button>
     </div>
 
@@ -55,7 +68,9 @@
         {{ink.batch_number}}
       </p>
 
-      <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
+      <button
+        class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+      >
         <a (click)="chooseInk(true, ink)">Open </a>
       </button>
     </div>
@@ -63,8 +78,11 @@
   </div>
 </ion-content>
 
-<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
-
+<ion-modal
+  id="example-modal"
+  [isOpen]="isModalOpen"
+  (didDismiss)="setClosed(false)"
+>
   <ng-template>
     <!--Tähän saa Milja tehtyä tyylit modalin osalta HUOM. väliaikaiset tyylit inks.page.css,
     jotka voi ottaa pois -->
@@ -80,22 +98,35 @@
       <div class="flex justify-end space-x-3 pt-2">
         <button
           class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          (click)="updateInk()">Update ink</button>
+          (click)="updateInk()"
+        >
+          Update ink
+        </button>
         <button
           class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          (click)="deleteInk()"> <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd"
+          (click)="deleteInk()"
+        >
+          <svg
+            class="w-5 h-5 mr-1"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
               d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-              clip-rule="evenodd"></path>
-          </svg> Delete ink</button>
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+          Delete ink
+        </button>
       </div>
 
-      <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
+      <button
+        class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+      >
         <a (click)="setClosed(false)">Close</a>
       </button>
-
     </div>
   </ng-template>
-
 </ion-modal>
