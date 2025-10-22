@@ -13,10 +13,12 @@ import {
 
 import { User, UserInk } from 'src/interface';
 
-// setting up environment variables for use
+//below is for testing env variable
+/* // setting up environment variables for use
 import { environment } from 'src/environments/environment';
-const isProd = environment.production; //false when using ionic serve, true when using ionic build
-console.log('Is it prod? ' + isProd);
+let isProd = environment.production; //false when using ionic serve, true when using ionic build
+isProd = true; 
+console.log('Is it prod? ' + isProd); */
 
 @Component({
   selector: 'app-inks',

@@ -4,18 +4,13 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { ApiService } from './api.service';
-import {
-  PublicInk,
-  UserInk,
-  Customer,
-  CustomerCreation,
-  User,
-} from 'src/interface';
+import { PublicInk, UserInk, Customer, User } from 'src/interface';
 
 describe('ApiService', () => {
   let service: ApiService;
   let httpMock: HttpTestingController;
   const apiUrl = 'https://q4u7ryiwla.execute-api.eu-north-1.amazonaws.com'; //from api.service.ts
+
   const mockPublicInk: PublicInk = {
     ink_id: 0,
     recalled: false,
@@ -37,7 +32,8 @@ describe('ApiService', () => {
     manufacturer: 'Ankkalinnan musteet',
     color: 'Black',
     recalled: false,
-    image_url: 'exampleURL',
+    image_url:
+      'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/6290/AF57/6C16/A84A/5F39/0A28/1066/1F1F/DV30UNION_m.jpg',
     size: '100ml',
     User_user_id: 'id-here',
   };

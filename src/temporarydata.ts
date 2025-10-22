@@ -14,19 +14,19 @@ const mockImageB =
 
 export const mockUserInks: UserInk[] = [
   {
-    user_ink_id: 1,
-    batch_number: 'BN-001',
+    user_ink_id: 0,
+    batch_number: 'ABC123',
     opened_at: new Date('2025-01-01'),
-    expires_at: new Date('2026-01-01'),
-    favorite: true,
-    publicink_ink_id: 101,
-    product_name: 'Ocean Blue',
-    manufacturer: 'InkWell Co.',
-    color: 'Blue',
+    expires_at: new Date('2030-01-01'),
+    favorite: false,
+    publicink_ink_id: 0,
+    product_name: 'Akun muste',
+    manufacturer: 'Ankkalinnan musteet',
+    color: 'Black',
     recalled: false,
-    image_url: 'https://example.com/ink/ocean-blue.jpg',
-    size: '30ml',
-    User_user_id: 'user-123',
+    image_url: mockImageA,
+    size: '100ml',
+    User_user_id: 'id-here',
   },
 ];
 
@@ -37,7 +37,7 @@ export const mockPublicInks: PublicInk[] = [
     manufacturer: 'InkWell Co.',
     color: 'Blue',
     recalled: false,
-    image_url: 'https://example.com/ink/ocean-blue.jpg',
+    image_url: mockImageB,
     size: '30ml',
   },
   {
@@ -46,7 +46,7 @@ export const mockPublicInks: PublicInk[] = [
     manufacturer: 'ColorSplash',
     color: 'Red',
     recalled: true,
-    image_url: 'https://example.com/ink/sunset-red.jpg',
+    image_url: mockImageA,
     size: '50ml',
   },
 ];
