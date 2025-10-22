@@ -36,10 +36,6 @@ export class AddnewcustomerPage {
   //Tässä tapauksessa form-tagissa määritelty customerForm => mahdollista käyttää tämän tiedoston funktioissa kyseistä formia
   @ViewChild('customerForm') customerForm!: NgForm;
 
-  isCustomerformValid() {
-    return this.customerForm.valid;
-  }
-
   //Alustaa lomakkeen tyhjänä asiakkaana
   customer: CustomerCreation = {
     first_name: '',
@@ -104,5 +100,6 @@ export class AddnewcustomerPage {
 
   back() {
     this.router.navigate(['/tabs/customers']);
+    this.resetForm();
   }
 }

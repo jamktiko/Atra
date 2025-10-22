@@ -12,6 +12,7 @@ import {
   IonList,
   IonLabel,
   IonToolbar,
+  IonModal,
   ModalController,
 } from '@ionic/angular/standalone';
 
