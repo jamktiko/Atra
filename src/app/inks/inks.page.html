@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <!--Menee myös for-loopun ympärille-->
+  <!--Menee myös for-loopin ympärille-->
   <div class="">
     <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
       <h2 class="text-4xl font-pt-serif">Your Library</h2>
@@ -34,7 +34,6 @@
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
     <ion-searchbar animated="true" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
 
-
     <div class="flex">
       <button
         class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
@@ -55,7 +54,7 @@
         {{ink.batch_number}}
       </p>
 
-      <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
+      <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
         <a (click)="chooseInk(true, ink)">Open </a>
       </button>
     </div>

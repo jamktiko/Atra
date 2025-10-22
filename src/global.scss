@@ -1,5 +1,24 @@
 @use "tailwindcss";
 
+@theme {
+  --color-slate-50: oklch(62% 0.01 13); //1
+  --color-slate-100: oklch(54% 0.01 50); //2
+  --color-slate-200: oklch(47% 0.013 130.416); //3
+  --color-slate-300: oklch(40% 0.019 175.416); //4
+  --color-slate-400: oklch(35.6% 0.025 178.416); //5
+  --color-slate-500: oklch(28.6% 0.03 178.416); //6
+  --color-slate-600: oklch(22.5% 0.04 178.524); //7
+  --color-slate-700: oklch(18.5% 0.045 186.416); //8
+  --color-slate-800: oklch(15% 0.053 190.416); //9
+  --color-slate-900: oklch(13% 0.05 190); //10
+  --color-slate-950: oklch(11% 0.05 195); //11
+}
+
+@theme {
+  --color-neutral-50: oklch(85% 0.01 13);
+  --color-neutral-100: oklch(50% 0.01 13);
+}
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -34,6 +53,6 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+@import "@ionic/angular/css/palettes/dark.always.css";
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+// @import "@ionic/angular/css/palettes/dark.system.css";

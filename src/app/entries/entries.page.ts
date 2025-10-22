@@ -12,7 +12,7 @@ import { Entry } from 'src/interface';
 @Component({
   selector: 'app-entries',
   templateUrl: './entries.page.html',
-  styleUrls: ['./entries.page.css'],
+  styleUrls: [],
   standalone: true,
   imports: [
     IonContent,
