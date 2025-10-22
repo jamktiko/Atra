@@ -13,8 +13,10 @@ import {
 
 import { User, UserInk } from 'src/interface';
 
-/* const isProd = process.env['GIT_BRANCH'];
-console.log(isProd); */
+// setting up environment variables for use
+import { environment } from 'src/environments/environment';
+const isProd = environment.production; //false when using ionic serve, true when using ionic build
+console.log('Is it prod? ' + isProd);
 
 @Component({
   selector: 'app-inks',
