@@ -1,9 +1,10 @@
 name: Hosting Deployment
 run-name: ${{ github.actor }} is deploying app to S3
 on:
-  push:
-    branches:
-      - prod
+  #push:
+  # branches:
+  #    - prod
+  workflow_dispatch: #Manual triggering
 jobs:
   Deploy-Prod:
     runs-on: ubuntu-latest
