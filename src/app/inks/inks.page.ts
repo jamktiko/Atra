@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../services/api.service';
 import { IonSearchbar } from '@ionic/angular/standalone';
-import { DatePipe } from '@angular/common';
 import {
   IonContent,
   IonHeader,
@@ -58,6 +57,10 @@ export class InksPage implements OnInit {
 
   updatedInk!: UserInk;
 
+  /*
+   * Hallinnoi musteen päivityksen updatemodal-näkyvyyttä */
+  showUpdateModal: boolean = false;
+
   /*Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa kovakoodattu feikkidata
    */
 
@@ -74,6 +77,11 @@ export class InksPage implements OnInit {
         console.error('Jodain meni bieleen: ', err);
       },
     });
+  }
+
+  toggleUpdateModal(isOpen: boolean) {
+    this.showUpdateModal = isOpen;
+    console.log(this.showUpdateModal);
   }
 
   toPublic() {
@@ -118,6 +126,7 @@ export class InksPage implements OnInit {
       .subscribe({
         next: (updatedInk) => {
           this.updatedInk = updatedInk;
+          this.toggleUpdateModal(false);
           console.log('Ink updated: ', updatedInk);
           //success message toast, redirect
         },

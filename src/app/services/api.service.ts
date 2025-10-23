@@ -110,7 +110,7 @@ export class ApiService {
    * Backend-kutsu deleteUserInk
    */
   deleteUserInk(userInkId: string): Observable<UserInk> {
-    return this.http.delete<UserInk>(`${this.apiUrl}/${userInkId}`);
+    return this.http.delete<UserInk>(`${this.apiUrl}/userInk/${userInkId}`);
   }
 
   /**
