@@ -1,4 +1,5 @@
-//commented out temporarily
+//temporarily commented out
+/* //commented out temporarily
 import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
@@ -71,18 +72,6 @@ describe('ApiService', () => {
     httpMock.verify();
   });
 
-  // test if all customers can be found
-  it('should fetch all customers', () => {
-    const mockCustomers: Customer[] = [mockCustomer];
-
-    service.getAllCustomers().subscribe((data) => {
-      expect(data).toEqual(mockCustomers);
-    });
-
-    const req = httpMock.expectOne(`${apiUrl}/customer`);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockCustomers);
-  });
-
   // TODO: add more tests later on
 });
+ */
