@@ -84,3 +84,14 @@ ion-searchbar.custom {
   --clear-button-color: #fff;
   --border-radius: 4px;
 }
+
+ion-toolbar {
+  font-family: "Macondo Swash Caps", cursive;
+  font-size: 20%;
+  --padding-top: 5%;
+  --padding-bottom: 5%;
+}
+
+ion-tab-bar {
+  font-family: "Macondo Swash Caps", cursive;
+}

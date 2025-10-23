@@ -1,26 +1,44 @@
 <ion-content [fullscreen]="true">
-  <h2>Hi username</h2> <img src="https://cdn.pixabay.com/photo/2020/06/30/10/23/icon-5355896_1280.png" width="40%" />
+  <div class="flex bg-slate-900 my-4">
+    <div class="flex-1 p-3 md:p-5">
+      <h2 class="text-lg font-lato text-neutral-50 dark:text-white">Hi username</h2>
+      <img src="https://cdn.pixabay.com/photo/2020/06/30/10/23/icon-5355896_1280.png" width="40%" />
 
-  <div>
-    <button> <a tab="user/usersettings" href="/tabs/user/usersettings">User Settings</a></button>
-  </div>
 
-  <div>
-    <button><a tab="user/appsettings" href="/tabs/user/appsettings">App Settings</a></button>
-  </div>
+      <div>
+        <button
+          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+          (click)="usersettingsNavigate()">User Settings</button>
+      </div>
 
-  <div>
-    <button><a tab="user/contacthelp" href="/tabs/user/contacthelp">Help</a></button>
-  </div>
+      <div>
+        <button
+          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+          (click)="appsettingsNavigate()">App Settings</button>
+      </div>
 
-  <div>
-    <button><a tab="user/privacy" href="/tabs/user/privacy">Privacy policy</a></button>
-  </div>
+      <div>
+        <button
+          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+          (click)="contacthelpNavigate()">Help</button>
+      </div>
 
-  <div>
-    <button>
-      <a tab="user/privacy" href="/tabs/user/privacy">Log out</a>
-    </button>
+
+      <div>
+        <button
+          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+          (click)="privacyNavigate()">Privacy
+          policy</button>
+      </div>
+
+      <div>
+        <button
+          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+          (click)="logout()">Log
+          out </button>
+      </div>
+
+    </div>
   </div>
 
 </ion-content>

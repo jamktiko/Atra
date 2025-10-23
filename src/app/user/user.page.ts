@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonButton } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -11,7 +12,27 @@ import { IonContent, IonButton } from '@ionic/angular/standalone';
   imports: [IonContent, CommonModule, FormsModule],
 })
 export class UserPage implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+
+  appsettingsNavigate() {
+    this.router.navigate(['/tabs/user/appsettings']);
+  }
+
+  contacthelpNavigate() {
+    this.router.navigate(['/tabs/user/contacthelp']);
+  }
+
+  privacyNavigate() {
+    this.router.navigate(['/tabs/user/privacy']);
+  }
+
+  usersettingsNavigate() {
+    this.router.navigate(['/tabs/user/usersettings']);
+  }
+
+  logout() {
+    console.log('Logout clicked');
+  }
 }
