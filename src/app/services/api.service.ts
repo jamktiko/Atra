@@ -19,7 +19,7 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://q4u7ryiwla.execute-api.eu-north-1.amazonaws.com';
+  private apiUrl = 'https://tqcdm5dn0k.execute-api.eu-north-1.amazonaws.com';
   //private readonly isProd = environment.production; //false when using ionic serve, true when using ionic build
   private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
 
