@@ -8,6 +8,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { Entry } from 'src/interface';
+import { IonSearchbar } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-entries',
@@ -19,6 +20,7 @@ import { Entry } from 'src/interface';
     IonHeader,
     IonTitle,
     IonToolbar,
+    IonSearchbar,
     CommonModule,
     FormsModule,
   ],

@@ -1,15 +1,15 @@
 @use "tailwindcss";
 
 @theme {
-  --color-slate-50: oklch(62% 0.01 13); //1
-  --color-slate-100: oklch(54% 0.01 50); //2
+  --color-slate-50: oklch(65% 0.01 83); //1
+  --color-slate-100: oklch(57% 0.01 80); //2
   --color-slate-200: oklch(47% 0.013 130.416); //3
   --color-slate-300: oklch(40% 0.019 175.416); //4
   --color-slate-400: oklch(35.6% 0.025 178.416); //5
   --color-slate-500: oklch(28.6% 0.03 178.416); //6
   --color-slate-600: oklch(22.5% 0.03 178.524); //7
   --color-slate-700: oklch(18.5% 0.04 183.416); //8
-  --color-slate-800: oklch(15% 0.053 190.416); //9
+  --color-slate-800: oklch(15% 0.05 190); //9
   --color-slate-900: oklch(13% 0.05 190); //10
   --color-slate-950: oklch(11% 0.05 195); //11
 }
@@ -58,5 +58,29 @@
 // @import "@ionic/angular/css/palettes/dark.system.css";
 
 :root {
-  --ion-background-color: oklch(11% 0.05 195);
+  --ion-background-color: oklch(12.232% 0.02081 201.719);
+  --ion-background-color-rgb: rgb(0, 8, 9);
+
+  --ion-text-color: oklch(85% 0.02 183);
+  --ion-text-color-rgb: rgb(192, 210, 207);
+
+  --ion-toolbar-background: oklch(28.6% 0.03 178.416);
+  --ion-toolbar-color: oklch(12.232% 0.02081 201.719);
+
+  --ion-tab-bar-color: oklch(47.6% 0.02 150.416);
+  --ion-tab-bar-color-selected: oklch(87% 0.01 13);
+  --ion-tab-bar-min-height: 7%;
+  --ion-tab-bar-padding-top: 8px;
+  --ion-tab-bar-padding-bottom: 8px;
+  --ion-tab-bar-padding-start: 12px;
+  --ion-tab-bar-padding-end: 12px;
+}
+
+ion-searchbar.custom {
+  --background: oklch(18.5% 0.04 183.416);
+  --color: oklch(62% 0.01 13);
+  --placeholder-color: #fff;
+  --icon-color: #fff;
+  --clear-button-color: #fff;
+  --border-radius: 4px;
 }
