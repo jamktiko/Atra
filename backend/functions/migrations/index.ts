@@ -69,23 +69,27 @@ export const handler: Handler = async (event, ctx) => {
         appointment_date DATETIME NOT NULL,
         comments TEXT,
         User_user_id VARCHAR(255) NOT NULL,
-        Customer_customer_id INT NOT NULL,
+        Customer_customer_id INT NULL, --NULL for cascades
         PRIMARY KEY (appointment_id),
         UNIQUE KEY idAppointment_UNIQUE (appointment_id),
         INDEX fk_Appointment_User1_idx (User_user_id),
         INDEX fk_Appointment_Customer1_idx (Customer_customer_id),
         FOREIGN KEY (User_user_id) REFERENCES User(user_id),
-        FOREIGN KEY (Customer_customer_id) REFERENCES Customer(customer_id)
+        FOREIGN KEY (Customer_customer_id) REFERENCES Customer(customer_id) 
+          ON DELETE SET NULL --cascades customer deletion
       ) ENGINE=InnoDB;
 
       CREATE TABLE IF NOT EXISTS UserInk_has_Appointment (
-        UserInk_user_ink_id INT NOT NULL,
-        Appointment_appointment_id INT NOT NULL,
+        id INT NOT NULL AUTO_INCREMENT,
+        UserInk_user_ink_id INT NULL, --NULL for cascades
+        Appointment_appointment_id INT NULL, --NULL for cascades
         PRIMARY KEY (UserInk_user_ink_id, Appointment_appointment_id),
         INDEX fk_UserInk_has_Appointment_Appointment1_idx (Appointment_appointment_id),
         INDEX fk_UserInk_has_Appointment_UserInk1_idx (UserInk_user_ink_id),
-        FOREIGN KEY (UserInk_user_ink_id) REFERENCES UserInk(user_ink_id),
+        FOREIGN KEY (UserInk_user_ink_id) REFERENCES UserInk(user_ink_id)
+          ON DELETE SET NULL --cascades user deletion,
         FOREIGN KEY (Appointment_appointment_id) REFERENCES Appointment(appointment_id)
+          ON DELETE SET NULL --cascades appointment deletion
       ) ENGINE=InnoDB;`);
 
     await conn.query(`

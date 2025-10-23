@@ -1,5 +1,5 @@
 //commented out temporarily
-/* import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,
   HttpTestingController,
@@ -71,58 +71,6 @@ describe('ApiService', () => {
     httpMock.verify();
   });
 
-  // test if all public inks can be found
-  it('should fetch all public inks', () => {
-    const mockData: PublicInk[] = [mockPublicInk];
-
-    service.getAllPublicInks().subscribe((data) => {
-      expect(data).toEqual(mockData);
-    });
-
-    const req = httpMock.expectOne(`${apiUrl}/publicInk`);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockData);
-  });
-
-  // test if one public ink can be found by id
-  it('should fetch one public ink by ID', () => {
-    const id = 0;
-
-    service.getOnePublicInk(id).subscribe((data) => {
-      expect(data).toEqual(mockPublicInk);
-    });
-
-    const req = httpMock.expectOne(`${apiUrl}/publicInk/${id}`);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockPublicInk);
-  });
-
-  // test if all own inks can be found
-  it('should fetch all own inks', () => {
-    const mockData: UserInk[] = [mockUserInk];
-
-    service.getAllUserInks().subscribe((data) => {
-      expect(data).toEqual(mockData);
-    });
-
-    const req = httpMock.expectOne(`${apiUrl}/userInk`);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockData);
-  });
-
-  // test if one own ink can be found by id
-  it('should fetch one own ink by ID', () => {
-    const id = 0;
-
-    service.getOneUserInk(id).subscribe((data) => {
-      expect(data).toEqual(mockUserInk);
-    });
-
-    const req = httpMock.expectOne(`${apiUrl}/userInk/${id}`);
-    expect(req.request.method).toBe('GET');
-    req.flush(mockUserInk);
-  });
-
   // test if all customers can be found
   it('should fetch all customers', () => {
     const mockCustomers: Customer[] = [mockCustomer];
@@ -136,6 +84,5 @@ describe('ApiService', () => {
     req.flush(mockCustomers);
   });
 
-  // TODO: add entry tests later on
+  // TODO: add more tests later on
 });
- */

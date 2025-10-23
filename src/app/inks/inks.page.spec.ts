@@ -49,8 +49,8 @@ describe('InksPage', () => {
   });
 
   //temporarily commented out
-  /*   //test if after triggering filteredSearch-function, inks are rendered
-  it('should render inks from filteredSearch()', () => {
+  //test if after triggering filteredSearch-function, inks are rendered
+  /* it('should render inks from filteredSearch()', () => {
     component.filteredSearch = () => [
       {
         product_name: 'Ink A',
@@ -129,6 +129,5 @@ describe('InksPage', () => {
     fixture.detectChanges();
 
     const inkElements = fixture.debugElement.queryAll(By.css('.bg-slate-900'));
-    expect(inkElements.length).toBe(1);
-  }); */
+    expect(inkElements.length).toBe(1); */
 });

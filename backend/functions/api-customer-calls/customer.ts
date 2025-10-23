@@ -71,6 +71,7 @@ export async function deleteCustomer(customer_id: string) {
 
     return successResponse({ message: 'Customer deleted successfully' });
   } catch (err) {
+    console.error('Delete error:', err);
     return clientErrorResponse('Delete failed');
   }
 }
