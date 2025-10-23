@@ -80,6 +80,15 @@ export const mockCustomers: Customer[] = [
     notes: 'Prefers blue tones.',
     User_user_id: 'user-123',
   },
+  {
+    customer_id: 2,
+    email: 'john.doe@example.com',
+    phone: '+358401004500',
+    first_name: 'Jonathan',
+    last_name: 'Doe',
+    notes: 'Rich guy',
+    User_user_id: 'user-123',
+  },
 ];
 
 export const mockCustomerCreations: CustomerCreation[] = [
