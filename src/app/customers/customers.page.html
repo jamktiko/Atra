@@ -1,20 +1,19 @@
 <!-- TÄMÄ ON banneri-->
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="atra">ATRA</ion-title>
+    <ion-title style="--background: oklch(22.5% 0.03 178.524)">ATRA</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
-  <!--Menee myös asiakasboksien ympärille-->
 
-  <div class="flex-1 p-6 text-neutral-950 text-center space-y-2 ">
+  <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
     <h2 class="text-4xl font-pt-serif text-neutral-50">Customers</h2>
     <h3 class="font-lato text-neutral-50">Your customers and their information</h3>
 
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-    <ion-searchbar style=" --color: white;" placeholder="Search" [(ngModel)]="searchItem"></ion-searchbar>
+    <ion-searchbar class="custom" placeholder="Search" [(ngModel)]="searchItem" animated="true" />
 
   </div>
 

@@ -12,6 +12,7 @@ import {
   IonList,
   IonLabel,
   IonToolbar,
+  IonModal,
   ModalController,
 } from '@ionic/angular/standalone';
 
@@ -20,15 +21,7 @@ import {
   templateUrl: './modalcustomer.page.html',
   styleUrls: ['./modalcustomer.page.css'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonButton,
-    IonList,
-    IonItem,
-    IonLabel,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [IonContent, IonList, IonItem, IonLabel, CommonModule, FormsModule],
 })
 export class ModalcustomerPage implements OnInit {
   @Input() newcustomer?: CustomerCreation;

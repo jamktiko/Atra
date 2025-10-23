@@ -86,7 +86,7 @@ export class CustomersPage implements OnInit {
     this.chosenCustomer = customer;
   }
 
-  //405 Not Allowed: selvitä Lotan kanssa
+  //400: selvitä Lotan kanssa
   deleteCustomer() {
     const customerId = this.chosenCustomer.customer_id;
     console.log(customerId);

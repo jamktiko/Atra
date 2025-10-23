@@ -1,11 +1,11 @@
 ion-tab-bar {
-  --color: oklch(47.6% 0.02 150.416); /* Default tab button text/icon color */
-  --color-selected: oklch(87% 0.01 13); /* Selected tab color */
-  --padding-top: 8px;
+  /* --color: oklch(47.6% 0.02 150.416);
+  --color-selected: oklch(87% 0.01 13); */
+  /* --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 12px;
-  --padding-end: 12px;
-  min-height: 7%;
+  --padding-end: 12px; */
+  /* min-height: 7%; */
 }
 
 ion-tab-bar ion-icon {

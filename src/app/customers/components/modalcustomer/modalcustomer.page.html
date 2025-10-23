@@ -1,30 +1,35 @@
 <ion-content>
-  <div class="bg-slate-900 my-2 p-3 text-neutral-50">
-    <h2>You're adding a new customer.</h2>
 
-    <ion-list>
-      <ion-label class="block m-1 text-lg font-lato text-neutral-50">
-        <ion-item>{{newcustomer?.first_name}}</ion-item>
-      </ion-label>
+  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+    <div
+      class="relative bg-slate-900 text-neutral-50 rounded-2xl shadow-2xl w-[90%] max-w-md p-6 border border-white/10 animate-modal-in">
+      <h2>You're adding a new customer.</h2>
 
-      <ion-label class="block m-1 text-lg font-lato text-neutral-50">
-        <ion-item>{{newcustomer?.last_name}}</ion-item>
-      </ion-label>
+      <ion-list class="text-slate-50">
+        <ion-label class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">
+          <ion-item
+            class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">{{newcustomer?.first_name}}</ion-item>
+        </ion-label>
 
-      <ion-label class="block m-1 text-lg font-lato text-neutral-50">
-        <ion-item>{{newcustomer?.email}}</ion-item>
-      </ion-label>
+        <ion-label class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">
+          <ion-item
+            class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">{{newcustomer?.last_name}}</ion-item>
+        </ion-label>
 
-      <ion-label class="block m-1 text-lg font-lato text-neutral-50">
-        <ion-item>{{newcustomer?.phone}}</ion-item>
-      </ion-label>
+        <ion-label class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">
+          <ion-item class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">{{newcustomer?.email}}</ion-item>
+        </ion-label>
 
-      <p>Please check customer information before confirming.</p>
-      <ion-button (click)="sendCancel()" type="button"
-        class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">Cancel</ion-button>
-      <ion-button (click)="sendConfirm()" type="button"
-        class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">Confirm</ion-button>
-    </ion-list>
+        <ion-label class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">
+          <ion-item class="text-slate-50 block m-1 text-lg font-lato text-neutral-50">{{newcustomer?.phone}}</ion-item>
+        </ion-label>
 
+        <p>Please check customer information before confirming.</p>
+        <button (click)="sendCancel()" type="button"
+          class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">Cancel</button>
+        <button (click)="sendConfirm()" type="button"
+          class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">Confirm</button>
+      </ion-list>
+    </div>
   </div>
 </ion-content>
