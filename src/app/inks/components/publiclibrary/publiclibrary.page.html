@@ -20,15 +20,17 @@
         class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
       </div>
       <!-- Own -->
-      <a tab="inks" href="/tabs/inks"
-        class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-300 block">
+      <button
+        class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-300 block"
+        (click)="toOwnLibrary()">
         Own
-      </a>
+      </button>
       <!-- Public -->
-      <a tab="inks/publiclibrary" href="/tabs/inks/publiclibrary"
-        class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-50 block">
+      <button
+        class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-50 block"
+        (class)="alreadyHere()">
         Public
-      </a>
+      </button>
     </label>
   </div>
 

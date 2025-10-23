@@ -12,6 +12,7 @@ import {
   IonModal,
 } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-publiclibrary',
@@ -44,7 +45,7 @@ export class PubliclibraryPage implements OnInit {
   searchItem: string = '';
   selectedInk: any;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   /**
    * Hoitaa yksittäisen musteen valitsemisen, ja ottaa parametreiksiin isOpen ja ink-arvot.
@@ -60,6 +61,15 @@ export class PubliclibraryPage implements OnInit {
    */
   setClosed(isOpen: boolean) {
     this.isModalOpen = isOpen;
+  }
+
+  toOwnLibrary() {
+    this.router.navigate(['/tabs/inks']);
+  }
+
+  alreadyHere() {
+    //toast to user that already at this page
+    console.log('At public library already.');
   }
 
   /**

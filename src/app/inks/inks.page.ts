@@ -12,6 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 
 import { User, UserInk } from 'src/interface';
+import { Router } from '@angular/router';
 
 //below is for testing env variable
 /* // setting up environment variables for use
@@ -56,11 +57,15 @@ export class InksPage implements OnInit {
 
   updatedInk!: UserInk;
 
+  /*
+   * Hallinnoi musteen päivityksen updatemodal-näkyvyyttä */
+  showUpdateModal: boolean = false;
+
   /*Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa kovakoodattu feikkidata
    */
 
   /* Constructorissa otetaan käyttöön apiservice */
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.apiService.getAllUserInks().subscribe({
@@ -74,6 +79,18 @@ export class InksPage implements OnInit {
     });
   }
 
+  toggleUpdateModal(isOpen: boolean) {
+    this.showUpdateModal = isOpen;
+    console.log(this.showUpdateModal);
+  }
+
+  toPublic() {
+    this.router.navigate(['/tabs/inks/publiclibrary']);
+  }
+  alreadyHere() {
+    //toast to user that already at this page
+    console.log('At own library already.');
+  }
   /**
    * Chooseink-metodi valitsee tietyn musteen, ja ottaa parametriksi booleanin ja ink-datan,
    * eli yksittäisen musteen tiedot. Boolean asetetaan isModalOpen-muuttujan arvoksi, ja musteen
@@ -109,6 +126,7 @@ export class InksPage implements OnInit {
       .subscribe({
         next: (updatedInk) => {
           this.updatedInk = updatedInk;
+          this.toggleUpdateModal(false);
           console.log('Ink updated: ', updatedInk);
           //success message toast, redirect
         },
