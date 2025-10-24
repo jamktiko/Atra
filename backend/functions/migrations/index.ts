@@ -62,8 +62,9 @@ export const handler: Handler = async (event, ctx) => {
         UNIQUE KEY user_ink_id_UNIQUE (user_ink_id),
         FOREIGN KEY (PublicInk_ink_id) REFERENCES PublicInk(ink_id),
         FOREIGN KEY (User_user_id) REFERENCES User(user_id)
-      ) ENGINE=InnoDB;
+      ) ENGINE=InnoDB;`);
 
+    /* ---- Appointment table removed ----
       CREATE TABLE IF NOT EXISTS Appointment (
         appointment_id INT NOT NULL AUTO_INCREMENT,
         appointment_date DATETIME NOT NULL,
@@ -78,7 +79,9 @@ export const handler: Handler = async (event, ctx) => {
         FOREIGN KEY (Customer_customer_id) REFERENCES Customer(customer_id) 
           ON DELETE SET NULL --cascades customer deletion
       ) ENGINE=InnoDB;
+      -------------------------------------- */
 
+    /* ---- UserInk_has_Appointment removed ----
       CREATE TABLE IF NOT EXISTS UserInk_has_Appointment (
         id INT NOT NULL AUTO_INCREMENT,
         UserInk_user_ink_id INT NULL, --NULL for cascades
@@ -90,7 +93,8 @@ export const handler: Handler = async (event, ctx) => {
           ON DELETE SET NULL --cascades user deletion,
         FOREIGN KEY (Appointment_appointment_id) REFERENCES Appointment(appointment_id)
           ON DELETE SET NULL --cascades appointment deletion
-      ) ENGINE=InnoDB;`);
+      ) ENGINE=InnoDB;
+      --------------------------------------------- */
 
     await conn.query(`
       INSERT INTO User (user_id, email, first_name, last_name)
@@ -131,13 +135,16 @@ export const handler: Handler = async (event, ctx) => {
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('98765', DATE("2025-01-01"), DATE("2026-01-01"), 0, 20, 'demo-user-123');
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('HJKL011', DATE("2025-01-01"), DATE("2026-01-01"), 1, 2, 'demo-user-123');`);
 
+    /* ---- Appointment inserts removed ----
     await conn.query(`
       INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-06-06"), 'eka', 'demo-user-123', 1);
       INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-07"), 'toka', 'demo-user-123', 1);
       INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-09"), '', 'demo-user-123', 2);
       INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-10-06"), '', 'demo-user-123', 3);
       INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-12-12"), '', 'demo-user-123', 2);`);
+    -------------------------------------- */
 
+    /* ---- UserInk_has_Appointment inserts removed ----
     await conn.query(`
       INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (1, 1);
       INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (3, 1);
@@ -148,6 +155,7 @@ export const handler: Handler = async (event, ctx) => {
       INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (2, 4);
       INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (3, 4);
       INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (4, 4);`);
+    -------------------------------------- */
 
     await conn.commit();
     console.log('Migration finished');
