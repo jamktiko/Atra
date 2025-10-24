@@ -1,7 +1,7 @@
 <!-- TÄMÄ ON banneri-->
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title style="--background: oklch(22.5% 0.03 178.524)">ATRA</ion-title>
+    <ion-title>ATRA</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -17,16 +17,12 @@
 
   </div>
 
-  <div class="flex">
-    <button (click)="addNew()"
-      class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
+  <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
+    <button
+      class="flex items-center gap-2 px-4 py-4 bg-slate-600 text-neutral-50 font-lato font-si border border-slate-900 rounded-full transition drop-shadow-xl drop-shadow-slate-800"
+      (click)="addNew()">
 
-      <span class="text-l">
-        +
-      </span>
-      <span>Add new
-      </span>
-
+      <span class="text-l"> + </span> Add new
     </button>
   </div>
 

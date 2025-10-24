@@ -84,6 +84,10 @@ export class InksPage implements OnInit {
     console.log(this.showUpdateModal);
   }
 
+  addNew() {
+    this.router.navigate(['/tabs/inks/addnewink']);
+  }
+
   toPublic() {
     this.router.navigate(['/tabs/inks/publiclibrary']);
   }

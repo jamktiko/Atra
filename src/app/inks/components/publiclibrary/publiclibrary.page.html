@@ -5,52 +5,54 @@
 </ion-header>
 
 <ion-content>
-  <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
-    <h2 class="text-4xl font-pt-serif">
-      Ink Library
-    </h2>
-    <h3 class="font-lato">Here is where you can find our ink library. Browse, admire, or find something new to try.</h3>
+  <div>
+    <!--^ Menee myös for-loopin ympärille-->
+    <div class="flex flex-col items-center justify-center px-4 py-4 my-2 text-neutral-50 text-center">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-pt-serif">Ink Library</h2>
+      <h3 class="sm:text-lg md:text-xl font-lato">All application inks. Browse, admire, or find
+        something new to try.</h3>
 
 
-    <label class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
-      style="margin: 1em; padding: 0.3em">
-      <input type="checkbox" class="sr-only peer" checked />
-      <!-- Liukuva tausta -->
-      <div
-        class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
-      </div>
-      <!-- Own -->
-      <button
-        class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-300 block"
-        (click)="toOwnLibrary()">
-        Own
-      </button>
-      <!-- Public -->
-      <button
-        class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-50 block"
-        (class)="alreadyHere()">
-        Public
-      </button>
-    </label>
-  </div>
-
-  <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
-
-  <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
-  <div class="grid grid-cols-2 gap-4">
-    @for (ink of filteredSearch(); track ink.ink_id) {
-
-    <div class="bg-slate-700 rounded-lg shadow p-1 m-1" (click)="chooseInk(true, ink)">
-      <img src="{{ink.image_url}}" width="90%" />
-      <h3 class="mt-2 text-m text-neutral-50">
-        {{ink.product_name}}
-      </h3>
-      <!-- <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
-        <a>Open </a>
-      </button> -->
+      <label
+        class="relative flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-black rounded-full cursor-pointer overflow-hidden mt-4 px-1 py-1">
+        <input type="checkbox" class="sr-only peer" checked />
+        <!-- Liukuva tausta -->
+        <div
+          class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
+        </div>
+        <!-- Own -->
+        <button
+          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-300 block"
+          (click)="toOwnLibrary()">
+          Own
+        </button>
+        <!-- Public -->
+        <button
+          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-50 block"
+          (class)="alreadyHere()">
+          Public
+        </button>
+      </label>
     </div>
 
-    }
+    <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+
+    <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
+    <div class="grid grid-cols-2 gap-4">
+      @for (ink of filteredSearch(); track ink.ink_id) {
+
+      <div class="bg-slate-700 rounded-lg shadow p-1 m-1" (click)="chooseInk(true, ink)">
+        <img src="{{ink.image_url}}" width="90%" />
+        <h3 class="mt-2 text-m text-neutral-50">
+          {{ink.product_name}}
+        </h3>
+        <!-- <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
+        <a>Open </a>
+      </button> -->
+      </div>
+
+      }
+    </div>
   </div>
 </ion-content>
 

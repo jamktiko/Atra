@@ -6,27 +6,30 @@
 
 <ion-content>
   <!--Menee myös for-loopin ympärille-->
-  <div class="">
-    <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
-      <h2 class="text-4xl font-pt-serif">Your Library</h2>
-      <h3 class="font-lato">We keep all your inks in this library.</h3>
+  <div>
+    <div class="flex flex-col items-center justify-center px-4 py-4 my-2 text-neutral-50 text-center">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-pt-serif">Your Library</h2>
+      <h3 class="sm:text-lg md:text-xl font-lato">We keep all your inks in this library.</h3>
 
-      <label class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
-        style="margin: 1em; padding: 0.3em">
+      <label
+        class="relative flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-black rounded-full cursor-pointer overflow-hidden mt-4 px-1 py-1">
         <input type="checkbox" class="sr-only peer" />
-        <!-- Liukuva tausta -->
+
+        <!-- Liukuva tausta-->
         <div
           class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
         </div>
+
         <!-- Own -->
         <button
-          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300"
           (click)="alreadyHere()">
           Own
         </button>
+
         <!-- Public -->
         <button
-          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50"
           (click)="toPublic()">
           Public
         </button>
@@ -36,11 +39,12 @@
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
     <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
 
-    <div class="flex">
+    <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
       <button
-        class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
-        <a tab="inks/addnewink" href="/tabs/inks/addnewink">
-          <span class="text-l"> + </span> Add new</a>
+        class="flex items-center gap-2 px-4 py-4 bg-slate-600 text-neutral-50 font-lato font-si border border-slate-900 rounded-full transition drop-shadow-xl drop-shadow-slate-800"
+        (click)="addNew()">
+
+        <span class="text-l"> + </span> Add new
       </button>
     </div>
 
@@ -61,9 +65,6 @@
 
       }
 
-      <!-- <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
-        <a >Open </a>
-      </button> -->
     </div>
   </div>
 </ion-content>

@@ -183,4 +183,8 @@ export class AddnewinkPage implements OnInit {
       },
     });
   }
+
+  back() {
+    this.router.navigate(['/tabs/inks']);
+  }
 }
