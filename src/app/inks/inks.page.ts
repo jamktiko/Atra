@@ -127,6 +127,7 @@ export class InksPage implements OnInit {
         next: (updatedInk) => {
           this.updatedInk = updatedInk;
           this.toggleUpdateModal(false);
+          this.isModalOpen = false;
           console.log('Ink updated: ', updatedInk);
           //success message toast, redirect
         },

@@ -19,9 +19,12 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://tqcdm5dn0k.execute-api.eu-north-1.amazonaws.com';
-  private readonly isProd = environment.production; //false when using ionic serve, true when using ionic build
-  //private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
+  private apiUrl = 'https://ox2qpoqiyk.execute-api.eu-north-1.amazonaws.com';
+  //TÄMÄ KUN DEV
+  private readonly isProd = environment.production;
+  //false when using ionic serve, true when using ionic build
+  //TÄMÄ KUN PROD
+  // private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
 
   private localUserInks: UserInk[] = [...mockUserInks]; //copy of mockUserInks
   private localCustomers: Customer[] = [...mockCustomers]; //copy of mockCustomers
@@ -144,7 +147,7 @@ export class ApiService {
    */
   deleteUserInk(userInkId: number): Observable<UserInk> {
     if (this.isProd) {
-      return this.http.delete<UserInk>(`${this.apiUrl}/${userInkId}`); //might need userInk/ after apiurl & before userInkId
+      return this.http.delete<UserInk>(`${this.apiUrl}/userInk/${userInkId}`);
     } else {
       const index = this.localUserInks.findIndex(
         (ink) => ink.user_ink_id === userInkId
