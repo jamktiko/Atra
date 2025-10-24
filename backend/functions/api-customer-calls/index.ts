@@ -4,7 +4,7 @@
 
 import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
 import * as customer from './customer';
-import { notAllowedResponse } from '../shared/utils';
+import { notAllowedResponse, clientErrorResponse } from '../shared/utils';
 
 // reititetään kutsut oikeisiin käsittelijöihin
 export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
@@ -30,8 +30,20 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
     return customer.updateCustomer(pathParameters!.id!, event.body!);
   }
 
+  //if (httpMethod === 'DELETE' && routeKey === '/customer/{id}') {
+  //return customer.deleteCustomer(pathParameters!.id!);
+  //}
+
   if (httpMethod === 'DELETE' && routeKey === '/customer/{id}') {
-    return customer.deleteCustomer(pathParameters!.id!);
+    const id = pathParameters?.id;
+    if (!id) {
+      console.error(
+        'DELETE /customer called without id, pathParameters:',
+        pathParameters
+      );
+      return clientErrorResponse('Missing id parameter');
+    }
+    return customer.deleteCustomer(id);
   }
 
   if (httpMethod === 'POST' && routeKey === '/customer') {

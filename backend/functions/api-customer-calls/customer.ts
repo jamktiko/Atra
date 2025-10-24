@@ -56,7 +56,33 @@ export async function addCustomer(userId: string, body: string) {
   return successResponse({ insertedId: (result as any).insertId });
 }
 
+/*
 export async function deleteCustomer(customer_id: string) {
+  try {
+    const pool = await getPool();
+    const [result] = await pool.query(
+      'DELETE FROM Customer WHERE customer_id = ?',
+      [customer_id]
+    );
+    const { affectedRows } = result as any;
+
+    if (affectedRows === 0) {
+      return notFoundResponse('Customer not found');
+    }
+
+    return successResponse({ message: 'Customer deleted successfully' });
+  } catch (err) {
+    console.error('Delete error:', err);
+    return clientErrorResponse('Delete failed');
+  }
+}
+*/
+
+export async function deleteCustomer(customer_id: string) {
+  if (!customer_id) {
+    return clientErrorResponse('Missing customer id');
+  }
+
   try {
     const pool = await getPool();
     const [result] = await pool.query(
