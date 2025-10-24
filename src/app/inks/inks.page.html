@@ -6,27 +6,30 @@
 
 <ion-content>
   <!--Menee myös for-loopin ympärille-->
-  <div class="">
-    <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
-      <h2 class="text-4xl font-pt-serif">Your Library</h2>
-      <h3 class="font-lato">We keep all your inks in this library.</h3>
+  <div>
+    <div class="flex flex-col items-center justify-center px-4 py-4 my-2 text-neutral-50 text-center">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-pt-serif">Your Library</h2>
+      <h3 class="sm:text-lg md:text-xl font-lato">We keep all your inks in this library.</h3>
 
-      <label class="relative flex w-80 bg-black rounded-full cursor-pointer overflow-hidden"
-        style="margin: 1em; padding: 0.3em">
+      <label
+        class="relative flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-black rounded-full cursor-pointer overflow-hidden mt-4 px-1 py-1">
         <input type="checkbox" class="sr-only peer" />
-        <!-- Liukuva tausta -->
+
+        <!-- Liukuva tausta-->
         <div
           class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
         </div>
+
         <!-- Own -->
         <button
-          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300 block"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300"
           (click)="alreadyHere()">
           Own
         </button>
+
         <!-- Public -->
         <button
-          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50 block"
+          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50"
           (click)="toPublic()">
           Public
         </button>
@@ -36,11 +39,12 @@
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
     <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
 
-    <div class="flex">
+    <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
       <button
-        class="flex-1 items-center gap-2 px-4 py-4 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full">
-        <a tab="inks/addnewink" href="/tabs/inks/addnewink">
-          <span class="text-l"> + </span> Add new</a>
+        class="flex items-center gap-2 px-4 py-4 bg-slate-600 text-neutral-50 font-lato font-si border border-slate-900 rounded-full transition drop-shadow-xl drop-shadow-slate-800"
+        (click)="addNew()">
+
+        <span class="text-l"> + </span> Add new
       </button>
     </div>
 
@@ -61,9 +65,6 @@
 
       }
 
-      <!-- <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
-        <a >Open </a>
-      </button> -->
     </div>
   </div>
 </ion-content>
@@ -88,7 +89,7 @@
           Update info
         </button>
         <button
-          class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
+          class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2"
           (click)="deleteInk()">
           <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -109,24 +110,42 @@
 <ion-modal id="example-modal" [isOpen]="showUpdateModal" (didDismiss)="toggleUpdateModal(false)">
   <ng-template>
     <div class="inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-      <div class="relative bg-slate-900 text-neutral-50 rounded-2xl shadow-2xl  max-w-md p-6 border border-white/10">
-        <h2>You're updating: <strong>{{selectedInk.product_name}}, {{selectedInk.color}}, {{selectedInk.size}}</strong>
-        </h2>
-        <small>Please add opening date, expiry date (automatically 12 months otherwise), and batch number.</small> <br>
+      <div
+        class="relative bg-slate-900 text-neutral-50 rounded-2xl shadow-2xl max-w-md p-6 border border-white/10 items-center">
+        <h2 class="text-xl text-slate-50 font-bold text-center">You're updating:</h2>
+        <p class="text-lg font-bold text-center">{{selectedInk.product_name}}, {{selectedInk.color}},
+          {{selectedInk.size}}</p>
 
-        <p> Opened: <input type="date" [(ngModel)]="selectedInk.opened_at" /></p>
+        <p class="text-center">Please add opening date, expiry date, and batch number.</p>
+
+        <label> Opened: </label><input type="date"
+          class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+          [(ngModel)]="selectedInk.opened_at" />
         <p>(current value: {{selectedInk.opened_at |
           date: 'MMM dd, yyyy'}})
         </p>
-        <p> Expires at: <input type="date" [(ngModel)]="selectedInk.expires_at" /></p>
+
+        <label for="opened_at" class="block mb-1 text-lg font-lato text-neutral-50"> Expires at: </label>
+
+        <input
+          class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+          id="opened_at" type="date" [(ngModel)]="selectedInk.expires_at" />
         <p> (current value:
           {{selectedInk.expires_at | date: 'MMM dd, yyyy'}}) </p>
-        <p>Batchnumber: <input type="text" [(ngModel)]="selectedInk.batch_number" /> </p>
-        <p>Please ensure correct info before confirming.</p>
-        <button (click)="toggleUpdateModal(false)" type="button"
-          class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">Cancel</button>
-        <button (click)="updateInk()" type="button"
-          class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">Confirm</button>
+
+
+        <label for="batchnumber" class="block mb-1 text-lg font-lato text-neutral-50">Batchnumber: </label>
+        <input
+          class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+          id="batchnumber" type="text" [(ngModel)]="selectedInk.batch_number" />
+
+        <div class="justify-center text-center py-2">
+          <p class="my-2">Please check your info before confirming.</p>
+          <button (click)="toggleUpdateModal(false)" type="button"
+            class="text-neutral-50 bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 text-center">Cancel</button>
+          <button (click)="updateInk()" type="button"
+            class="text-neutral-50 bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 ext-center">Confirm</button>
+        </div>
 
       </div>
     </div>

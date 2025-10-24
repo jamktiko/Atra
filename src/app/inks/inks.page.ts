@@ -84,6 +84,10 @@ export class InksPage implements OnInit {
     console.log(this.showUpdateModal);
   }
 
+  addNew() {
+    this.router.navigate(['/tabs/inks/addnewink']);
+  }
+
   toPublic() {
     this.router.navigate(['/tabs/inks/publiclibrary']);
   }
@@ -127,6 +131,7 @@ export class InksPage implements OnInit {
         next: (updatedInk) => {
           this.updatedInk = updatedInk;
           this.toggleUpdateModal(false);
+          this.isModalOpen = false;
           console.log('Ink updated: ', updatedInk);
           //success message toast, redirect
         },
