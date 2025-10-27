@@ -7,47 +7,19 @@
 <ion-content [fullscreen]="true">
   <h2>Entries</h2>
   <ion-searchbar class="custom" animated="true" placeholder="Search" />
-  <div class="bg-slate-50 m-2 p-2">
-    <h1>One </h1>
-  </div>
 
-  <div class="bg-slate-100 m-2 p-2">
-    <h1>Two </h1>
-  </div>
+  @for (entry of entries; track entry.appointment_id) {
+  <div class="bg-slate-700 rounded-lg shadow p-1 m-1">
+    <h3 class="mt-2 text-m text-neutral-50">
+      Entry date: {{entry.appointment_date}}
+    </h3>
+    <p class="mt-2 text-sm text-gray-400">Customer id: {{entry.Customer_customer_id}}</p>
 
-  <div class="bg-slate-200 m-2 p-2">
-    <h1>Three</h1>
-  </div>
+    <!-- <button class="bg-slate-300 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
+        <a>Open </a>
+      </button> -->
 
-  <div class="bg-slate-300 m-2 p-2">
-    <h1>Four</h1>
   </div>
+  }
 
-  <div class="bg-slate-400 m-2 p-2">
-    <h1>Five</h1>
-  </div>
-
-  <div class="bg-slate-500 m-2 p-2">
-    <h1>Six</h1>
-  </div>
-
-  <div class="bg-slate-600 m-2 p-2">
-    <h1>Seven</h1>
-  </div>
-
-  <div class="bg-slate-700 m-2 p-2">
-    <h1>eight</h1>
-  </div>
-
-  <div class="bg-slate-800 m-2 p-2">
-    <h1>Nine</h1>
-  </div>
-
-  <div class="bg-slate-900 m-2 p-2">
-    <h1>Ten</h1>
-  </div>
-
-  <div class="bg-slate-950 m-2 p-2">
-    <h1>Eleven</h1>
-  </div>
 </ion-content>
