@@ -33,10 +33,11 @@ interface User {
 }
 
 interface Entry {
-  id: number;
-  customer: string;
+  appointment_id: number;
   appointment_date: Date;
-  notes: string;
+  comments: string;
+  User_user_id: string;
+  Customer_customer_id: number;
 }
 
 interface Customer {

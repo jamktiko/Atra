@@ -9,6 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Entry } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-entries',
@@ -26,7 +27,18 @@ import { IonSearchbar } from '@ionic/angular/standalone';
   ],
 })
 export class EntriesPage implements OnInit {
-  constructor() {}
+  entries: Entry[] = [];
 
-  ngOnInit() {}
+  constructor(private apiService: ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getEntries().subscribe({
+      next: (data) => {
+        this.entries = data;
+      },
+      error: (err) => {
+        console.error('No entries found: ', err);
+      },
+    });
+  }
 }
