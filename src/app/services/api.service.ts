@@ -260,7 +260,7 @@ export class ApiService {
         last_name: customerData.last_name,
         email: customerData.email,
         phone: customerData.phone,
-        notes: '', //TODO: add this later on
+        notes: '',
         User_user_id: 'mock-user-id',
       };
 
