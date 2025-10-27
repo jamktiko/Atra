@@ -75,9 +75,9 @@ export class CustomersPage implements OnInit {
 
     return this.allcustomers.filter(
       (customer) =>
-        customer.first_name.toLowerCase().includes(search) ||
-        customer.last_name.toLowerCase().includes(search) ||
-        customer.email.toLowerCase().includes(search)
+        (customer.first_name?.toLowerCase() ?? '').includes(search) ||
+        (customer.last_name?.toLowerCase() ?? '').includes(search) ||
+        (customer.email?.toLowerCase() ?? '').includes(search)
     );
   }
 
