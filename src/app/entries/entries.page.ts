@@ -70,13 +70,16 @@ export class EntriesPage implements OnInit {
    */
   sortByDate(entries: Entry[]) {
     let sorted: Record<string, Entry[]> = {};
+
     for (let i = 0; i < entries.length; i++) {
       const date = entries[i].appointment_date
         .toLocaleDateString('en-CA')
         .split('T')[0];
-      if (sorted[date] == null) sorted[date] = [];
-      // console.log(sorted);
-      sorted[date].push(entries[i]);
+
+      if (sorted[date] == null) {
+        sorted[date] = [];
+        sorted[date].push(entries[i]);
+      }
     }
 
     this.groupedEntries = sorted;

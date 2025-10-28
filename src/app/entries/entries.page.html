@@ -8,23 +8,24 @@
   <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
     <h2 class="text-4xl font-pt-serif text-neutral-50">Entries</h2>
     <h3 class="font-lato text-neutral-50">Your entries and their information.</h3>
-    <ion-searchbar class="custom" animated="true" placeholder="Search" />
+
   </div>
 
+  <ion-searchbar class="custom" animated="true" placeholder="Search" />
   <!--Ulkoinen silmukka käy läpi jokaisen groupedEntriesin, joka on asetettu taulukkomuotoon ger groupedEntriesArray-funktiolla.
-  
+
   -->
   @for (group of groupedEntriesArray; track group[0]) {
-  <h3 class="font-lato text-neutral-50 p-2 m-2">{{ group[0] | date:'mediumDate' }}</h3>
+  <h3 class="text-lg font-lato text-neutral-50 px-x mx-4">{{ group[0] | date:'mediumDate' }}</h3>
 
   <!--Sisäinen silmukka iteroi läpi jokaisen entryn, joka sisältää appointment_id, appointment_date, comments, User_user_id, Customer_customer_id.
   -->
   @for (entry of group[1]; track entry.appointment_id)
   {
-  <div class="flex flex-col bg-slate-900 border p-2 border-neutral-50/60 rounded-xl m-2">
+  <div class="flex flex-col bg-slate-800 border p-2 border-neutral-50/60 rounded-xl m-2">
     <h2 class="text-m font-lato text-neutral-50">{{entry.appointment_date | date:'HH:mm'}}</h2>
-    <h2 class="text-m font-lato text-neutral-400">{{ entry.comments }} — {{ entry.User_user_id }}
-    </h2>
+    <p class="text-sm font-lato text-neutral-400">{{ entry.comments }}</p>
+    <p class="text-sm font-lato text-neutral-400">Customer: {{ entry.Customer_customer_id }}</p>
   </div>
   }
 
