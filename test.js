@@ -41,13 +41,23 @@ const entries = [
     User_user_id: "USR-004",
     Customer_customer_id: 505,
   },
+  {
+    appointment_id: 1006,
+    appointment_date: new Date("2025-10-20T11:30:00"),
+    comments: "TEST ADDED MANUALLY",
+    User_user_id: "USR-001",
+    Customer_customer_id: 508,
+  },
 ];
 
 let sorted = {};
 for (let i = 0; i < entries.length; i++) {
   //converts Date object to string key
   const date = entries[i].appointment_date.toISOString().split("T")[0];
-  if (sorted[date] == null) sorted[date] = [];
+
+  if (!(date in sorted)) {
+    sorted[date] = [];
+  }
 
   sorted[date].push(entries[i]);
 }

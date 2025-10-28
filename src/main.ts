@@ -14,6 +14,7 @@ import { importProvidersFrom } from '@angular/core';
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { provideNgToast } from 'ng-angular-popup';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -21,5 +22,6 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     importProvidersFrom(HttpClientModule),
+    provideNgToast(),
   ],
 });

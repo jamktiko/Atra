@@ -14,6 +14,12 @@ import { ApiService } from '../services/api.service';
 import { routes } from '../tabs/tabs.routes';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import {
+  NgToastComponent,
+  NgToastService,
+  TOAST_POSITIONS,
+  ToastPosition,
+} from 'ng-angular-popup';
 
 @Component({
   selector: 'app-customers',
@@ -21,6 +27,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./customers.page.css'],
   standalone: true,
   imports: [
+    NgToastComponent,
     IonContent,
     IonHeader,
     IonTitle,
@@ -45,7 +52,11 @@ export class CustomersPage implements OnInit {
   chosenCustomer: any;
   isModalOpen: boolean = false;
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private toast: NgToastService
+  ) {}
 
   ngOnInit() {
     this.loadCustomers();
@@ -86,7 +97,6 @@ export class CustomersPage implements OnInit {
     this.chosenCustomer = customer;
   }
 
-  //400: selvitä Lotan kanssa
   deleteCustomer() {
     const customerId = this.chosenCustomer.customer_id;
     console.log(customerId);
@@ -107,6 +117,8 @@ export class CustomersPage implements OnInit {
     this.apiService.updateCustomer(customerId, customerData).subscribe({
       next: (data) => {
         console.log('Customer updated: ', data);
+        this.setClosed(false);
+        this.toast.success('Customer updated successfully');
       },
       error: (err) => {
         console.error('No success: '), err;

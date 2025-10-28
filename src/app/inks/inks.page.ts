@@ -13,6 +13,7 @@ import {
 
 import { User, UserInk } from 'src/interface';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 
 //below is for testing env variable
 /* // setting up environment variables for use
@@ -65,7 +66,11 @@ export class InksPage implements OnInit {
    */
 
   /* Constructorissa otetaan käyttöön apiservice */
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private toast: NgToastService
+  ) {}
 
   ngOnInit() {
     this.apiService.getAllUserInks().subscribe({
@@ -133,10 +138,11 @@ export class InksPage implements OnInit {
           this.toggleUpdateModal(false);
           this.isModalOpen = false;
           console.log('Ink updated: ', updatedInk);
-          //success message toast, redirect
+          this.toast.success('Yay');
         },
         error: (err) => {
           console.error('Something went wrong: ', err);
+
           //error message toast
         },
       });

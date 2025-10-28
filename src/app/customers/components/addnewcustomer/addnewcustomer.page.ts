@@ -23,13 +23,26 @@ import { CustomerCreation } from 'src/interface';
 import { ModalcustomerPage } from '../modalcustomer/modalcustomer.page';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
+import {
+  NgToastComponent,
+  NgToastService,
+  TOAST_POSITIONS,
+  ToastPosition,
+} from 'ng-angular-popup';
 
 @Component({
   selector: 'app-addnewcustomer',
   templateUrl: './addnewcustomer.page.html',
   styleUrls: ['./addnewcustomer.page.css'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, ModalcustomerPage, IonText],
+  imports: [
+    NgToastComponent,
+    IonContent,
+    CommonModule,
+    FormsModule,
+    ModalcustomerPage,
+    IonText,
+  ],
 })
 export class AddnewcustomerPage {
   //ViewChild mahdollistaa sen, että HTML-templaatissa määritelty muuttuja voidaan ottaa ts-tiedostossa käyttöön
@@ -48,7 +61,11 @@ export class AddnewcustomerPage {
   // HTML-templaatissa  @if (openModal) {<app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel()" [openModal]="openModal"></app-modalcustomer>}
   openModal: boolean = false;
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private toast: NgToastService
+  ) {}
 
   showModal() {
     this.openModal = true;
@@ -90,6 +107,7 @@ export class AddnewcustomerPage {
     this.apiService.addNewCustomer(this.customer).subscribe({
       next: (data) => {
         this.customer = data;
+        this.toast.success('Customer added successfully');
         this.router.navigate(['/tabs/customers']);
       },
       error: (err) => {

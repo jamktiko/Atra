@@ -67,6 +67,9 @@ export class EntriesPage implements OnInit {
    * * .toLocaleDateString('en-CA') tulostaa muodossa YYYY-MM-DDT00:00:0000
    * 'T' toimii ajanerottajana (time separator) eli erottaa ajan päivämäärästä > saadaan pelkkä kellonaika 00:00:0000
    *
+   * sorted[date] etsii taulukon kyseisen date-muuttujan arvolla, eli etsii kyseisen key-arvon
+   * if (!(date in sorted)) tarkistaa, sisältääkö sorted-objekti key-arvoa date (eli sisältääkö kyseistä päivämäärää)
+   *
    */
   sortByDate(entries: Entry[]) {
     let sorted: Record<string, Entry[]> = {};
@@ -76,10 +79,11 @@ export class EntriesPage implements OnInit {
         .toLocaleDateString('en-CA')
         .split('T')[0];
 
-      if (sorted[date] == null) {
+      if (!(date in sorted)) {
         sorted[date] = [];
-        sorted[date].push(entries[i]);
       }
+
+      sorted[date].push(entries[i]);
     }
 
     this.groupedEntries = sorted;

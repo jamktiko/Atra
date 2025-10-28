@@ -65,7 +65,7 @@ export const mockEntries: Entry[] = [
   {
     appointment_id: 1001,
     appointment_date: new Date('2025-10-20T09:30:00'),
-    comments: 'Initial consultation. Customer interested in premium plan.',
+    comments: 'Initial consultation.',
     User_user_id: 'USR-001',
     Customer_customer_id: 501,
   },
@@ -103,6 +103,13 @@ export const mockEntries: Entry[] = [
     comments: 'New appointment booked via online portal.',
     User_user_id: 'USR-004',
     Customer_customer_id: 505,
+  },
+  {
+    appointment_id: 1006,
+    appointment_date: new Date('2025-10-20T11:30:00'),
+    comments: 'TEST ADDED MANUALLY',
+    User_user_id: 'USR-001',
+    Customer_customer_id: 508,
   },
 ];
 

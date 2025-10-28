@@ -7,6 +7,7 @@
 
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
+  <ng-toast></ng-toast>
 
   <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
     <h2 class="text-4xl font-pt-serif text-neutral-50">Customers</h2>
@@ -22,20 +23,21 @@
       class="flex items-center gap-2 px-4 py-4 bg-slate-600 text-neutral-50 font-lato font-si border border-slate-900 rounded-full transition drop-shadow-xl drop-shadow-slate-800"
       (click)="addNew()">
 
-      <span class="text-l"> + </span> Add new
+      <span class="text-l"> + </span>Add new
     </button>
   </div>
 
   <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
   @for (customer of filteredCustomers(); track customer.customer_id) {
-  <div class="flex flex-col bg-slate-900 border border-neutral-50/60 rounded-xl my-4 ">
+  <div class="flex flex-col bg-slate-900 border border-neutral-50/60 rounded-xl my-4 "
+    (click)="chooseCustomer(true, customer)">
     <div class="p-3 md:p-5 ">
       <h3 class="text-lg font-lato text-neutral-50">{{customer.last_name}}, {{customer.first_name}}
       </h3>
       <p class="mt-2 font-lato text-gray-500">{{customer.email}}</p>
     </div>
-    <button class="bg-slate-200 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
-      <a (click)="chooseCustomer(true, customer)">Open </a></button>
+    <!-- <button class="bg-slate-200 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
+      Open</button> -->
   </div>
   }
 
