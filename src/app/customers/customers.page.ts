@@ -71,7 +71,7 @@ export class CustomersPage implements OnInit {
   }
 
   filteredCustomers() {
-    const search = this.searchItem!.toLowerCase() ?? '';
+    const search = this.searchItem.toLowerCase() ?? '';
 
     return this.allcustomers.filter(
       (customer) =>

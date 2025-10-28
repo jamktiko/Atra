@@ -27,12 +27,12 @@
   </div>
 
   <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
-  @for (customer of filteredCustomers(); track customer.email) {
+  @for (customer of filteredCustomers(); track customer.customer_id) {
   <div class="flex flex-col bg-slate-900 border border-neutral-50/60 rounded-xl my-4 ">
     <div class="p-3 md:p-5 ">
-      <h3 class="text-lg font-lato text-neutral-50 dark:text-white">{{customer.last_name}}, {{customer.first_name}}
+      <h3 class="text-lg font-lato text-neutral-50">{{customer.last_name}}, {{customer.first_name}}
       </h3>
-      <p class="mt-2 font-lato text-gray-500 dark:text-neutral-400">{{customer.email}}</p>
+      <p class="mt-2 font-lato text-gray-500">{{customer.email}}</p>
     </div>
     <button class="bg-slate-200 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
       <a (click)="chooseCustomer(true, customer)">Open </a></button>

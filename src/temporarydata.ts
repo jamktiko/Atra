@@ -77,6 +77,13 @@ export const mockEntries: Entry[] = [
     Customer_customer_id: 502,
   },
   {
+    appointment_id: 1000,
+    appointment_date: new Date('2025-10-22T17:00:00'),
+    comments: 'Follow-up appointment to review progress.',
+    User_user_id: 'USR-002',
+    Customer_customer_id: 502,
+  },
+  {
     appointment_id: 1003,
     appointment_date: new Date('2025-10-24T11:15:00'),
     comments: 'Routine checkup — no issues reported.',
