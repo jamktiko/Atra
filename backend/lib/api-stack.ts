@@ -10,6 +10,7 @@ import { HttpLambdaIntegration } from 'aws-cdk-lib/aws-apigatewayv2-integrations
 import { Construct } from 'constructs';
 import { LambdaBuilder, Parameters } from '../helpers';
 import * as cdk from 'aws-cdk-lib';
+import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
 
 // Props välitetään stackin konstruktoriin.
 // Interface määrittelee vaaditut propsit.
@@ -56,6 +57,13 @@ export class ApiStack extends Stack {
       //ssm.cognitoClientId,
       frontendDomain
     );
+
+    // TODO: test that this works
+    // Annetaan luodun APIn url CloudFormation outputtina
+    new cdk.CfnOutput(this, 'ApiEndpoint', {
+      value: this.api.apiEndpoint,
+      exportName: 'ApiEndpoint',
+    });
 
     // ei tarpeellinen tässä vaiheessa
     this.migrationsRoute();
