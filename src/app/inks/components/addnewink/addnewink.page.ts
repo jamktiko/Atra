@@ -19,6 +19,12 @@ import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import {
+  NgToastComponent,
+  NgToastService,
+  TOAST_POSITIONS,
+  ToastPosition,
+} from 'ng-angular-popup';
 
 @Component({
   selector: 'app-addnewink',
@@ -26,6 +32,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./addnewink.page.css'],
   standalone: true,
   imports: [
+    NgToastComponent,
     IonContent,
     CommonModule,
     FormsModule,
@@ -52,11 +59,18 @@ export class AddnewinkPage implements OnInit {
     chosenInks: new FormArray([]),
   });
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private toast: NgToastService
+  ) {}
 
   ngOnInit() {
     this.getInks();
+    this.loadInks();
+  }
 
+  loadInks() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -176,6 +190,7 @@ export class AddnewinkPage implements OnInit {
     this.apiService.addNewUserInk(inkData).subscribe({
       next: (data) => {
         console.log('Added successfully: ', data);
+        this.toast.success('Ink added succesfully!');
         this.router.navigate(['/tabs/inks']);
       },
       error: (err) => {

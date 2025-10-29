@@ -103,6 +103,8 @@ export class CustomersPage implements OnInit {
     this.apiService.deleteCustomer(customerId).subscribe({
       next: () => {
         console.log('Customer deleted successfully!');
+        this.loadCustomers();
+        this.toast.success('Customer deleted successfully!');
         this.setClosed(false);
       },
       error: (err) => {
@@ -117,11 +119,13 @@ export class CustomersPage implements OnInit {
     this.apiService.updateCustomer(customerId, customerData).subscribe({
       next: (data) => {
         console.log('Customer updated: ', data);
+        this.loadCustomers();
         this.setClosed(false);
         this.toast.success('Customer updated successfully');
       },
       error: (err) => {
         console.error('No success: '), err;
+        this.toast.danger('Something went wrong.');
       },
     });
   }

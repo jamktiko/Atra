@@ -1,5 +1,12 @@
 const entries = [
   {
+    appointment_id: 1005,
+    appointment_date: new Date("2025-10-27T10:00:00"),
+    comments: "New appointment booked via online portal.",
+    User_user_id: "USR-004",
+    Customer_customer_id: 505,
+  },
+  {
     appointment_id: 1001,
     appointment_date: new Date("2025-10-20T09:30:00"),
     comments: "Initial consultation. Customer interested in premium plan.",
@@ -34,13 +41,7 @@ const entries = [
     User_user_id: "USR-001",
     Customer_customer_id: 504,
   },
-  {
-    appointment_id: 1005,
-    appointment_date: new Date("2025-10-27T10:00:00"),
-    comments: "New appointment booked via online portal.",
-    User_user_id: "USR-004",
-    Customer_customer_id: 505,
-  },
+
   {
     appointment_id: 1006,
     appointment_date: new Date("2025-10-20T11:30:00"),
@@ -51,9 +52,11 @@ const entries = [
 ];
 
 let sorted = {};
+
 for (let i = 0; i < entries.length; i++) {
-  //converts Date object to string key
-  const date = entries[i].appointment_date.toISOString().split("T")[0];
+  const date = entries[i].appointment_date
+    .toLocaleDateString("en-CA")
+    .split("T")[0];
 
   if (!(date in sorted)) {
     sorted[date] = [];
@@ -62,4 +65,8 @@ for (let i = 0; i < entries.length; i++) {
   sorted[date].push(entries[i]);
 }
 
-console.log("Sorted array: ", sorted);
+groupedEntries = Object.entries(sorted)
+  .map(([date, entries]) => ({ date, entries }))
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+console.log("Sorted array: ", groupedEntries);
