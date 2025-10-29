@@ -227,4 +227,38 @@ export class ApiStack extends Stack {
 
     /* Tänne loput reitit */
   }
+
+  private entryRoute() {
+    const fn = new LambdaBuilder(this, 'api-entry-calls')
+      .setDescription('CRUD operations for managing entries')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /entry kutsutaan
+    const integration = new HttpLambdaIntegration('entryCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/entry',
+      methods: [apigw2.HttpMethod.POST, apigw2.HttpMethod.GET],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/entry/{id}',
+      methods: [
+        apigw2.HttpMethod.POST,
+        apigw2.HttpMethod.GET,
+        apigw2.HttpMethod.DELETE,
+        apigw2.HttpMethod.PUT,
+      ],
+      integration,
+    });
+
+    /* Tänne loput reitit */
+  }
 }
