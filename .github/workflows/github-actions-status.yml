@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Print GitHub context
-        run: echo '${{ toJSON(github) }}
+        run: echo '${{ toJSON(github) }}'
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
