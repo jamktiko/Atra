@@ -11,7 +11,7 @@ import { PublicInk, UserInk, Customer, User } from 'src/interface';
 describe('ApiService', () => {
   let service: ApiService;
   let httpMock: HttpTestingController;
-  const apiUrl = 'https://tqcdm5dn0k.execute-api.eu-north-1.amazonaws.com'; //from api.service.ts
+  const apiUrl = 'environment.apiUrl'; //from api.service.ts
 
   const mockPublicInk: PublicInk = {
     ink_id: 0,
