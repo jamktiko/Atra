@@ -51,3 +51,4 @@ jobs:
           aws lambda invoke --function-name migrations --payload '{}' response.json
           cat response.json
       - run: echo "This job's status is ${{ job.status }}."
+      # insert printing environment.production
