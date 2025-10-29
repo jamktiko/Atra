@@ -1,7 +1,68 @@
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">addentry</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ng-toast></ng-toast>
+  <div class="">
+    <h2 class="text-neutral-50 text-center text-3xl my-2 font-pt-serif">Adding a new entry</h2>
+
+    <div class=" space-y-2 w-full max-w-md mx-auto">
+      <!-- Customer -->
+      <div>
+        <label for="customer" class="block mb-1 text-xl font-lato text-neutral-50">Customer</label>
+        <input type="text" name="customer" id="customer"
+          class="bg-slate-800 border border-gray-300 text-gray-900 text-lg rounded-lg block w-full p-2.5"
+          placeholder="Customer" required>
+      </div>
+
+      <!-- Date -->
+      <div>
+        <label for="date" class="block mb-1 text-xl font-lato text-neutral-50">Date</label>
+
+      </div>
+
+      <!-- Inks -->
+      <div>
+        <label for="ink" class="block mb-1 text-xl font-lato text-neutral-50">Inks</label>
+        <ion-searchbar class="custom" placeholder="Search" [(ngModel)]="searchInk"></ion-searchbar>
+        <div class="scrollable">
+
+          @for (ink of filteredInks(); track ink.user_ink_id) {
+          <!--Tätä voi muokata-->
+          <div class="flex bg-slate-950 my-2 p-3">
+            <img src="{{ink.image_url}}" width="20%" />
+
+            <p class>{{ink.product_name}} - {{ink.color}} -{{ink.batch_number}}</p>
+
+            <input class="bg-slate-600 text-neutral-50 font-lato text-l p-1 rounded-2xl" type="button" value="Select"
+              (click)="chooseInk(ink)">
+          </div>
+          }
+
+        </div>
+
+      </div>
+
+      <!-- Comments -->
+      <div>
+        <label for="description" class="block mb-1 text-xl font-lato text-neutral-50">Comments</label>
+        <textarea id="description" rows="4"
+          class="block p-2.5 w-full max-h-28 text-lg text-neutral-100 bg-gray-50 rounded-lg border bg-slate-800 border-gray-600"
+          placeholder="Write any additional comments here."></textarea>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 pt-2">
+        <button type="button" class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-slate-600
+                focus:ring-4 focus:outline-none focus:ring-red-300 font-medium 
+               rounded-lg text-lg px-4 py-2 text-center">
+
+          Back
+        </button>
+        <button type="submit" class="text-neutral-50 bg-teal-800 hover:bg-teal-600 focus:ring-4 focus:outline-none 
+               focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
+          Continue
+        </button>
+      </div>
+
+    </div>
+  </div>
+
 </ion-content>

@@ -24,7 +24,7 @@ export class ApiService {
   //private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD
-  private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
+  // private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
 
   private localUserInks: UserInk[] = [...mockUserInks]; //copy of mockUserInks
   private localCustomers: Customer[] = [...mockCustomers]; //copy of mockCustomers
@@ -313,7 +313,7 @@ export class ApiService {
     );
   }
 
-  getEntries(): Observable<Entry[]> {
+  getAllEntries(): Observable<Entry[]> {
     //Add userID parameter + to url
     if (this.isProd) {
       return this.http.get<Entry[]>(`${this.apiUrl}/entries/`);
@@ -321,4 +321,17 @@ export class ApiService {
       return of(this.localEntries);
     }
   }
+
+  getOneEntry(entryId: number): Observable<Entry> {
+    //Add userID parameter + to url
+    return this.http.get<Entry>(`${this.apiUrl}/entries/${entryId}`);
+  }
+
+  addNewEntry() {
+    // return this.http.post<Entry>(`${this.apiUrl}`)
+  }
+
+  updateEntry() {}
+
+  deleteEntry() {}
 }

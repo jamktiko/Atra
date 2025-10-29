@@ -12,6 +12,7 @@ import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { of, map, mergeMap, reduce, groupBy, toArray } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-entries',
@@ -35,14 +36,14 @@ export class EntriesPage implements OnInit {
 
   groupedEntries: { date: string; entries: Entry[] }[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit() {
     this.loadEntries();
   }
 
   loadEntries() {
-    this.apiService.getEntries().subscribe({
+    this.apiService.getAllEntries().subscribe({
       next: (data) => {
         this.entries = data;
         this.sortByDate(this.entries);
@@ -57,7 +58,9 @@ export class EntriesPage implements OnInit {
 
   deleteEntry() {}
 
-  addNew() {}
+  addNew() {
+    this.router.navigate(['/tabs/entries/addentry']);
+  }
 
   filteredSearch() {}
 
