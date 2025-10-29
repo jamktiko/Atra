@@ -19,7 +19,7 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://tmjyj9ra2h.execute-api.eu-north-1.amazonaws.com';
+  private apiUrl = 'https://9pnpcqq0d8.execute-api.eu-north-1.amazonaws.com';
   //TÄMÄ KUN DEV
   // private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
@@ -313,7 +313,7 @@ export class ApiService {
     );
   }
 
-  getEntries(): Observable<Entry[]> {
+  getAllEntries(): Observable<Entry[]> {
     //Add userID parameter + to url
     if (this.isProd) {
       return this.http.get<Entry[]>(`${this.apiUrl}/entries/`);
@@ -321,4 +321,17 @@ export class ApiService {
       return of(this.localEntries);
     }
   }
+
+  getOneEntry(entryId: number): Observable<Entry> {
+    //Add userID parameter + to url
+    return this.http.get<Entry>(`${this.apiUrl}/entries/${entryId}`);
+  }
+
+  addNewEntry() {
+    // return this.http.post<Entry>(`${this.apiUrl}`)
+  }
+
+  updateEntry() {}
+
+  deleteEntry() {}
 }
