@@ -40,6 +40,13 @@ interface Entry {
   Customer_customer_id: number;
 }
 
+interface EntryCreation {
+  appointment_date: Date;
+  comments: string;
+  User_user_id: string;
+  Customer_customer_id: number;
+}
+
 interface Customer {
   customer_id: number;
   email: string;
@@ -57,4 +64,12 @@ interface CustomerCreation {
   phone: string;
 }
 
-export { UserInk, PublicInk, User, Entry, Customer, CustomerCreation };
+export {
+  UserInk,
+  PublicInk,
+  User,
+  Entry,
+  Customer,
+  CustomerCreation,
+  EntryCreation,
+};

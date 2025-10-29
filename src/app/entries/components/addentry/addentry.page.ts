@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonContent, IonBadge } from '@ionic/angular/standalone';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
@@ -15,7 +10,7 @@ import {
   TOAST_POSITIONS,
   ToastPosition,
 } from 'ng-angular-popup';
-import { UserInk } from 'src/interface';
+import { EntryCreation, UserInk, Customer } from 'src/interface';
 import {
   FormsModule,
   FormControl,
@@ -23,6 +18,7 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
+import { Entry } from 'src/interface';
 
 @Component({
   selector: 'app-addentry',
@@ -35,15 +31,26 @@ import {
     CommonModule,
     FormsModule,
     IonSearchbar,
+    IonBadge,
   ],
 })
 export class AddentryPage implements OnInit {
   searchInk: string = '';
   searchCustomer: string = '';
 
-  userInks: UserInk[] = [];
+  userId: string = 'USR1';
+  customerId!: number;
 
+  userInks: UserInk[] = [];
+  customers: Customer[] = [];
   inksToAdd: any = [];
+
+  newEntry: EntryCreation = {
+    appointment_date: new Date(),
+    comments: '',
+    User_user_id: this.userId,
+    Customer_customer_id: this.customerId,
+  };
 
   /* Muuttuja, jonka avulla ylläpidetään modalentry-komponentin näkyvyyttä */
   showReview: boolean = false;
@@ -64,13 +71,13 @@ export class AddentryPage implements OnInit {
 
   ngOnInit() {
     this.getUserInks();
+    this.getCustomers();
   }
 
   getUserInks() {
     this.apiService.getAllUserInks().subscribe({
       next: (data) => {
         this.userInks = data;
-        console.log(data);
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
@@ -122,5 +129,27 @@ export class AddentryPage implements OnInit {
 
   getChosenInks(): FormArray {
     return this.inkGroup.get('chosenInks') as FormArray;
+  }
+
+  getCustomers() {
+    this.apiService.getAllCustomers().subscribe({
+      next: (data) => {
+        this.customers = data;
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
+  }
+
+  filteredCustomers() {
+    const search = this.searchCustomer.toLowerCase() ?? '';
+
+    return this.customers.filter(
+      (customer) =>
+        (customer.first_name?.toLowerCase() ?? '').includes(search) ||
+        (customer.last_name?.toLowerCase() ?? '').includes(search) ||
+        (customer.email?.toLowerCase() ?? '').includes(search)
+    );
   }
 }

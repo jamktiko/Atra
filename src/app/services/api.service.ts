@@ -19,7 +19,7 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://9pnpcqq0d8.execute-api.eu-north-1.amazonaws.com';
+  private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV
   private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
