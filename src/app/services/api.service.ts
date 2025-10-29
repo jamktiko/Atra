@@ -77,7 +77,7 @@ export class ApiService {
         (ink) => ink.user_ink_id === userInkId
       );
 
-      //if mockInk coul not be found somehow, this generates an empty fake mock ink
+      //if mockInk could not be found somehow, this generates an empty fake mock ink
       if (!mockInk) {
         return of({
           user_ink_id: userInkId,
@@ -301,7 +301,6 @@ export class ApiService {
 
   /**
    * Backend-kutsu updateCustomer
-   * TODO: mock data usage in else-block
    */
 
   updateCustomer(

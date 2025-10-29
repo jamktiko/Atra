@@ -5,6 +5,28 @@ on:
 jobs:
   checkstatus:
     runs-on: ubuntu-latest
+    env:
+      AWS_REGION: eu-north-1
+
     steps:
       - name: Print GitHub context
-        run: echo '${{ toJSON(github) }}'
+        run: echo '${{ toJSON(github) }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.ACCESSKEY }}
+          aws-secret-access-key: ${{ secrets.SECRETACCESSKEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: List RDS snapshots (Dry Run)
+        run: |
+          echo "Fetching RDS snapshots in region: $AWS_REGION"
+          aws rds describe-db-snapshots \
+            --query "DBSnapshots[].{Identifier:DBSnapshotIdentifier,Status:Status,Created:SnapshotCreateTime}" \
+            --output table
+
+      - name: Print environment.production value
+        run: |
+          PROD_VALUE=$(grep -oP '(?<=production:\s).*' src/environments/environment.prod.ts | tr -d ',')
+          echo "Current environment.production value: $PROD_VALUE"
