@@ -12,6 +12,9 @@ jobs:
       - name: Print GitHub context
         run: echo '${{ toJSON(github) }}'
 
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -30,3 +33,10 @@ jobs:
         run: |
           PROD_VALUE=$(grep -oP '(?<=production:\s).*' src/environments/environment.prod.ts | tr -d ',')
           echo "Current environment.production value: $PROD_VALUE"
+      - name: Delete RDS snapshots
+        run: |
+          SNAPSHOTS=$(aws rds describe-db-snapshots --query "DBSnapshots[].DBSnapshotIdentifier" --output text)
+          for SNAPSHOT in $SNAPSHOTS; do
+            echo "Deleting snapshot: $SNAPSHOT"
+            aws rds delete-db-snapshot --db-snapshot-identifier "$SNAPSHOT"
+          done
