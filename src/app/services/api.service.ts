@@ -4,7 +4,7 @@ import { CustomerCreation, PublicInk, UserInk } from 'src/interface';
 import { Observable } from 'rxjs';
 import { Entry } from 'src/interface';
 import { Customer } from 'src/interface';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import {
   mockUserInks,
   mockPublicInks,
