@@ -67,3 +67,10 @@ jobs:
             echo "Deleting $LOG_GROUP"
             aws logs delete-log-group --log-group-name "$LOG_GROUP"
           done
+      - name: Delete RDS snapshots
+        run: |
+          SNAPSHOTS=$(aws rds describe-db-snapshots --snapshot-type manual --query "DBSnapshots[].DBSnapshotIdentifier" --output text)
+          for SNAPSHOT in $SNAPSHOTS; do
+            echo "Deleting snapshot: $SNAPSHOT"
+            aws rds delete-db-snapshot --db-snapshot-identifier "$SNAPSHOT"
+          done
