@@ -48,9 +48,9 @@ jobs:
           API_URL=$(aws cloudformation describe-stacks --stack-name your-stack-name \
           --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" --output text)
           echo "API_URL=$API_URL" >> $GITHUB_ENV
-      - name: Inject API URL into environment.prod.ts
-        run: |
-          sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" frontend/src/environments/environment.prod.ts
+      #- name: Inject API URL into environment.prod.ts
+      #  run: |
+      #    sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" frontend/src/environments/environment.prod.ts
       #- name: Deploy frontend to S3
       #  run: |
       #    aws s3 sync ./hosting s3://atra-frontend-bucket --delete --exact-timestamps
