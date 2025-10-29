@@ -4,7 +4,7 @@ import { CustomerCreation, PublicInk, UserInk } from 'src/interface';
 import { Observable } from 'rxjs';
 import { Entry } from 'src/interface';
 import { Customer } from 'src/interface';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import {
   mockUserInks,
   mockPublicInks,
@@ -19,7 +19,7 @@ import { of } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'environment.apiUrl';
+  private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV
   //private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
