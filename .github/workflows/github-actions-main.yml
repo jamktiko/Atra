@@ -20,21 +20,21 @@ jobs:
         run: npm ci
       - name: Install Ionic CLI
         run: npm install -g @ionic/cli
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.ACCESSKEY }}
-          aws-secret-access-key: ${{ secrets.SECRETACCESSKEY }}
-          aws-region: eu-north-1
-      - name: Fetch API URL from CloudFormation # if it exists fetch it, if not apiUrl in env will be ''
-        run: |
-          API_URL=$(aws cloudformation describe-stacks --stack-name api \
-            --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" --output text)
-          echo "API_URL=$API_URL" >> $GITHUB_ENV
-      - name: Inject API URL into environment.ts
-        run: |
-          sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
-          sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" src/environments/environment.prod.ts
+      #- name: Set up AWS CLI
+      #  uses: aws-actions/configure-aws-credentials@v2
+      #  with:
+      #    aws-access-key-id: ${{ secrets.ACCESSKEY }}
+      #    aws-secret-access-key: ${{ secrets.SECRETACCESSKEY }}
+      #    aws-region: eu-north-1
+      #- name: Fetch API URL from CloudFormation # if it exists fetch it, if not apiUrl in env will be ''
+      #  run: |
+      #    API_URL=$(aws cloudformation describe-stacks --stack-name api \
+      #      --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" --output text)
+      #    echo "API_URL=$API_URL" >> $GITHUB_ENV
+      #- name: Inject API URL into environment.ts
+      #  run: |
+      #    sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
+      #    sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" src/environments/environment.prod.ts
       - name: Build Ionic projects
         run: ionic build
       - name: Run unit tests
