@@ -1,21 +1,28 @@
 <ion-content [fullscreen]="true">
   <ng-toast></ng-toast>
-  <div class="">
+  <div class="justify-center">
     <h2 class="text-neutral-50 text-center text-3xl my-2 font-pt-serif">Adding a new entry</h2>
 
-    <div class=" space-y-2 w-full max-w-md mx-auto">
+    <button (click)="getChosenInkIds()">TESTAA TÄSTÄ</button>
+
+    <div class=" space-y-2 w-full mx-auto">
       <!-- Customer -->
       <div>
         <label for="customer" class="block mb-1 text-xl font-lato text-neutral-50">Customer</label>
-        <input type="text" name="customer" id="customer"
-          class="bg-slate-800 border border-gray-300 text-gray-900 text-lg rounded-lg block w-full p-2.5"
-          placeholder="Customer" required>
+        <select name="customers" id="customers"
+          class="bg-slate-800 border bg-slate-800 border-gray-600 text-lg rounded-lg block w-full p-2.5"
+          placeholder="Customer" [(ngModel)]="searchCustomer" required>
+          @for (customer of customers; track customer.customer_id) {
+          <option>{{customer.first_name}}, {{customer.last_name}}</option>
+          }
+        </select>
       </div>
 
       <!-- Date -->
       <div>
         <label for="date" class="block mb-1 text-xl font-lato text-neutral-50">Date</label>
-
+        <input id="date" type="datetime-local" class="border border-gray-300 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5 
+                 focus:ring-slate-500 focus:border-slate-900" />
       </div>
 
       <!-- Inks -->
@@ -26,7 +33,7 @@
 
           @for (ink of filteredInks(); track ink.user_ink_id) {
           <!--Tätä voi muokata-->
-          <div class="flex bg-slate-950 my-2 p-3">
+          <div class="flex justify-center bg-slate-950 my-2 mx-2 p-3">
             <img src="{{ink.image_url}}" width="20%" />
 
             <p class>{{ink.product_name}} - {{ink.color}} -{{ink.batch_number}}</p>
@@ -37,6 +44,14 @@
           }
 
         </div>
+        @if (getChosenInks().length > 0 ) {
+        <div class="items-center text-center">
+          <ion-badge
+            style="--background: rgb(0, 0, 0); padding: 10px; color: white; border-color: white; border-width: 2px; ">{{getChosenInks().length}}</ion-badge>
+          <span class="text-2xl font-pt-serif"> Inks chosen</span>
+
+        </div>
+        }
 
       </div>
 
@@ -56,7 +71,7 @@
 
           Back
         </button>
-        <button type="submit" class="text-neutral-50 bg-teal-800 hover:bg-teal-600 focus:ring-4 focus:outline-none 
+        <button type="submit" class="text-neutral-50 bg-slate-600 hover:bg-teal-600 focus:ring-4 focus:outline-none 
                focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
           Continue
         </button>

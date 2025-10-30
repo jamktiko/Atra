@@ -58,7 +58,7 @@ export class AddnewcustomerPage {
   };
 
   //Hallitsee modalcustomerin näkyvyyttä
-  // HTML-templaatissa  @if (openModal) {<app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel()" [openModal]="openModal"></app-modalcustomer>}
+  // HTML-templaatissa
   openModal: boolean = false;
 
   constructor(
