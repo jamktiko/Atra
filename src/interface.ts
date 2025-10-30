@@ -44,7 +44,7 @@ interface EntryCreation {
   appointment_date: Date;
   comments: string;
   User_user_id: string;
-  Customer_customer_id: number;
+  Customer_customer_id: number | undefined;
   inks: number[];
 }
 

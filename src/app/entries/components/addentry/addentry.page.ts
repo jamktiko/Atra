@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { IonContent, IonBadge } from '@ionic/angular/standalone';
 import { IonSearchbar } from '@ionic/angular/standalone';
@@ -41,18 +41,23 @@ import {
     IonBadge,
     NgSelectComponent,
     NgLabelTemplateDirective,
-    NgTagTemplateDirective,
+
     NgOptionTemplateDirective,
-    NgOptionComponent,
   ],
 })
 export class AddentryPage implements OnInit {
+  comments: string = '';
   searchInk: string = '';
-  selectedCustomer: string = '';
+
+  /*Annetaan newEntrylle musteiden id-numerot lomakkeeseen
+   */
   chosenInkIds: number[] = [];
 
   userId: string = 'USR1';
-  customerId!: number;
+  /*
+   *Muuttuja ng-select-komponenttiin asiakkaan hakemiseen ja valitsemiseen
+   */
+  selectedCustomerId!: number | undefined;
 
   userInks: UserInk[] = [];
   customers: Customer[] = [];
@@ -62,12 +67,16 @@ export class AddentryPage implements OnInit {
     appointment_date: new Date(),
     comments: '',
     User_user_id: this.userId,
-    Customer_customer_id: this.customerId,
-    inks: this.chosenInkIds,
+    Customer_customer_id: undefined,
+    inks: [],
   };
 
   /* Muuttuja, jonka avulla ylläpidetään modalentry-komponentin näkyvyyttä */
   showReview: boolean = false;
+
+  showModal(isOpen: boolean) {
+    this.showReview = isOpen;
+  }
 
   inkGroup = new FormGroup({
     chosenInks: new FormArray([]),
@@ -143,15 +152,19 @@ export class AddentryPage implements OnInit {
 
   getChosenInkIds(): number[] {
     const inkarray = this.getChosenInks();
-    const inkIds: number[] = [];
+    if (!inkarray) {
+      return [];
+    } else {
+      const inkIds: number[] = [];
 
-    for (let i = 0; i < inkarray.length; i++) {
-      const inkGroupInArray = inkarray.at(i) as FormGroup;
-      const idNumber = inkGroupInArray.get('user_ink_id')?.value;
-      inkIds.push(idNumber);
+      for (let i = 0; i < inkarray.length; i++) {
+        const inkGroupInArray = inkarray.at(i) as FormGroup;
+        const idNumber = inkGroupInArray.get('user_ink_id')?.value;
+        inkIds.push(idNumber);
+      }
+      console.log(inkIds);
+      return inkIds;
     }
-    console.log(inkIds);
-    return inkIds;
   }
 
   getCustomers() {
@@ -173,5 +186,15 @@ export class AddentryPage implements OnInit {
       (customer.last_name?.toLowerCase() ?? '').includes(search) ||
       (customer.email?.toLowerCase() ?? '').includes(search)
     );
+  }
+
+  testContinue() {
+    console.log('Customer id: ', this.selectedCustomerId);
+  }
+
+  submit() {
+    this.newEntry.Customer_customer_id = this.selectedCustomerId;
+    this.newEntry.inks = this.getChosenInkIds();
+    console.log('New entry: ', this.newEntry);
   }
 }
