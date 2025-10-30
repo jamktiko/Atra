@@ -23,6 +23,7 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV
   private readonly isProd = environment.production;
+  private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD
   //private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
