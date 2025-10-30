@@ -17,6 +17,7 @@ import {
   FormGroup,
   FormArray,
   Validators,
+  AbstractControl,
 } from '@angular/forms';
 import { Entry } from 'src/interface';
 
@@ -37,6 +38,7 @@ import { Entry } from 'src/interface';
 export class AddentryPage implements OnInit {
   searchInk: string = '';
   searchCustomer: string = '';
+  chosenInkIds: number[] = [];
 
   userId: string = 'USR1';
   customerId!: number;
@@ -50,15 +52,12 @@ export class AddentryPage implements OnInit {
     comments: '',
     User_user_id: this.userId,
     Customer_customer_id: this.customerId,
+    inks: this.chosenInkIds,
   };
 
   /* Muuttuja, jonka avulla ylläpidetään modalentry-komponentin näkyvyyttä */
   showReview: boolean = false;
 
-  /**
-   * FormGroup, johon tallennetaan valitut musteet eli chosenInks FormArraynaFormGroupeja
-   * Eli chosenInks: new FormArray([FormGroup: {inkid: value, productname: value...}])
-   * */
   inkGroup = new FormGroup({
     chosenInks: new FormArray([]),
   });
@@ -129,6 +128,16 @@ export class AddentryPage implements OnInit {
 
   getChosenInks(): FormArray {
     return this.inkGroup.get('chosenInks') as FormArray;
+  }
+
+  getChosenInkIds() {
+    const inkarray = this.inkGroup.get('chosenInks') as FormArray;
+    const inkIds = [];
+
+    for (let i = 0; i < inkarray.length; i++) {
+      inkIds.push(inkarray.at(i));
+    }
+    console.log(inkIds);
   }
 
   getCustomers() {

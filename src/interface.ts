@@ -45,6 +45,7 @@ interface EntryCreation {
   comments: string;
   User_user_id: string;
   Customer_customer_id: number;
+  inks: number[];
 }
 
 interface Customer {
