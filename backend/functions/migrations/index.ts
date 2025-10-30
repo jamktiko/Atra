@@ -83,7 +83,7 @@ export const handler: Handler = async (event, ctx) => {
         id INT NOT NULL AUTO_INCREMENT,
         UserInk_user_ink_id INT NULL, --NULL for cascades
         Entry_entry_id INT NULL, --NULL for cascades
-        PRIMARY KEY (UserInk_user_ink_id, Entry_entry_id),
+        PRIMARY KEY (id), //
         INDEX fk_UserInk_has_Entry_Entry1_idx (Entry_entry_id),
         INDEX fk_UserInk_has_Entry_UserInk1_idx (UserInk_user_ink_id),
         FOREIGN KEY (UserInk_user_ink_id) REFERENCES UserInk(user_ink_id)
@@ -92,6 +92,9 @@ export const handler: Handler = async (event, ctx) => {
           ON DELETE SET NULL --cascades entry deletion
       ) ENGINE=InnoDB;
     `);
+
+    /* PRIMARY KEY (UserInk_user_ink_id, Entry_entry_id), */
+    //looking for a fix, replaced UserInk_has_Entry primary key to id, originally was the above one
 
     await conn.query(`
       INSERT INTO User (user_id, email, first_name, last_name)

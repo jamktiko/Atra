@@ -1,3 +1,6 @@
+-- VANHA, ÄLÄ LUE TÄTÄ
+
+
 -- f08c996c-f081-7001-76e0-bfe9e4956901 replace if needed (user SUB)
 
 -- MySQL Workbench Forward Engineering
