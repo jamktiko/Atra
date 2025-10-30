@@ -20,6 +20,7 @@ import {
   ToastPosition,
 } from 'ng-angular-popup';
 import { filter } from 'rxjs/operators';
+import { environment } from 'src/environments/environment.prod';
 
 //below is for testing env variable
 /* // setting up environment variables for use
@@ -197,5 +198,9 @@ export class InksPage implements OnInit {
       //päivitetään apiservicen vaiheessa tarkistamaan myös publicinkistä tulevia attribuutteja: color, manufacturer etc.
       ink.product_name.toLowerCase().includes(search)
     );
+  }
+
+  testaa() {
+    console.log(environment.apiUrl);
   }
 }

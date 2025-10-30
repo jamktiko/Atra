@@ -21,10 +21,10 @@ import { of } from 'rxjs';
 export class ApiService {
   private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV
-  //private readonly isProd = environment.production;
+  private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD
-  private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
+  //private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
 
   private localUserInks: UserInk[] = [...mockUserInks]; //copy of mockUserInks
   private localCustomers: Customer[] = [...mockCustomers]; //copy of mockCustomers
@@ -192,10 +192,43 @@ export class ApiService {
         userInkData
       );
     } else {
-      return this.http.put<UserInk>(
-        `${this.apiUrl}/userInk/${userInkId}`,
-        userInkData
+      // Convert userInkId to number for comparison
+      const id = Number(userInkId);
+      const index = this.localUserInks.findIndex(
+        (ink) => ink.user_ink_id === id
       );
+
+      if (index !== -1) {
+        // Merge existing ink with new data
+        this.localUserInks[index] = {
+          ...this.localUserInks[index],
+          ...userInkData,
+          user_ink_id: id, // Ensure ID stays consistent
+          User_user_id: userId, // Ensure user ID is updated
+        };
+
+        return of(this.localUserInks[index]);
+      } else {
+        // If ink not found, return a mock placeholder
+        const mockInk: UserInk = {
+          user_ink_id: id,
+          batch_number: userInkData.batch_number ?? 'N/A',
+          opened_at: userInkData.opened_at ?? new Date('1970-01-01'),
+          expires_at: userInkData.expires_at ?? new Date('1970-01-01'),
+          favorite: userInkData.favorite ?? false,
+          publicink_ink_id: userInkData.publicink_ink_id ?? 0,
+          product_name: userInkData.product_name ?? 'N/A',
+          manufacturer: userInkData.manufacturer ?? 'N/A',
+          color: userInkData.color ?? 'N/A',
+          recalled: userInkData.recalled ?? false,
+          image_url: userInkData.image_url ?? 'N/A',
+          size: userInkData.size ?? 'N/A',
+          User_user_id: userId,
+        };
+
+        this.localUserInks.push(mockInk);
+        return of(mockInk);
+      }
     }
   }
 
@@ -307,10 +340,41 @@ export class ApiService {
     customerId: number,
     customerData: Customer
   ): Observable<Customer> {
-    return this.http.put<Customer>(
-      `${this.apiUrl}/customer/${customerId}`,
-      customerData
-    );
+    if (this.isProd) {
+      return this.http.put<Customer>(
+        `${this.apiUrl}/customer/${customerId}`,
+        customerData
+      );
+    } else {
+      const index = this.localCustomers.findIndex(
+        (c) => c.customer_id === customerId
+      );
+
+      if (index !== -1) {
+        // Merge old and new data
+        this.localCustomers[index] = {
+          ...this.localCustomers[index],
+          ...customerData,
+          customer_id: customerId, // Ensure ID stays correct
+        };
+
+        return of(this.localCustomers[index]);
+      } else {
+        // If not found, create a mock customer and add it
+        const mockCustomer: Customer = {
+          customer_id: customerId,
+          first_name: customerData.first_name ?? 'Mock',
+          last_name: customerData.last_name ?? 'Customer',
+          email: customerData.email ?? 'mock@example.com',
+          phone: customerData.phone ?? '000-0000000',
+          notes: customerData.notes ?? '',
+          User_user_id: customerData.User_user_id ?? 'mock-user-id',
+        };
+
+        this.localCustomers.push(mockCustomer);
+        return of(mockCustomer);
+      }
+    }
   }
 
   getAllEntries(): Observable<Entry[]> {
