@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { IonContent, IonBadge } from '@ionic/angular/standalone';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
@@ -17,9 +17,15 @@ import {
   FormGroup,
   FormArray,
   Validators,
-  AbstractControl,
 } from '@angular/forms';
 import { Entry } from 'src/interface';
+import {
+  NgLabelTemplateDirective,
+  NgOptionTemplateDirective,
+  NgOptionComponent,
+  NgSelectComponent,
+  NgTagTemplateDirective,
+} from '@ng-select/ng-select';
 
 @Component({
   selector: 'app-addentry',
@@ -33,11 +39,16 @@ import { Entry } from 'src/interface';
     FormsModule,
     IonSearchbar,
     IonBadge,
+    NgSelectComponent,
+    NgLabelTemplateDirective,
+    NgTagTemplateDirective,
+    NgOptionTemplateDirective,
+    NgOptionComponent,
   ],
 })
 export class AddentryPage implements OnInit {
   searchInk: string = '';
-  searchCustomer: string = '';
+  selectedCustomer: string = '';
   chosenInkIds: number[] = [];
 
   userId: string = 'USR1';
@@ -130,14 +141,17 @@ export class AddentryPage implements OnInit {
     return this.inkGroup.get('chosenInks') as FormArray;
   }
 
-  getChosenInkIds() {
-    const inkarray = this.inkGroup.get('chosenInks') as FormArray;
-    const inkIds = [];
+  getChosenInkIds(): number[] {
+    const inkarray = this.getChosenInks();
+    const inkIds: number[] = [];
 
     for (let i = 0; i < inkarray.length; i++) {
-      inkIds.push(inkarray.at(i));
+      const inkGroupInArray = inkarray.at(i) as FormGroup;
+      const idNumber = inkGroupInArray.get('user_ink_id')?.value;
+      inkIds.push(idNumber);
     }
     console.log(inkIds);
+    return inkIds;
   }
 
   getCustomers() {
@@ -151,14 +165,13 @@ export class AddentryPage implements OnInit {
     });
   }
 
-  filteredCustomers() {
-    const search = this.searchCustomer.toLowerCase() ?? '';
+  filteredCustomers(searchCustomer: string, customer: any): boolean {
+    const search = searchCustomer.toLowerCase() ?? '';
 
-    return this.customers.filter(
-      (customer) =>
-        (customer.first_name?.toLowerCase() ?? '').includes(search) ||
-        (customer.last_name?.toLowerCase() ?? '').includes(search) ||
-        (customer.email?.toLowerCase() ?? '').includes(search)
+    return (
+      (customer.first_name?.toLowerCase() ?? '').includes(search) ||
+      (customer.last_name?.toLowerCase() ?? '').includes(search) ||
+      (customer.email?.toLowerCase() ?? '').includes(search)
     );
   }
 }

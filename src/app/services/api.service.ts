@@ -14,6 +14,7 @@ import {
   mockCustomerCreations,
 } from 'src/temporarydata';
 import { of } from 'rxjs';
+import { is } from 'cypress/types/bluebird';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,7 @@ export class ApiService {
   private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV
   private readonly isProd = environment.production;
+
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD
   //private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
@@ -388,14 +390,44 @@ export class ApiService {
 
   getOneEntry(entryId: number): Observable<Entry> {
     //Add userID parameter + to url
-    return this.http.get<Entry>(`${this.apiUrl}/entries/${entryId}`);
+    if (this.isProd) {
+      return this.http.get<Entry>(`${this.apiUrl}/entries/${entryId}`);
+    } else {
+      //this needs to be tested still!
+      const mockEntry = this.localEntries.find(
+        (e) => e.appointment_id === entryId
+      ) || {
+        appointment_id: entryId,
+        appointment_date: new Date(),
+        comments: 'Mock comments',
+        User_user_id: '',
+        Customer_customer_id: 0,
+      };
+      return of(mockEntry);
+    }
   }
 
   addNewEntry() {
-    // return this.http.post<Entry>(`${this.apiUrl}`)
+    if (this.isProd) {
+      // return this.http.post<Entry>(`${this.apiUrl}`)
+    } else {
+      //mock
+    }
   }
 
-  updateEntry() {}
+  updateEntry() {
+    if (this.isProd) {
+      //real
+    } else {
+      //mock
+    }
+  }
 
-  deleteEntry() {}
+  deleteEntry() {
+    if (this.isProd) {
+      //real
+    } else {
+      //mock
+    }
+  }
 }
