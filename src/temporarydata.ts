@@ -191,7 +191,7 @@ export const mockCustomers: Customer[] = [
   },
   {
     customer_id: 2,
-    email: 'john.doe@example.com',
+    email: 'jonathan.doe@example.com',
     phone: '+358401004500',
     first_name: 'Jonathan',
     last_name: 'Doe',

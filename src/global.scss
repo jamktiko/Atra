@@ -106,10 +106,10 @@ ion-tab-bar {
   }
 
   .ng-select.custom .ng-option {
-    @apply px-2 py-2 bg-slate-400;
+    @apply px-2 py-2;
   }
 
   .ng-select.custom .ng-option-selected {
-    @apply bg-slate-900 text-slate-50;
+    @apply bg-slate-600 text-neutral-50;
   }
 }
