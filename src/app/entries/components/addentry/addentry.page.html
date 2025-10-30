@@ -1,19 +1,24 @@
 <ion-content [fullscreen]="true">
   <ng-toast></ng-toast>
   <div class="justify-center">
+
     <h2 class="text-neutral-50 text-center text-3xl my-2 font-pt-serif">Adding a new entry</h2>
 
+
     <div class="space-y-2 mx-3">
+
       <!-- Customer -->
       <div>
         <label for="customer" class="block mb-1 text-xl font-lato text-neutral-50 mx-1">Customer</label>
 
-        <ng-select [items]="customers" [(ngModel)]="selectedCustomer" [searchFn]="filteredCustomers" class="custom">
+        <!--antaa formiin customerId item_customer.id perusteella-->
+        <ng-select [items]="customers" [(ngModel)]="selectedCustomerId" bindValue="customer_id"
+          [searchFn]="filteredCustomers" class="custom">
           <ng-template ng-option-tmp let-item="item" class="custom">
             {{item.last_name}}, {{item.first_name}}
           </ng-template>
           <ng-template ng-label-tmp let-item="item">
-            {{ item.last_name }}, {{ item.first_name }}
+            {{ item.last_name }} {{ item.first_name }}
           </ng-template>
         </ng-select>
 
@@ -23,7 +28,7 @@
       <div>
         <label for="date" class="block mb-1 text-xl font-lato text-neutral-50 mx-1">Date</label>
         <input id="date" type="datetime-local" class="border border-gray-300 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5 
-                 focus:ring-slate-500 focus:border-slate-900" />
+                 focus:ring-slate-500 focus:border-slate-900" [(ngModel)]="newEntry.appointment_date" />
       </div>
 
       <!-- Inks -->
@@ -61,8 +66,10 @@
         <label for="description" class="block mb-1 text-xl font-lato text-neutral-50 mx-1">Comments</label>
         <textarea id="description" rows="4"
           class="block p-2.5 w-full max-h-28 text-lg text-neutral-100 bg-gray-50 rounded-lg border bg-slate-800 border-gray-600 mx-1"
-          placeholder="Write any additional comments here."></textarea>
+          placeholder="Write any additional comments here." [(ngModel)]="newEntry.comments"></textarea>
       </div>
+
+
 
       <!-- Buttons -->
       <div class="flex flex-wrap justify-center gap-3 pt-2">
@@ -72,7 +79,7 @@
 
           Back
         </button>
-        <button type="submit" class="text-neutral-50 bg-slate-600 hover:bg-teal-600 focus:ring-2 focus:outline-none 
+        <button (click)="submit()" type="submit" class="text-neutral-50 bg-slate-600 hover:bg-teal-600 focus:ring-2 focus:outline-none 
                focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
           Continue
         </button>
