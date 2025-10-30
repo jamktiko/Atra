@@ -95,3 +95,21 @@ ion-toolbar {
 ion-tab-bar {
   font-family: "Macondo Swash Caps", cursive;
 }
+
+@layer components {
+  .ng-select.custom .ng-select-container {
+    @apply border border-gray-300 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full p-2.5 focus:ring-slate-500 focus:border-slate-900;
+  }
+
+  .ng-select.custom .ng-dropdown-panel {
+    @apply border border-gray-300 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full p-2.5 focus:ring-slate-500 focus:border-slate-900;
+  }
+
+  .ng-select.custom .ng-option {
+    @apply px-2 py-2 bg-slate-400;
+  }
+
+  .ng-select.custom .ng-option-selected {
+    @apply bg-slate-900 text-slate-50;
+  }
+}

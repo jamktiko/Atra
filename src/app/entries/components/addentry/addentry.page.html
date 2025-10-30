@@ -3,19 +3,18 @@
   <div class="justify-center">
     <h2 class="text-neutral-50 text-center text-3xl my-2 font-pt-serif">Adding a new entry</h2>
 
-    <button (click)="getChosenInkIds()">TESTAA TÄSTÄ</button>
-
     <div class=" space-y-2 w-full mx-auto">
       <!-- Customer -->
       <div>
         <label for="customer" class="block mb-1 text-xl font-lato text-neutral-50">Customer</label>
-        <select name="customers" id="customers"
-          class="bg-slate-800 border bg-slate-800 border-gray-600 text-lg rounded-lg block w-full p-2.5"
-          placeholder="Customer" [(ngModel)]="searchCustomer" required>
-          @for (customer of customers; track customer.customer_id) {
-          <option>{{customer.first_name}}, {{customer.last_name}}</option>
-          }
-        </select>
+
+        <ng-select [items]="customers" [(ngModel)]="selectedCustomer" [searchFn]="filteredCustomers"
+          placeholder="Choose a customer" class="custom">
+          <ng-template ng-option-tmp let-item="item" class="custom">
+            {{item.last_name}}, {{item.first_name}}
+          </ng-template>
+        </ng-select>
+
       </div>
 
       <!-- Date -->
