@@ -63,9 +63,8 @@ export const handler: Handler = async (event, ctx) => {
         FOREIGN KEY (PublicInk_ink_id) REFERENCES PublicInk(ink_id),
         FOREIGN KEY (User_user_id) REFERENCES User(user_id)
       ) ENGINE=InnoDB;
-    `); // comment this out later
 
-    /*       CREATE TABLE IF NOT EXISTS Entry (
+        CREATE TABLE IF NOT EXISTS Entry (
         entry_id INT NOT NULL AUTO_INCREMENT,
         entry_date DATETIME NOT NULL,
         comments TEXT,
@@ -92,10 +91,7 @@ export const handler: Handler = async (event, ctx) => {
         FOREIGN KEY (Entry_entry_id) REFERENCES Entry(entry_id)
           ON DELETE SET NULL --cascades entry deletion
       ) ENGINE=InnoDB;
-    `); */
-
-    /* PRIMARY KEY (UserInk_user_ink_id, Entry_entry_id), */
-    //looking for a fix
+    `);
 
     await conn.query(`
       INSERT INTO User (user_id, email, first_name, last_name)
@@ -136,7 +132,7 @@ export const handler: Handler = async (event, ctx) => {
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('98765', DATE("2025-01-01"), DATE("2026-01-01"), 0, 20, 'demo-user-123');
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('HJKL011', DATE("2025-01-01"), DATE("2026-01-01"), 1, 2, 'demo-user-123');`);
 
-    /*     await conn.query(`
+    await conn.query(`
       INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-06-06"), 'eka', 'demo-user-123', 1);
       INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-07"), 'toka', 'demo-user-123', 1);
       INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-09"), '', 'demo-user-123', 2);
@@ -152,7 +148,7 @@ export const handler: Handler = async (event, ctx) => {
       INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (1, 4);
       INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (2, 4);
       INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (3, 4);
-      INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (4, 4);`); */
+      INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (4, 4);`);
 
     await conn.commit();
     console.log('Migration finished');
