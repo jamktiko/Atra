@@ -55,9 +55,13 @@ export class AddentryPage implements OnInit {
    */
   chosenInkIds: number[] = [];
 
-  userId: string = 'USR1';
   /*
-   *Muuttuja ng-select-komponenttiin asiakkaan hakemiseen ja valitsemiseen
+   * Kovakoodattu userID, joka tulee myöhemmin Cogniton kautta
+   */
+  userId: string = 'USR1';
+
+  /*
+   * Muuttuja ng-select-komponenttiin asiakkaan hakemiseen ja valitsemiseen
    */
   selectedCustomerId!: number;
 
@@ -69,7 +73,7 @@ export class AddentryPage implements OnInit {
     entry_date: new Date(),
     comments: '',
     User_user_id: this.userId,
-    Customer_customer_id: undefined,
+    Customer_customer_id: undefined, //undefined kunnes continue() alustaa
     inks: [],
   };
 
@@ -194,7 +198,7 @@ export class AddentryPage implements OnInit {
     console.log('Customer id: ', this.selectedCustomerId);
   }
 
-  submit() {
+  continue() {
     this.newEntry.Customer_customer_id = this.selectedCustomerId;
     this.newEntry.inks = this.getChosenInkIds();
     this.showModal(true);
@@ -203,5 +207,21 @@ export class AddentryPage implements OnInit {
 
   handleCancel() {
     this.showModal(false);
+  }
+
+  handleConfirm(newEntry: EntryCreation) {
+    //hakee jokaisen musteen yksitellen, palauttaa tällä hetkellä taulukon observableja
+    // const inkArray: any[] = [];
+    // newEntry.inks.forEach((ink) => {
+    //   inkArray.push(this.apiService.getOneUserInk(ink));
+    // });
+
+    // console.log('Ink array: ', inkArray);
+
+    this.addNewEntry(newEntry);
+  }
+
+  addNewEntry(newEntry: EntryCreation) {
+    this.apiService.addNewEntry(newEntry);
   }
 }
