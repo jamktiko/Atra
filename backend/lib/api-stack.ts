@@ -228,7 +228,8 @@ export class ApiStack extends Stack {
     /* Tänne loput reitit */
   }
 
-  private entryRoute() {
+  //temporarily commented out for troubleshooting
+  /*   private entryRoute() {
     const fn = new LambdaBuilder(this, 'api-entry-calls')
       .setDescription('CRUD operations for managing entries')
       .setEnv({
@@ -257,8 +258,8 @@ export class ApiStack extends Stack {
         apigw2.HttpMethod.PUT,
       ],
       integration,
-    });
+    }); */
 
-    /* Tänne loput reitit */
-  }
+  /* Tänne loput reitit */
 }
+/* } */

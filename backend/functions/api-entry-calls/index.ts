@@ -1,4 +1,5 @@
-import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
+//temporarily commented out for troubleshooting
+/* import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
 import * as entry from './entry';
 import { clientErrorResponse, notAllowedResponse } from '../shared/utils';
 
@@ -54,3 +55,4 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
 
   return notAllowedResponse();
 };
+ */
