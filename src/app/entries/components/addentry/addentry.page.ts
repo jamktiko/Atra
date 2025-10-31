@@ -66,7 +66,7 @@ export class AddentryPage implements OnInit {
   inksToAdd: any = [];
 
   newEntry: EntryCreation = {
-    appointment_date: new Date(),
+    entry_date: new Date(),
     comments: '',
     User_user_id: this.userId,
     Customer_customer_id: undefined,

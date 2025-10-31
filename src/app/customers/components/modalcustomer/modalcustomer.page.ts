@@ -21,7 +21,7 @@ import {
   templateUrl: './modalcustomer.page.html',
   styleUrls: ['./modalcustomer.page.css'],
   standalone: true,
-  imports: [IonContent, IonList, IonItem, IonLabel, CommonModule, FormsModule],
+  imports: [IonContent, IonList, IonItem, CommonModule, FormsModule],
 })
 export class ModalcustomerPage implements OnInit {
   @Input() newcustomer?: CustomerCreation;
