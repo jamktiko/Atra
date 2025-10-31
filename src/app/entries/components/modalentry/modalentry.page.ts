@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -7,28 +7,27 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
+import { EntryCreation } from 'src/interface';
 
 @Component({
   selector: 'app-modalentry',
   templateUrl: './modalentry.page.html',
   styleUrls: ['./modalentry.page.scss'],
   standalone: true,
-  imports: [
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    CommonModule,
-    FormsModule,
-  ],
+  imports: [IonContent, CommonModule, FormsModule],
 })
 export class ModalentryPage implements OnInit {
+  @Input() reviewEntry!: EntryCreation;
+  @Output() cancel = new EventEmitter<void>();
+
+  dateInISO!: string;
+
   constructor() {}
 
   ngOnInit() {}
 
   sendCancel() {
-    console.log('Cancel');
+    this.cancel.emit();
   }
 
   sendConfirm() {

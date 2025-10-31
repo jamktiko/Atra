@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
-import { IonContent, IonBadge } from '@ionic/angular/standalone';
+import { IonContent, IonBadge, IonModal } from '@ionic/angular/standalone';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
@@ -26,6 +26,7 @@ import {
   NgSelectComponent,
   NgTagTemplateDirective,
 } from '@ng-select/ng-select';
+import { ModalentryPage } from '../modalentry/modalentry.page';
 
 @Component({
   selector: 'app-addentry',
@@ -43,6 +44,7 @@ import {
     NgLabelTemplateDirective,
 
     NgOptionTemplateDirective,
+    ModalentryPage,
   ],
 })
 export class AddentryPage implements OnInit {
@@ -57,7 +59,7 @@ export class AddentryPage implements OnInit {
   /*
    *Muuttuja ng-select-komponenttiin asiakkaan hakemiseen ja valitsemiseen
    */
-  selectedCustomerId!: number | undefined;
+  selectedCustomerId!: number;
 
   userInks: UserInk[] = [];
   customers: Customer[] = [];
@@ -195,6 +197,11 @@ export class AddentryPage implements OnInit {
   submit() {
     this.newEntry.Customer_customer_id = this.selectedCustomerId;
     this.newEntry.inks = this.getChosenInkIds();
+    this.showModal(true);
     console.log('New entry: ', this.newEntry);
+  }
+
+  handleCancel() {
+    this.showModal(false);
   }
 }

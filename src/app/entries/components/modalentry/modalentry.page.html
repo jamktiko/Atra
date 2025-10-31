@@ -1,148 +1,47 @@
 <ion-content [fullscreen]="true">
-  <div class="p-7 w-full">
-    <h2 class="text-neutral-950 text-center text-5xl font-pt-serif">Entry</h2>
 
-    <form action="#" class="my-10 space-y-6 w-full max-w-md mx-auto">
-      <!-- Customer -->
-      <div>
-        <label
-          for="customer"
-          class="block mb-1 text-3xl font-lato text-neutral-950"
-          >Customer</label
-        >
-        <input
-          type="text"
-          name="customer"
-          id="customer"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg block w-full p-2.5 dark:bg-teal-900 dark:border-gray-600 dark:text-white"
-          placeholder="Customer"
-          required
-          readonly="true"
-        />
-      </div>
+  <div class="p-7 w-full space-y-6">
+    <h2 class="text-center text-5xl font-pt-serif">Entry</h2>
 
-      <!-- Date -->
-      <div>
-        <label for="date" class="block mb-1 text-3xl font-lato text-neutral-950"
-          >Date</label
-        >
-        <div class="relative">
-          <div
-            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-          >
-            <svg
-              class="w-4 h-4 text-gray-500 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 
-                     2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 
-                     2H5a1 1 0 0 1 0-2Z"
-              />
-            </svg>
-          </div>
-          <input
-            id="datepicker-autohide"
-            datepicker
-            datepicker-autohide
-            type="text"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg block w-full ps-10 p-2.5 focus:ring-blue-500 focus:border-blue-500 dark:bg-teal-900 dark:border-gray-600 dark:text-white"
-            placeholder="Select date"
-            readonly="true"
-          />
-        </div>
-      </div>
+    <div>
+      <label for="customer" class="block mb-1 text-3xl font-lato text-neutral-50">Customer</label>
+      <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-700 border-gray-600 text-white">
+        {{reviewEntry.Customer_customer_id}} </p>
+    </div>
 
-      <!-- Inks -->
-      <div>
-        <label for="ink" class="block mb-1 text-3xl font-lato text-neutral-950"
-          >Inks</label
-        >
-        <div
-          class="bg-gray-50 dark:bg-teal-900 border border-gray-300 dark:border-gray-600 rounded-lg p-3 space-y-2 max-h-52 overflow-y-auto"
-        >
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Eternal Ink – Bright Red</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Fusion Ink – Deep Black</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Dynamic – White</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Dynamic – White</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Dynamic – White</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Dynamic – White</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Dynamic – White</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Dynamic – White</span>
-          </div>
-          <div
-            class="flex items-center justify-between bg-teal-800 text-neutral-50 rounded-lg px-3 py-2"
-          >
-            <span class="text-lg">Dynamic – White</span>
-          </div>
-        </div>
-      </div>
+    <div>
+      <label for="date" class="block mb-1 text-3xl font-lato text-neutral-50">Date</label>
+      <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-700 border-gray-600 text-white">
+        {{reviewEntry.appointment_date | date:'short'}}</p>
+    </div>
 
-      <!-- Comments -->
-      <div>
-        <label
-          for="description"
-          class="block mb-1 text-3xl font-lato text-neutral-950"
-          >Comments</label
-        >
-        <textarea
-          id="description"
-          rows="4"
-          class="block p-2.5 w-full max-h-28 text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-slate-500 focus:border-slate-500 dark:bg-teal-900 dark:border-gray-600 dark:text-white"
-          placeholder="Write your comments about customer here.."
-          readonly="true"
-        ></textarea>
+    <div>
+      <label for="ink" class="block mb-1 text-3xl font-lato text-neutral-50">Inks</label>
+      <div class="bg-gray-50 dark:bg-slate-800 border border-gray-300 dark:border-gray-600 rounded-lg p-3 
+                  space-y-2 max-h-52 overflow-y-auto">
+        <p>TO BE FETCHED AS INK INFO (id numbers for now)</p>
+        @for (ink of reviewEntry.inks; track ink) {
+        <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-700 border-gray-600 text-white"> {{ink}}</p>
+        }
       </div>
+    </div>
 
-      <!-- Buttons -->
-      <div class="flex flex-wrap justify-center gap-3 pt-2">
-        <button
-          type="button"
-          class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-lg px-4 py-2 text-center"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          class="text-neutral-50 bg-teal-800 hover:bg-teal-600 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center"
-        >
-          Confirm
-        </button>
-      </div>
-    </form>
+    <div>
+      <label class="block mb-1 text-3xl font-lato text-neutral-50">Comments</label>
+      <p>{{reviewEntry.comments}}</p>
+    </div>
+
+
+    <div class="flex flex-wrap justify-center gap-4 pt-2">
+      <button type="button" (click)="sendCancel()"
+        class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-lg px-4 py-2 text-center">
+        Cancel
+      </button>
+      <button type="submit"
+        class="text-neutral-50 bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
+        Confirm
+      </button>
+    </div>
   </div>
+
 </ion-content>
