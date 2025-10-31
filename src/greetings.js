@@ -9,6 +9,6 @@ export const greetingsData = {
     "What is on the agenda today?",
     "Remember to hydrate - and not just the tats",
     "Good to see you again",
-    "Did you remember to log your latest appointment?",
+    "Did you remember to log your latest entry?",
   ],
 };

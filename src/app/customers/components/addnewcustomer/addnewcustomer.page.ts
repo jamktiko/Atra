@@ -55,6 +55,7 @@ export class AddnewcustomerPage {
     last_name: '',
     email: '',
     phone: '',
+    notes: '',
   };
 
   //Hallitsee modalcustomerin näkyvyyttä
@@ -99,6 +100,7 @@ export class AddnewcustomerPage {
       last_name: '',
       email: '',
       phone: '',
+      notes: '',
     };
   }
 

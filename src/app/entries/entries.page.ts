@@ -71,7 +71,7 @@ export class EntriesPage implements OnInit {
    * @returns groupedEntries: Record<string, Entry[]> {} = an object filled with date string as key and Entry array of single entries as value
    *  tallennetaan Record-muodossa (avain-arvo-pareina), joka tallentaa päivän eli date string-avaimeksi, ja se ottaa taulukon kirjauksia eli Entryjä arvokseen.
    *
-   * const date = entries[i].appointment_date
+   * const date = entries[i].entry_date
         .toLocaleDateString('en-CA')
         .split('T')[0];
    * * .toLocaleDateString('en-CA') tulostaa muodossa YYYY-MM-DDT00:00:0000
@@ -89,7 +89,7 @@ export class EntriesPage implements OnInit {
     let sorted: Record<string, Entry[]> = {};
 
     for (let i = 0; i < entries.length; i++) {
-      const date = entries[i].appointment_date
+      const date = entries[i].entry_date
         .toLocaleDateString('en-CA')
         .split('T')[0];
 

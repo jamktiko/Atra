@@ -62,22 +62,25 @@
       }
 
       <label for="notes" class="block mb-1 m-1 text-lg font-lato text-neutral-50">Notes (optional)</label>
-      <input type="text" id="notes" placeholder="Notes about this customer"
+      <input type="text" id="notes" [(ngModel)]="customer.notes" #notes="ngModel" name="notes"
+        placeholder="Notes about this customer"
         class="bg-slate-700 border border-gray-300 text-slate-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full py-4" />
     </form>
+
   </div>
+
   @if (openModal) {
   <app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel()"
     [openModal]="openModal"></app-modalcustomer>
   }
-  <div class="flex items-center justify-center">
+  <div class="flex items-center justify-center space-x-4">
     <button
-      class="text-neutral-50 bg-slate-200 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-m px-4 py-2 m-2 text-center"
+      class="text-red-600 inline-flex items-center hover:text-neutral-50 ring-2 ring-red-600 focus:ring-red-300 font-medium rounded-lg text-lg px-4 py-2 text-center"
       (click)="back()">
       Back
     </button>
     <button
-      class="text-neutral-50 bg-slate-500 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-m px-4 py-2 m-2 text-center disabled:bg-slate-700 disabled:text-gray-500"
+      class="text-neutral-50 bg-slate-500 focus:ring-4 ring-2 ring-slate-400 focus:outline-none focus:ring-slate-200 font-medium rounded-lg text-lg px-4 py-2 text-center"
       (click)="showModal()" [disabled]="!customerForm.valid">
       Continue
     </button>

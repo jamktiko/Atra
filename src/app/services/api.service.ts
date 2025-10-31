@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CustomerCreation, PublicInk, UserInk } from 'src/interface';
+import {
+  CustomerCreation,
+  EntryCreation,
+  PublicInk,
+  UserInk,
+} from 'src/interface';
 import { Observable } from 'rxjs';
 import { Entry } from 'src/interface';
 import { Customer } from 'src/interface';
@@ -22,10 +27,10 @@ import { is } from 'cypress/types/bluebird';
 export class ApiService {
   private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV
-  //private readonly isProd = environment.production;
+  private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD
-  private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
+  // private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
 
   private localUserInks: UserInk[] = [...mockUserInks]; //copy of mockUserInks
   private localCustomers: Customer[] = [...mockCustomers]; //copy of mockCustomers
@@ -378,26 +383,29 @@ export class ApiService {
     }
   }
 
+  /*
+   * Backend-kutsu listEntries()
+   */
+
   getAllEntries(): Observable<Entry[]> {
     //Add userID parameter + to url
     if (this.isProd) {
-      return this.http.get<Entry[]>(`${this.apiUrl}/entries/`);
+      return this.http.get<Entry[]>(`${this.apiUrl}/entry`);
     } else {
       return of(this.localEntries);
     }
   }
 
-  getOneEntry(entryId: number): Observable<Entry> {
-    //Add userID parameter + to url
+  getOneEntry(entryId: number, userId: string): Observable<Entry> {
     if (this.isProd) {
-      return this.http.get<Entry>(`${this.apiUrl}/entries/${entryId}`);
+      return this.http.get<Entry>(`${this.apiUrl}/entry/${entryId}`);
     } else {
       //this needs to be tested still!
       const mockEntry = this.localEntries.find(
-        (e) => e.appointment_id === entryId
+        (e) => e.entry_id === entryId
       ) || {
-        appointment_id: entryId,
-        appointment_date: new Date(),
+        entry_id: entryId,
+        entry_date: new Date(),
         comments: 'Mock comments',
         User_user_id: '',
         Customer_customer_id: 0,
@@ -406,15 +414,21 @@ export class ApiService {
     }
   }
 
-  addNewEntry() {
-    if (this.isProd) {
-      // return this.http.post<Entry>(`${this.apiUrl}`)
-    } else {
-      //mock
-    }
-  }
+  // addNewEntry(
+  //   userId: string,
+  //   customer_id: number,
+  //   entry_date: string,
+  //   user_ink_id: number[],
+  //   comments: string
+  // ): Observable<EntryCreation> {
+  //   return this.http.post<EntryCreation>(`${this.apiUrl}/entry`, body);
+  // }
 
-  updateEntry() {
+  /*
+   * Backend-kutsu updateEntry
+   */
+
+  updateEntry(entry_id: number, userId: string) {
     if (this.isProd) {
       //real
     } else {
@@ -422,11 +436,10 @@ export class ApiService {
     }
   }
 
-  deleteEntry() {
-    if (this.isProd) {
-      //real
-    } else {
-      //mock
-    }
+  /*
+   * Backend-kutsu deleteEntry
+   */
+  deleteEntry(entry_id: number, userId: string): Observable<Entry> {
+    return this.http.delete<Entry>(`${this.apiUrl}/entry/${entry_id}`);
   }
 }
