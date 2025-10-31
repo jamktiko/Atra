@@ -1,5 +1,10 @@
 <ion-content [fullscreen]="true">
   <ng-toast></ng-toast>
+  <!--MODAALI-->
+  @if (showReview) {
+  <app-modalentry (cancel)="handleCancel()" [reviewEntry]="newEntry"></app-modalentry>
+  }
+
   <div class="justify-center">
 
     <h2 class="text-neutral-50 text-center text-3xl my-2 font-pt-serif">Adding a new entry</h2>
@@ -61,7 +66,6 @@
 
       </div>
 
-      <!-- Comments -->
       <div>
         <label for="description" class="block mb-1 text-xl font-lato text-neutral-50 mx-1">Comments</label>
         <textarea id="description" rows="4"
@@ -70,13 +74,10 @@
       </div>
 
 
-
-      <!-- Buttons -->
       <div class="flex flex-wrap justify-center gap-3 pt-2">
         <button type="button" class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-slate-600
                 focus:ring-2 focus:outline-none focus:ring-red-800 font-medium 
                rounded-lg text-lg px-4 py-2 text-center">
-
           Back
         </button>
         <button (click)="submit()" type="submit" class="text-neutral-50 bg-slate-600 hover:bg-teal-600 focus:ring-2 focus:outline-none 
@@ -87,5 +88,6 @@
 
     </div>
   </div>
+
 
 </ion-content>
