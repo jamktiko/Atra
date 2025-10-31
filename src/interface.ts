@@ -33,15 +33,15 @@ interface User {
 }
 
 interface Entry {
-  appointment_id: number;
-  appointment_date: Date;
+  entry_id: number;
+  entry_date: Date;
   comments: string;
   User_user_id: string;
   Customer_customer_id: number;
 }
 
 interface EntryCreation {
-  appointment_date: Date;
+  entry_date: Date;
   comments: string;
   User_user_id: string;
   Customer_customer_id: number | undefined;
@@ -63,6 +63,7 @@ interface CustomerCreation {
   last_name: string;
   email: string;
   phone: string;
+  notes: string;
 }
 
 export {

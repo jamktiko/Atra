@@ -99,24 +99,24 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `atratestdb`.`Appointment`
+-- Table `atratestdb`.`Entry`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `atratestdb`.`Appointment` (
-  `appointment_id` INT NOT NULL AUTO_INCREMENT,
-  `appointment_date` DATETIME NOT NULL,
+CREATE TABLE IF NOT EXISTS `atratestdb`.`Entry` (
+  `entry_id` INT NOT NULL AUTO_INCREMENT,
+  `entry_date` DATETIME NOT NULL,
   `comments` TEXT NULL,
   `User_user_id` VARCHAR(255) NOT NULL,
   `Customer_customer_id` INT NOT NULL,
-  PRIMARY KEY (`appointment_id`),
-  INDEX `fk_Appointment_User1_idx` (`User_user_id` ASC) VISIBLE,
-  INDEX `fk_Appointment_Customer1_idx` (`Customer_customer_id` ASC) VISIBLE,
-  UNIQUE INDEX `idAppointment_UNIQUE` (`appointment_id` ASC) VISIBLE,
-  CONSTRAINT `fk_Appointment_User1`
+  PRIMARY KEY (`entry_id`),
+  INDEX `fk_Entry_User1_idx` (`User_user_id` ASC) VISIBLE,
+  INDEX `fk_Entry_Customer1_idx` (`Customer_customer_id` ASC) VISIBLE,
+  UNIQUE INDEX `idEntry_UNIQUE` (`entry_id` ASC) VISIBLE,
+  CONSTRAINT `fk_Entry_User1`
     FOREIGN KEY (`User_user_id`)
     REFERENCES `atratestdb`.`User` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Appointment_Customer1`
+  CONSTRAINT `fk_Entry_Customer1`
     FOREIGN KEY (`Customer_customer_id`)
     REFERENCES `atratestdb`.`Customer` (`customer_id`)
     ON DELETE NO ACTION
@@ -125,22 +125,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `atratestdb`.`UserInk_has_Appointment`
+-- Table `atratestdb`.`UserInk_has_Entry`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `atratestdb`.`UserInk_has_Appointment` (
+CREATE TABLE IF NOT EXISTS `atratestdb`.`UserInk_has_Entry` (
   `UserInk_user_ink_id` INT NOT NULL,
-  `Appointment_appointment_id` INT NOT NULL,
-  PRIMARY KEY (`UserInk_user_ink_id`, `Appointment_appointment_id`),
-  INDEX `fk_UserInk_has_Appointment_Appointment1_idx` (`Appointment_appointment_id` ASC) VISIBLE,
-  INDEX `fk_UserInk_has_Appointment_UserInk1_idx` (`UserInk_user_ink_id` ASC) VISIBLE,
-  CONSTRAINT `fk_UserInk_has_Appointment_UserInk1`
+  `Entry_entry_id` INT NOT NULL,
+  PRIMARY KEY (`UserInk_user_ink_id`, `Entry_entry_id`),
+  INDEX `fk_UserInk_has_Entry_Entry1_idx` (`Entry_entry_id` ASC) VISIBLE,
+  INDEX `fk_UserInk_has_Entry_UserInk1_idx` (`UserInk_user_ink_id` ASC) VISIBLE,
+  CONSTRAINT `fk_UserInk_has_Entry_UserInk1`
     FOREIGN KEY (`UserInk_user_ink_id`)
     REFERENCES `atratestdb`.`UserInk` (`user_ink_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_UserInk_has_Appointment_Appointment1`
-    FOREIGN KEY (`Appointment_appointment_id`)
-    REFERENCES `atratestdb`.`Appointment` (`appointment_id`)
+  CONSTRAINT `fk_UserInk_has_Entry_Entry1`
+    FOREIGN KEY (`Entry_entry_id`)
+    REFERENCES `atratestdb`.`Entry` (`entry_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -212,18 +212,18 @@ INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_in
 INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('98765', DATE("2025-01-01"), DATE("2026-01-01"), 0, 20, 'f08c996c-f081-7001-76e0-bfe9e4956901');
 INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('HJKL011', DATE("2025-01-01"), DATE("2026-01-01"), 1, 2, 'f08c996c-f081-7001-76e0-bfe9e4956901');
 
-INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-06-06"), 'eka', 'f08c996c-f081-7001-76e0-bfe9e4956901', 1);
-INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-07"), 'toka', 'f08c996c-f081-7001-76e0-bfe9e4956901', 1);
-INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-09"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 2);
-INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-10-06"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 3);
-INSERT INTO Appointment (appointment_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-12-12"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 2);
+INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-06-06"), 'eka', 'f08c996c-f081-7001-76e0-bfe9e4956901', 1);
+INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-07"), 'toka', 'f08c996c-f081-7001-76e0-bfe9e4956901', 1);
+INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-09"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 2);
+INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-10-06"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 3);
+INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-12-12"), '', 'f08c996c-f081-7001-76e0-bfe9e4956901', 2);
 
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (1, 1);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (3, 1);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (1, 2);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (4, 2);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (1, 3);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (1, 4);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (2, 4);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (3, 4);
-INSERT INTO UserInk_has_Appointment (UserInk_user_ink_id, Appointment_appointment_id) VALUES (4, 4);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (1, 1);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (3, 1);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (1, 2);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (4, 2);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (1, 3);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (1, 4);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (2, 4);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (3, 4);
+INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (4, 4);
