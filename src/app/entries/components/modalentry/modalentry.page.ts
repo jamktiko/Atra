@@ -1,13 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
-import { EntryCreation } from 'src/interface';
+import { IonContent } from '@ionic/angular/standalone';
+import { EntryCreation, UserInk } from 'src/interface';
+import { ApiService } from 'src/app/services/api.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-modalentry',
@@ -19,18 +16,36 @@ import { EntryCreation } from 'src/interface';
 export class ModalentryPage implements OnInit {
   @Input() reviewEntry!: EntryCreation;
   @Output() cancel = new EventEmitter<void>();
+  @Output() confirm = new EventEmitter<EntryCreation>();
 
-  dateInISO!: string;
+  reviewInks: UserInk[] = [];
 
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loopThroughInks();
+  }
+
+  loopThroughInks() {
+    const inkArray = this.reviewEntry.inks.map((id) =>
+      this.apiService.getOneUserInk(id)
+    );
+    forkJoin(inkArray).subscribe({
+      next: (data) => {
+        this.reviewInks = data;
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
+    return inkArray;
+  }
 
   sendCancel() {
     this.cancel.emit();
   }
 
   sendConfirm() {
-    console.log('Confirm');
+    this.confirm.emit(this.reviewEntry);
   }
 }

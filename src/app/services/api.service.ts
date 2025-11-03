@@ -414,6 +414,9 @@ export class ApiService {
     }
   }
 
+  addNewEntry(newEntry: EntryCreation) {
+    console.log('Apiservice reached new entry: ', newEntry);
+  }
   // addNewEntry(
   //   userId: string,
   //   customer_id: number,
