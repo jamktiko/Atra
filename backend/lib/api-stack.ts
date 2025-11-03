@@ -67,6 +67,7 @@ export class ApiStack extends Stack {
 
     // ei tarpeellinen tässä vaiheessa
     this.migrationsRoute();
+    this.dropSchemaRoute();
 
     this.customerRoute();
     this.publicInkRoute();
@@ -124,6 +125,23 @@ export class ApiStack extends Stack {
     new cdk.CfnOutput(this, 'MigrationsFnArn', {
       value: migrationsFn.functionArn,
       exportName: 'MigrationsFnArn',
+    });
+  }
+
+  private dropSchemaRoute() {
+    const dropSchemaFn = new LambdaBuilder(this, 'drop-schema')
+      .setDescription('Run DB drop schema to kill all data')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    new cdk.CfnOutput(this, 'DropSchemaFnArn', {
+      value: dropSchemaFn.functionArn,
+      exportName: 'DropSchemaFnArn',
     });
   }
 
