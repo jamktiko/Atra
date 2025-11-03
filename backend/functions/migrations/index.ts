@@ -62,36 +62,36 @@ export const handler: Handler = async (event, ctx) => {
         UNIQUE KEY user_ink_id_UNIQUE (user_ink_id),
         FOREIGN KEY (PublicInk_ink_id) REFERENCES PublicInk(ink_id),
         FOREIGN KEY (User_user_id) REFERENCES User(user_id)
-      ) ENGINE=InnoDB;
+      ) ENGINE=InnoDB; `);
 
-        CREATE TABLE IF NOT EXISTS Entry (
+    /*         CREATE TABLE IF NOT EXISTS Entry (
         entry_id INT NOT NULL AUTO_INCREMENT,
         entry_date DATETIME NOT NULL,
         comments TEXT,
         User_user_id VARCHAR(255) NOT NULL,
-        Customer_customer_id INT NULL, --NULL for cascades
+        Customer_customer_id INT NULL,
         PRIMARY KEY (entry_id),
         UNIQUE KEY idEntry_UNIQUE (entry_id),
         INDEX fk_Entry_User1_idx (User_user_id),
         INDEX fk_Entry_Customer1_idx (Customer_customer_id),
         FOREIGN KEY (User_user_id) REFERENCES User(user_id),
         FOREIGN KEY (Customer_customer_id) REFERENCES Customer(customer_id) 
-          ON DELETE SET NULL --cascades customer deletion
+          ON DELETE SET NULL
       ) ENGINE=InnoDB;
 
         CREATE TABLE IF NOT EXISTS UserInk_has_Entry (
         id INT NOT NULL AUTO_INCREMENT,
-        UserInk_user_ink_id INT NULL, --NULL for cascades
-        Entry_entry_id INT NULL, --NULL for cascades
+        UserInk_user_ink_id INT NULL,
+        Entry_entry_id INT NULL,
         PRIMARY KEY (UserInk_user_ink_id, Entry_entry_id),
         INDEX fk_UserInk_has_Entry_Entry1_idx (Entry_entry_id),
         INDEX fk_UserInk_has_Entry_UserInk1_idx (UserInk_user_ink_id),
         FOREIGN KEY (UserInk_user_ink_id) REFERENCES UserInk(user_ink_id)
-          ON DELETE SET NULL --cascades user deletion,
+          ON DELETE SET NULL
         FOREIGN KEY (Entry_entry_id) REFERENCES Entry(entry_id)
-          ON DELETE SET NULL --cascades entry deletion
+          ON DELETE SET NULL
       ) ENGINE=InnoDB;
-    `);
+    `); */
 
     await conn.query(`
       INSERT INTO User (user_id, email, first_name, last_name)
@@ -132,7 +132,7 @@ export const handler: Handler = async (event, ctx) => {
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('98765', DATE("2025-01-01"), DATE("2026-01-01"), 0, 20, 'demo-user-123');
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id) VALUES ('HJKL011', DATE("2025-01-01"), DATE("2026-01-01"), 1, 2, 'demo-user-123');`);
 
-    await conn.query(`
+    /*     await conn.query(`
       INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-06-06"), 'eka', 'demo-user-123', 1);
       INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-07"), 'toka', 'demo-user-123', 1);
       INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id) VALUES (DATE("2025-07-09"), '', 'demo-user-123', 2);
@@ -148,7 +148,8 @@ export const handler: Handler = async (event, ctx) => {
       INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (1, 4);
       INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (2, 4);
       INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (3, 4);
-      INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (4, 4);`);
+      INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES (4, 4);
+      `); */
 
     await conn.commit();
     console.log('Migration finished');
