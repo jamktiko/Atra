@@ -1,5 +1,8 @@
+// Cypress tests to test login & logout, and CRUD-operations
+import { environment } from "srcenvironmentsenvironment.ts";
+
 describe("Basic app existence test", () => {
   it("Can find app", () => {
-    cy.visit("http://localhost:8100"); // Adjust the URL as needed
+    cy.visit(environment.apiUrl); // Adjust the URL as needed
   });
 });
