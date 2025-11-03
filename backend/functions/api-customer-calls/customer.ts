@@ -76,7 +76,7 @@ export async function deleteCustomer(customer_id: string) {
     return clientErrorResponse('Delete failed');
   }
 }
-
+*/
 
 export async function deleteCustomer(customer_id: string) {
   if (!customer_id) {
@@ -101,8 +101,6 @@ export async function deleteCustomer(customer_id: string) {
     return clientErrorResponse('Delete failed');
   }
 }
-
-*/
 
 // Tämä on erittäin huono tapa tehdä päivitys --> pitääkö siirtyä ORMeihin vai onko joku toinen tapa??
 export async function updateCustomer(customer_id: string, body: string | null) {
