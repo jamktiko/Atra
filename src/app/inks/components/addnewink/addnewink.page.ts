@@ -195,6 +195,7 @@ export class AddnewinkPage implements OnInit {
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
+        this.toast.danger('Something went wrong');
       },
     });
   }
