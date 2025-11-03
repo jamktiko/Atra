@@ -70,11 +70,13 @@
   --ion-tab-bar-background: oklch(15% 0.05 190);
   --ion-tab-bar-color: oklch(47.6% 0.02 150.416);
   --ion-tab-bar-color-selected: oklch(87% 0.01 13);
-  --ion-tab-bar-min-height: 7%;
-  --ion-tab-bar-padding-top: 8px;
-  --ion-tab-bar-padding-bottom: 8px;
-  --ion-tab-bar-padding-start: 12px;
-  --ion-tab-bar-padding-end: 12px;
+
+  --ion-tab-button-justify-content: center;
+  --ion-tab-button-align-items: center;
+}
+
+ion-tab-button {
+  flex: 1;
 }
 
 ion-searchbar.custom {
@@ -91,6 +93,10 @@ ion-toolbar {
   font-size: 50%;
   --padding-top: 5%;
   --padding-bottom: 5%;
+  text-align: center;
+  justify-content: center;
+  text-shadow: 1px 1px 2px rgb(58, 113, 104), 0 0 1em rgb(0, 0, 0),
+    0 0 0.2em rgb(5, 43, 38);
 }
 
 ion-tab-bar {
@@ -115,5 +121,40 @@ ion-tab-bar {
   }
 }
 
+@media screen and (min-width: 319px) {
+  ion-tab-bar {
+    min-height: 8%;
+  }
+  ion-tab-button {
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  ion-icon {
+    font-size: 34px;
+  }
+}
 @media screen and (min-width: 431px) {
+  ion-tab-bar {
+    min-height: 8.5%;
+  }
+
+  ion-tab-button {
+    font-size: 20px;
+  }
+  ion-icon {
+    font-size: 42px;
+  }
+}
+@media screen and (min-width: 768px) {
+  ion-tab-bar {
+    min-height: 9%;
+  }
+
+  ion-tab-button {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+  ion-icon {
+    font-size: 52px;
+  }
 }

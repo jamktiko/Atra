@@ -102,6 +102,7 @@ export class AddnewcustomerPage {
       phone: '',
       notes: '',
     };
+    this.customer = this.customer;
   }
 
   /** */
@@ -114,6 +115,7 @@ export class AddnewcustomerPage {
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
+        this.toast.danger('Something went wrong');
       },
     });
   }
