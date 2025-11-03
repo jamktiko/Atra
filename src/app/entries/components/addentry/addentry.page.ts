@@ -18,7 +18,6 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
-import { Entry } from 'src/interface';
 import {
   NgLabelTemplateDirective,
   NgOptionTemplateDirective,
@@ -34,7 +33,6 @@ import { ModalentryPage } from '../modalentry/modalentry.page';
   styleUrls: ['./addentry.page.css'],
   standalone: true,
   imports: [
-    NgToastComponent,
     IonContent,
     CommonModule,
     FormsModule,
@@ -224,19 +222,13 @@ export class AddentryPage implements OnInit {
   }
 
   handleConfirm(newEntry: EntryCreation) {
-    //hakee jokaisen musteen yksitellen, palauttaa tällä hetkellä taulukon observableja
-    // const inkArray: any[] = [];
-    // newEntry.inks.forEach((ink) => {
-    //   inkArray.push(this.apiService.getOneUserInk(ink));
-    // });
-
-    // console.log('Ink array: ', inkArray);
-
     this.addNewEntry(newEntry);
   }
 
   addNewEntry(newEntry: EntryCreation) {
     this.apiService.addNewEntry(newEntry);
+    this.toast.success('Entry added successfully');
+    this.router.navigate(['/tabs/entries']);
   }
 
   back() {

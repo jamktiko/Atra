@@ -10,9 +10,14 @@ import {
 import { Entry } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
-import { of, map, mergeMap, reduce, groupBy, toArray } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import {
+  NgToastComponent,
+  NgToastService,
+  TOAST_POSITIONS,
+  ToastPosition,
+} from 'ng-angular-popup';
 
 @Component({
   selector: 'app-entries',
@@ -27,6 +32,7 @@ import { Router } from '@angular/router';
     IonSearchbar,
     CommonModule,
     FormsModule,
+    NgToastComponent,
   ],
 })
 export class EntriesPage implements OnInit {
@@ -36,7 +42,11 @@ export class EntriesPage implements OnInit {
 
   groupedEntries: { date: string; entries: Entry[] }[] = [];
 
-  constructor(private apiService: ApiService, private router: Router) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private toast: NgToastService
+  ) {}
 
   ngOnInit() {
     this.loadEntries();
