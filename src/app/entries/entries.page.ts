@@ -6,6 +6,7 @@ import {
   IonHeader,
   IonTitle,
   IonToolbar,
+  IonModal,
 } from '@ionic/angular/standalone';
 import { Entry } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
@@ -33,12 +34,17 @@ import {
     CommonModule,
     FormsModule,
     NgToastComponent,
+    IonModal,
   ],
 })
 export class EntriesPage implements OnInit {
   entries: Entry[] = [];
 
   searchItem: string = '';
+
+  oneEntryModal: boolean = false;
+
+  chosenEntryId: number | undefined = undefined;
 
   groupedEntries: { date: string; entries: Entry[] }[] = [];
 
@@ -52,14 +58,26 @@ export class EntriesPage implements OnInit {
     this.loadEntries();
   }
 
+  setClosed(show: boolean) {
+    this.oneEntryModal = show;
+  }
+
+  chooseEntry(show: boolean, entry: Entry) {
+    this.oneEntryModal = show;
+    this.chosenEntryId = entry.entry_id;
+    return this.apiService.getOneEntry(this.chosenEntryId);
+  }
+
   loadEntries() {
     this.apiService.getAllEntries().subscribe({
       next: (data) => {
         this.entries = data;
+        console.log(data);
         this.sortByDate(this.entries);
       },
       error: (err) => {
         console.error('No entries found: ', err);
+        this.toast.warning('Something went wrong');
       },
     });
   }
@@ -81,10 +99,9 @@ export class EntriesPage implements OnInit {
    * @returns groupedEntries: Record<string, Entry[]> {} = an object filled with date string as key and Entry array of single entries as value
    *  tallennetaan Record-muodossa (avain-arvo-pareina), joka tallentaa päivän eli date string-avaimeksi, ja se ottaa taulukon kirjauksia eli Entryjä arvokseen.
    *
-   * const date = entries[i].entry_date
-        .toLocaleDateString('en-CA')
-        .split('T')[0];
-   * * .toLocaleDateString('en-CA') tulostaa muodossa YYYY-MM-DDT00:00:0000
+   * const dateObj = new Date(entries[i].entry_date);
+      const date = dateObj.toLocaleDateString('en-CA').split('T')[0];
+  * tulostaa muodossa YYYY-MM-DDT00:00:0000
    * 'T' toimii ajanerottajana (time separator) eli erottaa ajan päivämäärästä > saadaan pelkkä kellonaika 00:00:0000
    *
    * sorted[date] etsii taulukon kyseisen date-muuttujan arvolla, eli etsii kyseisen key-arvon
@@ -99,9 +116,8 @@ export class EntriesPage implements OnInit {
     let sorted: Record<string, Entry[]> = {};
 
     for (let i = 0; i < entries.length; i++) {
-      const date = entries[i].entry_date
-        .toLocaleDateString('en-CA')
-        .split('T')[0];
+      const dateObj = new Date(entries[i].entry_date);
+      const date = dateObj.toLocaleDateString('en-CA').split('T')[0];
 
       if (!(date in sorted)) {
         sorted[date] = [];
