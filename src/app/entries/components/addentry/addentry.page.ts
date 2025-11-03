@@ -58,11 +58,13 @@ export class AddentryPage implements OnInit {
   /*
    * Kovakoodattu userID, joka tulee myöhemmin Cogniton kautta
    */
+
   userId: string = 'USR1';
 
   /*
    * Muuttuja ng-select-komponenttiin asiakkaan hakemiseen ja valitsemiseen
    */
+
   selectedCustomerId!: number;
 
   userInks: UserInk[] = [];
@@ -76,6 +78,18 @@ export class AddentryPage implements OnInit {
     Customer_customer_id: undefined, //undefined kunnes continue() alustaa
     inks: [],
   };
+
+  resetForm() {
+    this.newEntry = {
+      entry_date: new Date(),
+      comments: '',
+      User_user_id: this.userId,
+      Customer_customer_id: undefined,
+      inks: [],
+    };
+
+    this.newEntry = this.newEntry;
+  }
 
   /* Muuttuja, jonka avulla ylläpidetään modalentry-komponentin näkyvyyttä */
   showReview: boolean = false;
@@ -223,5 +237,10 @@ export class AddentryPage implements OnInit {
 
   addNewEntry(newEntry: EntryCreation) {
     this.apiService.addNewEntry(newEntry);
+  }
+
+  back() {
+    this.resetForm();
+    this.router.navigate(['/tabs/entries']);
   }
 }

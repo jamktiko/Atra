@@ -26,6 +26,9 @@ export class ModalentryPage implements OnInit {
     this.loopThroughInks();
   }
 
+  /*
+   * Funktio musteiden läpikäymiseen: forkJoin ottaa taulukon Observableja > hakee ja tallentaa reviewInksin arvot
+   */
   loopThroughInks() {
     const inkArray = this.reviewEntry.inks.map((id) =>
       this.apiService.getOneUserInk(id)
