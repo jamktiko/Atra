@@ -396,22 +396,23 @@ export class ApiService {
     }
   }
 
-  getOneEntry(entryId: number, userId: string): Observable<Entry> {
-    if (this.isProd) {
-      return this.http.get<Entry>(`${this.apiUrl}/entry/${entryId}`);
-    } else {
-      //this needs to be tested still!
-      const mockEntry = this.localEntries.find(
-        (e) => e.entry_id === entryId
-      ) || {
-        entry_id: entryId,
-        entry_date: new Date(),
-        comments: 'Mock comments',
-        User_user_id: '',
-        Customer_customer_id: 0,
-      };
-      return of(mockEntry);
-    }
+  getOneEntry(entryId: number): Observable<Entry> {
+    return this.http.get<Entry>(`${this.apiUrl}/entry/${entryId}`);
+    //  else {
+    //this needs to be tested still!
+    //   const mockEntry = this.localEntries.find(
+    //     (e) => e.entry_id === entryId
+    //   ) || {
+    //     entry_id: entryId,
+    //     entry_date: new Date(),
+    //     comments: 'Mock comments',
+    //     first_name: 'Steve',
+    //     last_name: 'Harrington',
+    //     User_user_id: '',
+    //     Customer_customer_id: 0,
+    //   };
+    //   return of(mockEntry);
+    // }
   }
 
   addNewEntry(newEntry: EntryCreation) {

@@ -5,13 +5,20 @@ import { IonContent } from '@ionic/angular/standalone';
 import { EntryCreation, UserInk } from 'src/interface';
 import { ApiService } from 'src/app/services/api.service';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
+import {
+  NgToastComponent,
+  NgToastService,
+  TOAST_POSITIONS,
+  ToastPosition,
+} from 'ng-angular-popup';
 
 @Component({
   selector: 'app-modalentry',
   templateUrl: './modalentry.page.html',
   styleUrls: ['./modalentry.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule],
+  imports: [IonContent, CommonModule, FormsModule, NgToastComponent],
 })
 export class ModalentryPage implements OnInit {
   @Input() reviewEntry!: EntryCreation;
@@ -20,12 +27,19 @@ export class ModalentryPage implements OnInit {
 
   reviewInks: UserInk[] = [];
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private router: Router,
+    private toast: NgToastService
+  ) {}
 
   ngOnInit() {
     this.loopThroughInks();
   }
 
+  /*
+   * Funktio musteiden läpikäymiseen: forkJoin ottaa taulukon Observableja > hakee ja tallentaa reviewInksin arvot
+   */
   loopThroughInks() {
     const inkArray = this.reviewEntry.inks.map((id) =>
       this.apiService.getOneUserInk(id)
@@ -36,6 +50,7 @@ export class ModalentryPage implements OnInit {
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
+        this.toast.warning('Something went wrong');
       },
     });
     return inkArray;

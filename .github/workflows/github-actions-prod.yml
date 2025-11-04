@@ -41,18 +41,28 @@ jobs:
           cdk deploy frontend --require-approval never
           # cdk deploy cognito --require-approval never # Temporarily disabled
           cdk deploy api --require-approval never
-      # below is for automated deployment, remove from comments when needed
-      #- name: Fetch API url from CloudfFormation
-      #  run: |
-      #    API_URL=$(aws cloudformation describe-stacks --stack-name api \
-      #    --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" --output text)
-      #    echo "API_URL=$API_URL" >> $GITHUB_ENV
-      #- name: Inject API URL into environment.prod.ts
-      #  run: |
-      #    sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" src/environments/environment.prod.ts
-      #    sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
-      #- name: Build Ionic projects
-      #  run: ionic build --prod
+      - name: Fetch API url from CloudfFormation
+        run: |
+          API_URL=$(aws cloudformation describe-stacks --stack-name api \
+          --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" --output text)
+          echo "API_URL=$API_URL" >> $GITHUB_ENV
+      - name: Inject API URL into environment.prod.ts
+        run: |
+          sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" src/environments/environment.prod.ts
+          sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
+      - name: Build Ionic projects
+        run: ionic build --prod
+      - name: Run e2e tests
+        run: |
+          npm install -g @ionic/cli
+          npm install -g @angular/cli
+          npm install -g cypress
+          ionic serve --no-open --no-interactive --port=8100 & #runs ionic serve in the background
+          SERVER_PID=$!
+          sleep 5
+          npx cypress run --headless --browser chrome
+          sleep 5
+          kill $SERVER_PID
       #- name: Deploy frontend to S3
       #  run: |
       #    aws s3 sync ./hosting s3://atra-frontend-bucket --delete --exact-timestamps

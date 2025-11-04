@@ -20,7 +20,8 @@ export const handler: Handler = async (Event, ctx) => {
   const pool = await getPool();
   const conn = await pool.getConnection();
   try {
-    await conn.query('DROP SCHEMA IF EXISTS AtraDatabase CASCADE;');
+    //await conn.query('DROP SCHEMA IF EXISTS AtraDatabase;');
+    await conn.query('DROP DATABASE IF EXISTS `AtraDatabase`;');
     console.log('Schema dropped: AtraDatabase');
     return {
       statusCode: 200,
