@@ -82,7 +82,6 @@ export class InksPage implements OnInit {
 
   ngOnInit() {
     this.getInks();
-
     this.loadInks();
   }
 
@@ -90,7 +89,6 @@ export class InksPage implements OnInit {
     this.apiService.getAllUserInks().subscribe({
       next: (data) => {
         this.userInks = data;
-        console.log(data);
       },
       error: (err) => {
         console.error('Something went wrong when fetching inks: ', err);
@@ -102,7 +100,7 @@ export class InksPage implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        if (event.urlAfterRedirects === '/tabs/customers') {
+        if (event.urlAfterRedirects === '/tabs/inks') {
           this.getInks();
         }
       });

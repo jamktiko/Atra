@@ -39,7 +39,7 @@ interface Entry {
   Customer_customer_id: number;
   first_name: string;
   last_name: string;
-  inks: number[];
+  inks: EntryInk[];
 }
 
 interface EntryCreation {
@@ -48,6 +48,14 @@ interface EntryCreation {
   User_user_id: string;
   Customer_customer_id: number | undefined;
   inks: number[];
+}
+
+interface ListEntries {
+  entry_id: number;
+  entry_date: string;
+  customer_id: number;
+  first_name: string;
+  last_name: string;
 }
 
 interface Customer {
@@ -94,4 +102,5 @@ export {
   CustomerCreation,
   EntryCreation,
   EntryInk,
+  ListEntries,
 };
