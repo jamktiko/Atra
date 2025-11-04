@@ -32,7 +32,6 @@ export class ApiService {
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD ELI DATA TIETOKANNASTA
   private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
-  private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
 
   private localUserInks: UserInk[] = [...mockUserInks]; //copy of mockUserInks
   private localCustomers: Customer[] = [...mockCustomers]; //copy of mockCustomers
