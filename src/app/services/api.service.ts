@@ -416,18 +416,20 @@ export class ApiService {
     // }
   }
 
-  addNewEntry(newEntry: EntryCreation) {
-    console.log('Apiservice reached new entry: ', newEntry);
+  addNewEntry(
+    customer_id: number,
+    entry_date: string,
+    user_ink_id: number[],
+    comments: string
+  ): Observable<EntryCreation> {
+    const body = {
+      customer_id,
+      entry_date,
+      user_ink_id,
+      comments,
+    };
+    return this.http.post<EntryCreation>(`${this.apiUrl}/entry`, body);
   }
-  // addNewEntry(
-  //   userId: string,
-  //   customer_id: number,
-  //   entry_date: string,
-  //   user_ink_id: number[],
-  //   comments: string
-  // ): Observable<EntryCreation> {
-  //   return this.http.post<EntryCreation>(`${this.apiUrl}/entry`, body);
-  // }
 
   /*
    * Backend-kutsu updateEntry

@@ -70,9 +70,9 @@ export class EntriesPage implements OnInit {
     this.oneEntryModal = show;
     this.chosenEntryId = entryId;
     this.apiService.getOneEntry(this.chosenEntryId).subscribe({
-      next: (response: any) => {
-        this.chosenEntry = response.data;
-        console.log(this.chosenEntry);
+      next: (data) => {
+        this.chosenEntry = data;
+        console.log('Chosen entry: ', this.chosenEntry);
       },
       error: (err) => {
         console.error('Something went wrong: ', err);

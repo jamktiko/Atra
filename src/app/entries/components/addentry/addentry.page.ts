@@ -73,7 +73,7 @@ export class AddentryPage implements OnInit {
     entry_date: new Date(),
     comments: '',
     User_user_id: this.userId,
-    Customer_customer_id: undefined, //undefined kunnes continue() alustaa
+    Customer_customer_id: this.selectedCustomerId, //undefined kunnes continue() alustaa
     inks: [],
   };
 
@@ -82,7 +82,7 @@ export class AddentryPage implements OnInit {
       entry_date: new Date(),
       comments: '',
       User_user_id: this.userId,
-      Customer_customer_id: undefined,
+      Customer_customer_id: this.selectedCustomerId,
       inks: [],
     };
 
@@ -226,7 +226,23 @@ export class AddentryPage implements OnInit {
   }
 
   addNewEntry(newEntry: EntryCreation) {
-    this.apiService.addNewEntry(newEntry);
+    const dateString = newEntry.entry_date.toLocaleString('en-CA');
+
+    this.apiService
+      .addNewEntry(
+        newEntry.Customer_customer_id,
+        dateString,
+        newEntry.inks,
+        newEntry.comments
+      )
+      .subscribe({
+        next: (data) => {
+          this.newEntry = data;
+        },
+        error: (err) => {
+          console.error('Something went wrong: ', err);
+        },
+      });
     this.toast.success('Entry added successfully');
     this.router.navigate(['/tabs/entries']);
   }
