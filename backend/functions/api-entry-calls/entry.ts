@@ -96,25 +96,15 @@ export async function getEntry(entry_id: string, userId: string) {
     const entry = rows[0];
 
     const [inks]: any = await pool.query(
-      `
-      SELECT
+      `SELECT
         uhe.id,
         uhe.UserInk_user_ink_id AS user_ink_id,
-        -- snapshot values (may be NULL)
-        uhe.snapshot_product_name,
-        uhe.snapshot_manufacturer,
-        uhe.snapshot_color,
-        uhe.snapshot_batch_number,
-        uhe.snapshot_image_url,
-        uhe.snapshot_size,
-        -- fallbacks to current values when snapshot is NULL
         COALESCE(uhe.snapshot_product_name, pi.product_name) AS product_name,
         COALESCE(uhe.snapshot_manufacturer, pi.manufacturer) AS manufacturer,
         COALESCE(uhe.snapshot_color, pi.color) AS color,
         COALESCE(uhe.snapshot_batch_number, ui.batch_number) AS batch_number,
         COALESCE(uhe.snapshot_image_url, pi.image_url) AS image_url,
-        COALESCE(uhe.snapshot_size, pi.size) AS size,
-        ui.favorite AS current_favorite
+        COALESCE(uhe.snapshot_size, pi.size) AS size
       FROM UserInk_has_Entry uhe
       LEFT JOIN UserInk ui ON uhe.UserInk_user_ink_id = ui.user_ink_id
       LEFT JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
@@ -124,10 +114,22 @@ export async function getEntry(entry_id: string, userId: string) {
       [entry_id]
     );
 
-    entry.inks = inks;
-    return successResponse(entry);
-  } catch (err) {
-    console.error('getEntry error:', err);
+    const result = {
+      entry_id: entry.entry_id,
+      entry_date: entry.entry_date,
+      comments: entry.comments ?? null,
+      customer: entry.customer_id
+        ? {
+            customer_id: entry.customer_id,
+            first_name: entry.first_name,
+            last_name: entry.last_name,
+          }
+        : null,
+      inks: inks ?? [],
+    };
+    return successResponse({ data: result });
+  } catch (error) {
+    console.error('getEntry error:', error);
     return clientErrorResponse('Could not fetch entry');
   }
 }
@@ -145,6 +147,18 @@ export async function addEntry(
   try {
     await conn.beginTransaction();
 
+    // validate customer if provided
+    if (customer_id !== null) {
+      const [cust]: any = await conn.query(
+        `SELECT 1 FROM Customer WHERE customer_id = ? AND User_user_id = ?`,
+        [customer_id, userId]
+      );
+      if (!cust.length) {
+        await conn.rollback();
+        return clientErrorResponse('Invalid customer for this user');
+      }
+    }
+
     const [entryResult]: any = await conn.query(
       `INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id)
        VALUES (?, ?, ?, ?)`,
@@ -159,10 +173,12 @@ export async function addEntry(
     }
 
     await conn.commit();
-    return successResponse({ message: 'Entry added', entry_id: entryId });
-  } catch (err) {
+    return successResponse({
+      mdata: { message: 'Entry added', entry_id: entryId },
+    });
+  } catch (error) {
     await conn.rollback();
-    console.error('addEntry error:', err);
+    console.error('addEntry error:', error);
     return clientErrorResponse('Could not add entry');
   } finally {
     conn.release();
@@ -219,7 +235,6 @@ export async function updateEntry(
   */
 
 // Update entry fields and optionally replace attached inks
-
 export async function updateEntry(
   entry_id: number,
   userId: string,
@@ -232,6 +247,18 @@ export async function updateEntry(
 ) {
   const pool = await getPool();
   const conn = await pool.getConnection();
+
+  // Validation
+  if (fields.entry_date && isNaN(Date.parse(fields.entry_date))) {
+    return clientErrorResponse('Invalid entry_date');
+  }
+  if (
+    fields.replace_user_ink_id &&
+    !Array.isArray(fields.replace_user_ink_id)
+  ) {
+    return clientErrorResponse('replace_user_ink_id must be an array');
+  }
+
   const updates = [];
   const values: any[] = [];
 
@@ -248,6 +275,7 @@ export async function updateEntry(
     values.push(fields.customer_id);
   }
   if (updates.length === 0 && !fields.replace_user_ink_id) {
+    conn.release();
     return clientErrorResponse('No fields to update');
   }
 
@@ -256,18 +284,48 @@ export async function updateEntry(
 
     if (updates.length > 0) {
       values.push(entry_id, userId);
+      // Update entry fields
       const [result]: any = await conn.query(
-        `UPDATE Entry SET ${updates.join(
-          ', '
-        )} WHERE entry_id = ? AND User_user_id = ?`,
+        `UPDATE Entry 
+        SET ${updates.join(', ')} 
+        WHERE entry_id = ? AND User_user_id = ?`,
         values
       );
       if (result.affectedRows === 0) {
         await conn.rollback();
-        return notFoundResponse('Entry not found');
+        conn.release();
+        return notFoundResponse('Entry not found or not owned by user');
       }
     }
-  } catch (error) {}
+
+    if (fields.replace_user_ink_id) {
+      // First remove all current associations
+      await conn.query(
+        `DELETE FROM UserInk_has_Entry WHERE Entry_entry_id = ?`,
+        [entry_id]
+      );
+      if (fields.replace_user_ink_id.length > 0) {
+        const inkValues = fields.replace_user_ink_id.map((id) => [
+          id,
+          entry_id,
+        ]);
+        // Bulk insert new associations
+        await conn.query(
+          `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id)
+          VALUES ?`,
+          [inkValues]
+        );
+      }
+    }
+    await conn.commit();
+    return successResponse({ message: 'Entry updated' });
+  } catch (error) {
+    await conn.rollback();
+    console.error('updateEntry error:', error);
+    return clientErrorResponse('Could not update entry');
+  } finally {
+    conn.release();
+  }
 }
 
 export async function deleteEntry(entry_id: number, userId: string) {
@@ -276,23 +334,26 @@ export async function deleteEntry(entry_id: number, userId: string) {
   try {
     await conn.beginTransaction();
 
+    // Delete associations first
     await conn.query(`DELETE FROM UserInk_has_Entry WHERE Entry_entry_id = ?`, [
       entry_id,
     ]);
+    // Delete entry itself
     const [result]: any = await conn.query(
       `DELETE FROM Entry WHERE entry_id = ? AND User_user_id = ?`,
       [entry_id, userId]
     );
 
-    await conn.commit();
-
-    if (result.affectedRows === 0)
+    if (result.affectedRows === 0) {
+      await conn.rollback();
       return notFoundResponse('Entry not found or not owned by user');
+    }
 
+    await conn.commit();
     return successResponse({ message: 'Entry deleted' });
-  } catch (err) {
+  } catch (error) {
     await conn.rollback();
-    console.error('deleteEntry error:', err);
+    console.error('deleteEntry error:', error);
     return clientErrorResponse('Could not delete entry');
   } finally {
     conn.release();
