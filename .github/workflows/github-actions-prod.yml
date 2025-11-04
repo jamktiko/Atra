@@ -52,8 +52,6 @@ jobs:
           sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
       - name: Build Ionic projects
         run: ionic build --prod
-      - name: Serve Ionic project
-        run: ionic serve
       - name: Run e2e tests
         run: |
           npm install -g @ionic/cli
