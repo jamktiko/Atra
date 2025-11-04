@@ -30,7 +30,7 @@ export async function listEntries(userId: string) {
   const pool = await getPool();
   try {
     const [rows] = await pool.query(
-      `SELECT e.entry_id, e.entry_date, e.Customer_customer_id
+      `SELECT e.entry_id, e.entry_date, e.Customer_customer_id, c.first_name, c.last_name
        FROM Entry e
        LEFT JOIN Customer c ON e.Customer_customer_id = c.customer_id
        WHERE e.User_user_id = ?
@@ -132,12 +132,13 @@ export async function getEntry(entry_id: string, userId: string) {
   }
 }
 
+// Add entry and attach inks (user_ink_id array). Populates snapshots for each association.
 export async function addEntry(
   userId: string,
-  customer_id: number,
+  customer_id: number | null,
   entry_date: string,
-  user_ink_id: number[],
-  comments: string
+  user_ink_id: number[] = [],
+  comments: string | null = null
 ) {
   const pool = await getPool();
   const conn = await pool.getConnection();
@@ -147,18 +148,14 @@ export async function addEntry(
     const [entryResult]: any = await conn.query(
       `INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id)
        VALUES (?, ?, ?, ?)`,
-      [entry_date, comments || null, userId, customer_id]
+      [entry_date, comments, userId, customer_id]
     );
 
     const entryId = entryResult.insertId;
 
-    if (user_ink_id.length > 0) {
-      const inkValues = user_ink_id.map((id) => [id, entryId]);
-      await conn.query(
-        `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id)
-         VALUES ?`,
-        [inkValues]
-      );
+    // Attach inks and populate snapshots
+    for (const inkId of user_ink_id) {
+      await insertAssociation(conn, inkId, entryId);
     }
 
     await conn.commit();
@@ -172,6 +169,7 @@ export async function addEntry(
   }
 }
 
+/*
 export async function updateEntry(
   entry_id: number,
   userId: string,
@@ -217,6 +215,59 @@ export async function updateEntry(
     console.error('updateEntry error:', err);
     return clientErrorResponse('Could not update entry');
   }
+}
+  */
+
+// Update entry fields and optionally replace attached inks
+
+export async function updateEntry(
+  entry_id: number,
+  userId: string,
+  fields: {
+    entry_date?: string;
+    comments?: string;
+    customer_id?: number | null;
+    replace_user_ink_id?: number[]; // If provided, replaces existing associations
+  }
+) {
+  const pool = await getPool();
+  const conn = await pool.getConnection();
+  const updates = [];
+  const values: any[] = [];
+
+  if (fields.entry_date !== undefined) {
+    updates.push('entry_date = ?');
+    values.push(fields.entry_date);
+  }
+  if (fields.comments !== undefined) {
+    updates.push('comments = ?');
+    values.push(fields.comments);
+  }
+  if (fields.customer_id !== undefined) {
+    updates.push('Customer_customer_id = ?');
+    values.push(fields.customer_id);
+  }
+  if (updates.length === 0 && !fields.replace_user_ink_id) {
+    return clientErrorResponse('No fields to update');
+  }
+
+  try {
+    await conn.beginTransaction();
+
+    if (updates.length > 0) {
+      values.push(entry_id, userId);
+      const [result]: any = await conn.query(
+        `UPDATE Entry SET ${updates.join(
+          ', '
+        )} WHERE entry_id = ? AND User_user_id = ?`,
+        values
+      );
+      if (result.affectedRows === 0) {
+        await conn.rollback();
+        return notFoundResponse('Entry not found');
+      }
+    }
+  } catch (error) {}
 }
 
 export async function deleteEntry(entry_id: number, userId: string) {

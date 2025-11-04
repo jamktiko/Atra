@@ -26,16 +26,16 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       event.body
     );
 
-    if (!customer_id || !entry_date || !Array.isArray(user_ink_id)) {
+    if (!entry_date || !Array.isArray(user_ink_id)) {
       return clientErrorResponse('Missing required fields');
     }
 
     return entry.addEntry(
       userId,
-      customer_id,
+      customer_id ?? null,
       entry_date,
       user_ink_id,
-      comments || ''
+      comments ?? null
     );
   }
 
