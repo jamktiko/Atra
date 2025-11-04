@@ -31,7 +31,7 @@ export const handler: Handler = async (event, ctx) => {
         notes TEXT,
         User_user_id VARCHAR(255) NOT NULL,
         PRIMARY KEY (customer_id),
-        UNIQUE KEY ux_customer_email (email),
+        UNIQUE KEY ux_customer_email (email, User_user_id),
         INDEX fk_Customer_User1_idx (User_user_id),
         CONSTRAINT fk_Customer_User1 FOREIGN KEY (User_user_id) REFERENCES User(user_id)
           ON DELETE RESTRICT
@@ -46,7 +46,7 @@ export const handler: Handler = async (event, ctx) => {
         image_url VARCHAR(255),
         size VARCHAR(45),
         PRIMARY KEY (ink_id),
-        UNIQUE KEY ux_publicink_product (product_name, manufacturer)
+        UNIQUE KEY ux_publicink_product (product_name, manufacturer, size)
       ) ENGINE=InnoDB;
 
       CREATE TABLE IF NOT EXISTS UserInk (
