@@ -1,11 +1,13 @@
 <ion-content [fullscreen]="true">
 
   <!--MODAALI-->
+
   @if (showReview) {
   <app-modalentry (cancel)="handleCancel()" [reviewEntry]="newEntry" (confirm)="handleConfirm($event)"></app-modalentry>
   }
-
   <div class="justify-center">
+
+
 
     <h2 class="text-neutral-50 text-center text-3xl my-2 font-pt-serif">Adding a new entry</h2>
 
