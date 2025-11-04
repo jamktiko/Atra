@@ -1,0 +1,12 @@
+ion-modal#example-modal {
+  --height: fit-content;
+  --width: 95%;
+}
+
+ion-modal#example-modal::part(backdrop) {
+  background: rgba(0, 0, 0, 2) !important;
+}
+
+ion-modal#example-modal::part(content) {
+  --background: transparent !important;
+}

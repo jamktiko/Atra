@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   CustomerCreation,
   EntryCreation,
+  ListEntries,
   PublicInk,
   UserInk,
 } from 'src/interface';
@@ -27,14 +28,14 @@ import { is } from 'cypress/types/bluebird';
 export class ApiService {
   private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV LOCAL
-  private readonly isProd = environment.production;
+  // private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD ELI DATA TIETOKANNASTA
-  // private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
+  private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
 
   private localUserInks: UserInk[] = [...mockUserInks]; //copy of mockUserInks
   private localCustomers: Customer[] = [...mockCustomers]; //copy of mockCustomers
-  private localEntries: Entry[] = [...mockEntries]; //copy of mockEntries
+  private localEntries: ListEntries[] = [...mockEntries]; //copy of mockEntries
 
   constructor(private http: HttpClient) {}
 
@@ -387,10 +388,10 @@ export class ApiService {
    * Backend-kutsu listEntries()
    */
 
-  getAllEntries(): Observable<Entry[]> {
+  getAllEntries(): Observable<ListEntries[]> {
     //Add userID parameter + to url
     if (this.isProd) {
-      return this.http.get<Entry[]>(`${this.apiUrl}/entry`);
+      return this.http.get<ListEntries[]>(`${this.apiUrl}/entry`);
     } else {
       return of(this.localEntries);
     }

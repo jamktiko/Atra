@@ -8,7 +8,7 @@ import {
   IonToolbar,
   IonModal,
 } from '@ionic/angular/standalone';
-import { Entry } from 'src/interface';
+import { Entry, ListEntries } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { DatePipe } from '@angular/common';
@@ -19,6 +19,8 @@ import {
   TOAST_POSITIONS,
   ToastPosition,
 } from 'ng-angular-popup';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { forkJoin, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-entries',
@@ -36,17 +38,19 @@ import {
     NgToastComponent,
     IonModal,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EntriesPage implements OnInit {
-  entries: Entry[] = [];
+  entries: ListEntries[] = [];
 
   searchItem: string = '';
 
   oneEntryModal: boolean = false;
 
-  chosenEntryId: number | undefined = undefined;
+  chosenEntryId!: number;
+  chosenEntry!: Entry | null;
 
-  groupedEntries: { date: string; entries: Entry[] }[] = [];
+  groupedEntries: { date: string; entries: ListEntries[] }[] = [];
 
   constructor(
     private apiService: ApiService,
@@ -62,10 +66,18 @@ export class EntriesPage implements OnInit {
     this.oneEntryModal = show;
   }
 
-  chooseEntry(show: boolean, entry: Entry) {
+  chooseEntry(show: boolean, entryId: any) {
     this.oneEntryModal = show;
-    this.chosenEntryId = entry.entry_id;
-    return this.apiService.getOneEntry(this.chosenEntryId);
+    this.chosenEntryId = entryId;
+    this.apiService.getOneEntry(this.chosenEntryId).subscribe({
+      next: (response: any) => {
+        this.chosenEntry = response.data;
+        console.log(this.chosenEntry);
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
   }
 
   loadEntries() {
@@ -112,8 +124,8 @@ export class EntriesPage implements OnInit {
    * Lopussa groupedEntries lajitellaan uusimmasta vanhimpaan .map ja .sort-metodeiden avulla
    *
    */
-  sortByDate(entries: Entry[]) {
-    let sorted: Record<string, Entry[]> = {};
+  sortByDate(entries: ListEntries[]) {
+    let sorted: Record<string, ListEntries[]> = {};
 
     for (let i = 0; i < entries.length; i++) {
       const dateObj = new Date(entries[i].entry_date);

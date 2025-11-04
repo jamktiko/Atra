@@ -74,7 +74,7 @@ export class AddnewinkPage implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        if (event.urlAfterRedirects === '/tabs/customers') {
+        if (event.urlAfterRedirects === '/tabs/inks') {
           this.getInks();
         }
       });
@@ -190,8 +190,8 @@ export class AddnewinkPage implements OnInit {
     this.apiService.addNewUserInk(inkData).subscribe({
       next: (data) => {
         console.log('Added successfully: ', data);
-        this.toast.success('Ink added succesfully!');
         this.router.navigate(['/tabs/inks']);
+        this.toast.success('Ink added succesfully!');
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
