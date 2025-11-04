@@ -1,7 +1,11 @@
 // Cypress tests to test login & logout, and CRUD-operations
 // each test has isolated log in-event for test isolation
 
-// TODO: implement logging in and out
+//for e2e tests to run, the following conditions need to be met (automatically implemented in prod-workflow)
+//1. ionic serve is on
+//2. environment.isProd = true
+//3. cloud infrastructure is on
+//4. environment.apiUrl is correct
 
 import { environment } from "src/environments/environment.ts";
 let url = "http://localhost:8100";
@@ -9,6 +13,8 @@ const sleeptime = 2000;
 
 //only run tests in prod
 if (environment.apiUrl !== "") {
+  // TODO: implement logging in and out
+
   //beforeEach for log in, afterEach for log out
   /*   beforeEach(() => {
     cy.session("user", () => {
@@ -23,6 +29,8 @@ if (environment.apiUrl !== "") {
     cy.url().should("include", "/login");
   }); */
 
+  //these work!
+  //TODO: test invalid inputs for add customer form
   describe("Test CRUD-operations for customers", () => {
     it("Can move to customers-page", () => {
       cy.visit(`${url}/tabs/firstpage`);
@@ -31,8 +39,6 @@ if (environment.apiUrl !== "") {
       }).click();
       cy.url().should("include", "/tabs/customers");
     });
-
-    //TODO: test invalid inputs for add customer form
 
     it("Can update a customer", () => {
       //create the customer for tests
@@ -97,7 +103,7 @@ if (environment.apiUrl !== "") {
       //delete it
       //check it no longer exists
     });
-  });
+  }); */
 
   describe("Test CRUD-operations for inks", () => {
     it("Can move to inks-page", () => {
@@ -109,7 +115,8 @@ if (environment.apiUrl !== "") {
     });
 
     it("Can add an ink", () => {
-      cy.get("button").contains("Add new").click();
+      cy.visit(`${url}/tabs/inks`);
+      //cy.get("button").contains("Add new").click();
       //get one ink, any basically
       //add batch number
       //continue
@@ -128,7 +135,7 @@ if (environment.apiUrl !== "") {
       //delete it
       //check it no longer exists
     });
-  }); */
+  });
 }
 
 //end of e2e-tests
