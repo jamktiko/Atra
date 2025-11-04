@@ -118,16 +118,12 @@ export async function getEntry(entry_id: string, userId: string) {
       entry_id: entry.entry_id,
       entry_date: entry.entry_date,
       comments: entry.comments ?? null,
-      customer: entry.customer_id
-        ? {
-            customer_id: entry.customer_id,
-            first_name: entry.first_name,
-            last_name: entry.last_name,
-          }
-        : null,
+      customer_id: entry.customer_id ?? null,
+      first_name: entry.first_name ?? null,
+      last_name: entry.last_name ?? null,
       inks: inks ?? [],
     };
-    return successResponse({ data: result });
+    return successResponse(result);
   } catch (error) {
     console.error('getEntry error:', error);
     return clientErrorResponse('Could not fetch entry');
