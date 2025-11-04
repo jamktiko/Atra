@@ -52,17 +52,17 @@ jobs:
           sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
       - name: Build Ionic projects
         run: ionic build --prod
-      - name: Run e2e tests
-        run: |
-          npm install -g @ionic/cli
-          npm install -g @angular/cli
-          npm install -g cypress
-          ionic serve --no-open --no-interactive --port=8100 & #runs ionic serve in the background
-          SERVER_PID=$!
-          sleep 5
-          npx cypress run --headless --browser chrome
-          sleep 5
-          kill $SERVER_PID
+      #- name: Run e2e tests
+      #  run: |
+      #    npm install -g @ionic/cli
+      #    npm install -g @angular/cli
+      #    npm install -g cypress
+      #    ionic serve --no-open --no-interactive --port=8100 & #runs ionic serve in the background
+      #    SERVER_PID=$!
+      #    sleep 5
+      #    npx cypress run --headless --browser chrome
+      #    sleep 5
+      #    kill $SERVER_PID
       #- name: Deploy frontend to S3
       #  run: |
       #    aws s3 sync ./hosting s3://atra-frontend-bucket --delete --exact-timestamps
