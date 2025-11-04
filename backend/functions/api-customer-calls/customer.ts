@@ -17,7 +17,7 @@ export async function listCustomers(userId: string) {
 export async function getCustomer(customer_id: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT c.customer_id, c.first_name, c.last_name, c.email
+    `SELECT c.customer_id, c.first_name, c.last_name, c.email, c.notes
     FROM Customer c
     WHERE c.customer_id = ?`,
     [customer_id]
