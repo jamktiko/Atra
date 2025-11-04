@@ -9,24 +9,15 @@
 
 import { environment } from "src/environments/environment.ts";
 let url = "http://localhost:8100";
-const sleeptime = 2000;
+const sleeptime = 2500;
 
 //only run tests in prod
 if (environment.apiUrl !== "") {
-  // TODO: implement logging in and out
-
-  //beforeEach for log in, afterEach for log out
   /*   beforeEach(() => {
-    cy.session("user", () => {
-      //cy.visit(`/login`);
-      //cy.get("[data-cy=email]").type(Cypress.env("USER_EMAIL"));
-      //cy.get("[data-cy=password]").type(Cypress.env("USER_PASSWORD"));
-      //cy.get("[data-cy=submit]").click();
-    });
-  }); */
-  /*   afterEach(() => {
-    cy.visit(`jotain`);
-    cy.url().should("include", "/login");
+    //TODO: LOG IN
+  });
+  afterEach(() => {
+    //TODO: LOG OUT
   }); */
 
   //these work!
@@ -40,8 +31,8 @@ if (environment.apiUrl !== "") {
       cy.url().should("include", "/tabs/customers");
     });
 
-    it("Can update a customer", () => {
-      //create the customer for tests
+    it("Can add and update a customer", () => {
+      //add customer
       cy.visit(`${url}/tabs/customers`);
       cy.contains("button", "Add new").click();
       cy.get("#firstname").type("Test");
@@ -53,7 +44,9 @@ if (environment.apiUrl !== "") {
       cy.contains("button", "Continue").click();
       cy.wait(sleeptime);
       cy.contains("button", "Confirm").click();
+      cy.wait(sleeptime);
 
+      //update customer
       cy.visit(`${url}/tabs/customers`);
       cy.wait(sleeptime);
       cy.get("h3").contains("Tester, Test").click();
@@ -114,26 +107,61 @@ if (environment.apiUrl !== "") {
       cy.url().should("include", "/tabs/inks");
     });
 
-    it("Can add an ink", () => {
+    it("Can add and update an ink", () => {
+      //add ink
       cy.visit(`${url}/tabs/inks`);
-      //cy.get("button").contains("Add new").click();
-      //get one ink, any basically
-      //add batch number
-      //continue
-    });
+      cy.get("button").contains("Add new").click();
+      cy.wait(sleeptime);
+      cy.get('input[type="button"][value="Select"]')
+        .should("be.visible")
+        .first()
+        .click();
+      cy.wait(sleeptime);
+      cy.get("button").contains("Continue").click();
+      cy.get("button").contains("Yes, continue").should("be.disabled");
+      cy.get('input[placeholder="Insert batchnumber"]').type("test");
+      cy.get("button").contains("Yes, continue").click();
+      cy.wait(sleeptime);
 
-    it("Can update an ink", () => {
+      //update ink
       cy.visit(`${url}/tabs/inks`);
-      //get any added ink
-      //empty batch number and put write in another
-      //continue
+      cy.wait(sleeptime);
+      cy.get("p").contains("Batch: test").first().click();
+      cy.wait(sleeptime);
+      cy.get("button")
+        .contains("Update info")
+        .should("be.visible")
+        .first()
+        .click();
+      //TODO: test invalid inputs on form
+      cy.contains("label", "Opened:")
+        .next('input[type="date"]')
+        .type(new Date().toISOString().split("T")[0]);
+      const oneYearLater = new Date();
+      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+      const formattedDate = oneYearLater.toISOString().split("T")[0];
+      cy.contains("label", "Expires at:")
+        .next('input[type="date"]')
+        .type(formattedDate);
+      cy.get("#batchnumber").clear().type("DELETE-ME");
+      cy.wait(sleeptime);
+      cy.get("button").contains("Confirm").should("be.visible").first().click();
+      cy.wait(sleeptime);
     });
 
     it("Can delete an ink", () => {
       cy.visit(`${url}/tabs/inks`);
-      //choose the ink with the new batch number
-      //delete it
-      //check it no longer exists
+      cy.wait(sleeptime);
+      cy.get("p").contains("Batch: DELETE-ME").first().click();
+      cy.wait(sleeptime);
+      cy.get("button")
+        .contains("Delete ink")
+        .should("be.visible")
+        .first()
+        .click();
+      cy.wait(sleeptime);
+      cy.contains("p", "Batchnumber: DELETE-ME").should("not.exist");
+      cy.wait(sleeptime);
     });
   });
 }
