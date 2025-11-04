@@ -104,12 +104,10 @@ export const handler: Handler = async (event, ctx) => {
           ON DELETE CASCADE
       ) ENGINE=InnoDB;
 
-      -- Idempotent seed: user
       INSERT INTO User (user_id, email, first_name, last_name)
       VALUES ('demo-user-123', 'testi.testaaja@testaajat.com', 'Testi', 'Testaaja')
       ON DUPLICATE KEY UPDATE user_id = user_id;
 
-      -- Idempotent seed: public inks (many rows)
       INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size)
       VALUES
       ('Panthera Black', 'Panthera Ink', 'Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
@@ -134,7 +132,6 @@ export const handler: Handler = async (event, ctx) => {
       ('Quantum Ink Rose Pink', 'Quantum Ink', 'Pink', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml')
       ON DUPLICATE KEY UPDATE product_name = VALUES(product_name), manufacturer = VALUES(manufacturer);
 
-      -- Idempotent seed: customers (ensure unique emails so we can reference by email)
       INSERT INTO Customer (email, first_name, last_name, phone, User_user_id)
       VALUES
         ('cust1@example.com', 'Aku', 'Asiakas', '0442005678', 'demo-user-123'),
@@ -142,7 +139,6 @@ export const handler: Handler = async (event, ctx) => {
         ('cust3@example.com', 'Liisa', 'Laine', '0443000000', 'demo-user-123')
       ON DUPLICATE KEY UPDATE email = email;
 
-      -- Idempotent seed: user inks (resolve PublicInk by product_name/manufacturer)
       INSERT INTO UserInk (batch_number, opened_at, expires_at, favorite, PublicInk_ink_id, User_user_id)
       VALUES
         ('123456', '2025-01-01', '2026-01-01', 0, (SELECT ink_id FROM PublicInk WHERE product_name = 'Panthera Black' AND manufacturer = 'Panthera Ink' LIMIT 1), 'demo-user-123'),
@@ -152,7 +148,6 @@ export const handler: Handler = async (event, ctx) => {
         ('HJKL011', '2025-01-01', '2026-01-01', 1, (SELECT ink_id FROM PublicInk WHERE product_name = 'World Famous London Fog' AND manufacturer = 'World Famous Ink' LIMIT 1), 'demo-user-123')
       ON DUPLICATE KEY UPDATE batch_number = VALUES(batch_number);
 
-      -- Idempotent seed: entries using customer lookup by email to satisfy FK
       INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id)
       VALUES (DATE('2025-06-06'), 'eka', 'demo-user-123', (SELECT customer_id FROM Customer WHERE email = 'cust1@example.com' LIMIT 1))
       ON DUPLICATE KEY UPDATE entry_date = entry_date;
@@ -173,7 +168,7 @@ export const handler: Handler = async (event, ctx) => {
       VALUES (DATE('2025-12-12'), '', 'demo-user-123', (SELECT customer_id FROM Customer WHERE email = 'cust2@example.com' LIMIT 1))
       ON DUPLICATE KEY UPDATE entry_date = entry_date;
 
-      -- Bulk insert associations with snapshots using UNION ALL pattern (idempotent via unique index)
+      -- Bulk insert associations with snapshots using UNION ALL
       INSERT INTO UserInk_has_Entry (
         UserInk_user_ink_id, Entry_entry_id,
         snapshot_product_name, snapshot_manufacturer, snapshot_color,
