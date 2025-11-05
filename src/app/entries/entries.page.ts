@@ -44,6 +44,8 @@ import { filter } from 'rxjs';
 export class EntriesPage implements OnInit {
   entries: ListEntries[] = [];
 
+  showUpdateModal: boolean = false;
+
   searchItem: string = '';
 
   oneEntryModal: boolean = false;
@@ -63,6 +65,10 @@ export class EntriesPage implements OnInit {
 
   ionViewDidEnter() {
     this.loadEntries();
+  }
+
+  toggleUpdateModal(show: boolean) {
+    this.showUpdateModal = show;
   }
 
   setClosed(show: boolean) {
@@ -120,7 +126,6 @@ export class EntriesPage implements OnInit {
       next: (data) => {
         this.chosenEntry = data;
         this.toast.success('Entry deleted successfully');
-        console.log('Deleted entry: ', this.chosenEntry);
         this.setClosed(false);
         this.loadEntries();
       },

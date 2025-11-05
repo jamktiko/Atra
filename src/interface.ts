@@ -58,6 +58,14 @@ interface ListEntries {
   last_name: string;
 }
 
+interface EntryUpdate {
+  entry_id: number;
+  entry_date: string;
+  comments: string;
+  customer_id: number;
+  replace_user_ink_id: number[];
+}
+
 interface Customer {
   customer_id: number;
   email: string;
@@ -103,4 +111,5 @@ export {
   EntryCreation,
   EntryInk,
   ListEntries,
+  EntryUpdate,
 };
