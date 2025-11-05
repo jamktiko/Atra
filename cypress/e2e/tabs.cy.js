@@ -25,8 +25,6 @@ if (environment.apiUrl !== "") {
     //TODO: LOG OUT
   }); */
 
-  //these work!
-  //TODO: test invalid inputs for add customer form
   describe("Test CRUD-operations for customers", () => {
     it("Can move to customers-page", () => {
       cy.visit(`${url}/tabs/firstpage`);
@@ -40,6 +38,7 @@ if (environment.apiUrl !== "") {
 
     it("Can add and update a customer", () => {
       //add customer
+      //TODO: test invalid inputs for add customer form
       cy.visit(`${url}/tabs/customers`);
       cy.contains("button", "Add new").should("be.visible").click();
       cy.get("#firstname").should("be.visible").type("TEST");
@@ -82,7 +81,8 @@ if (environment.apiUrl !== "") {
       cy.url().should("include", "/tabs/entries");
     });
 
-    it("Can add an entry", () => {
+    it("Can add and update an entry", () => {
+      //add entry
       cy.visit(`${url}/tabs/entries`);
       cy.get("button").contains("Add new").should("be.visible").click();
       cy.wait(sleeptime);
@@ -99,34 +99,34 @@ if (environment.apiUrl !== "") {
       cy.get("textarea").should("be.visible").type("DELETE ME");
       cy.get("button").contains("Continue").should("be.visible").click();
       cy.get("button").contains("Confirm").should("be.visible").click();
-    });
 
-    it("Can update an entry", () => {
+      //update entry
       cy.visit(`${url}/tabs/entries`);
-      //get created entry
-      //update any field
-      //cy.get("button").contains("Update").click();
+      //TODO: implement
     });
 
     it("Can delete an entry", () => {
       cy.visit(`${url}/tabs/entries`);
-
-      //troubleshooting
-      /*       cy.get("h3").each(($el) => {
-        cy.log($el.text());
-      });
-
-      //troubleshooting ends
-
-      cy.contains("h3", "Jan 1, 9999").should("exist"); */
-      /*         .parent()
-        .within(() => {
-          cy.contains("h2", "02:00").should("exist").click({ force: true }); //12:00 AM -> into GMT+2 = 02:00
-        }); */
       cy.wait(sleeptime);
-      cy.get("button").contains("Delete").click();
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true })
+        .should("exist")
+        .parent()
+        .within(() => {
+          cy.contains("h2", "02:00", { includeShadowDom: true })
+            .should("exist")
+            .click({ force: true });
+        });
+      cy.wait(sleeptime);
+      //push delete and check it did it
+      cy.get("button")
+        .contains("Delete")
+        .should("exist")
+        .click({ force: true });
       cy.visit(`${url}/tabs/entries`);
-      cy.contains("h3", "Jan 1, 9999").should("not.exist");
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true }).should(
+        "not.exist"
+      );
+      cy.wait(sleeptime);
     });
   });
 
