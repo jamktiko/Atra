@@ -160,3 +160,18 @@ ion-tab-bar {
     font-size: 54px;
   }
 }
+
+ion-modal.transparent-modal::part(backdrop) {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+ion-modal.transparent-modal::part(content) {
+  background: transparent !important;
+  --background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* On small screens Ionic wraps the modal content in .ion-page */
+ion-modal.transparent-modal .ion-page {
+  background: transparent !important;
+}

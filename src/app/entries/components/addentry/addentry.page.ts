@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { IonContent, IonBadge, IonModal } from '@ionic/angular/standalone';
 import { IonSearchbar } from '@ionic/angular/standalone';
@@ -48,6 +48,8 @@ import { ModalentryPage } from '../modalentry/modalentry.page';
 export class AddentryPage implements OnInit {
   comments: string = '';
   searchInk: string = '';
+
+  entries: any = [];
 
   /*Annetaan newEntrylle musteiden id-numerot lomakkeeseen
    */
@@ -223,6 +225,9 @@ export class AddentryPage implements OnInit {
 
   handleConfirm(newEntry: EntryCreation) {
     this.addNewEntry(newEntry);
+    this.router.navigate(['/tabs/entries']);
+    this.toast.success('Entry added successfully');
+    this.showModal(false);
   }
 
   addNewEntry(newEntry: EntryCreation) {
@@ -243,8 +248,6 @@ export class AddentryPage implements OnInit {
           console.error('Something went wrong: ', err);
         },
       });
-    this.toast.success('Entry added successfully');
-    this.router.navigate(['/tabs/entries']);
   }
 
   back() {
