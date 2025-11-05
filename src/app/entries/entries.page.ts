@@ -59,11 +59,9 @@ export class EntriesPage implements OnInit {
     private toast: NgToastService
   ) {}
 
-  ngOnInit() {
-    this.loadEntries();
-  }
+  ngOnInit() {}
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.loadEntries();
   }
 
@@ -77,7 +75,6 @@ export class EntriesPage implements OnInit {
     this.apiService.getOneEntry(this.chosenEntryId).subscribe({
       next: (data) => {
         this.chosenEntry = data;
-        console.log('Chosen entry: ', this.chosenEntry);
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
@@ -90,7 +87,6 @@ export class EntriesPage implements OnInit {
       next: (data) => {
         this.entries = data;
         this.sortByDate(this.entries);
-        this.entries = this.entries;
       },
       error: (err) => {
         console.error('No entries found: ', err);

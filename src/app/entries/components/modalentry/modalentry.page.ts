@@ -37,6 +37,10 @@ export class ModalentryPage implements OnInit {
     this.loopThroughInks();
   }
 
+  ionViewWillEnter() {
+    this.loopThroughInks();
+  }
+
   /*
    * Funktio musteiden läpikäymiseen: forkJoin ottaa taulukon Observableja > hakee ja tallentaa reviewInksin arvot
    */

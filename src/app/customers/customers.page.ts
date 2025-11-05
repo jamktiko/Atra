@@ -99,7 +99,7 @@ export class CustomersPage implements OnInit {
 
   deleteCustomer() {
     const customerId = this.chosenCustomer.customer_id;
-    console.log(customerId);
+
     this.apiService.deleteCustomer(customerId).subscribe({
       next: () => {
         console.log('Customer deleted successfully!');

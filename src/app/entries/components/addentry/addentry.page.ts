@@ -108,9 +108,11 @@ export class AddentryPage implements OnInit {
     private toast: NgToastService
   ) {}
 
-  ngOnInit() {
-    this.getUserInks();
+  ngOnInit() {}
+
+  ionViewWillEnter() {
     this.getCustomers();
+    this.getUserInks();
   }
 
   getUserInks() {
