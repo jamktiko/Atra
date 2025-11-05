@@ -10,6 +10,11 @@
 import { environment } from "src/environments/environment.ts";
 let url = "http://localhost:8100";
 const sleeptime = 2500;
+const future = new Date("9999-01-01").toISOString().slice(0, 16);
+const today = new Date().toISOString().split("T")[0];
+const oneYearLater = new Date();
+oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
+const formattedDate = oneYearLater.toISOString().split("T")[0];
 
 //only run tests in prod
 if (environment.apiUrl !== "") {
@@ -27,46 +32,48 @@ if (environment.apiUrl !== "") {
       cy.visit(`${url}/tabs/firstpage`);
       cy.get('ion-tab-button[tab="customers"]', {
         includeShadowDom: true,
-      }).click();
+      })
+        .should("be.visible")
+        .click();
       cy.url().should("include", "/tabs/customers");
     });
 
     it("Can add and update a customer", () => {
       //add customer
       cy.visit(`${url}/tabs/customers`);
-      cy.contains("button", "Add new").click();
-      cy.get("#firstname").type("Test");
-      cy.get("#lastname").type("Tester");
-      cy.get("#email").type("test@mail.com");
-      cy.get("#tel").type("123456789");
-      cy.get("#notes").type("Notes here");
+      cy.contains("button", "Add new").should("be.visible").click();
+      cy.get("#firstname").should("be.visible").type("TEST");
+      cy.get("#lastname").should("be.visible").type("DELETE");
+      cy.get("#email").should("be.visible").type("test@mail.com");
+      cy.get("#tel").should("be.visible").type("123456789");
+      cy.get("#notes").should("be.visible").type("Notes here");
       cy.wait(sleeptime);
-      cy.contains("button", "Continue").click();
+      cy.contains("button", "Continue").should("be.visible").click();
       cy.wait(sleeptime);
-      cy.contains("button", "Confirm").click();
+      cy.contains("button", "Confirm").should("be.visible").click();
       cy.wait(sleeptime);
 
       //update customer
       cy.visit(`${url}/tabs/customers`);
       cy.wait(sleeptime);
-      cy.get("h3").contains("Tester, Test").click();
-      cy.get("#first-name").clear().type("Åäö");
-      cy.get("button").contains("Update").click();
+      cy.get("h3").contains("DELETE, TEST").should("be.visible").click();
+      cy.get("#first-name").should("be.visible").clear().type("ME");
+      cy.get("button").contains("Update").should("be.visible").click();
       cy.wait(sleeptime);
     });
 
     it("Can delete a customer", () => {
       cy.visit(`${url}/tabs/customers`);
       cy.wait(sleeptime);
-      cy.get("h3").contains("Tester, Åäö").click();
-      cy.get("button").contains("Delete").click();
+      cy.get("h3").contains("DELETE, ME").should("be.visible").click();
+      cy.get("button").contains("Delete").should("be.visible").click();
       cy.visit(`${url}/tabs/customers`);
-      cy.contains("h3", "Tester, Åäö").should("not.exist");
+      cy.contains("h3", "DELETE, ME").should("not.exist");
       cy.wait(sleeptime);
     });
   });
 
-  /*   describe("Test CRUD-operations for entries", () => {
+  describe("Test CRUD-operations for entries", () => {
     it("Can move to entries-page", () => {
       cy.visit(`${url}/tabs/firstpage`);
       cy.get('ion-tab-button[tab="entries"]', {
@@ -74,17 +81,35 @@ if (environment.apiUrl !== "") {
       }).click();
       cy.url().should("include", "/tabs/entries");
     });
+
     it("Can add an entry", () => {
-      cy.get("button").contains("Add new").click();
-      //add customer
-      //add date
-      //add one ink, any ink
-      cy.get("#notes").type("Very good notes here");
-      cy.get("button").contains("Continue").click();
+      cy.visit(`${url}/tabs/entries`);
+      cy.get("button").contains("Add new").should("be.visible").click();
+      cy.wait(sleeptime);
+      cy.get('div.ng-input input[role="combobox"]')
+        .should("be.visible")
+        .click();
+      cy.get(".ng-option").first().should("be.visible").click();
+      cy.get("#date").should("be.visible").type(future);
+      cy.wait(sleeptime);
+      cy.get('input[type="button"][value="Select"]')
+        .first()
+        .should("be.visible")
+        .click();
+      cy.get("button").contains("Continue").should("be.visible").click();
+      cy.get("button").contains("Confirm").should("be.visible").click();
     });
 
     it("Can update an entry", () => {
       cy.visit(`${url}/tabs/entries`);
+
+      //kesken
+      /* cy.contains("h3", "Jan 1, 9999")
+        .should("exist")
+        .parent()
+        .within(() => {
+          cy.contains("h2", "00:00").should("exist").click();
+        }); */
       //get created entry
       //update any field
       //cy.get("button").contains("Update").click();
@@ -96,7 +121,7 @@ if (environment.apiUrl !== "") {
       //delete it
       //check it no longer exists
     });
-  }); */
+  });
 
   describe("Test CRUD-operations for inks", () => {
     it("Can move to inks-page", () => {
@@ -110,23 +135,25 @@ if (environment.apiUrl !== "") {
     it("Can add and update an ink", () => {
       //add ink
       cy.visit(`${url}/tabs/inks`);
-      cy.get("button").contains("Add new").click();
+      cy.get("button").contains("Add new").should("be.visible").click();
       cy.wait(sleeptime);
       cy.get('input[type="button"][value="Select"]')
         .should("be.visible")
         .first()
         .click();
       cy.wait(sleeptime);
-      cy.get("button").contains("Continue").click();
+      cy.get("button").contains("Continue").should("be.visible").click();
       cy.get("button").contains("Yes, continue").should("be.disabled");
-      cy.get('input[placeholder="Insert batchnumber"]').type("test");
-      cy.get("button").contains("Yes, continue").click();
+      cy.get('input[placeholder="Insert batchnumber"]')
+        .should("be.visible")
+        .type("test");
+      cy.get("button").contains("Yes, continue").should("be.visible").click();
       cy.wait(sleeptime);
 
       //update ink
       cy.visit(`${url}/tabs/inks`);
       cy.wait(sleeptime);
-      cy.get("p").contains("Batch: test").first().click();
+      cy.get("p").contains("Batch: test").should("be.visible").first().click();
       cy.wait(sleeptime);
       cy.get("button")
         .contains("Update info")
@@ -136,14 +163,13 @@ if (environment.apiUrl !== "") {
       //TODO: test invalid inputs on form
       cy.contains("label", "Opened:")
         .next('input[type="date"]')
-        .type(new Date().toISOString().split("T")[0]);
-      const oneYearLater = new Date();
-      oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
-      const formattedDate = oneYearLater.toISOString().split("T")[0];
+        .should("be.visible")
+        .type(today);
       cy.contains("label", "Expires at:")
         .next('input[type="date"]')
+        .should("be.visible")
         .type(formattedDate);
-      cy.get("#batchnumber").clear().type("DELETE-ME");
+      cy.get("#batchnumber").should("be.visible").clear().type("DELETE-ME");
       cy.wait(sleeptime);
       cy.get("button").contains("Confirm").should("be.visible").first().click();
       cy.wait(sleeptime);
@@ -152,7 +178,11 @@ if (environment.apiUrl !== "") {
     it("Can delete an ink", () => {
       cy.visit(`${url}/tabs/inks`);
       cy.wait(sleeptime);
-      cy.get("p").contains("Batch: DELETE-ME").first().click();
+      cy.get("p")
+        .contains("Batch: DELETE-ME")
+        .should("be.visible")
+        .first()
+        .click();
       cy.wait(sleeptime);
       cy.get("button")
         .contains("Delete ink")
@@ -161,7 +191,6 @@ if (environment.apiUrl !== "") {
         .click();
       cy.wait(sleeptime);
       cy.contains("p", "Batchnumber: DELETE-ME").should("not.exist");
-      cy.wait(sleeptime);
     });
   });
 }
