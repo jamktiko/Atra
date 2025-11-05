@@ -96,20 +96,13 @@ if (environment.apiUrl !== "") {
         .first()
         .should("be.visible")
         .click();
+      cy.get("textarea").should("be.visible").type("DELETE ME");
       cy.get("button").contains("Continue").should("be.visible").click();
       cy.get("button").contains("Confirm").should("be.visible").click();
     });
 
     it("Can update an entry", () => {
       cy.visit(`${url}/tabs/entries`);
-
-      //kesken
-      /* cy.contains("h3", "Jan 1, 9999")
-        .should("exist")
-        .parent()
-        .within(() => {
-          cy.contains("h2", "00:00").should("exist").click();
-        }); */
       //get created entry
       //update any field
       //cy.get("button").contains("Update").click();
@@ -117,9 +110,23 @@ if (environment.apiUrl !== "") {
 
     it("Can delete an entry", () => {
       cy.visit(`${url}/tabs/entries`);
-      //get updated entry
-      //delete it
-      //check it no longer exists
+
+      //troubleshooting
+      /*       cy.get("h3").each(($el) => {
+        cy.log($el.text());
+      });
+
+      //troubleshooting ends
+
+      cy.contains("h3", "Jan 1, 9999").should("exist"); */
+      /*         .parent()
+        .within(() => {
+          cy.contains("h2", "02:00").should("exist").click({ force: true }); //12:00 AM -> into GMT+2 = 02:00
+        }); */
+      cy.wait(sleeptime);
+      cy.get("button").contains("Delete").click();
+      cy.visit(`${url}/tabs/entries`);
+      cy.contains("h3", "Jan 1, 9999").should("not.exist");
     });
   });
 
@@ -152,6 +159,7 @@ if (environment.apiUrl !== "") {
 
       //update ink
       cy.visit(`${url}/tabs/inks`);
+      cy.wait(sleeptime);
       cy.wait(sleeptime);
       cy.get("p").contains("Batch: test").should("be.visible").first().click();
       cy.wait(sleeptime);
