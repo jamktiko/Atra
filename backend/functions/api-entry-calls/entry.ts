@@ -234,43 +234,38 @@ export async function updateEntry(
 export async function updateEntry(
   entry_id: number,
   userId: string,
-  fields: {
-    entry_date?: string;
-    comments?: string;
-    customer_id?: number | null;
-    replace_user_ink_id?: number[]; // If provided, replaces existing associations
-  }
+  entry_date?: string,
+  comments?: string,
+  customer_id?: number | null,
+  replace_user_ink_id?: number[] // If provided, replaces existing associations
 ) {
   const pool = await getPool();
   const conn = await pool.getConnection();
 
   // Validation
-  if (fields.entry_date && isNaN(Date.parse(fields.entry_date))) {
+  if (entry_date && isNaN(Date.parse(entry_date))) {
     return clientErrorResponse('Invalid entry_date');
   }
-  if (
-    fields.replace_user_ink_id &&
-    !Array.isArray(fields.replace_user_ink_id)
-  ) {
+  if (replace_user_ink_id && !Array.isArray(replace_user_ink_id)) {
     return clientErrorResponse('replace_user_ink_id must be an array');
   }
 
   const updates = [];
   const values: any[] = [];
 
-  if (fields.entry_date !== undefined) {
+  if (entry_date !== undefined) {
     updates.push('entry_date = ?');
-    values.push(fields.entry_date);
+    values.push(entry_date);
   }
-  if (fields.comments !== undefined) {
+  if (comments !== undefined) {
     updates.push('comments = ?');
-    values.push(fields.comments);
+    values.push(comments);
   }
-  if (fields.customer_id !== undefined) {
+  if (customer_id !== undefined) {
     updates.push('Customer_customer_id = ?');
-    values.push(fields.customer_id);
+    values.push(customer_id);
   }
-  if (updates.length === 0 && !fields.replace_user_ink_id) {
+  if (updates.length === 0 && !replace_user_ink_id) {
     conn.release();
     return clientErrorResponse('No fields to update');
   }
@@ -294,17 +289,14 @@ export async function updateEntry(
       }
     }
 
-    if (fields.replace_user_ink_id) {
+    if (replace_user_ink_id) {
       // First remove all current associations
       await conn.query(
         `DELETE FROM UserInk_has_Entry WHERE Entry_entry_id = ?`,
         [entry_id]
       );
-      if (fields.replace_user_ink_id.length > 0) {
-        const inkValues = fields.replace_user_ink_id.map((id) => [
-          id,
-          entry_id,
-        ]);
+      if (replace_user_ink_id.length > 0) {
+        const inkValues = replace_user_ink_id.map((id) => [id, entry_id]);
         // Bulk insert new associations
         await conn.query(
           `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id)

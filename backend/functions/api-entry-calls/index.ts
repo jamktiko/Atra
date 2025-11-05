@@ -43,8 +43,17 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
     if (!pathParameters?.id) return clientErrorResponse('Missing id');
     if (!event.body) return clientErrorResponse('Missing request body');
 
-    const fields = JSON.parse(event.body);
-    return entry.updateEntry(Number(pathParameters.id), userId, fields);
+    const { entry_date, comments, customer_id, replace_user_ink_id } =
+      JSON.parse(event.body);
+
+    return entry.updateEntry(
+      Number(pathParameters.id),
+      userId,
+      entry_date,
+      comments,
+      customer_id,
+      replace_user_ink_id
+    );
   }
 
   if (httpMethod === 'DELETE' && routeKey === '/entry/{id}') {
