@@ -5,6 +5,9 @@ import {
 } from '../shared/utils';
 import { getPool } from '../shared/db';
 
+// Inserts association between UserInk and Entry, populating snapshot fields
+// from current UserInk and PublicInk data
+// Used when adding a new Entry!
 export async function insertAssociation(
   conn: any,
   user_ink_id: number,
@@ -26,6 +29,7 @@ export async function insertAssociation(
   );
 }
 
+// List all entries for a user
 export async function listEntries(userId: string) {
   const pool = await getPool();
   try {
@@ -43,43 +47,6 @@ export async function listEntries(userId: string) {
     return clientErrorResponse('Could not fetch entries');
   }
 }
-
-/*
-export async function getEntry(entry_id: string, userId: string) {
-  const pool = await getPool();
-  try {
-    const [rows]: any = await pool.query(
-      `SELECT e.entry_id, e.entry_date, e.comments, c.customer_id, c.first_name, c.last_name, 
-      FROM Entry e
-      LEFT JOIN Customer c ON e.Customer_customer_id = c.customer_id
-      WHERE e.entry_id = ? AND e.User_user_id = ?`,
-      [entry_id, userId]
-    );
-    if (!rows.length) return notFoundResponse('Entry not found');
-    const entry = rows[0];
-
-    const [inks]: any = await pool.query(
-      `SELECT 
-         uie.UserInk_user_ink_id AS user_ink_id,
-         ui.batch_number,
-         pi.product_name,
-         pi.manufacturer,
-         pi.color
-       FROM UserInk_has_Entry uie
-       LEFT JOIN UserInk ui ON uie.UserInk_user_ink_id = ui.user_ink_id
-       LEFT JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
-       WHERE uie.Entry_entry_id = ?`,
-      [entry_id]
-    );
-
-    entry.inks = inks;
-    return successResponse(entry);
-  } catch (err) {
-    console.error('getEntry error:', err);
-    return clientErrorResponse('Could not fetch entry');
-  }
-}
-*/
 
 // Get entry with inks (prefer snapshots, fallback to current values)
 export async function getEntry(entry_id: string, userId: string) {
@@ -181,55 +148,6 @@ export async function addEntry(
   }
 }
 
-/*
-export async function updateEntry(
-  entry_id: number,
-  userId: string,
-  fields: {
-    entry_date?: string;
-    comments?: string;
-    customer_id?: number | null;
-  }
-) {
-  const pool = await getPool();
-  const updates = [];
-  const values: any[] = [];
-
-  if (fields.entry_date !== undefined) {
-    updates.push('entry_date = ?');
-    values.push(fields.entry_date);
-  }
-  if (fields.comments !== undefined) {
-    updates.push('comments = ?');
-    values.push(fields.comments);
-  }
-  if (fields.customer_id !== undefined) {
-    updates.push('Customer_customer_id = ?');
-    values.push(fields.customer_id);
-  }
-
-  if (updates.length === 0) return clientErrorResponse('No fields to update');
-
-  values.push(entry_id, userId);
-
-  try {
-    const [result]: any = await pool.query(
-      `UPDATE Entry SET ${updates.join(
-        ', '
-      )} WHERE entry_id = ? AND User_user_id = ?`,
-      values
-    );
-
-    if (result.affectedRows === 0) return notFoundResponse('Entry not found');
-
-    return successResponse({ message: 'Entry updated' });
-  } catch (err) {
-    console.error('updateEntry error:', err);
-    return clientErrorResponse('Could not update entry');
-  }
-}
-  */
-
 // Update entry fields and optionally replace attached inks
 export async function updateEntry(
   entry_id: number,
@@ -237,7 +155,8 @@ export async function updateEntry(
   entry_date?: string,
   comments?: string,
   customer_id?: number | null,
-  replace_user_ink_id?: number[] // If provided, replaces existing associations
+  add_user_ink_id?: number[],
+  remove_user_ink_id?: number[]
 ) {
   const pool = await getPool();
   const conn = await pool.getConnection();
@@ -246,8 +165,11 @@ export async function updateEntry(
   if (entry_date && isNaN(Date.parse(entry_date))) {
     return clientErrorResponse('Invalid entry_date');
   }
-  if (replace_user_ink_id && !Array.isArray(replace_user_ink_id)) {
-    return clientErrorResponse('replace_user_ink_id must be an array');
+  if (add_user_ink_id && !Array.isArray(add_user_ink_id)) {
+    return clientErrorResponse('add_user_ink_id must be an array');
+  }
+  if (remove_user_ink_id && !Array.isArray(remove_user_ink_id)) {
+    return clientErrorResponse('remove_user_ink_id must be an array');
   }
 
   const updates = [];
@@ -265,17 +187,22 @@ export async function updateEntry(
     updates.push('Customer_customer_id = ?');
     values.push(customer_id);
   }
-  if (updates.length === 0 && !replace_user_ink_id) {
+
+  // If nothing to do:
+  if (
+    updates.length === 0 &&
+    !add_user_ink_id?.length &&
+    !remove_user_ink_id?.length
+  ) {
     conn.release();
     return clientErrorResponse('No fields to update');
   }
 
   try {
     await conn.beginTransaction();
-
+    // Update Entry base fields:
     if (updates.length > 0) {
       values.push(entry_id, userId);
-      // Update entry fields
       const [result]: any = await conn.query(
         `UPDATE Entry 
         SET ${updates.join(', ')} 
@@ -289,21 +216,33 @@ export async function updateEntry(
       }
     }
 
-    if (replace_user_ink_id) {
-      // First remove all current associations
-      await conn.query(
-        `DELETE FROM UserInk_has_Entry WHERE Entry_entry_id = ?`,
+    // Add inks:
+    if (add_user_ink_id && add_user_ink_id.length > 0) {
+      // avoiding duplicates here: only insert inks not already linked
+      const [existing]: any = await conn.query(
+        `SELECT UserInk_user_ink_id FROM UserInk_has_Entry WHERE Entry_entry_id = ?`,
         [entry_id]
       );
-      if (replace_user_ink_id.length > 0) {
-        const inkValues = replace_user_ink_id.map((id) => [id, entry_id]);
-        // Bulk insert new associations
+      const existingIds = existing.map((e: any) => e.UserInk_user_ink_id);
+      const newIds = add_user_ink_id.filter((id) => !existingIds.includes(id));
+
+      if (newIds.length > 0) {
+        const valuesToInsert = newIds.map((id) => [id, entry_id]);
         await conn.query(
-          `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id)
-          VALUES ?`,
-          [inkValues]
+          `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES ?`,
+          [valuesToInsert]
         );
       }
+    }
+
+    //Remove inks:
+    if (remove_user_ink_id && remove_user_ink_id.length > 0) {
+      await conn.query(
+        `DELETE FROM UserInk_has_Entry
+        WHERE Entry_entry_id = ?
+        AND UserInk_user_ink_id IN (?)`,
+        [entry_id, remove_user_ink_id]
+      );
     }
     await conn.commit();
     return successResponse({ message: 'Entry updated' });
@@ -316,6 +255,7 @@ export async function updateEntry(
   }
 }
 
+// Delete entry and its associations
 export async function deleteEntry(entry_id: number, userId: string) {
   const pool = await getPool();
   const conn = await pool.getConnection();
