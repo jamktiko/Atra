@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -13,6 +13,7 @@ import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { NavigationEnd } from '@angular/router';
 import {
   NgToastComponent,
   NgToastService,
@@ -20,7 +21,7 @@ import {
   ToastPosition,
 } from 'ng-angular-popup';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { forkJoin, lastValueFrom } from 'rxjs';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-entries',
@@ -62,6 +63,10 @@ export class EntriesPage implements OnInit {
     this.loadEntries();
   }
 
+  ionViewWillEnter() {
+    this.loadEntries();
+  }
+
   setClosed(show: boolean) {
     this.oneEntryModal = show;
   }
@@ -70,9 +75,9 @@ export class EntriesPage implements OnInit {
     this.oneEntryModal = show;
     this.chosenEntryId = entryId;
     this.apiService.getOneEntry(this.chosenEntryId).subscribe({
-      next: (response: any) => {
-        this.chosenEntry = response.data;
-        console.log(this.chosenEntry);
+      next: (data) => {
+        this.chosenEntry = data;
+        console.log('Chosen entry: ', this.chosenEntry);
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
@@ -84,8 +89,8 @@ export class EntriesPage implements OnInit {
     this.apiService.getAllEntries().subscribe({
       next: (data) => {
         this.entries = data;
-        console.log(data);
         this.sortByDate(this.entries);
+        this.entries = this.entries;
       },
       error: (err) => {
         console.error('No entries found: ', err);
@@ -94,9 +99,41 @@ export class EntriesPage implements OnInit {
     });
   }
 
-  updateEntry() {}
+  updateEntry(chosenEntry: any) {
+    const dateString = chosenEntry.entry_date.toLocaleDateString('en-CA');
+    this.apiService
+      .updateEntry(
+        chosenEntry.entry_id,
+        dateString,
+        chosenEntry.comments,
+        chosenEntry.customer_id,
+        chosenEntry.replace_user_ink_id
+      )
+      .subscribe({
+        next: (data) => {
+          this.chosenEntry = data;
+        },
+        error: (err) => {
+          console.error('Something went wrong: ', err);
+        },
+      });
+  }
 
-  deleteEntry() {}
+  deleteEntry(chosenEntry: any) {
+    this.apiService.deleteEntry(chosenEntry.entry_id).subscribe({
+      next: (data) => {
+        this.chosenEntry = data;
+        this.toast.success('Entry deleted successfully');
+        console.log('Deleted entry: ', this.chosenEntry);
+        this.setClosed(false);
+        this.loadEntries();
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+        this.toast.warning('Something went wrong');
+      },
+    });
+  }
 
   addNew() {
     this.router.navigate(['/tabs/entries/addentry']);

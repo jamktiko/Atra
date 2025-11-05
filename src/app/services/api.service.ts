@@ -28,7 +28,7 @@ import { is } from 'cypress/types/bluebird';
 export class ApiService {
   private apiUrl = environment.apiUrl;
   //TÄMÄ KUN DEV LOCAL
-  //private readonly isProd = environment.production;
+  // private readonly isProd = environment.production;
   //false when using ionic serve, true when using ionic build
   //TÄMÄ KUN PROD ELI DATA TIETOKANNASTA
   private readonly isProd = true; //this is for testing: fakes that we are in prod branch after ionic build
@@ -416,35 +416,50 @@ export class ApiService {
     // }
   }
 
-  addNewEntry(newEntry: EntryCreation) {
-    console.log('Apiservice reached new entry: ', newEntry);
+  addNewEntry(
+    customer_id: number,
+    entry_date: string,
+    user_ink_id: number[],
+    comments: string
+  ): Observable<EntryCreation> {
+    const body = {
+      customer_id,
+      entry_date,
+      user_ink_id,
+      comments,
+    };
+    return this.http.post<EntryCreation>(`${this.apiUrl}/entry`, body);
   }
-  // addNewEntry(
-  //   userId: string,
-  //   customer_id: number,
-  //   entry_date: string,
-  //   user_ink_id: number[],
-  //   comments: string
-  // ): Observable<EntryCreation> {
-  //   return this.http.post<EntryCreation>(`${this.apiUrl}/entry`, body);
-  // }
 
   /*
    * Backend-kutsu updateEntry
    */
 
-  updateEntry(entry_id: number, userId: string) {
-    if (this.isProd) {
-      //real
-    } else {
-      //mock
+  updateEntry(
+    entry_id: number,
+    userId: string,
+    entry_date?: string,
+    comments?: string,
+    customer_id?: number,
+    replace_user_ink_id?: number[]
+  ): Observable<Entry> {
+    const body = {
+      entry_id,
+      userId,
+      entry_date,
+      comments,
+      customer_id,
+      replace_user_ink_id,
+    };
+    {
+      return this.http.put<Entry>(`${this.apiUrl}`, body);
     }
   }
 
   /*
    * Backend-kutsu deleteEntry
    */
-  deleteEntry(entry_id: number, userId: string): Observable<Entry> {
+  deleteEntry(entry_id: number): Observable<Entry> {
     return this.http.delete<Entry>(`${this.apiUrl}/entry/${entry_id}`);
   }
 }

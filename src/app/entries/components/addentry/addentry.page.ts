@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { IonContent, IonBadge, IonModal } from '@ionic/angular/standalone';
 import { IonSearchbar } from '@ionic/angular/standalone';
@@ -49,6 +49,8 @@ export class AddentryPage implements OnInit {
   comments: string = '';
   searchInk: string = '';
 
+  entries: any = [];
+
   /*Annetaan newEntrylle musteiden id-numerot lomakkeeseen
    */
   chosenInkIds: number[] = [];
@@ -73,7 +75,7 @@ export class AddentryPage implements OnInit {
     entry_date: new Date(),
     comments: '',
     User_user_id: this.userId,
-    Customer_customer_id: undefined, //undefined kunnes continue() alustaa
+    Customer_customer_id: this.selectedCustomerId, //undefined kunnes continue() alustaa
     inks: [],
   };
 
@@ -82,7 +84,7 @@ export class AddentryPage implements OnInit {
       entry_date: new Date(),
       comments: '',
       User_user_id: this.userId,
-      Customer_customer_id: undefined,
+      Customer_customer_id: this.selectedCustomerId,
       inks: [],
     };
 
@@ -223,12 +225,29 @@ export class AddentryPage implements OnInit {
 
   handleConfirm(newEntry: EntryCreation) {
     this.addNewEntry(newEntry);
+    this.router.navigate(['/tabs/entries']);
+    this.toast.success('Entry added successfully');
+    this.showModal(false);
   }
 
   addNewEntry(newEntry: EntryCreation) {
-    this.apiService.addNewEntry(newEntry);
-    this.toast.success('Entry added successfully');
-    this.router.navigate(['/tabs/entries']);
+    const dateString = newEntry.entry_date.toLocaleString('en-CA');
+
+    this.apiService
+      .addNewEntry(
+        newEntry.Customer_customer_id,
+        dateString,
+        newEntry.inks,
+        newEntry.comments
+      )
+      .subscribe({
+        next: (data) => {
+          this.newEntry = data;
+        },
+        error: (err) => {
+          console.error('Something went wrong: ', err);
+        },
+      });
   }
 
   back() {

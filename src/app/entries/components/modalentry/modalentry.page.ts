@@ -47,6 +47,7 @@ export class ModalentryPage implements OnInit {
     forkJoin(inkArray).subscribe({
       next: (data) => {
         this.reviewInks = data;
+        console.log(this.reviewInks);
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
