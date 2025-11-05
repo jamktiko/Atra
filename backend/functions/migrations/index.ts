@@ -176,7 +176,7 @@ export const handler: Handler = async (event, ctx) => {
       )
       -- (1,1)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-06-06') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -186,7 +186,7 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (3,1)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-06-06') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -196,7 +196,7 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (1,2)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-07-07') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -206,7 +206,7 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (4,2)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-07-07') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -216,7 +216,7 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (1,3)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-07-09') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -226,7 +226,7 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (1,4)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-10-06') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -236,7 +236,7 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (2,4)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-10-06') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -246,7 +246,7 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (3,4)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-10-06') AND User_user_id = 'demo-user-123' LIMIT 1)
@@ -256,14 +256,23 @@ export const handler: Handler = async (event, ctx) => {
 
       -- (4,4)
       SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
-             ui.batch_number, pi.image_url, pi.size
+      ui.batch_number, pi.image_url, pi.size
       FROM UserInk ui
       JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
       JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-10-06') AND User_user_id = 'demo-user-123' LIMIT 1)
       WHERE ui.user_ink_id = (SELECT user_ink_id FROM UserInk WHERE batch_number = '98765' LIMIT 1)
 
-      ON DUPLICATE KEY UPDATE created_at = created_at;
-    `);
+      UNION ALL
+
+      -- (5,5)
+      SELECT ui.user_ink_id, e.entry_id, pi.product_name, pi.manufacturer, pi.color,
+      ui.batch_number, pi.image_url, pi.size
+      FROM UserInk ui
+      JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
+      JOIN Entry e ON e.entry_id = (SELECT entry_id FROM Entry WHERE entry_date = DATE('2025-12-12') AND User_user_id = 'demo-user-123' LIMIT 1)
+      WHERE ui.user_ink_id = (SELECT user_ink_id FROM UserInk WHERE batch_number = 'HJKL011' LIMIT 1)
+
+      ON DUPLICATE KEY UPDATE created_at = created_at;`);
 
     await conn.commit();
     console.log('Migration finished');
