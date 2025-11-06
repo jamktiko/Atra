@@ -5,6 +5,7 @@ import {
 } from '../shared/utils';
 import { getPool } from '../shared/db';
 
+// List all inks owned by user
 export async function listOwnInks(userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
@@ -20,6 +21,7 @@ export async function listOwnInks(userId: string) {
   return successResponse(rows);
 }
 
+// Get specific user ink by id
 export async function getUserInk(user_ink_id: string, userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
@@ -37,10 +39,12 @@ export async function getUserInk(user_ink_id: string, userId: string) {
   return successResponse((rows as any)[0]);
 }
 
+// Add new user ink(s)
 export async function addUserInk(userId: string, body: any) {
   const pool = await getPool();
   const items = Array.isArray(body) ? body : [body];
 
+  // map items to values array
   const values = items.map((ink) => [
     ink.batch_number,
     ink.opened_at || null,
@@ -49,6 +53,7 @@ export async function addUserInk(userId: string, body: any) {
     userId,
   ]);
 
+  // Insert values into UserInk
   const [result] = await pool.query(
     `INSERT INTO UserInk 
     (batch_number, opened_at, expires_at, PublicInk_ink_id, User_user_id)
@@ -61,6 +66,7 @@ export async function addUserInk(userId: string, body: any) {
   });
 }
 
+// Poistetaan userink
 export async function deleteUserInk(user_ink_id: string) {
   try {
     const pool = await getPool();
@@ -80,7 +86,7 @@ export async function deleteUserInk(user_ink_id: string) {
   }
 }
 
-// Sama kuin Customer update --> tämä on erittäin kömpleö ja huono tapa
+// Päivitetään userink tiedot
 export async function updateUserInk(
   user_ink_id: string,
   user_id: string,
@@ -121,7 +127,7 @@ export async function updateUserInk(
     return clientErrorResponse('No valid fields to update');
   }
 
-  // WHERE parametrit
+  // Lisätään where ehtoon ink id ja käyttäjä id
   values.push(user_ink_id, user_id);
 
   const [result] = await pool.query(
