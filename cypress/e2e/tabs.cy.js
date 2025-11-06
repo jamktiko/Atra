@@ -38,12 +38,21 @@ if (environment.apiUrl !== "") {
 
     it("Can add and update a customer", () => {
       //add customer
-      //TODO: test invalid inputs for add customer form
       cy.visit(`${url}/tabs/customers`);
       cy.contains("button", "Add new").should("be.visible").click();
-      cy.get("#firstname").should("be.visible").type("TEST");
+      cy.get("#firstname").should("be.visible").type("123456789");
+      cy.get("#email").should("be.visible").type("testmail.com");
+      cy.get("#lastname").should("be.visible").click();
+      cy.get("ion-text")
+        .contains("Please fill in a valid first name.")
+        .should("exist");
+      cy.get("ion-text")
+        .contains("Please enter a valid email address (with full domain).")
+        .should("exist");
+      cy.wait(sleeptime);
+      cy.get("#firstname").should("be.visible").clear().type("TEST");
       cy.get("#lastname").should("be.visible").type("DELETE");
-      cy.get("#email").should("be.visible").type("test@mail.com");
+      cy.get("#email").should("be.visible").clear().type("test@mail.com");
       cy.get("#tel").should("be.visible").type("123456789");
       cy.get("#notes").should("be.visible").type("Notes here");
       cy.wait(sleeptime);
@@ -102,7 +111,29 @@ if (environment.apiUrl !== "") {
 
       //update entry
       cy.visit(`${url}/tabs/entries`);
-      //TODO: implement
+      cy.wait(sleeptime);
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true })
+        .should("exist")
+        .parent()
+        .within(() => {
+          cy.contains("h2", "02:00", { includeShadowDom: true })
+            .should("exist")
+            .click({ force: true });
+        });
+      cy.wait(sleeptime);
+
+      //TODO: insert an update here
+
+      cy.get("button")
+        .contains("Update")
+        .should("exist")
+        .click({ force: true });
+
+      //TODO: check if update happened
+      cy.visit(`${url}/tabs/entries`);
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true }).should(
+        "exist"
+      );
     });
 
     it("Can delete an entry", () => {
@@ -117,7 +148,6 @@ if (environment.apiUrl !== "") {
             .click({ force: true });
         });
       cy.wait(sleeptime);
-      //push delete and check it did it
       cy.get("button")
         .contains("Delete")
         .should("exist")
@@ -168,7 +198,6 @@ if (environment.apiUrl !== "") {
         .should("be.visible")
         .first()
         .click();
-      //TODO: test invalid inputs on form
       cy.contains("label", "Opened:")
         .next('input[type="date"]')
         .should("be.visible")
