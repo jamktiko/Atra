@@ -25,8 +25,6 @@ if (environment.apiUrl !== "") {
     //TODO: LOG OUT
   }); */
 
-  //these work!
-  //TODO: test invalid inputs for add customer form
   describe("Test CRUD-operations for customers", () => {
     it("Can move to customers-page", () => {
       cy.visit(`${url}/tabs/firstpage`);
@@ -42,9 +40,19 @@ if (environment.apiUrl !== "") {
       //add customer
       cy.visit(`${url}/tabs/customers`);
       cy.contains("button", "Add new").should("be.visible").click();
-      cy.get("#firstname").should("be.visible").type("TEST");
+      cy.get("#firstname").should("be.visible").type("123456789");
+      cy.get("#email").should("be.visible").type("testmail.com");
+      cy.get("#lastname").should("be.visible").click();
+      cy.get("ion-text")
+        .contains("Please fill in a valid first name.")
+        .should("exist");
+      cy.get("ion-text")
+        .contains("Please enter a valid email address (with full domain).")
+        .should("exist");
+      cy.wait(sleeptime);
+      cy.get("#firstname").should("be.visible").clear().type("TEST");
       cy.get("#lastname").should("be.visible").type("DELETE");
-      cy.get("#email").should("be.visible").type("test@mail.com");
+      cy.get("#email").should("be.visible").clear().type("test@mail.com");
       cy.get("#tel").should("be.visible").type("123456789");
       cy.get("#notes").should("be.visible").type("Notes here");
       cy.wait(sleeptime);
@@ -82,7 +90,8 @@ if (environment.apiUrl !== "") {
       cy.url().should("include", "/tabs/entries");
     });
 
-    it("Can add an entry", () => {
+    it("Can add and update an entry", () => {
+      //add entry
       cy.visit(`${url}/tabs/entries`);
       cy.get("button").contains("Add new").should("be.visible").click();
       cy.wait(sleeptime);
@@ -96,30 +105,58 @@ if (environment.apiUrl !== "") {
         .first()
         .should("be.visible")
         .click();
+      cy.get("textarea").should("be.visible").type("DELETE ME");
       cy.get("button").contains("Continue").should("be.visible").click();
       cy.get("button").contains("Confirm").should("be.visible").click();
-    });
 
-    it("Can update an entry", () => {
+      //update entry
       cy.visit(`${url}/tabs/entries`);
-
-      //kesken
-      /* cy.contains("h3", "Jan 1, 9999")
+      cy.wait(sleeptime);
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true })
         .should("exist")
         .parent()
         .within(() => {
-          cy.contains("h2", "00:00").should("exist").click();
-        }); */
-      //get created entry
-      //update any field
-      //cy.get("button").contains("Update").click();
+          cy.contains("h2", "02:00", { includeShadowDom: true })
+            .should("exist")
+            .click({ force: true });
+        });
+      cy.wait(sleeptime);
+
+      //TODO: insert an update here
+
+      cy.get("button")
+        .contains("Update")
+        .should("exist")
+        .click({ force: true });
+
+      //TODO: check if update happened
+      cy.visit(`${url}/tabs/entries`);
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true }).should(
+        "exist"
+      );
     });
 
     it("Can delete an entry", () => {
       cy.visit(`${url}/tabs/entries`);
-      //get updated entry
-      //delete it
-      //check it no longer exists
+      cy.wait(sleeptime);
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true })
+        .should("exist")
+        .parent()
+        .within(() => {
+          cy.contains("h2", "02:00", { includeShadowDom: true })
+            .should("exist")
+            .click({ force: true });
+        });
+      cy.wait(sleeptime);
+      cy.get("button")
+        .contains("Delete")
+        .should("exist")
+        .click({ force: true });
+      cy.visit(`${url}/tabs/entries`);
+      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true }).should(
+        "not.exist"
+      );
+      cy.wait(sleeptime);
     });
   });
 
@@ -153,6 +190,7 @@ if (environment.apiUrl !== "") {
       //update ink
       cy.visit(`${url}/tabs/inks`);
       cy.wait(sleeptime);
+      cy.wait(sleeptime);
       cy.get("p").contains("Batch: test").should("be.visible").first().click();
       cy.wait(sleeptime);
       cy.get("button")
@@ -160,7 +198,6 @@ if (environment.apiUrl !== "") {
         .should("be.visible")
         .first()
         .click();
-      //TODO: test invalid inputs on form
       cy.contains("label", "Opened:")
         .next('input[type="date"]')
         .should("be.visible")

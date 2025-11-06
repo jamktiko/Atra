@@ -136,9 +136,7 @@ export async function addEntry(
     }
 
     await conn.commit();
-    return successResponse({
-      mdata: { message: 'Entry added', entry_id: entryId },
-    });
+    return successResponse({ message: 'Entry added', entry_id: entryId });
   } catch (error) {
     await conn.rollback();
     console.error('addEntry error:', error);

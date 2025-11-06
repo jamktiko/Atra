@@ -11,25 +11,30 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   //const userId = event.requestContext.authorizer.jwt.claims.sub as string;
   const userId = process.env.DEMO_USER_ID || 'demo-user-123';
 
+  // List all user's entries
   if (httpMethod === 'GET' && routeKey === '/entry') {
     return entry.listEntries(userId);
   }
 
+  // Get specific entry
   if (httpMethod === 'GET' && routeKey === '/entry/{id}') {
     if (!pathParameters?.id) return clientErrorResponse('Missing id');
     return entry.getEntry(pathParameters.id, userId);
   }
 
+  // Create new entry
   if (httpMethod === 'POST' && routeKey === '/entry') {
     if (!event.body) return clientErrorResponse('Missing request body');
     const { customer_id, entry_date, comments, user_ink_id } = JSON.parse(
       event.body
     );
 
+    // Validation
     if (!entry_date || !Array.isArray(user_ink_id)) {
       return clientErrorResponse('Missing required fields');
     }
 
+    // Create entry
     return entry.addEntry(
       userId,
       customer_id ?? null,
@@ -39,10 +44,12 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
     );
   }
 
+  // Update entry
   if (httpMethod === 'PUT' && routeKey === '/entry/{id}') {
     if (!pathParameters?.id) return clientErrorResponse('Missing id');
     if (!event.body) return clientErrorResponse('Missing request body');
 
+    // Parse body and extract fields to update
     const {
       entry_date,
       comments,
@@ -62,6 +69,7 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       return clientErrorResponse('No fields to update');
     }
 
+    // Update entry
     return entry.updateEntry(
       Number(pathParameters.id),
       userId,
@@ -73,6 +81,7 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
     );
   }
 
+  // Delete entry
   if (httpMethod === 'DELETE' && routeKey === '/entry/{id}') {
     if (!pathParameters?.id) return clientErrorResponse('Missing id');
     return entry.deleteEntry(Number(pathParameters.id), userId);

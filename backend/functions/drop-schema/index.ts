@@ -5,7 +5,7 @@ import { getPool } from '../shared/db';
  * Drop the AtraDatabase schema. To run this handler you MUST set environment variable:
  *   DROP_SCHEMA_CONFIRM = "YES"
  *
- * This prevents accidental destructive operations.
+ * This prevents accidental destructive operations :)
  */
 
 export const handler: Handler = async (Event, ctx) => {
