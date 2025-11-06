@@ -146,6 +146,8 @@ export async function addEntry(
   }
 }
 
+// remove and add inks in two separate arrays:
+/*
 // Update entry fields and optionally replace attached inks
 export async function updateEntry(
   entry_id: number,
@@ -232,6 +234,7 @@ export async function updateEntry(
         );
       }
     }
+    
 
     //Remove inks:
     if (remove_user_ink_id && remove_user_ink_id.length > 0) {
@@ -241,6 +244,87 @@ export async function updateEntry(
         AND UserInk_user_ink_id IN (?)`,
         [entry_id, remove_user_ink_id]
       );
+    }
+    await conn.commit();
+    return successResponse({ message: 'Entry updated' });
+  } catch (error) {
+    await conn.rollback();
+    console.error('updateEntry error:', error);
+    return clientErrorResponse('Could not update entry');
+  } finally {
+    conn.release();
+  }
+}
+*/
+
+export async function updateEntry(
+  entry_id: number,
+  userId: string,
+  entry_date?: string,
+  comments?: string,
+  customer_id?: number | null,
+  replace_user_ink_id?: number[]
+) {
+  const pool = await getPool();
+  const conn = await pool.getConnection();
+
+  // Validation
+  if (entry_date && isNaN(Date.parse(entry_date))) {
+    return clientErrorResponse('Invalid entry_date');
+  }
+  if (replace_user_ink_id && !Array.isArray(replace_user_ink_id)) {
+    return clientErrorResponse('replace_user_ink_id must be an array');
+  }
+
+  const updates = [];
+  const values: any[] = [];
+
+  if (entry_date !== undefined) {
+    updates.push('entry_date = ?');
+    values.push(entry_date);
+  }
+  if (comments !== undefined) {
+    updates.push('comments = ?');
+    values.push(comments);
+  }
+  if (customer_id !== undefined) {
+    updates.push('Customer_customer_id = ?');
+    values.push(customer_id);
+  }
+  if (updates.length === 0 && !replace_user_ink_id) {
+    conn.release();
+    return clientErrorResponse('No fields to update');
+  }
+
+  try {
+    await conn.beginTransaction();
+    if (updates.length > 0) {
+      values.push(entry_id, userId);
+      const [result]: any = await conn.query(
+        `UPDATE Entry 
+        SET ${updates.join(', ')} 
+        WHERE entry_id = ? AND User_user_id = ?`,
+        values
+      );
+      if (result.affectedRows === 0) {
+        await conn.rollback();
+        conn.release();
+        return notFoundResponse('Entry not found or not owned by user');
+      }
+    }
+    if (replace_user_ink_id) {
+      await conn.query(
+        `DELETE FROM UserInk_has_Entry WHERE Entry_entry_id = ?`,
+        [entry_id]
+      );
+      if (replace_user_ink_id.length > 0) {
+        const inkValues = replace_user_ink_id.map((id) => [id, entry_id]);
+        await conn.query(
+          `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id)
+          VALUES ?`,
+          [inkValues]
+        );
+      }
     }
     await conn.commit();
     return successResponse({ message: 'Entry updated' });
