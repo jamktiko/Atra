@@ -116,6 +116,13 @@ export const routes: Routes = [
             (m) => m.ModalentryPage
           ),
       },
+      {
+        path: 'entries/singleentry',
+        loadComponent: () =>
+          import('../entries/components/singleentry/singleentry.page').then(
+            (m) => m.SingleentryPage
+          ),
+      },
 
       {
         path: 'mainpage',

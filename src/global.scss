@@ -175,3 +175,12 @@ ion-modal.transparent-modal::part(content) {
 ion-modal.transparent-modal .ion-page {
   background: transparent !important;
 }
+
+.scrollable {
+  max-height: 20vh;
+  overflow-y: auto;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 0.5em;
+}
