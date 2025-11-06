@@ -1,6 +1,6 @@
 import { Component, OnInit, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, FormGroup, FormArray } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -8,7 +8,7 @@ import {
   IonToolbar,
   IonModal,
 } from '@ionic/angular/standalone';
-import { Entry, ListEntries } from 'src/interface';
+import { Entry, ListEntries, UserInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { DatePipe } from '@angular/common';
@@ -43,6 +43,11 @@ import { filter } from 'rxjs';
 })
 export class EntriesPage implements OnInit {
   entries: ListEntries[] = [];
+  searchInk: string = '';
+  userInks: UserInk[] = [];
+  inkGroup = new FormGroup({
+    chosenInks: new FormArray([]),
+  });
 
   showUpdateModal: boolean = false;
 
@@ -179,5 +184,68 @@ export class EntriesPage implements OnInit {
     this.groupedEntries = Object.entries(sorted)
       .map(([date, entries]) => ({ date, entries }))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }
+
+  filteredInks(): any {
+    const search = this.searchInk.toLowerCase() ?? '';
+
+    return this.userInks.filter(
+      (ink) =>
+        ink.product_name.toLowerCase().includes(search) ||
+        ink.color.toLowerCase().includes(search) ||
+        ink.manufacturer.toLowerCase().includes(search)
+    );
+  }
+
+  chooseInk(ink: UserInk) {
+    const inks = this.getChosenInks();
+
+    if (
+      !inks.value.some((chosenInk: any) => chosenInk.id === ink.user_ink_id)
+    ) {
+      inks.push(
+        new FormGroup({
+          user_ink_id: new FormControl(ink.user_ink_id),
+          batch_number: new FormControl(ink.batch_number),
+          opened_at: new FormControl(ink.opened_at),
+          expires_at: new FormControl(ink.expires_at),
+          favorite: new FormControl(ink.favorite),
+          publicink_ink_id: new FormControl(ink.publicink_ink_id),
+          product_name: new FormControl(ink.product_name),
+          manufacturer: new FormControl(ink.manufacturer),
+          color: new FormControl(ink.color),
+          recalled: new FormControl(ink.recalled),
+          image_url: new FormControl(ink.image_url),
+          size: new FormControl(ink.size),
+          User_user_id: new FormControl(ink.User_user_id),
+        })
+      );
+
+      console.log(inks.value);
+    } else {
+      console.log('Ink already chosen: ', ink.user_ink_id);
+      console.log(inks.value);
+    }
+  }
+
+  getChosenInks(): FormArray {
+    return this.inkGroup.get('chosenInks') as FormArray;
+  }
+
+  getChosenInkIds(): number[] {
+    const inkarray = this.getChosenInks();
+    if (!inkarray) {
+      return [];
+    } else {
+      const inkIds: number[] = [];
+
+      for (let i = 0; i < inkarray.length; i++) {
+        const inkGroupInArray = inkarray.at(i) as FormGroup;
+        const idNumber = inkGroupInArray.get('user_ink_id')?.value;
+        inkIds.push(idNumber);
+      }
+      console.log(inkIds);
+      return inkIds;
+    }
   }
 }

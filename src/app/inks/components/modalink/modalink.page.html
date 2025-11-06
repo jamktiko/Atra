@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-  <ion-header class="box2" collapse="condense">
+  <ion-header collapse="condense">
 
     <div class="flex-1 p-6 text-neutral-50 text-center space-y-2">
       <h2 class="text-4xl font-pt-serif">Review</h2>
@@ -10,7 +10,6 @@
   <!--If-lohko hallinnoimassa näkymää: jos musteita ei valittu, näytetään else-osio -->
   @if (inksToReview.length > 0) {
 
-  <!--MILJA älä koske scrollable :)-->
   <div class="scrollable">
     <!-- Käy inkstoreview-taulukon eli kaikki valitut musteet läpi for-loopilla-->
 

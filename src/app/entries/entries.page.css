@@ -10,3 +10,12 @@ ion-modal#example-modal::part(backdrop) {
 ion-modal#example-modal::part(content) {
   --background: transparent !important;
 }
+
+.scrollable {
+  max-height: 25vh;
+  overflow-y: auto;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 0.5em;
+}
