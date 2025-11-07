@@ -42,9 +42,7 @@ export class SingleentryPage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
-    console.log('Singleentry initialized');
-  }
+  ngOnInit() {}
 
   sendClose() {
     this.close.emit();
@@ -52,6 +50,7 @@ export class SingleentryPage implements OnInit {
 
   sendDelete(chosenEntry: Entry) {
     this.delete.emit(chosenEntry);
+    this.close.emit();
   }
 
   toggleUpdateModal(show: boolean) {

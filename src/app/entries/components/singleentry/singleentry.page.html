@@ -25,12 +25,15 @@
     <h2 class="text-center text-3xl font-pt-serif mb-6">Inks</h2>
     <div class="bg-gray-50 bg-slate-800 border border-gray-300 border-gray-600 rounded-lg p-3 
                   space-y-2 max-h-52 overflow-y-auto">
-      <div class="flex items-center justify-between bg-slate-700 text-neutral-50 rounded-lg px-3 py-2">
-        @for (ink of chosenEntry.inks; track ink.id) {
+
+
+      @for (ink of chosenEntry.inks; track ink.id) {
+      <div class="flex bg-slate-900 my-2 p-1 mx-2">
         <img src="{{ink.image_url}}" width="25%" />
         <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
-        }
       </div>
+      }
+
     </div>
 
     <h2 class="text-center text-3xl font-pt-serif mb-6">Comments</h2>
