@@ -115,7 +115,7 @@ export async function updateCustomer(customer_id: string, body: string | null) {
   try {
     data = body ? JSON.parse(body) : {};
   } catch {
-    return clientErrorResponse('Invalid jason body');
+    return clientErrorResponse('Invalid jason body'); //jason lol
   }
 
   // Dynaamiset SQL kentät
