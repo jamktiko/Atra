@@ -437,22 +437,20 @@ export class ApiService {
 
   updateEntry(
     entry_id: number,
-    userId: string,
-    entry_date?: string,
-    comments?: string,
-    customer_id?: number,
-    replace_user_ink_id?: number[]
+    entry_date: string,
+    comments: string,
+    customer_id: number,
+    replace_user_ink_id: number[]
   ): Observable<Entry> {
     const body = {
       entry_id,
-      userId,
       entry_date,
       comments,
       customer_id,
       replace_user_ink_id,
     };
     {
-      return this.http.put<Entry>(`${this.apiUrl}`, body);
+      return this.http.put<Entry>(`${this.apiUrl}/entry/${entry_id}`, body);
     }
   }
 

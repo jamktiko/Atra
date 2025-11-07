@@ -11,13 +11,20 @@ import {
 } from 'ng-angular-popup';
 import { Router } from '@angular/router';
 import { Entry, UserInk } from 'src/interface';
+import { IonSearchbar } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-singleentry',
   templateUrl: './singleentry.page.html',
   styleUrls: ['./singleentry.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NgToastComponent, IonModal],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgToastComponent,
+    IonModal,
+    IonSearchbar,
+  ],
 })
 export class SingleentryPage implements OnInit {
   @Input() chosenEntry!: Entry;
@@ -28,8 +35,8 @@ export class SingleentryPage implements OnInit {
     chosenInks: new FormArray([]),
   });
 
-  getUpdatedInks() {
-    return this.getChosenInkIds();
+  get chosenInks(): FormArray {
+    return this.inkGroup.get('chosenInks') as FormArray;
   }
 
   singleInkGet: any;
@@ -48,6 +55,19 @@ export class SingleentryPage implements OnInit {
 
   ngOnInit() {
     this.getUserInks();
+
+    this.inkGroup = new FormGroup({
+      chosenInks: new FormArray([]),
+    });
+
+    this.initializeChosenInks();
+  }
+
+  initializeChosenInks() {
+    const formArray = this.chosenInks;
+    this.chosenEntry.inks.forEach((ink: any) => {
+      formArray.push(new FormControl(ink.user_ink_id));
+    });
   }
 
   sendClose() {
@@ -63,19 +83,24 @@ export class SingleentryPage implements OnInit {
     this.showUpdateModal = show;
   }
 
-  updateEntry(chosenEntry: any) {
-    const dateString = chosenEntry.entry_date.toLocaleDateString('en-CA');
+  submit(chosenEntry: any) {
+    const inkArray = this.getChosenInkIds();
+
     this.apiService
       .updateEntry(
         chosenEntry.entry_id,
-        dateString,
+        chosenEntry.entry_date,
         chosenEntry.comments,
-        chosenEntry.Customer_customer_id,
-        chosenEntry.replace_user_ink_id
+        chosenEntry.customer_id,
+        inkArray
       )
       .subscribe({
         next: (data) => {
           this.chosenEntry = data;
+          console.log('Update success!');
+          this.toggleUpdateModal(false);
+          this.sendClose();
+          this.toast.success('Entry updated successfully');
           this.router.navigate(['/tabs/entries']);
         },
         error: (err) => {
@@ -107,8 +132,8 @@ export class SingleentryPage implements OnInit {
     );
   }
 
-  chooseInk(ink: UserInk) {
-    const inks = this.getChosenInks();
+  chooseInk(ink: any) {
+    const inks = this.chosenInks;
 
     if (
       !inks.value.some((chosenInk: any) => chosenInk.id === ink.user_ink_id)
@@ -116,31 +141,20 @@ export class SingleentryPage implements OnInit {
       inks.push(
         new FormGroup({
           user_ink_id: new FormControl(ink.user_ink_id),
-          batch_number: new FormControl(ink.batch_number),
-          opened_at: new FormControl(ink.opened_at),
-          expires_at: new FormControl(ink.expires_at),
-          favorite: new FormControl(ink.favorite),
-          publicink_ink_id: new FormControl(ink.publicink_ink_id),
           product_name: new FormControl(ink.product_name),
           manufacturer: new FormControl(ink.manufacturer),
           color: new FormControl(ink.color),
-          recalled: new FormControl(ink.recalled),
           image_url: new FormControl(ink.image_url),
-          size: new FormControl(ink.size),
-          User_user_id: new FormControl(ink.User_user_id),
         })
       );
+      this.chosenEntry.inks.push(ink);
     } else {
       console.log('Ink already chosen: ', ink.user_ink_id);
     }
   }
 
-  getChosenInks(): FormArray {
-    return this.inkGroup.get('chosenInks') as FormArray;
-  }
-
   getChosenInkIds(): number[] {
-    const inkarray = this.getChosenInks();
+    const inkarray = this.chosenInks;
     if (!inkarray) {
       return [];
     } else {
@@ -156,25 +170,26 @@ export class SingleentryPage implements OnInit {
     }
   }
 
-  getInk(id: number) {
-    console.log('Get ink clicked, id-number: ', id);
-    this.apiService.getOneUserInk(id).subscribe({
-      next: (data) => {
-        this.singleInkGet = data;
-      },
-    });
-    return this.singleInkGet;
-  }
+  // getInk(id: number) {
+  //   console.log('Get ink clicked, id-number: ', id);
+  //   this.apiService.getOneUserInk(id).subscribe({
+  //     next: (data) => {
+  //       this.singleInkGet = data;
+  //     },
+  //   });
+  //   return this.singleInkGet;
+  // }
 
-  handleInkDelete(inkId: number) {
-    const inks = this.inkGroup.get('chosenInks') as FormArray;
+  handleInkDelete(user_ink_id: number) {
+    const inksArray = this.chosenInks;
 
-    const index = inks.value.indexOf(inkId);
+    const index = inksArray.value.indexOf(user_ink_id);
 
     if (index > -1) {
-      //angular equivalent of splice: removes item in array where index matches
-      inks.removeAt(index);
-      console.log('Removed ink: ', inkId, 'New chosenInks: ', inks.value);
+      inksArray.removeAt(index);
+      this.chosenEntry.inks = this.chosenEntry.inks.filter(
+        (ink) => ink.user_ink_id !== user_ink_id
+      );
     }
   }
 }
