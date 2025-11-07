@@ -58,6 +58,14 @@ interface ListEntries {
   last_name: string;
 }
 
+interface EntryUpdate {
+  entry_id: number;
+  entry_date: string;
+  comments: string;
+  customer_id: number;
+  replace_user_ink_id: number[];
+}
+
 interface Customer {
   customer_id: number;
   email: string;
@@ -78,19 +86,19 @@ interface CustomerCreation {
 
 interface EntryInk {
   id: number; // tämä on entryinkin oma id
-  user_ink_id?: number | null;
-  snapshot_product_name?: string | null;
-  snapshot_manufacturer?: string | null;
-  snapshot_color?: string | null;
-  snapshot_batch_number?: string | null;
-  snapshot_image_url?: string | null;
-  snapshot_size?: string | null;
-  product_name?: string | null; // fallback
-  manufacturer?: string | null; // fallback
-  color?: string | null; // fallback
-  batch_number?: string | null; // fallback
-  image_url?: string | null; // fallback
-  size?: string | null; // fallback
+  user_ink_id: any;
+  snapshot_product_name: string | null;
+  snapshot_manufacturer: string | null;
+  snapshot_color: string | null;
+  snapshot_batch_number: string | null;
+  snapshot_image_url: string | null;
+  snapshot_size: string | null;
+  product_name: string | null; // fallback
+  manufacturer: string | null; // fallback
+  color: string | null; // fallback
+  batch_number: string | null; // fallback
+  image_url: string | null; // fallback
+  size: string | null; // fallback
 }
 
 export {
@@ -103,4 +111,5 @@ export {
   EntryCreation,
   EntryInk,
   ListEntries,
+  EntryUpdate,
 };

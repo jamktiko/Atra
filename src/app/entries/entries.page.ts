@@ -1,6 +1,6 @@
-import { Component, OnInit, output, input } from '@angular/core';
+import { Component, OnInit, output, input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, FormGroup, FormArray } from '@angular/forms';
 import {
   IonContent,
   IonHeader,
@@ -8,7 +8,7 @@ import {
   IonToolbar,
   IonModal,
 } from '@ionic/angular/standalone';
-import { Entry, ListEntries } from 'src/interface';
+import { Entry, ListEntries, UserInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from '../services/api.service';
 import { DatePipe } from '@angular/common';
@@ -22,6 +22,7 @@ import {
 } from 'ng-angular-popup';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { filter } from 'rxjs';
+import { SingleentryPage } from './components/singleentry/singleentry.page';
 
 @Component({
   selector: 'app-entries',
@@ -37,7 +38,7 @@ import { filter } from 'rxjs';
     CommonModule,
     FormsModule,
     NgToastComponent,
-    IonModal,
+    SingleentryPage,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -46,10 +47,9 @@ export class EntriesPage implements OnInit {
 
   searchItem: string = '';
 
-  oneEntryModal: boolean = false;
+  singleEntryModal: boolean = false;
 
-  chosenEntryId!: number;
-  chosenEntry!: Entry | null;
+  chosenEntry!: Entry;
 
   groupedEntries: { date: string; entries: ListEntries[] }[] = [];
 
@@ -65,16 +65,19 @@ export class EntriesPage implements OnInit {
     this.loadEntries();
   }
 
-  setClosed(show: boolean) {
-    this.oneEntryModal = show;
+  // toggleUpdateModal(show: boolean) {
+  //   this.showUpdateModal = show;
+  // }
+
+  handleClosed() {
+    this.singleEntryModal = false;
   }
 
-  chooseEntry(show: boolean, entryId: any) {
-    this.oneEntryModal = show;
-    this.chosenEntryId = entryId;
-    this.apiService.getOneEntry(this.chosenEntryId).subscribe({
+  chooseEntry(show: boolean, entryId: number) {
+    this.apiService.getOneEntry(entryId).subscribe({
       next: (data) => {
         this.chosenEntry = data;
+        this.singleEntryModal = show;
       },
       error: (err) => {
         console.error('Something went wrong: ', err);
@@ -95,33 +98,11 @@ export class EntriesPage implements OnInit {
     });
   }
 
-  updateEntry(chosenEntry: any) {
-    const dateString = chosenEntry.entry_date.toLocaleDateString('en-CA');
-    this.apiService
-      .updateEntry(
-        chosenEntry.entry_id,
-        dateString,
-        chosenEntry.comments,
-        chosenEntry.customer_id,
-        chosenEntry.replace_user_ink_id
-      )
-      .subscribe({
-        next: (data) => {
-          this.chosenEntry = data;
-        },
-        error: (err) => {
-          console.error('Something went wrong: ', err);
-        },
-      });
-  }
-
   deleteEntry(chosenEntry: any) {
     this.apiService.deleteEntry(chosenEntry.entry_id).subscribe({
       next: (data) => {
         this.chosenEntry = data;
         this.toast.success('Entry deleted successfully');
-        console.log('Deleted entry: ', this.chosenEntry);
-        this.setClosed(false);
         this.loadEntries();
       },
       error: (err) => {
@@ -134,8 +115,6 @@ export class EntriesPage implements OnInit {
   addNew() {
     this.router.navigate(['/tabs/entries/addentry']);
   }
-
-  filteredSearch() {}
 
   /**
    * Funktio lajittelee kirjaukset päiväyksen perusteella

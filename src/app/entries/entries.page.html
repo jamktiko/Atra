@@ -4,6 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
+@if (chosenEntry && singleEntryModal) {
+<app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry"></app-singleentry>
+} @else {
 <ion-content [fullscreen]="true">
 
   <ng-toast></ng-toast>
@@ -43,21 +46,25 @@
   }
   }
 </ion-content>
+}
 
+
+
+<!-- 
 <ion-modal [isOpen]="oneEntryModal" (didDismiss)="setClosed(false)" [componentProps]="{chosenEntry}">
 
   <ng-template>
     <div class="p-7 w-full">
       <div class=>
 
-        <!--EntryID-->
+      
         <h2 class="text-center text-5xl font-pt-serif">Entry {{chosenEntry?.entry_id}}</h2>
 
-        <!--aikatiedot-->
+       
         <h2 class="text-center text-3xl font-pt-serif mb-6">Date and time</h2>
         <div class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg  block w-full p-2.5">
           <p>
-            {{chosenEntry?.entry_date | date:'M/d/yy, h:mm'}}
+            {{chosenEntry?.entry_date | date:'MMM d, y, h:mm'}}
           </p>
         </div>
 
@@ -74,6 +81,7 @@
                   space-y-2 max-h-52 overflow-y-auto">
           <div class="flex items-center justify-between bg-slate-700 text-neutral-50 rounded-lg px-3 py-2">
             @for (ink of chosenEntry?.inks; track ink.id) {
+            <img src="{{ink.image_url}}" width="25%" />
             <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
             }
           </div>
@@ -105,7 +113,8 @@
           </button>
 
           <button type="submit"
-            class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">
+            class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center"
+            (click)="toggleUpdateModal(true)">
             Update
           </button>
         </div>
@@ -119,8 +128,4 @@
     </div>
   </ng-template>
 
-</ion-modal>
-
-<ion-modal>
-
-</ion-modal>
+</ion-modal> -->

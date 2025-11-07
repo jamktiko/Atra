@@ -110,26 +110,26 @@ export const handler: Handler = async (event, ctx) => {
 
       INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size)
       VALUES
-      ('Panthera Black', 'Panthera Ink', 'Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Panthera Shadow', 'Panthera Ink', 'Dark Gray', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Eternal Jet Black', 'Eternal Ink', 'Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Eternal Chocolate Brown', 'Eternal Ink', 'Brown', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('World Famous London Fog', 'World Famous Ink', 'Gray', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('World Famous Mint Green', 'World Famous Ink', 'Green', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '180ml'),
-      ('Intenze Chrome Yellow', 'Intenze', 'Yellow', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '22ml'),
-      ('Intenze Purple Rain', 'Intenze', 'Purple', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Radiant Bright Orange', 'Radiant Ink', 'Orange', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Radiant Deep Turquoise', 'Radiant Ink', 'Turquoise', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Dynamic Black', 'Dynamic', 'Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Dynamic Light Gray', 'Dynamic', 'Light Gray', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Kuro Sumi Carbon', 'Kuro Sumi', 'Carbon Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '44ml'),
-      ('Kuro Sumi Gray Wash', 'Kuro Sumi', 'Gray Wash', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Cosmoink Violet', 'Cosmoink', 'Violet', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Cosmoink Midnight Blue', 'Cosmoink', 'Blue', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Panthera Velvet Black', 'Panthera Ink', 'Velvet Black', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Panthera Bright Red', 'Panthera Ink', 'Red', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '88ml'),
-      ('Quantum Ink Silver', 'Quantum Ink', 'Silver', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml'),
-      ('Quantum Ink Rose Pink', 'Quantum Ink', 'Pink', 0, 'https://www.nordictattoosupplies.com/WebRoot/NTS/Shops/24052010-172317/65CE/0425/9EFB/4FDE/39AF/0A28/1066/809C/KSI44FLBL_ml.jpg', '30ml')
+      ('Panthera Black', 'Panthera Ink', 'Black', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Panthera Shadow', 'Panthera Ink', 'Dark Gray', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Eternal Jet Black', 'Eternal Ink', 'Black', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Eternal Chocolate Brown', 'Eternal Ink', 'Brown', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('World Famous London Fog', 'World Famous Ink', 'Gray', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('World Famous Mint Green', 'World Famous Ink', 'Green', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '180ml'),
+      ('Intenze Chrome Yellow', 'Intenze', 'Yellow', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '22ml'),
+      ('Intenze Purple Rain', 'Intenze', 'Purple', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Radiant Bright Orange', 'Radiant Ink', 'Orange', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Radiant Deep Turquoise', 'Radiant Ink', 'Turquoise', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Dynamic Black', 'Dynamic', 'Black', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Dynamic Light Gray', 'Dynamic', 'Light Gray', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Kuro Sumi Carbon', 'Kuro Sumi', 'Carbon Black', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '44ml'),
+      ('Kuro Sumi Gray Wash', 'Kuro Sumi', 'Gray Wash', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Cosmoink Violet', 'Cosmoink', 'Violet', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Cosmoink Midnight Blue', 'Cosmoink', 'Blue', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Panthera Velvet Black', 'Panthera Ink', 'Velvet Black', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Panthera Bright Red', 'Panthera Ink', 'Red', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '88ml'),
+      ('Quantum Ink Silver', 'Quantum Ink', 'Silver', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
+      ('Quantum Ink Rose Pink', 'Quantum Ink', 'Pink', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml')
       ON DUPLICATE KEY UPDATE product_name = VALUES(product_name), manufacturer = VALUES(manufacturer);
 
       INSERT INTO Customer (email, first_name, last_name, phone, User_user_id)

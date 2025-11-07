@@ -1,58 +1,55 @@
-<ion-content [fullscreen]="true">
-  <ng-toast></ng-toast>
+<ng-toast></ng-toast>
 
-  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-    <div
-      class="relative bg-slate-800 text-neutral-50 rounded-2xl shadow-2xl w-[90%] p-6 border border-white/10 animate-modal-in">
-      <h2 class="text-center text-5xl font-pt-serif">Entry</h2>
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+  <div
+    class="relative bg-slate-800 text-neutral-50 rounded-2xl shadow-2xl w-[90%] p-6 border border-white/10 animate-modal-in">
+    <h2 class="text-center text-5xl font-pt-serif">Entry</h2>
 
-      <div>
-        <label for="customer" class="block mb-1 text-3xl font-lato text-neutral-50">Customer</label>
-        <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-800 border-gray-600 text-white">
-          {{reviewEntry.Customer_customer_id}} </p>
-      </div>
+    <div>
+      <label for="customer" class="block mb-1 text-3xl font-lato text-neutral-50">Customer</label>
+      <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-800 border-gray-600 text-white">
+        {{reviewEntry.Customer_customer_id}} </p>
+    </div>
 
-      <div>
-        <label for="date" class="block mb-1 text-3xl font-lato text-neutral-50">Date</label>
-        <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-800 border-gray-600 text-white">
-          {{reviewEntry.entry_date | date:'short'}}</p>
-      </div>
+    <div>
+      <label for="date" class="block mb-1 text-3xl font-lato text-neutral-50">Date</label>
+      <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-800 border-gray-600 text-white">
+        {{reviewEntry.entry_date | date:'short'}}</p>
+    </div>
 
-      <div>
-        <label for="ink" class="block mb-1 text-3xl font-lato text-neutral-50">Inks</label>
-        <div class="bg-gray-50 bg-slate-800 border border-gray-300 border-gray-600 rounded-lg p-3 
+    <div>
+      <label for="ink" class="block mb-1 text-3xl font-lato text-neutral-50">Inks</label>
+      <div class="bg-gray-50 bg-slate-800 border border-gray-300 border-gray-600 rounded-lg p-3 
                   space-y-2 max-h-52 overflow-y-auto">
 
-          <div class="flex">
-            @for (ink of reviewInks; track ink.user_ink_id) {
+        <div class="flex">
+          @for (ink of reviewInks; track ink.user_ink_id) {
 
-            <div class="bg-slate-700 m-2 p-1 basis-auto">
-              <img src="{{ink.image_url}}">
-              <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
-            </div>
-
-            }
+          <div class="bg-slate-700 m-2 p-1 basis-auto">
+            <img src="{{ink.image_url}}" width="75%">
+            <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
           </div>
+
+          }
         </div>
       </div>
+    </div>
 
-      <div>
-        <label class="block mb-1 text-3xl font-lato text-neutral-50">Comments</label>
-        <p>{{reviewEntry.comments}}</p>
-      </div>
+    <div>
+      <label class="block mb-1 text-3xl font-lato text-neutral-50">Comments</label>
+      <p>{{reviewEntry.comments}}</p>
+    </div>
 
 
-      <div class="flex flex-wrap justify-center gap-4 pt-2">
-        <button type="button" (click)="sendCancel()"
-          class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-lg px-4 py-2 text-center">
-          Cancel
-        </button>
-        <button type="submit" (click)="sendConfirm()"
-          class="text-neutral-50 bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
-          Confirm
-        </button>
-      </div>
+    <div class="flex flex-wrap justify-center gap-4 pt-2">
+      <button type="button" (click)="sendCancel()"
+        class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-lg px-4 py-2 text-center">
+        Cancel
+      </button>
+      <button type="submit" (click)="sendConfirm()"
+        class="text-neutral-50 bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
+        Confirm
+      </button>
     </div>
   </div>
-
-</ion-content>
+</div>

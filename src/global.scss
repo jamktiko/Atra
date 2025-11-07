@@ -171,7 +171,15 @@ ion-modal.transparent-modal::part(content) {
   box-shadow: none !important;
 }
 
-/* On small screens Ionic wraps the modal content in .ion-page */
 ion-modal.transparent-modal .ion-page {
   background: transparent !important;
+}
+
+.scrollable {
+  max-height: 20vh;
+  overflow-y: auto;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 0.5em;
 }
