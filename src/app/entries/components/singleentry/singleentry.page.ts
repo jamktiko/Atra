@@ -28,6 +28,10 @@ export class SingleentryPage implements OnInit {
     chosenInks: new FormArray([]),
   });
 
+  getUpdatedInks() {
+    return this.getChosenInkIds();
+  }
+
   singleInkGet: any;
 
   searchInk: string = '';
@@ -42,7 +46,9 @@ export class SingleentryPage implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getUserInks();
+  }
 
   sendClose() {
     this.close.emit();
@@ -64,7 +70,7 @@ export class SingleentryPage implements OnInit {
         chosenEntry.entry_id,
         dateString,
         chosenEntry.comments,
-        chosenEntry.customer_id,
+        chosenEntry.Customer_customer_id,
         chosenEntry.replace_user_ink_id
       )
       .subscribe({
@@ -76,6 +82,18 @@ export class SingleentryPage implements OnInit {
           console.error('Something went wrong: ', err);
         },
       });
+  }
+
+  getUserInks() {
+    this.apiService.getAllUserInks().subscribe({
+      next: (data) => {
+        this.userInks = data;
+        console.log(data);
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
+      },
+    });
   }
 
   filteredInks(): any {
@@ -112,11 +130,8 @@ export class SingleentryPage implements OnInit {
           User_user_id: new FormControl(ink.User_user_id),
         })
       );
-
-      console.log(inks.value);
     } else {
       console.log('Ink already chosen: ', ink.user_ink_id);
-      console.log(inks.value);
     }
   }
 
@@ -149,5 +164,17 @@ export class SingleentryPage implements OnInit {
       },
     });
     return this.singleInkGet;
+  }
+
+  handleInkDelete(inkId: number) {
+    const inks = this.inkGroup.get('chosenInks') as FormArray;
+
+    const index = inks.value.indexOf(inkId);
+
+    if (index > -1) {
+      //angular equivalent of splice: removes item in array where index matches
+      inks.removeAt(index);
+      console.log('Removed ink: ', inkId, 'New chosenInks: ', inks.value);
+    }
   }
 }

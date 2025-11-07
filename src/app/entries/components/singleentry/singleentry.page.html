@@ -80,7 +80,7 @@
 <ion-modal [isOpen]="showUpdateModal" (didDismiss)="toggleUpdateModal(false)">
   <ng-template>
     <div class="scrollable-wide">
-      <div class="fixed h-[90%] inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+      <div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
         <div
           class="relative bg-slate-800 text-neutral-50 rounded-2xl shadow-2xl w-[90%] p-6 border border-white/10 animate-modal-in">
 
@@ -101,8 +101,25 @@
             [(ngModel)]="chosenEntry!.comments" />
 
 
-          <h3>Current inks: </h3>
+          <h2>Add or delete inks</h2>
+          <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchInk" />
+          <div class="scrollable">
 
+            @for (ink of filteredInks(); track ink.ink_id) {
+            <!--Tätä voi muokata-->
+            <div class="bg-slate-950 my-2 p-3">
+              <img src="{{ink.image_url}}" width="20%" />
+
+              {{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}}
+
+              <input class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+                type="button" value="Select" (click)="chooseInk(ink)">
+            </div>
+            }
+
+          </div>
+
+          <h3>Chosen inks:</h3>
           <div class="scrollable">
             @for (ink of chosenEntry!.inks; track ink.id) {
 
@@ -110,13 +127,12 @@
               <img src="{{ink.image_url}}" width="25%" />
               <p>{{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}} </p>
 
-              <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">Delete</button>
+              <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+                (click)="handleInkDelete(ink.id)">Delete</button>
             </div>
 
             }
           </div>
-
-
 
           <div class="justify-center text-center py-2">
             <p class="my-2">Please check before confirming.</p>
