@@ -62,7 +62,7 @@ interface EntryUpdate {
   entry_id: number;
   entry_date: string;
   comments: string;
-  customer_id: number;
+  Customer_customer_id: number;
   replace_user_ink_id: number[];
 }
 
