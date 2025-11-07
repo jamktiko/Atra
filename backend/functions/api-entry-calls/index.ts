@@ -49,6 +49,9 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
     if (!pathParameters?.id) return clientErrorResponse('Missing id');
     if (!event.body) return clientErrorResponse('Missing request body');
 
+    const { entry_date, comments, customer_id, replace_user_ink_id } =
+      JSON.parse(event.body);
+    /*
     // Parse body and extract fields to update
     const {
       entry_date,
@@ -57,14 +60,16 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       add_user_ink_id,
       remove_user_ink_id,
     } = JSON.parse(event.body);
+     */
 
     // Validation
     if (
       entry_date === undefined &&
       comments === undefined &&
       customer_id === undefined &&
-      !Array.isArray(add_user_ink_id) &&
-      !Array.isArray(remove_user_ink_id)
+      !Array.isArray(replace_user_ink_id)
+      //!Array.isArray(add_user_ink_id) &&
+      //!Array.isArray(remove_user_ink_id)
     ) {
       return clientErrorResponse('No fields to update');
     }
@@ -76,8 +81,9 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       entry_date,
       comments,
       customer_id,
-      add_user_ink_id,
-      remove_user_ink_id
+      replace_user_ink_id
+      //add_user_ink_id,
+      //remove_user_ink_id
     );
   }
 
