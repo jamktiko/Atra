@@ -6,7 +6,7 @@
 
 @if (chosenEntry && singleEntryModal) {
 <app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry"></app-singleentry>
-}
+} @else {
 <ion-content [fullscreen]="true">
 
   <ng-toast></ng-toast>
@@ -46,6 +46,7 @@
   }
   }
 </ion-content>
+}
 
 
 

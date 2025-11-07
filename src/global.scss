@@ -171,7 +171,6 @@ ion-modal.transparent-modal::part(content) {
   box-shadow: none !important;
 }
 
-/* On small screens Ionic wraps the modal content in .ion-page */
 ion-modal.transparent-modal .ion-page {
   background: transparent !important;
 }

@@ -76,56 +76,61 @@
 
 <ion-modal [isOpen]="showUpdateModal" (didDismiss)="toggleUpdateModal(false)">
   <ng-template>
-    <div class=" inset-0 bg-black/60 backdrop-blur-sm items-center justify-center ">
+    <div class="scrollable-wide">
+      <div class="fixed h-[90%] inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+        <div
+          class="relative bg-slate-800 text-neutral-50 rounded-2xl shadow-2xl w-[90%] p-6 border border-white/10 animate-modal-in">
 
-      <h2 class=" text-xl text-slate-50 font-bold text-center">
-        You're updating entry {{chosenEntry.entry_id}}
-      </h2>
-      <p>Please note that you can only update comments, date, time and inks that you have used.</p>
+          <h2 class=" text-xl text-slate-50 font-bold text-center">
+            You're updating entry {{chosenEntry.entry_id}}
+          </h2>
+          <p>Please note that you can only update comments, date, time and inks that you have used.</p>
 
-      <label for="date" class="block mb-1 text-lg font-lato text-neutral-50 mx-1">Date</label>
-      <input id="date" type="datetime-local"
-        class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
-        [(ngModel)]="chosenEntry!.entry_date" />
-      <p>Current value: {{chosenEntry!.entry_date | date:'MMM d, y, h:mm' }}</p>
+          <label for="date" class="block mb-1 text-lg font-lato text-neutral-50 mx-1">Date</label>
+          <input id="date" type="datetime-local"
+            class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
+            [(ngModel)]="chosenEntry!.entry_date" />
+          <p>Current value: {{chosenEntry!.entry_date | date:'MMM d, y, h:mm' }}</p>
 
-      <label for="comments" class="block mb-1 text-lg font-lato text-neutral-50 mx-1">Comments</label>
-      <input id="comments" type="text"
-        class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
-        [(ngModel)]="chosenEntry!.comments" />
+          <label for="comments" class="block mb-1 text-lg font-lato text-neutral-50 mx-1">Comments</label>
+          <input id="comments" type="text"
+            class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
+            [(ngModel)]="chosenEntry!.comments" />
 
 
-      <h3>Current inks: </h3>
+          <h3>Current inks: </h3>
 
-      <div class="scrollable">
-        @for (ink of chosenEntry!.inks; track ink.id) {
+          <div class="scrollable">
+            @for (ink of chosenEntry!.inks; track ink.id) {
 
-        <div class="flex bg-slate-900 my-2 p-1 mx-2">
-          <img src="{{ink.image_url}}" width="25%" />
-          <p>{{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}} </p>
+            <div class="flex bg-slate-900 my-2 p-1 mx-2">
+              <img src="{{ink.image_url}}" width="25%" />
+              <p>{{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}} </p>
 
-          <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">Delete</button>
+              <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">Delete</button>
+            </div>
+
+            }
+          </div>
+
+
+
+          <div class="justify-center text-center py-2">
+            <p class="my-2">Please check before confirming.</p>
+            <button type="button"
+              class="text-neutral-50 bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 text-center"
+              (click)="toggleUpdateModal(false)">
+              Cancel
+            </button>
+            <button (click)="updateEntry(chosenEntry)" type="button"
+              class="text-neutral-50 bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 ext-center">
+              Confirm
+            </button>
+          </div>
+
+
         </div>
-
-        }
       </div>
-
-
-
-      <div class="justify-center text-center py-2">
-        <p class="my-2">Please check before confirming.</p>
-        <button type="button"
-          class="text-neutral-50 bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 text-center">
-          Cancel
-        </button>
-        <button (click)="updateEntry(chosenEntry)" type="button"
-          class="text-neutral-50 bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 ext-center">
-          Confirm
-        </button>
-      </div>
-
-
     </div>
-
   </ng-template>
 </ion-modal>
