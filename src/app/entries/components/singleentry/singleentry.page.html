@@ -27,7 +27,7 @@
                   space-y-2 max-h-52 overflow-y-auto">
 
 
-      @for (ink of chosenEntry.inks; track ink.id) {
+      @for (ink of chosenEntry.inks; track ink.user_ink_id) {
       <div class="flex bg-slate-900 my-2 p-1 mx-2">
         <img src="{{ink.image_url}}" width="25%" />
         <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
@@ -79,6 +79,7 @@
 
 <ion-modal [isOpen]="showUpdateModal" (didDismiss)="toggleUpdateModal(false)">
   <ng-template>
+    <ng-toast></ng-toast>
     <div class="scrollable-wide">
       <div class="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
         <div
@@ -106,12 +107,12 @@
 
           <div class="scrollable">
 
-            @for (ink of filteredInks(); track ink.ink_id) {
+            @for (ink of filteredInks(); track ink.user_ink_id) {
             <!--Tätä voi muokata-->
             <div class="flex bg-slate-900 my-2 p-1 mx-2">
               <img src="{{ink.image_url}}" width="20%" />
 
-              {{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}}
+              {{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}} - UserInk ID:{{ink.user_ink_id}}
 
               <input class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
                 type="button" value="Select" (click)="chooseInk(ink)">
@@ -122,18 +123,24 @@
 
           <h3>Chosen inks:</h3>
           <div class="scrollable">
-            @for (ink of chosenEntry!.inks; track ink) {
+            @for (inkCtrl of chosenInks.controls; let i = $index; track inkCtrl.value.user_ink_id) {
+
 
             <div class="flex bg-slate-900 my-2 p-1 mx-2">
-              <img src="{{ink.image_url}}" width="25%" />
-              <p>{{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}} </p>
+              <img src="{{inkCtrl.value.image_url}}" width="25%" />
+              <p>{{inkCtrl.value.product_name}} - {{inkCtrl.value.manufacturer}} - {{inkCtrl.value.color}} - UserInk
+                ID:{{inkCtrl.value.user_ink_id}}</p>
 
               <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
-                (click)="handleInkDelete(ink.id)">Delete</button>
+                (click)="handleInkDelete(i)">Delete</button>
             </div>
 
             }
           </div>
+
+          <button (click)="testHere()"
+            class="text-neutral-50 bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 text-center">TESTAA
+            SLLY TÄSTÄ</button>
 
           <div class="justify-center text-center py-2">
             <p class="my-2">Please check before confirming.</p>
