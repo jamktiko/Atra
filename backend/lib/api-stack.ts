@@ -58,7 +58,6 @@ export class ApiStack extends Stack {
       frontendDomain
     );
 
-    // TODO: test that this works
     // Annetaan luodun APIn url CloudFormation outputtina
     new cdk.CfnOutput(this, 'ApiEndpoint', {
       value: this.api.apiEndpoint,

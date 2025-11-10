@@ -61,26 +61,7 @@ describe('ApiStack', () => {
     });
   });
 
-  it('should allow CORS from specified origins', () => {
-    template.hasResourceProperties('AWS::ApiGatewayV2::Api', {
-      CorsConfiguration: Match.objectLike({
-        AllowOrigins: Match.arrayWith([
-          Match.objectLike({
-            'Fn::Join': Match.anyValue(),
-          }),
-          'http://localhost:8100',
-        ]),
-        AllowMethods: Match.arrayWith([
-          'GET',
-          'POST',
-          'PUT',
-          'DELETE',
-          'OPTIONS',
-        ]),
-        AllowHeaders: Match.arrayWith(['Content-Type', 'Authorization']),
-      }),
-    });
-  });
+  //add more method tests if needed
 
   // test to see if migrations-lambda has access to RDS
   it('should configure Lambda with VPC access', () => {

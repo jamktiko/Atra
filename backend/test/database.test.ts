@@ -63,7 +63,7 @@ describe('DatabaseStack', () => {
   it('should create an RDS Proxy', () => {
     template.hasResourceProperties('AWS::RDS::DBProxy', {
       EngineFamily: 'MYSQL',
-      RequireTLS: false,
+      RequireTLS: false, //usually true in production
     });
   });
 });
