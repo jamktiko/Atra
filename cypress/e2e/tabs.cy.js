@@ -121,17 +121,18 @@ if (environment.apiUrl !== "") {
             .click({ force: true });
         });
       cy.wait(sleeptime);
-
-      //TODO: insert an update here
-
       cy.get("button")
         .contains("Update")
         .should("exist")
         .click({ force: true });
-
-      //TODO: check if update happened
+      cy.get("#date")
+        .should("exist")
+        .type(new Date("9998-01-01").toISOString().slice(0, 16), {
+          force: true,
+        });
+      cy.visit(`${url}/tabs/inks`); //temp fix
       cy.visit(`${url}/tabs/entries`);
-      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true }).should(
+      cy.contains("h3", "Jan 1, 9998", { includeShadowDom: true }).should(
         "exist"
       );
     });
@@ -139,7 +140,7 @@ if (environment.apiUrl !== "") {
     it("Can delete an entry", () => {
       cy.visit(`${url}/tabs/entries`);
       cy.wait(sleeptime);
-      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true })
+      cy.contains("h3", "Jan 1, 9998", { includeShadowDom: true })
         .should("exist")
         .parent()
         .within(() => {
@@ -153,7 +154,7 @@ if (environment.apiUrl !== "") {
         .should("exist")
         .click({ force: true });
       cy.visit(`${url}/tabs/entries`);
-      cy.contains("h3", "Jan 1, 9999", { includeShadowDom: true }).should(
+      cy.contains("h3", "Jan 1, 9998", { includeShadowDom: true }).should(
         "not.exist"
       );
       cy.wait(sleeptime);
