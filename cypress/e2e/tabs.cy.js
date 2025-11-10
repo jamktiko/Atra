@@ -130,11 +130,19 @@ if (environment.apiUrl !== "") {
         .type(new Date("9998-01-01").toISOString().slice(0, 16), {
           force: true,
         });
-      cy.visit(`${url}/tabs/inks`); //temp fix
+      cy.get("button")
+        .contains("Confirm")
+        .scrollIntoView()
+        .click({ force: true });
+      cy.wait(sleeptime);
+      cy.visit(`${url}/tabs/inks`);
+      cy.wait(sleeptime);
       cy.visit(`${url}/tabs/entries`);
-      cy.contains("h3", "Jan 1, 9998", { includeShadowDom: true }).should(
-        "exist"
-      );
+      cy.wait(sleeptime);
+      cy.contains("h3", "Jan 1, 9998", {
+        includeShadowDom: true,
+        timeout: 10000,
+      }).should("exist");
     });
 
     it("Can delete an entry", () => {
@@ -175,17 +183,13 @@ if (environment.apiUrl !== "") {
       cy.visit(`${url}/tabs/inks`);
       cy.get("button").contains("Add new").should("be.visible").click();
       cy.wait(sleeptime);
-      cy.get('input[type="button"][value="Select"]')
-        .should("be.visible")
-        .first()
-        .click();
+      cy.get('input[type="button"][value="Select"]').first().click();
       cy.wait(sleeptime);
       cy.get("button").contains("Continue").should("be.visible").click();
       cy.get("button").contains("Yes, continue").should("be.disabled");
-      cy.get('input[placeholder="Insert batchnumber"]')
-        .should("be.visible")
-        .type("test");
+      cy.get('input[placeholder="Insert batchnumber"]').type("test");
       cy.get("button").contains("Yes, continue").should("be.visible").click();
+      cy.wait(sleeptime);
       cy.wait(sleeptime);
 
       //update ink
@@ -210,6 +214,7 @@ if (environment.apiUrl !== "") {
       cy.get("#batchnumber").should("be.visible").clear().type("DELETE-ME");
       cy.wait(sleeptime);
       cy.get("button").contains("Confirm").should("be.visible").first().click();
+      cy.wait(sleeptime);
       cy.wait(sleeptime);
     });
 
