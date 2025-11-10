@@ -1,6 +1,13 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, FormArray, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormsModule,
+  FormArray,
+  FormControl,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { IonContent, IonModal } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import {
@@ -24,6 +31,7 @@ import { IonSearchbar } from '@ionic/angular/standalone';
     NgToastComponent,
     IonModal,
     IonSearchbar,
+    ReactiveFormsModule,
   ],
 })
 export class SingleentryPage implements OnInit {
@@ -53,21 +61,36 @@ export class SingleentryPage implements OnInit {
     private router: Router
   ) {}
 
+  testHere() {
+    console.log('Inks to submit: ', this.chosenInks.value);
+  }
+
   ngOnInit() {
     this.getUserInks();
+  }
 
-    this.inkGroup = new FormGroup({
-      chosenInks: new FormArray([]),
-    });
-
+  ionViewWillEnter() {
+    console.log('Ion view changed');
     this.initializeChosenInks();
   }
 
   initializeChosenInks() {
     const formArray = this.chosenInks;
-    this.chosenEntry.inks.forEach((ink: any) => {
-      formArray.push(new FormControl(ink.user_ink_id));
-    });
+    formArray.clear();
+
+    if (this.chosenEntry) {
+      this.chosenEntry.inks.forEach((ink) => {
+        formArray.push(
+          new FormGroup({
+            user_ink_id: new FormControl(ink.user_ink_id),
+            product_name: new FormControl(ink.product_name),
+            manufacturer: new FormControl(ink.manufacturer),
+            color: new FormControl(ink.color),
+            image_url: new FormControl(ink.image_url),
+          })
+        );
+      });
+    }
   }
 
   sendClose() {
@@ -80,7 +103,12 @@ export class SingleentryPage implements OnInit {
   }
 
   toggleUpdateModal(show: boolean) {
-    this.showUpdateModal = show;
+    if (show) {
+      this.showUpdateModal = show;
+      this.initializeChosenInks();
+    } else {
+      this.showUpdateModal = show;
+    }
   }
 
   submit(chosenEntry: any) {
@@ -97,9 +125,10 @@ export class SingleentryPage implements OnInit {
       .subscribe({
         next: (data) => {
           this.chosenEntry = data;
-          console.log('Update success!');
-          this.toggleUpdateModal(false);
+          console.log('Update success, entry id: ', data.entry_id);
+          console.log('Whole entry: ', data);
           this.sendClose();
+          this.toggleUpdateModal(false);
           this.toast.success('Entry updated successfully');
           this.router.navigate(['/tabs/entries']);
         },
@@ -136,7 +165,9 @@ export class SingleentryPage implements OnInit {
     const inks = this.chosenInks;
 
     if (
-      !inks.value.some((chosenInk: any) => chosenInk.id === ink.user_ink_id)
+      !inks.value.some(
+        (chosenInk: any) => chosenInk.user_ink_id === ink.user_ink_id
+      )
     ) {
       inks.push(
         new FormGroup({
@@ -147,9 +178,9 @@ export class SingleentryPage implements OnInit {
           image_url: new FormControl(ink.image_url),
         })
       );
-      this.chosenEntry.inks.push(ink);
     } else {
       console.log('Ink already chosen: ', ink.user_ink_id);
+      this.toast.danger('Ink already chosen!');
     }
   }
 
@@ -180,16 +211,13 @@ export class SingleentryPage implements OnInit {
   //   return this.singleInkGet;
   // }
 
-  handleInkDelete(user_ink_id: number) {
+  handleInkDelete(index: number) {
     const inksArray = this.chosenInks;
+    const user_ink_id = this.chosenInks.value.user_ink_id;
 
-    const index = inksArray.value.indexOf(user_ink_id);
-
-    if (index > -1) {
-      inksArray.removeAt(index);
-      this.chosenEntry.inks = this.chosenEntry.inks.filter(
-        (ink) => ink.user_ink_id !== user_ink_id
-      );
-    }
+    inksArray.removeAt(index);
+    this.chosenEntry.inks = this.chosenEntry.inks.filter(
+      (ink) => ink.user_ink_id !== user_ink_id
+    );
   }
 }
