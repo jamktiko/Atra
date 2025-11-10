@@ -71,6 +71,7 @@ export class EntriesPage implements OnInit {
 
   handleClosed() {
     this.singleEntryModal = false;
+    this.loadEntries();
   }
 
   chooseEntry(show: boolean, entryId: number) {

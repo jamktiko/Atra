@@ -201,16 +201,6 @@ export class SingleentryPage implements OnInit {
     }
   }
 
-  // getInk(id: number) {
-  //   console.log('Get ink clicked, id-number: ', id);
-  //   this.apiService.getOneUserInk(id).subscribe({
-  //     next: (data) => {
-  //       this.singleInkGet = data;
-  //     },
-  //   });
-  //   return this.singleInkGet;
-  // }
-
   handleInkDelete(index: number) {
     const inksArray = this.chosenInks;
     const user_ink_id = this.chosenInks.value.user_ink_id;
