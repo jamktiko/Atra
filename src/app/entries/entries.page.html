@@ -5,7 +5,8 @@
 </ion-header>
 
 @if (chosenEntry && singleEntryModal) {
-<app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry"></app-singleentry>
+<app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry" [entries]="entries"
+  [groupedEntries]="groupedEntries"></app-singleentry>
 } @else {
 <ion-content [fullscreen]="true">
 
