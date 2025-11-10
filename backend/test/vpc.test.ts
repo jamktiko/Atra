@@ -26,6 +26,7 @@ describe('VpcStack', () => {
     });
   });
 
+  //may be unnecessary in the future, depending on if we use NAT Gateway or not
   it('creates NAT Gateway for private subnet', () => {
     template.resourceCountIs('AWS::EC2::NatGateway', 1);
   });
