@@ -6,7 +6,7 @@ import { Construct } from 'constructs';
 enum ParameterNames {
   cognitoUserPoolId = '/cognito/userPoolId',
   cognitoClientId = '/cognito/clientId',
-  rdsProxyEndpoint = '/rds/proxy/endpoint',
+  rdsInstanceEndpoint = '/rds/instance/endpoint',
   rdsSecurityGroupId = '/sg/rds',
   lambdaSecurityGroupId = '/sg/lambda',
   distributionDomainName = '/frontend/distributionDomainName',
@@ -50,12 +50,12 @@ export default class Parameters {
     return this.getParameter(ParameterNames.cognitoClientId);
   }
 
-  public set rdsProxyEndpoint(value: string) {
-    this.setParameter(ParameterNames.rdsProxyEndpoint, value);
+  public set rdsInstanceEndpoint(value: string) {
+    this.setParameter(ParameterNames.rdsInstanceEndpoint, value);
   }
 
-  public get rdsProxyEndpoint() {
-    return this.getParameter(ParameterNames.rdsProxyEndpoint);
+  public get rdsInstanceEndpoint() {
+    return this.getParameter(ParameterNames.rdsInstanceEndpoint);
   }
 
   public set rdsSecurityGroupId(value: string) {

@@ -21,13 +21,13 @@ interface ApiStackProps extends StackProps {
 
 // API Stack joka luo API Gatewayn ja Lambda funktion
 // API GW käyttää cognitoa käyttäjien autentikointiin
-// lambda funktio hoitaa CRUD operaatiot Proxyn kautta
+// lambda funktio hoitaa CRUD operaatiot tietokantaan
 export class ApiStack extends Stack {
   private api: apigw2.HttpApi;
   private vpc: ec2.IVpc;
   private lambdaSecurityGroup: ec2.ISecurityGroup;
   private rdsSecretName: string;
-  private rdsProxyEndpoint: string;
+  private rdsInstanceEndpoint: string;
 
   constructor(scope: Construct, id: string, props: ApiStackProps) {
     super(scope, id, props);
@@ -37,7 +37,7 @@ export class ApiStack extends Stack {
     const { vpc, rdsSecretName } = props;
     this.vpc = vpc;
     this.rdsSecretName = rdsSecretName;
-    this.rdsProxyEndpoint = ssm.rdsProxyEndpoint;
+    this.rdsInstanceEndpoint = ssm.rdsInstanceEndpoint;
 
     this.lambdaSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(
       this,
@@ -116,7 +116,7 @@ export class ApiStack extends Stack {
       .setDescription('Run DB migrations and seed test data')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -133,7 +133,7 @@ export class ApiStack extends Stack {
       .setDescription('Run DB drop schema to kill all data')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -153,7 +153,7 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for customer management')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
         //DEMO_USER_ID: 'demo-user-123', // DEMOA VARTEN !!!!
       })
       .allowSecretsManager()
@@ -188,7 +188,7 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for getting public ink(s)')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -217,7 +217,7 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for managing user ink(s)')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -251,7 +251,7 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for managing entries')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)

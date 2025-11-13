@@ -17,7 +17,7 @@ interface CognitoStackProps extends StackProps {
 export class CognitoStack extends Stack {
   private vpc: ec2.IVpc;
   private rdsSecretName: string;
-  private rdsProxyEndpoint: string;
+  private rdsInstanceEndpoint: string;
   private lambdaSecurityGroup: ec2.ISecurityGroup;
   private postConfirmationFn: any;
   constructor(scope: Construct, id: string, props: CognitoStackProps) {
@@ -26,7 +26,7 @@ export class CognitoStack extends Stack {
     const { vpc, rdsSecretName } = props;
     this.vpc = vpc;
     this.rdsSecretName = rdsSecretName;
-    this.rdsProxyEndpoint = ssm.rdsProxyEndpoint;
+    this.rdsInstanceEndpoint = ssm.rdsInstanceEndpoint;
 
     this.lambdaSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(
       this,
@@ -45,7 +45,7 @@ export class CognitoStack extends Stack {
       )
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)

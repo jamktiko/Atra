@@ -17,7 +17,7 @@ interface DatabaseStackProps extends StackProps {
   instanceSize: ec2.InstanceSize;
 }
 
-// Database Stack joka luo RDS instanssin ja RDS Proxyn
+// Database Stack that creates RDS instance
 export class DatabaseStack extends Stack {
   constructor(scope: Construct, id: string, props: DatabaseStackProps) {
     super(scope, id, props);
@@ -39,7 +39,7 @@ export class DatabaseStack extends Stack {
     const subnetType = ec2.SubnetType.PRIVATE_ISOLATED;
 
     // Kutsutaan luontimetodeja kontsruktorissa
-    // RDS instanssi ja Proxy luodaan omissa metodeissaan
+    // RDS instanssi omassa netodissa
     // jotta koodi pysyy siistimpänä ja selkeämpänä
     // Metodit on määritelty tämän classin sisällä private metodeina!
     const instance = this.createInstance(
@@ -52,14 +52,7 @@ export class DatabaseStack extends Stack {
       instanceSize
     );
 
-    const proxy = this.createProxy(
-      'RdsProxy',
-      instance,
-      vpc,
-      rdsSecurityGroup,
-      subnetType
-    );
-    ssm.rdsProxyEndpoint = proxy.endpoint;
+    ssm.rdsInstanceEndpoint = instance.dbInstanceEndpointAddress;
   }
 
   // Metodit on määritelty private, koska niitä ei tarvita stackin ulkopuolella
@@ -85,6 +78,7 @@ export class DatabaseStack extends Stack {
       secretName: rdsSecretName,
       excludeCharacters: '"@/\\',
     });
+
     const instance = new rds.DatabaseInstance(this, 'AtraDatabase', {
       databaseName,
       engine,
@@ -95,24 +89,9 @@ export class DatabaseStack extends Stack {
       publiclyAccessible: false,
       instanceType,
       multiAz: false,
+      removalPolicy: RemovalPolicy.DESTROY,
+      deletionProtection: false,
     });
     return instance;
-  }
-
-  private createProxy(
-    name: string,
-    instance: rds.DatabaseInstance,
-    vpc: ec2.Vpc,
-    rdsSecurityGroup: ec2.ISecurityGroup,
-    subnetType: ec2.SubnetType
-  ) {
-    const proxy = instance.addProxy(name, {
-      vpc,
-      secrets: instance.secret ? [instance.secret] : [], // käyttää samaa secretia kuin instanssi
-      securityGroups: [rdsSecurityGroup],
-      requireTLS: false, // ei vaadi TLS:ää (deviin, prodissa yleensä true)
-      vpcSubnets: { subnetType },
-    });
-    return proxy;
   }
 }
