@@ -14,13 +14,13 @@ export async function listCustomers(userId: string) {
   return successResponse(rows);
 }
 
-export async function getCustomer(customer_id: string) {
+export async function getCustomer(customer_id: string, userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
     `SELECT c.customer_id, c.first_name, c.last_name, c.email, c.notes
     FROM Customer c
-    WHERE c.customer_id = ?`,
-    [customer_id]
+    WHERE c.customer_id = ? AND c.User_user_id = ?`,
+    [customer_id, userId]
   );
 
   if ((rows as any).length === 0) {
@@ -78,7 +78,7 @@ export async function deleteCustomer(customer_id: string) {
 }
 */
 
-export async function deleteCustomer(customer_id: string) {
+export async function deleteCustomer(customer_id: string, userId: string) {
   if (!customer_id) {
     return clientErrorResponse('Missing customer id');
   }
@@ -86,8 +86,8 @@ export async function deleteCustomer(customer_id: string) {
   try {
     const pool = await getPool();
     const [result] = await pool.query(
-      'DELETE FROM Customer WHERE customer_id = ?',
-      [customer_id]
+      'DELETE FROM Customer WHERE customer_id = ? AND User_user_id = ?',
+      [customer_id, userId]
     );
     const { affectedRows } = result as any;
 
@@ -103,7 +103,11 @@ export async function deleteCustomer(customer_id: string) {
 }
 
 // Tämä on erittäin huono tapa tehdä päivitys --> pitääkö siirtyä ORMeihin vai onko joku toinen tapa??
-export async function updateCustomer(customer_id: string, body: string | null) {
+export async function updateCustomer(
+  customer_id: string,
+  userId: string,
+  body: string | null
+) {
   const pool = await getPool();
   let data: {
     email?: string;
@@ -143,13 +147,13 @@ export async function updateCustomer(customer_id: string, body: string | null) {
     return clientErrorResponse('No fields to update');
   }
 
-  values.push(customer_id);
+  values.push(customer_id, userId);
 
   // Update kysely
   const [result] = await pool.query(
     `UPDATE Customer
      SET ${fields.join(', ')}
-     WHERE customer_id = ?`,
+     WHERE customer_id = ? AND User_user_id = ?`,
     values
   );
 
@@ -162,8 +166,8 @@ export async function updateCustomer(customer_id: string, body: string | null) {
   const [rows] = await pool.query(
     `SELECT customer_id, email, first_name, last_name, phone
      FROM Customer
-     WHERE customer_id = ?`,
-    [customer_id]
+     WHERE customer_id = ? AND User_user_id = ?`,
+    [customer_id, userId]
   );
 
   const updatedCustomer = (rows as any[])[0];

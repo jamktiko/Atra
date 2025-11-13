@@ -317,6 +317,9 @@ export async function updateEntry(
         `DELETE FROM UserInk_has_Entry WHERE Entry_entry_id = ?`,
         [entry_id]
       );
+      for (const inkId of replace_user_ink_id) {
+        await insertAssociation(conn, inkId, entry_id);
+      }
       if (replace_user_ink_id.length > 0) {
         const inkValues = replace_user_ink_id.map((id) => [id, entry_id]);
         await conn.query(

@@ -32,7 +32,7 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   }
 
   if (httpMethod === 'DELETE' && routeKey === '/userInk/{id}') {
-    return userInk.deleteUserInk(pathParameters!.id!);
+    return userInk.deleteUserInk(pathParameters!.id!, userId!);
   }
 
   if (httpMethod === 'PUT' && routeKey === '/userInk/{id}') {

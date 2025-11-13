@@ -44,17 +44,17 @@ export class ApiStack extends Stack {
       'LambdaSG',
       ssm.lambdaSecurityGroupId
     );
-    //const cognitoUserPool = cognito.UserPool.fromUserPoolId(
-    //this,
-    //'UserPool',
-    //ssm.cognitoUserPoolId
-    //);
+    const cognitoUserPool = cognito.UserPool.fromUserPoolId(
+      this,
+      'UserPool',
+      ssm.cognitoUserPoolId
+    );
 
     // Kutsutaan apin luontimetodia ja reittien metodia
     this.api = this.createApi(
       'AtraApi',
-      //cognitoUserPool,
-      //ssm.cognitoClientId,
+      cognitoUserPool,
+      ssm.cognitoClientId,
       frontendDomain
     );
 
@@ -77,22 +77,21 @@ export class ApiStack extends Stack {
 
   private createApi(
     name: string,
-    //cognitoUserPool: cognito.IUserPool,
-    //cognitoClientId: string,
+    cognitoUserPool: cognito.IUserPool,
+    cognitoClientId: string,
     frontendDomain: string
   ) {
-    //const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
+    const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
 
     // JWT authorizer Cognito User Poolia varten
     // Authorizer tarkistaa, että token on validi ja peräisin oikeasta user poolista
     // Audience on client ID, eli siis sovellus, joka käyttää kyseistä user poolia
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! kommentoitu pois authorizer demoa varten!!
-    //const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
-    //jwtAudience: [cognitoClientId],
-    //});
+    const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
+      jwtAudience: [cognitoClientId],
+    });
     const api = new apigw2.HttpApi(this, 'AtraApi', {
       apiName: name,
-      //defaultAuthorizer: authorizer,
+      defaultAuthorizer: authorizer,
 
       // tässä määritellään CORS asetukset, eli sallitut domainit, metodit ja headerit
       // jotta frontti voi tehdä pyyntöjä apille
@@ -106,7 +105,7 @@ export class ApiStack extends Stack {
           apigw2.CorsHttpMethod.DELETE,
           apigw2.CorsHttpMethod.OPTIONS,
         ],
-        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`],
+        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`], // localhost pois kun ei tarvita enää testaukseen
       },
     });
     return api;
@@ -155,7 +154,7 @@ export class ApiStack extends Stack {
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
         RDS_PROXY_HOST: this.rdsProxyEndpoint,
-        DEMO_USER_ID: 'demo-user-123', // DEMOA VARTEN !!!!
+        //DEMO_USER_ID: 'demo-user-123', // DEMOA VARTEN !!!!
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
