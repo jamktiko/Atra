@@ -3,7 +3,10 @@ import { CognitoStack } from '../lib/cognito-stack';
 import { Match, Template } from 'aws-cdk-lib/assertions';
 
 const app = new App();
-const stack = new CognitoStack(app, 'TestStack');
+const stack = new CognitoStack(app, 'TestStack', {
+  vpc: {} as any, // tai mockattu VPC
+  rdsSecretName: 'dummy-secret',
+});
 const template = Template.fromStack(stack);
 
 describe('CognitoStack', () => {
