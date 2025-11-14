@@ -60,10 +60,11 @@ describe('DatabaseStack', () => {
   });
 
   // tests that an RDS Proxy is created with the correct properties
-  it('should create an RDS Proxy', () => {
+  //commented out due to RDS Proxy not being included in Free Tier
+  /*   it('should create an RDS Proxy', () => {
     template.hasResourceProperties('AWS::RDS::DBProxy', {
       EngineFamily: 'MYSQL',
       RequireTLS: false, //usually true in production
     });
-  });
+  }); */
 });

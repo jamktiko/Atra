@@ -1,12 +1,1 @@
-{
-  "availability-zones:account=888245942172:region=eu-north-1": [
-    "eu-north-1a",
-    "eu-north-1b",
-    "eu-north-1c"
-  ],
-  "ssm:account=888245942172:parameterName=/sg/rds:region=eu-north-1": "sg-01e9225e948284a8e",
-  "ssm:account=888245942172:parameterName=/sg/lambda:region=eu-north-1": "sg-004ff2d0ed3e609f2",
-  "ssm:account=888245942172:parameterName=/rds/proxy/endpoint:region=eu-north-1": "databaseatradatabaserdsproxye574338f.proxy-cv4eaukuofjq.eu-north-1.rds.amazonaws.com",
-  "ssm:account=888245942172:parameterName=/cognito/userPoolId:region=eu-north-1": "eu-north-1_ilxt458D2",
-  "ssm:account=888245942172:parameterName=/cognito/clientId:region=eu-north-1": "3c0fu69vtvjup35qhsni1qd67k"
-}
+{}

@@ -36,20 +36,21 @@ jobs:
       - name: Deploy backend with CDK
         run: |
           cd backend
+          cdk context --clear #should fix any possible cache problems
           cdk deploy vpc --require-approval never
           cdk deploy database --require-approval never
           cdk deploy frontend --require-approval never
           # cdk deploy cognito --require-approval never # Temporarily disabled
           cdk deploy api --require-approval never
-      - name: Fetch API url from CloudfFormation
-        run: |
-          API_URL=$(aws cloudformation describe-stacks --stack-name api \
-          --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" --output text)
-          echo "API_URL=$API_URL" >> $GITHUB_ENV
-      - name: Inject API URL into environment.prod.ts
-        run: |
-          sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" src/environments/environment.prod.ts
-          sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
+      # - name: Fetch API url from CloudfFormation
+      #   run: |
+      #    API_URL=$(aws cloudformation describe-stacks --stack-name api \
+      #     --query "Stacks[0].Outputs[?OutputKey=='ApiEndpoint'].OutputValue" --output text)
+      #     echo "API_URL=$API_URL" >> $GITHUB_ENV
+      # - name: Inject API URL into environment.prod.ts
+      #   run: |
+      #     sed -i "s|apiUrl: ''|apiUrl: \"${API_URL}\"|" src/environments/environment.prod.ts
+      #     sed -i "s|apiUrl: '.*'|apiUrl: '${API_URL}'|" src/environments/environment.ts
       - name: Build Ionic projects
         run: ionic build --prod
       #- name: Run e2e tests
