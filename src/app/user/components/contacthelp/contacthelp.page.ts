@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-contacthelp',
   templateUrl: './contacthelp.page.html',
-  styleUrls: ['./contacthelp.page.scss'],
+  styleUrls: ['./contacthelp.page.css'],
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule],
 })

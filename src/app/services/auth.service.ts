@@ -60,6 +60,10 @@ export class AuthService {
     return result.isAuthenticated;
   }
 
+  /*
+   * Saves refreshToken in the SecureStorage
+   */
+
   async storeRefreshToken(refreshToken: string) {
     await SecureStoragePlugin.set({
       key: 'refresh_token',

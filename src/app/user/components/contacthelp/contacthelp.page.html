@@ -1,9 +1,75 @@
-<ion-content [fullscreen]="true">
+<ion-content>
 
-  <h2> Contacthelp </h2>
+  <button class="px-4 py-2 mx-30 my-2 bg-slate-700 text-neutral-50 rounded-lg" (click)="return()">Back to
+    Settings</button>
 
-  <button
-    class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
-    (click)="return()">Back to Settings</button>
+
+  <form class="">
+
+    <div class="py-10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        <div class="grid lg:grid-cols-2 grid-cols-1">
+
+          <div class="lg:mb-0 mb-10 ">
+
+            <div class="group w-full h-full">
+              <div class="relative h-64 sm:h-full">
+
+                <img src="../../../../assets/img/background1.png" alt="img"
+                  class="w-full h-full lg:rounded-l-2xl rounded-2xl bg-blend-multiply bg-slate-700" />
+
+                <h1 class="text-white text-3xl sm:text-4xl font-bold absolute top-6 left-6 sm:top-11 sm:left-11">Contact
+                  us
+                </h1>
+                <div class="absolute bottom-0 w-full lg:p-11 p-5">
+                  <div class="bg-neutral-50 rounded-lg p-6 block">
+
+                    <a class="flex items-center mb-6">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48">
+                        <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
+                          <path d="M44 24V9H24H4V24V39H24" />
+                          <path fill="#06422f" d="M35 39L43 32L39 28L31 35V39H35Z" />
+                          <path d="M4 9L24 24L44 9" />
+                        </g>
+                      </svg>
+                      <h2 class="text-black text-base font-normal leading-6 ml-5">atraproject@outlook.com</h2>
+                    </a>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-neutral-50 p-5 lg:p-11 lg:rounded-r-2xl rounded-2xl">
+            <h2 class="text-slate-500 text-4xl font-bold mb-11">Send Us A Message</h2>
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400  shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-slate-10 focus:outline-none pl-4 mb-10"
+              placeholder="Name">
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-slate-10 focus:outline-none pl-4 mb-10"
+              placeholder="Email">
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-slate-10 focus:outline-none pl-4 mb-10"
+              placeholder="Phone">
+            <div class="mb-10">
+              <h4 class="text-slate-800 text-lg font-normal leading-7 mb-4 overscroll-contain">Please describe your
+                issue.
+                We'll get back
+                to
+                you as soon as possible.</h4>
+
+            </div>
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400 bg-transparent text-lg shadow-sm font-normal leading-7 rounded-full border border-slate-300 focus:outline-none pl-4 mb-10"
+              placeholder="Message">
+            <button class="w-full h-12 text-white text-xl leading-6 rounded-full bg-slate-600">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
 
 </ion-content>
