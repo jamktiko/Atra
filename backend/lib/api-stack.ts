@@ -21,13 +21,13 @@ interface ApiStackProps extends StackProps {
 
 // API Stack joka luo API Gatewayn ja Lambda funktion
 // API GW käyttää cognitoa käyttäjien autentikointiin
-// lambda funktio hoitaa CRUD operaatiot Proxyn kautta
+// lambda funktio hoitaa CRUD operaatiot tietokantaan
 export class ApiStack extends Stack {
   private api: apigw2.HttpApi;
   private vpc: ec2.IVpc;
   private lambdaSecurityGroup: ec2.ISecurityGroup;
   private rdsSecretName: string;
-  private rdsProxyEndpoint: string;
+  private rdsInstanceEndpoint: string;
 
   constructor(scope: Construct, id: string, props: ApiStackProps) {
     super(scope, id, props);
@@ -37,24 +37,24 @@ export class ApiStack extends Stack {
     const { vpc, rdsSecretName } = props;
     this.vpc = vpc;
     this.rdsSecretName = rdsSecretName;
-    this.rdsProxyEndpoint = ssm.rdsProxyEndpoint;
+    this.rdsInstanceEndpoint = ssm.rdsInstanceEndpoint;
 
     this.lambdaSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(
       this,
       'LambdaSG',
       ssm.lambdaSecurityGroupId
     );
-    //const cognitoUserPool = cognito.UserPool.fromUserPoolId(
-    //this,
-    //'UserPool',
-    //ssm.cognitoUserPoolId
-    //);
+    const cognitoUserPool = cognito.UserPool.fromUserPoolId(
+      this,
+      'UserPool',
+      ssm.cognitoUserPoolId
+    );
 
     // Kutsutaan apin luontimetodia ja reittien metodia
     this.api = this.createApi(
       'AtraApi',
-      //cognitoUserPool,
-      //ssm.cognitoClientId,
+      cognitoUserPool,
+      ssm.cognitoClientId,
       frontendDomain
     );
 
@@ -76,22 +76,21 @@ export class ApiStack extends Stack {
 
   private createApi(
     name: string,
-    //cognitoUserPool: cognito.IUserPool,
-    //cognitoClientId: string,
+    cognitoUserPool: cognito.IUserPool,
+    cognitoClientId: string,
     frontendDomain: string
   ) {
-    //const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
+    const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
 
     // JWT authorizer Cognito User Poolia varten
     // Authorizer tarkistaa, että token on validi ja peräisin oikeasta user poolista
     // Audience on client ID, eli siis sovellus, joka käyttää kyseistä user poolia
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! kommentoitu pois authorizer demoa varten!!
-    //const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
-    //jwtAudience: [cognitoClientId],
-    //});
+    const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
+      jwtAudience: [cognitoClientId],
+    });
     const api = new apigw2.HttpApi(this, 'AtraApi', {
       apiName: name,
-      //defaultAuthorizer: authorizer,
+      defaultAuthorizer: authorizer,
 
       // tässä määritellään CORS asetukset, eli sallitut domainit, metodit ja headerit
       // jotta frontti voi tehdä pyyntöjä apille
@@ -105,7 +104,7 @@ export class ApiStack extends Stack {
           apigw2.CorsHttpMethod.DELETE,
           apigw2.CorsHttpMethod.OPTIONS,
         ],
-        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`],
+        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`], // localhost pois kun ei tarvita enää testaukseen
       },
     });
     return api;
@@ -116,7 +115,7 @@ export class ApiStack extends Stack {
       .setDescription('Run DB migrations and seed test data')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -133,7 +132,7 @@ export class ApiStack extends Stack {
       .setDescription('Run DB drop schema to kill all data')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -153,8 +152,8 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for customer management')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
-        DEMO_USER_ID: 'demo-user-123', // DEMOA VARTEN !!!!
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
+        //DEMO_USER_ID: 'demo-user-123', // DEMOA VARTEN !!!!
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -188,7 +187,7 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for getting public ink(s)')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -217,7 +216,7 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for managing user ink(s)')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
@@ -251,7 +250,7 @@ export class ApiStack extends Stack {
       .setDescription('CRUD operations for managing entries')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
-        RDS_PROXY_HOST: this.rdsProxyEndpoint,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)

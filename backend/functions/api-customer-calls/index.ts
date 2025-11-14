@@ -15,24 +15,20 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   const routeKey = event.routeKey.split(' ')[1];
   const pathParameters = event.pathParameters;
   // käyttäjän ID löytyy JWT tokenista, sub on käyttäjän uniikki tunniste Cognitossa
-  //const userId = event.requestContext.authorizer.jwt.claims.sub as string;
-  const userId = process.env.DEMO_USER_ID || 'demo-user-123';
+  const userId = event.requestContext.authorizer.jwt.claims.sub as string;
+  //const userId = process.env.DEMO_USER_ID || 'demo-user-123';
 
   if (httpMethod === 'GET' && routeKey === '/customer') {
     return customer.listCustomers(userId);
   }
 
   if (httpMethod === 'GET' && routeKey === '/customer/{id}') {
-    return customer.getCustomer(pathParameters!.id!);
+    return customer.getCustomer(pathParameters!.id!, userId);
   }
 
-  if (httpMethod === 'PUT' && routeKey === '/customer/{id}') {
-    return customer.updateCustomer(pathParameters!.id!, event.body!);
+  if (httpMethod === 'POST' && routeKey === '/customer') {
+    return customer.addCustomer(userId, event.body!);
   }
-
-  //if (httpMethod === 'DELETE' && routeKey === '/customer/{id}') {
-  //return customer.deleteCustomer(pathParameters!.id!);
-  //}
 
   if (httpMethod === 'DELETE' && routeKey === '/customer/{id}') {
     const id = pathParameters?.id;
@@ -43,12 +39,13 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       );
       return clientErrorResponse('Missing id parameter');
     }
-    return customer.deleteCustomer(id);
+    return customer.deleteCustomer(id, userId);
   }
 
-  if (httpMethod === 'POST' && routeKey === '/customer') {
-    return customer.addCustomer(userId, event.body!);
+  if (httpMethod === 'PUT' && routeKey === '/customer/{id}') {
+    return customer.updateCustomer(pathParameters!.id!, userId, event.body!);
   }
+
   return notAllowedResponse();
 
   /* lisää reitityksiä */

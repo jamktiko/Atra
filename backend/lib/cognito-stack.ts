@@ -1,15 +1,55 @@
 import * as cdk from 'aws-cdk-lib';
-import { Stack, StackProps, aws_cognito as cognito } from 'aws-cdk-lib';
+import {
+  Stack,
+  StackProps,
+  aws_cognito as cognito,
+  aws_ec2 as ec2,
+} from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import { Parameters } from '../helpers';
+import { Parameters, LambdaBuilder } from '../helpers';
+
+interface CognitoStackProps extends StackProps {
+  vpc: ec2.IVpc;
+  rdsSecretName: string;
+}
 
 // Cognito Stack joka luo User Poolin ja User Pool Clientin
 export class CognitoStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
+  private vpc: ec2.IVpc;
+  private rdsSecretName: string;
+  private rdsInstanceEndpoint: string;
+  private lambdaSecurityGroup: ec2.ISecurityGroup;
+  private postConfirmationFn: any;
+  constructor(scope: Construct, id: string, props: CognitoStackProps) {
     super(scope, id, props);
-
     const ssm = new Parameters(this);
+    const { vpc, rdsSecretName } = props;
+    this.vpc = vpc;
+    this.rdsSecretName = rdsSecretName;
+    this.rdsInstanceEndpoint = ssm.rdsInstanceEndpoint;
+
+    this.lambdaSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(
+      this,
+      'LambdaSG',
+      ssm.lambdaSecurityGroupId
+    );
+
     const frontendDomain = ssm.distributionDomainName;
+
+    this.postConfirmationFn = new LambdaBuilder(
+      this,
+      'cognito-post-confirmation'
+    )
+      .setDescription(
+        'Handles Cognito Post Confirmation trigger to create user in DB'
+      )
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
 
     const userPool = this.createUserPool();
     const userPoolClient = this.createUserPoolClient(userPool, frontendDomain);
@@ -21,10 +61,13 @@ export class CognitoStack extends Stack {
   // Luo User Poolin (eli käyttäjätietokanta)
   createUserPool() {
     const userPool = new cognito.UserPool(this, 'UserPool', {
-      userPoolName: 'users',
+      userPoolName: 'AtraAppUsers',
       selfSignUpEnabled: true, // salli käyttäjien itse rekisteröityä
       signInAliases: { email: true }, // kirjaudu sisään sähköpostilla
       autoVerify: { email: true }, // vahvista sähköposti automaattisesti
+      lambdaTriggers: {
+        postConfirmation: this.postConfirmationFn,
+      },
       passwordPolicy: {
         // salasanapolitiikka
         minLength: 8,
@@ -34,6 +77,7 @@ export class CognitoStack extends Stack {
         requireDigits: true,
       },
       removalPolicy: cdk.RemovalPolicy.DESTROY, // tämä tarkoittaa, että user pool poistetaan stackin poistamisen yhteydessä -> ei tuotantokäytössä (RETAIN)!
+      deletionProtection: false, // poista suojaus, jotta pool voidaan poistaa
       //accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
       //userVerification: {
       // emailSubject: 'Welcome to Atra App!',

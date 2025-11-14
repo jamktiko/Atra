@@ -67,12 +67,12 @@ export async function addUserInk(userId: string, body: any) {
 }
 
 // Poistetaan userink
-export async function deleteUserInk(user_ink_id: string) {
+export async function deleteUserInk(user_ink_id: string, userId: string) {
   try {
     const pool = await getPool();
     const [result] = await pool.query(
-      'DELETE FROM UserInk WHERE user_ink_id = ?',
-      [user_ink_id]
+      'DELETE FROM UserInk ui WHERE user_ink_id = ? AND ui.User_user_id = ?',
+      [user_ink_id, userId]
     );
     const { affectedRows } = result as any;
 

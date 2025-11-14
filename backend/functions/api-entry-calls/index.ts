@@ -8,8 +8,8 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   const httpMethod = event.requestContext.http.method;
   const routeKey = event.routeKey.split(' ')[1];
   const pathParameters = event.pathParameters;
-  //const userId = event.requestContext.authorizer.jwt.claims.sub as string;
-  const userId = process.env.DEMO_USER_ID || 'demo-user-123';
+  const userId = event.requestContext.authorizer.jwt.claims.sub as string;
+  //const userId = process.env.DEMO_USER_ID || 'demo-user-123';
 
   // List all user's entries
   if (httpMethod === 'GET' && routeKey === '/entry') {
@@ -67,6 +67,7 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       entry_date === undefined &&
       comments === undefined &&
       customer_id === undefined &&
+      replace_user_ink_id !== undefined &&
       !Array.isArray(replace_user_ink_id)
       //!Array.isArray(add_user_ink_id) &&
       //!Array.isArray(remove_user_ink_id)
