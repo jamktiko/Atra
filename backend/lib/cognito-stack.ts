@@ -36,7 +36,7 @@ export class CognitoStack extends Stack {
 
     const frontendDomain = ssm.distributionDomainName;
 
-    const postConfirmationFn = new LambdaBuilder(
+    this.postConfirmationFn = new LambdaBuilder(
       this,
       'cognito-post-confirmation'
     )

@@ -14,7 +14,11 @@ const env = { region: 'eu-north-1', account: CDK_DEFAULT_ACCOUNT };
 const app = new cdk.App();
 
 const vpc = new VpcStack(app, 'vpc', { env: env });
-new CognitoStack(app, 'cognito', { env: env });
+new CognitoStack(app, 'cognito', {
+  env: env,
+  vpc: vpc.vpc,
+  rdsSecretName: 'AtraRdsSecret',
+});
 
 new DatabaseStack(app, 'database', {
   env: env,
