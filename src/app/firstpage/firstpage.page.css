@@ -1,12 +1,20 @@
 h1 {
   font-family: "Macondo Swash Caps", cursive;
-  color: oklch(28.6% 0.03 178.416);
+  color: oklch(38.6% 0.03 178.416);
   --padding-top: 5%;
   --padding-bottom: 5%;
   text-align: center;
   justify-content: center;
   letter-spacing: 2px;
-  text-shadow: 1px 1px 2px rgb(0, 0, 0), 0 0 0.5em rgb(25, 63, 49),
-    0 0 0.2em rgb(25, 63, 49);
+  text-shadow: 1px 1px 2px rgb(0, 0, 0), 0 0 0.5em rgb(34, 77, 61),
+    0 0 0.2em rgb(0, 0, 0);
   font-size: 2em;
+}
+
+.contact-bg {
+  --background: none; /* important: disables ionic's default bg */
+  background-image: url("../../assets/img/background1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }

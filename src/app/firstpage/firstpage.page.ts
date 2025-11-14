@@ -8,6 +8,7 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { LoginPage } from './components/login/login.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-firstpage',
@@ -17,7 +18,11 @@ import { LoginPage } from './components/login/login.page';
   imports: [IonContent, CommonModule, FormsModule, LoginPage],
 })
 export class FirstpagePage implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
+
+  navigateToMain() {
+    this.router.navigate(['/tabs/mainpage']);
+  }
 }
