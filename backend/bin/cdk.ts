@@ -17,13 +17,13 @@ const vpc = new VpcStack(app, 'vpc', { env: env });
 new CognitoStack(app, 'cognito', {
   env: env,
   vpc: vpc.vpc,
-  rdsSecretName: 'AtraRdsSecret',
+  rdsSecretName: 'RdsSecret',
 });
 
 new DatabaseStack(app, 'database', {
   env: env,
   vpc: vpc.vpc,
-  rdsSecretName: 'AtraRdsSecret',
+  rdsSecretName: 'RdsSecret',
   instanceClass: ec2.InstanceClass.T4G,
   instanceSize: ec2.InstanceSize.MICRO,
 });
@@ -31,7 +31,7 @@ new DatabaseStack(app, 'database', {
 new ApiStack(app, 'api', {
   env: env,
   vpc: vpc.vpc,
-  rdsSecretName: 'AtraRdsSecret',
+  rdsSecretName: 'RdsSecret',
 });
 
 new FrontendStack(app, 'frontend', {
