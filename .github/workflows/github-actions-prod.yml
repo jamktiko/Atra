@@ -39,7 +39,7 @@ jobs:
           cdk deploy vpc --require-approval never
           cdk deploy database --require-approval never
           cdk deploy frontend --require-approval never
-          # cdk deploy cognito --require-approval never # Temporarily disabled
+          cdk deploy cognito --require-approval never
           cdk deploy api --require-approval never
       - name: Fetch API url from CloudfFormation
         run: |
