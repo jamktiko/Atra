@@ -74,7 +74,7 @@ export class DatabaseStack extends Stack {
 
     // Luodaan automaattisesti salaisuus (username + password),
     // joka tallennetaan Secrets Manageriin
-    const credentials = rds.Credentials.fromGeneratedSecret('AtraDbSecret', {
+    const credentials = rds.Credentials.fromGeneratedSecret('DbSecret', {
       secretName: rdsSecretName,
       excludeCharacters: '"@/\\',
     });
