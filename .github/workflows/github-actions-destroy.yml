@@ -56,7 +56,7 @@ jobs:
         run: |
           cd backend
           cdk destroy api --force
-          # cdk destroy cognito --force
+          cdk destroy cognito --force
           cdk destroy frontend --force
           cdk destroy database --force
           cdk destroy vpc --force
