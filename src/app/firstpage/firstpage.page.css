@@ -1,0 +1,12 @@
+h1 {
+  font-family: "Macondo Swash Caps", cursive;
+  color: oklch(28.6% 0.03 178.416);
+  --padding-top: 5%;
+  --padding-bottom: 5%;
+  text-align: center;
+  justify-content: center;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px rgb(0, 0, 0), 0 0 0.5em rgb(25, 63, 49),
+    0 0 0.2em rgb(25, 63, 49);
+  font-size: 2em;
+}

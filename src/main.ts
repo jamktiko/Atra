@@ -15,6 +15,8 @@ import { importProvidersFrom } from '@angular/core';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideNgToast } from 'ng-angular-popup';
+import { provideAuth, AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { environment } from './environments/environment';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -23,5 +25,18 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     importProvidersFrom(HttpClientModule),
     provideNgToast(),
+    provideAuth({
+      config: {
+        authority: environment.cognitoUserPoolAuthority,
+        clientId: environment.cognitoClientId,
+        redirectUrl: 'io.ionic.atra://callback',
+        postLogoutRedirectUri: 'io.ionic.atra://logout',
+        scope: 'openid profile email',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        logLevel: LogLevel.Debug,
+      },
+    }),
   ],
 });

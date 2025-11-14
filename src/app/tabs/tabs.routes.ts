@@ -151,14 +151,14 @@ export const routes: Routes = [
 
       {
         path: '',
-        redirectTo: '/tabs/mainpage',
+        redirectTo: '/tabs/firstpage',
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/mainpage',
+    redirectTo: '/tabs/firstpage',
     pathMatch: 'full',
   },
 ];

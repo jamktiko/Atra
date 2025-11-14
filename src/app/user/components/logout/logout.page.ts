@@ -10,18 +10,18 @@ import {
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-logout',
+  templateUrl: './logout.page.html',
+  styleUrls: ['./logout.page.scss'],
   standalone: true,
   imports: [CommonModule, FormsModule],
 })
-export class LoginPage implements OnInit {
+export class LogoutPage implements OnInit {
   constructor(private auth: AuthService) {}
 
   ngOnInit() {}
 
-  login() {
-    this.auth.login();
+  logout() {
+    this.auth.logout();
   }
 }

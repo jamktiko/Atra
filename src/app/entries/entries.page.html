@@ -4,11 +4,12 @@
   </ion-toolbar>
 </ion-header>
 
-@if (chosenEntry && singleEntryModal) {
-<app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry" [entries]="entries"
-  [groupedEntries]="groupedEntries"></app-singleentry>
-} @else {
 <ion-content [fullscreen]="true">
+  @if (chosenEntry && singleEntryModal) {
+  <app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry"
+    [entries]="entries" [groupedEntries]="groupedEntries"></app-singleentry>
+  } @else {
+
 
   <ng-toast></ng-toast>
   <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
@@ -46,87 +47,6 @@
   </div>
   }
   }
+
+  }
 </ion-content>
-}
-
-
-
-<!-- 
-<ion-modal [isOpen]="oneEntryModal" (didDismiss)="setClosed(false)" [componentProps]="{chosenEntry}">
-
-  <ng-template>
-    <div class="p-7 w-full">
-      <div class=>
-
-      
-        <h2 class="text-center text-5xl font-pt-serif">Entry {{chosenEntry?.entry_id}}</h2>
-
-       
-        <h2 class="text-center text-3xl font-pt-serif mb-6">Date and time</h2>
-        <div class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg  block w-full p-2.5">
-          <p>
-            {{chosenEntry?.entry_date | date:'MMM d, y, h:mm'}}
-          </p>
-        </div>
-
-
-        <h2 class="text-center text-3xl font-pt-serif mb-6">Customer</h2>
-        <div class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg block w-full p-2.5">
-          <p>
-            {{chosenEntry?.first_name}} {{chosenEntry?.last_name}} </p>
-        </div>
-
-
-        <h2 class="text-center text-3xl font-pt-serif mb-6">Inks</h2>
-        <div class="bg-gray-50 bg-slate-800 border border-gray-300 border-gray-600 rounded-lg p-3 
-                  space-y-2 max-h-52 overflow-y-auto">
-          <div class="flex items-center justify-between bg-slate-700 text-neutral-50 rounded-lg px-3 py-2">
-            @for (ink of chosenEntry?.inks; track ink.id) {
-            <img src="{{ink.image_url}}" width="25%" />
-            <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
-            }
-          </div>
-        </div>
-
-        <h2 class="text-center text-3xl font-pt-serif mb-6">Comments</h2>
-        <div class="block p-2.5 w-full max-h-28 text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 
-               focus:ring-slate-500 focus:border-slate-500 bg-slate-800 border-gray-600 
-               text-white">
-
-          @if (chosenEntry?.comments === null) {
-          <p class="">No comments</p>
-          } @else {
-          <p>{{chosenEntry?.comments}}</p>
-          }
-        </div>
-
-
-        <div class="flex justify-end space-x-3 pt-2">
-          <button
-            class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-            (click)="deleteEntry(chosenEntry)">
-            <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"></path>
-            </svg>
-            Delete
-          </button>
-
-          <button type="submit"
-            class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center"
-            (click)="toggleUpdateModal(true)">
-            Update
-          </button>
-        </div>
-
-        <button
-          class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center"
-          (click)="setClosed(false)">
-          Close</button>
-
-      </div>
-    </div>
-  </ng-template>
-
-</ion-modal> -->
