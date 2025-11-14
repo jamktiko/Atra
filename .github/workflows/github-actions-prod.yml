@@ -36,12 +36,13 @@ jobs:
       - name: Deploy backend with CDK
         run: |
           cd backend
-          cdk context --clear #should fix any possible cache problems
-          cdk deploy vpc --require-approval never
-          cdk deploy database --require-approval never
-          cdk deploy frontend --require-approval never
-          # cdk deploy cognito --require-approval never # Temporarily disabled
-          cdk deploy api --require-approval never
+          npm ci
+          npx cdk context --clear #should fix any possible cache problems
+          npx cdk deploy vpc --require-approval never
+          npx cdk deploy database --require-approval never
+          npx cdk deploy frontend --require-approval never
+          # npx cdk deploy cognito --require-approval never # Temporarily disabled
+          npx cdk deploy api --require-approval never
       # - name: Fetch API url from CloudfFormation
       #   run: |
       #    API_URL=$(aws cloudformation describe-stacks --stack-name api \
