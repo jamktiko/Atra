@@ -112,7 +112,7 @@ export class InksPage implements OnInit {
   }
 
   addNew() {
-    this.router.navigate(['/tabs/inks/addnewink']);
+    this.router.navigate(['/inks/addnewink']);
   }
 
   toPublic() {
