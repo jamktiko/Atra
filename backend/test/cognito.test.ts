@@ -51,6 +51,6 @@ describe('CognitoStack', () => {
   });
 
   test('Creates SSM parameters for User Pool ID and Client ID', () => {
-    template.resourceCountIs('AWS::SSM::Parameter', 2);
+    template.resourceCountIs('AWS::SSM::Parameter', 3);
   });
 });
