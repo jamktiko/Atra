@@ -10,6 +10,7 @@ enum ParameterNames {
   rdsSecurityGroupId = '/sg/rds',
   lambdaSecurityGroupId = '/sg/lambda',
   distributionDomainName = '/frontend/distributionDomainName',
+  cognitoDomainUrl = '/cognito/domainUrl',
 }
 
 export default class Parameters {
@@ -80,5 +81,13 @@ export default class Parameters {
 
   public get distributionDomainName() {
     return this.getParameter(ParameterNames.distributionDomainName);
+  }
+
+  public set cognitoDomainUrl(value: string) {
+    this.setParameter(ParameterNames.cognitoDomainUrl, value);
+  }
+
+  public get cognitoDomainUrl() {
+    return this.getParameter(ParameterNames.cognitoDomainUrl);
   }
 }
