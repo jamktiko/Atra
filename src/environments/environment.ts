@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   gitBranch: '',
-  apiUrl: '',
+  apiUrl: 'https://4p9p2px7kf.execute-api.eu-north-1.amazonaws.com',
 };
 
 /*
@@ -16,3 +16,5 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+
+//TEST: NÄKEEKÖ LOTTA TÄN???
