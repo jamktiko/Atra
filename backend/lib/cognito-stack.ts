@@ -22,8 +22,10 @@ export class CognitoStack extends Stack {
   private postConfirmationFn: any;
   constructor(scope: Construct, id: string, props: CognitoStackProps) {
     super(scope, id, props);
+
     const ssm = new Parameters(this);
     const { vpc, rdsSecretName } = props;
+
     this.vpc = vpc;
     this.rdsSecretName = rdsSecretName;
     this.rdsInstanceEndpoint = ssm.rdsInstanceEndpoint;
@@ -52,10 +54,16 @@ export class CognitoStack extends Stack {
       .build();
 
     const userPool = this.createUserPool();
+    const domain = userPool.addDomain("CognitoHostedUiDomain", {
+      cognitoDomain: {
+        domainPrefix: "atra-app",
+      }
+    });
     const userPoolClient = this.createUserPoolClient(userPool, frontendDomain);
 
     ssm.cognitoUserPoolId = userPool.userPoolId;
     ssm.cognitoClientId = userPoolClient.userPoolClientId;
+    ssm.cognitoDomainUrl = domain.baseUrl();
   }
 
   // Luo User Poolin (eli käyttäjätietokanta)
@@ -67,6 +75,16 @@ export class CognitoStack extends Stack {
       autoVerify: { email: true }, // vahvista sähköposti automaattisesti
       lambdaTriggers: {
         postConfirmation: this.postConfirmationFn,
+      },
+      standardAttributes: {
+        givenName: {
+          required: true,
+          mutable: true,
+        },
+        familyName: {
+          required: true,
+          mutable: true,
+        }
       },
       passwordPolicy: {
         // salasanapolitiikka
@@ -116,8 +134,8 @@ export class CognitoStack extends Stack {
         // callbackUrl: mihin Cognito palauttaa käyttäjän kirjautumisen jälkeen
         // logoutUrl: mihin käyttäjä ohjataan uloskirjautumisen jälkeen
         // !!!!!!! REPLACE WITH CLOUDFRONT DOMAIN !!!!!!!!!!!!
-        callbackUrls: [`https://${frontendDomain}/*`],
-        logoutUrls: [`https://${frontendDomain}/logout`],
+        callbackUrls: [`https://${frontendDomain}/*`, `http://localhost:8100/tabs/mainpage`, `io.ionic.atra://callback`],
+        logoutUrls: [`https://${frontendDomain}/logout`, `http://localhost:8100/firstpage`, `io.ionic.atra://logout`],
       },
     });
     return client;
