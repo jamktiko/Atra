@@ -9,34 +9,56 @@ import {
   IonicRouteStrategy,
   provideIonicAngular,
 } from '@ionic/angular/standalone';
-import { HttpClientModule } from '@angular/common/http';
-import { importProvidersFrom } from '@angular/core';
-
+import {
+  withInterceptorsFromDi,
+  provideHttpClient,
+} from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './app/http-interceptors/auth.interceptor';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideNgToast } from 'ng-angular-popup';
-import { provideAuth, AuthModule, LogLevel } from 'angular-auth-oidc-client';
+import { provideAuth, LogLevel } from 'angular-auth-oidc-client';
 import { environment } from './environments/environment';
+import { AuthGuard } from './app/authguards/auth.guard';
+import { Capacitor } from '@capacitor/core';
+import { AuthService } from './app/services/auth.service';
+
+const isHybrid = Capacitor.isNativePlatform();
+
+const redirectUrl = isHybrid
+  ? 'io.ionic.atra://callback'
+  : window.location.origin + '/tabs/mainpage';
+
+const postLogoutRedirectUri = isHybrid
+  ? 'io.ionic.atra://logout'
+  : window.location.origin + '/firstpage';
 
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-    importProvidersFrom(HttpClientModule),
+
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideNgToast(),
     provideAuth({
       config: {
         authority: environment.cognitoUserPoolAuthority,
         clientId: environment.cognitoClientId,
-        redirectUrl: 'io.ionic.atra://callback',
-        postLogoutRedirectUri: 'io.ionic.atra://logout',
-        scope: 'openid profile email',
+        redirectUrl,
+        postLogoutRedirectUri,
         responseType: 'code',
+        scope: 'aws.cognito.signin.user.admin email openid phone profile',
         silentRenew: true,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
       },
     }),
+    { provide: AuthGuard },
+    AuthService,
   ],
 });
+
+export { isHybrid };

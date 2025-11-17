@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AuthGuard } from '../authguards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -8,18 +9,21 @@ export const routes: Routes = [
     children: [
       {
         path: 'user',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('../user/user.page').then((x) => x.UserPage),
       },
 
       {
         path: 'customers',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('../customers/customers.page').then((m) => m.CustomersPage),
       },
 
       {
         path: 'customers/modalcustomer',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import(
             '../customers/components/modalcustomer/modalcustomer.page'
@@ -28,12 +32,14 @@ export const routes: Routes = [
 
       {
         path: 'inks',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('../inks/inks.page').then((m) => m.InksPage),
       },
 
       {
         path: 'inks/publiclibrary',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('../inks/components/publiclibrary/publiclibrary.page').then(
             (m) => m.PubliclibraryPage
@@ -42,12 +48,14 @@ export const routes: Routes = [
 
       {
         path: 'entries',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('../entries/entries.page').then((m) => m.EntriesPage),
       },
 
       {
         path: 'mainpage',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('../mainpage/mainpage.page').then((m) => m.MainpagePage),
       },
@@ -55,6 +63,7 @@ export const routes: Routes = [
   },
   {
     path: '',
+    // canActivate: [AuthGuard],
     redirectTo: '/tabs/mainpage',
     pathMatch: 'full',
   },

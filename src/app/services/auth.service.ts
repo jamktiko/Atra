@@ -1,7 +1,3 @@
-/**
- * Authservice käsittelee käyttäjän kirjautumisen hallinnoinnin käyttöliittymässä.
- */
-
 import { Injectable } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
@@ -13,17 +9,19 @@ import { firstValueFrom } from 'rxjs';
 })
 export class AuthService {
   constructor(private oidc: OidcSecurityService) {
-    App.addListener('appUrlOpen', async (event: any) => {
-      if (event.url.startsWith('io.ionic.atra://callback')) {
-        await this.oidc.checkAuthIncludingServer();
-        await this.checkAuth();
-      }
-    });
+    //For later handling of deep-links in hybrid app
+    // App.addListener('appUrlOpen', async (event: any) => {
+    //   if (event.url.startsWith('io.ionic.atra://callback')) {
+    //     await this.oidc.checkAuthIncludingServer();
+    //     await this.checkAuth();
+    //   }
+    // });
   }
 
   /*
    * Calls for Cognito's Hosted UI and redirects to that hosted login page: handles also registration, forgot password etc.
    */
+
   login() {
     this.oidc.authorize();
   }
@@ -31,6 +29,7 @@ export class AuthService {
   /*
    * Calls for OIDC-logoff-method which also revokes access_token and refresh_token
    */
+
   async logout() {
     await this.oidc.logoffAndRevokeTokens();
     await SecureStoragePlugin.remove({ key: 'access_token' });
@@ -42,7 +41,8 @@ export class AuthService {
    * The accessToken value is then picked from that object and set to key of 'access_token'
    * If resreshToken exists, it is also set and collected
    */
-  async checkAuth() {
+
+  async checkAuth(): Promise<boolean> {
     const result = await firstValueFrom(this.oidc.checkAuth());
     if (result.isAuthenticated) {
       await SecureStoragePlugin.set({
@@ -50,6 +50,7 @@ export class AuthService {
         value: result.accessToken,
       });
     }
+
     const refreshToken = await firstValueFrom(this.oidc.getRefreshToken());
     if (refreshToken) {
       await SecureStoragePlugin.set({
@@ -57,6 +58,7 @@ export class AuthService {
         value: refreshToken,
       });
     }
+
     return result.isAuthenticated;
   }
 
@@ -64,12 +66,13 @@ export class AuthService {
    * Saves refreshToken in the SecureStorage
    */
 
-  async storeRefreshToken(refreshToken: string) {
-    await SecureStoragePlugin.set({
-      key: 'refresh_token',
-      value: refreshToken,
-    });
-  }
+  // async storeRefreshToken(refreshToken: string) {
+  //   await SecureStoragePlugin.set({
+  //     key: 'refresh_token',
+  //     value: refreshToken,
+  //   });
+  // }
+
   /*
    * Fetches the value set to access_token during
   * SecureStoragePlugin.set({
@@ -77,18 +80,22 @@ export class AuthService {
           value: result.accessToken,
         });
    */
-  async getAccessToken() {
-    const { value } = await SecureStoragePlugin.get({ key: 'access_token' });
-    return value;
+
+  async getAccessToken(): Promise<string | null> {
+    try {
+      const { value } = await SecureStoragePlugin.get({ key: 'access_token' });
+      return value ?? null;
+    } catch (e) {
+      return null; // token doesn't exist yet
+    }
   }
 
-  /*
-   * Fetches refresh_token manually if needed at some point
-   * However, useRefreshToken: true and silentRenew: true in main.ts provideAuth handles automatic refresh token
-   * fetch when the access token expires: only need to store securely
-   */
-  async getRefreshToken() {
-    const { value } = await SecureStoragePlugin.get({ key: 'refresh_token' });
-    return value;
+  async getRefreshToken(): Promise<string | null> {
+    try {
+      const { value } = await SecureStoragePlugin.get({ key: 'refresh_token' });
+      return value ?? null;
+    } catch (e) {
+      return null;
+    }
   }
 }

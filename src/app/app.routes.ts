@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './authguards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,7 @@ export const routes: Routes = [
 
   {
     path: 'inks/addnewink',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./inks/components/addnewink/addnewink.page').then(
         (m) => m.AddnewinkPage
@@ -20,6 +22,7 @@ export const routes: Routes = [
   },
   {
     path: 'inks/modalink',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./inks/components/modalink/modalink.page').then(
         (m) => m.ModalinkPage
@@ -27,6 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'tabs/customers/addnewcustomer',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./customers/components/addnewcustomer/addnewcustomer.page').then(
         (m) => m.AddnewcustomerPage
@@ -34,6 +38,7 @@ export const routes: Routes = [
   },
   {
     path: 'tabs/entries/addentry',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./entries/components/addentry/addentry.page').then(
         (m) => m.AddentryPage
@@ -54,6 +59,7 @@ export const routes: Routes = [
   },
   {
     path: 'entries/singleentry',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./entries/components/singleentry/singleentry.page').then(
         (m) => m.SingleentryPage
@@ -61,6 +67,7 @@ export const routes: Routes = [
   },
   {
     path: 'entries/modalentry',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./entries/components/modalentry/modalentry.page').then(
         (m) => m.ModalentryPage
@@ -68,6 +75,7 @@ export const routes: Routes = [
   },
   {
     path: 'tabs/user/usersettings',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./user/components/usersettings/usersettings.page').then(
         (m) => m.UsersettingsPage
@@ -75,6 +83,7 @@ export const routes: Routes = [
   },
   {
     path: 'tabs/user/contacthelp',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./user/components/contacthelp/contacthelp.page').then(
         (m) => m.ContacthelpPage
@@ -82,6 +91,7 @@ export const routes: Routes = [
   },
   {
     path: 'tabs/user/privacy',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./user/components/privacy/privacy.page').then(
         (m) => m.PrivacyPage
@@ -89,9 +99,22 @@ export const routes: Routes = [
   },
   {
     path: 'tabs/user/appsettings',
+    canActivate: [AuthGuard],
     loadComponent: () =>
       import('./user/components/appsettings/appsettings.page').then(
         (m) => m.AppsettingsPage
+      ),
+  },
+  {
+    path: '',
+    redirectTo: '/firstpage',
+    pathMatch: 'full',
+  },
+  {
+    path: 'callback',
+    loadComponent: () =>
+      import('./firstpage/components/callback/callback.page').then(
+        (m) => m.CallbackPage
       ),
   },
 ];

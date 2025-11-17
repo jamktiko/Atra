@@ -90,13 +90,17 @@ ion-searchbar.custom {
 
 ion-toolbar {
   font-family: "Macondo Swash Caps", cursive;
-  font-size: 50%;
+  font-size: 75%;
   --padding-top: 5%;
   --padding-bottom: 5%;
   text-align: center;
   justify-content: center;
   text-shadow: 1px 1px 2px rgb(58, 113, 104), 0 0 1em rgb(0, 0, 0),
     0 0 0.2em rgb(5, 43, 38);
+  background-image: url("./assets/img/background1vertical.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 ion-tab-bar {
