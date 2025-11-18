@@ -72,6 +72,7 @@ export class ApiStack extends Stack {
     this.publicInkRoute();
     this.userInkRoute();
     this.entryRoute();
+    this.userRoute();
   }
 
   private createApi(
@@ -273,6 +274,36 @@ export class ApiStack extends Stack {
         apigw2.HttpMethod.DELETE,
         apigw2.HttpMethod.PUT,
       ],
+      integration,
+    });
+
+    /* Tänne loput reitit */
+  }
+
+  // mainly for dev (for now)
+  private userRoute() {
+    const fn = new LambdaBuilder(this, 'api-user-calls')
+      .setDescription('CRUD operations for getting user(s)')
+      .setEnv({
+        RDS_SECRET_NAME: this.rdsSecretName,
+        RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
+      })
+      .allowSecretsManager()
+      .connectVPC(this.vpc, this.lambdaSecurityGroup)
+      .build();
+
+    // API GW kutsuu tätä funktiota kun reittiä /user kutsutaan
+    const integration = new HttpLambdaIntegration('userCallsFn', fn);
+
+    this.api.addRoutes({
+      path: '/user',
+      methods: [apigw2.HttpMethod.GET],
+      integration,
+    });
+
+    this.api.addRoutes({
+      path: '/user/{id}',
+      methods: [apigw2.HttpMethod.GET],
       integration,
     });
 
