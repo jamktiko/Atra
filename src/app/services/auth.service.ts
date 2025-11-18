@@ -1,22 +1,19 @@
 import { Injectable } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { SecureStoragePlugin } from 'capacitor-secure-storage-plugin';
-import { App } from '@capacitor/app';
 import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { CustomSecureStorage } from './customsecurestorage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private oidc: OidcSecurityService) {
-    //For later handling of deep-links in hybrid app
-    // App.addListener('appUrlOpen', async (event: any) => {
-    //   if (event.url.startsWith('io.ionic.atra://callback')) {
-    //     await this.oidc.checkAuthIncludingServer();
-    //     await this.checkAuth();
-    //   }
-    // });
-  }
+  constructor(
+    public oidc: OidcSecurityService,
+    private router: Router,
+    private storage: CustomSecureStorage
+  ) {}
 
   /*
    * Calls for Cognito's Hosted UI and redirects to that hosted login page: handles also registration, forgot password etc.
@@ -30,10 +27,25 @@ export class AuthService {
    * Calls for OIDC-logoff-method which also revokes access_token and refresh_token
    */
 
-  async logout() {
-    await this.oidc.logoffAndRevokeTokens();
-    await SecureStoragePlugin.remove({ key: 'access_token' });
-    await SecureStoragePlugin.remove({ key: 'refresh_token' });
+  async logout(): Promise<void> {
+    try {
+      // 1️⃣ Clear stored tokens
+      this.storage.clear();
+      console.log('CustomSecureStorage cleared');
+
+      // 2️⃣ Call OIDC logoff
+      await this.oidc.logoff().subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.error('Error: ', err);
+        },
+      }); // automatically clears runtime state and redirects
+      console.log('OIDC logoff called');
+    } catch (err) {
+      console.error('Logout failed: ', err);
+    }
   }
 
   /*
@@ -45,57 +57,15 @@ export class AuthService {
   async checkAuth(): Promise<boolean> {
     const result = await firstValueFrom(this.oidc.checkAuth());
     if (result.isAuthenticated) {
-      await SecureStoragePlugin.set({
-        key: 'access_token',
-        value: result.accessToken,
-      });
+      // save tokens to storage for page reloads
+      if (result.accessToken)
+        this.storage.write('access_token', result.accessToken);
+      if (result.idToken) this.storage.write('id_token', result.idToken);
     }
-
-    const refreshToken = await firstValueFrom(this.oidc.getRefreshToken());
-    if (refreshToken) {
-      await SecureStoragePlugin.set({
-        key: 'refresh_token',
-        value: refreshToken,
-      });
-    }
-
     return result.isAuthenticated;
   }
 
-  /*
-   * Saves refreshToken in the SecureStorage
-   */
-
-  // async storeRefreshToken(refreshToken: string) {
-  //   await SecureStoragePlugin.set({
-  //     key: 'refresh_token',
-  //     value: refreshToken,
-  //   });
-  // }
-
-  /*
-   * Fetches the value set to access_token during
-  * SecureStoragePlugin.set({
-          key: 'access_token',
-          value: result.accessToken,
-        });
-   */
-
   async getAccessToken(): Promise<string | null> {
-    try {
-      const { value } = await SecureStoragePlugin.get({ key: 'access_token' });
-      return value ?? null;
-    } catch (e) {
-      return null; // token doesn't exist yet
-    }
-  }
-
-  async getRefreshToken(): Promise<string | null> {
-    try {
-      const { value } = await SecureStoragePlugin.get({ key: 'refresh_token' });
-      return value ?? null;
-    } catch (e) {
-      return null;
-    }
+    return firstValueFrom(this.oidc.getAccessToken());
   }
 }

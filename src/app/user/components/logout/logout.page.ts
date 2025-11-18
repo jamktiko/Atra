@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
+import { CustomSecureStorage } from 'src/app/services/customsecurestorage';
 
 @Component({
   selector: 'app-logout',
@@ -17,11 +13,16 @@ import { AuthService } from 'src/app/services/auth.service';
   imports: [CommonModule, FormsModule],
 })
 export class LogoutPage implements OnInit {
-  constructor(private auth: AuthService) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private storage: CustomSecureStorage
+  ) {}
 
   ngOnInit() {}
 
-  logout() {
-    this.auth.logout();
+  async logout() {
+    console.log('User clicked logout');
+    await this.auth.logout(); // Hosted UI + local cache cleared
   }
 }

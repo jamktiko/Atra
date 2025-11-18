@@ -14,15 +14,17 @@ import {
   provideHttpClient,
 } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './app/http-interceptors/auth.interceptor';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { provideNgToast } from 'ng-angular-popup';
-import { provideAuth, LogLevel } from 'angular-auth-oidc-client';
 import { environment } from './environments/environment';
-import { AuthGuard } from './app/authguards/auth.guard';
 import { Capacitor } from '@capacitor/core';
+import { AuthInterceptor } from './app/http-interceptors/auth.interceptor';
+// import { AuthGuard } from './app/authguards/auth.guard';
 import { AuthService } from './app/services/auth.service';
+import { CustomSecureStorage } from './app/services/customsecurestorage';
+import { AbstractSecurityStorage } from 'angular-auth-oidc-client';
+import { provideAuth, LogLevel } from 'angular-auth-oidc-client';
 
 const isHybrid = Capacitor.isNativePlatform();
 
@@ -39,26 +41,36 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
-
-    provideHttpClient(withInterceptorsFromDi()),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    provideNgToast(),
     provideAuth({
       config: {
-        authority: environment.cognitoUserPoolAuthority,
         clientId: environment.cognitoClientId,
+        authority: environment.cognitoUserPoolAuthority,
         redirectUrl,
         postLogoutRedirectUri,
         responseType: 'code',
-        scope: 'aws.cognito.signin.user.admin email openid phone profile',
-        silentRenew: true,
+        scope: 'email openid profile',
+        silentRenew: false,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
+        authWellknownEndpoints: {
+          tokenEndpoint:
+            'https://atra-app.auth.eu-north-1.amazoncognito.com/oauth2/token',
+          userInfoEndpoint:
+            'https://atra-app.auth.eu-north-1.amazoncognito.com/oauth2/userInfo',
+
+          endSessionEndpoint: `https://atra-app.auth.eu-north-1.amazoncognito.com/logout?client_id=${
+            environment.cognitoClientId
+          }&logout_uri=${encodeURIComponent(postLogoutRedirectUri)}`,
+          jwksUri:
+            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_owIAD7f1D/.well-known/jwks.json',
+        },
       },
     }),
-    { provide: AuthGuard },
+
+    { provide: AbstractSecurityStorage, useClass: CustomSecureStorage },
     AuthService,
+    provideHttpClient(withInterceptorsFromDi()),
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    provideNgToast(),
   ],
 });
-
-export { isHybrid };
