@@ -11,6 +11,7 @@ import { Construct } from 'constructs';
 import { LambdaBuilder, Parameters } from '../helpers';
 import * as cdk from 'aws-cdk-lib';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
+import { HttpNoneAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2';
 
 // Props välitetään stackin konstruktoriin.
 // Interface määrittelee vaaditut propsit.
@@ -201,12 +202,14 @@ export class ApiStack extends Stack {
       path: '/publicInk',
       methods: [apigw2.HttpMethod.GET],
       integration,
+      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
 
     this.api.addRoutes({
       path: '/publicInk/{id}',
       methods: [apigw2.HttpMethod.GET],
       integration,
+      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
 
     /* Tänne loput reitit */
@@ -299,12 +302,14 @@ export class ApiStack extends Stack {
       path: '/user',
       methods: [apigw2.HttpMethod.GET],
       integration,
+      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
 
     this.api.addRoutes({
       path: '/user/{id}',
       methods: [apigw2.HttpMethod.GET],
       integration,
+      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
 
     /* Tänne loput reitit */
