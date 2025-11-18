@@ -1,14 +1,15 @@
-import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
+//import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
+import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import * as user from './user';
 import { notAllowedResponse, clientErrorResponse } from '../shared/utils';
 
-export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
+export const handler: APIGatewayProxyHandlerV2 = async (
     event
 ): Promise<any> => {
     const httpMethod = event.requestContext.http.method;
     const routeKey = event.routeKey.split(' ')[1];
     const pathParameters = event.pathParameters;
-    const userId = event.requestContext.authorizer.jwt.claims.sub as string;
+    //const userId = event.requestContext.authorizer.jwt.claims.sub as string;
 
     if (httpMethod === 'GET' && routeKey === '/user') {
         return user.listUsers();
