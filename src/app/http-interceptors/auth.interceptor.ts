@@ -13,7 +13,6 @@ import { AuthService } from '../services/auth.service';
  * AuthInterceptor fetched accessToken and automatically attaches the Bearer-token to  every HTTP-request:
  * backend can access the token and allows CRUD-methods to be executed. Configured in main.ts
  */
-
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {}
@@ -25,13 +24,15 @@ export class AuthInterceptor implements HttpInterceptor {
     return from(this.auth.getAccessToken()).pipe(
       mergeMap((token) => {
         if (token) {
-          const cloned = req.clone({
+          // Clone the request and attach JWT in Authorization header
+          const clonedReq = req.clone({
             setHeaders: {
               Authorization: `Bearer ${token}`,
             },
           });
-          return next.handle(cloned);
+          return next.handle(clonedReq);
         }
+        // If no token, send the request as-is
         return next.handle(req);
       })
     );

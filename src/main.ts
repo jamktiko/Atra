@@ -20,7 +20,7 @@ import { provideNgToast } from 'ng-angular-popup';
 import { environment } from './environments/environment';
 import { Capacitor } from '@capacitor/core';
 import { AuthInterceptor } from './app/http-interceptors/auth.interceptor';
-// import { AuthGuard } from './app/authguards/auth.guard';
+import { AuthGuard } from './app/authguards/auth.guard';
 import { AuthService } from './app/services/auth.service';
 import { CustomSecureStorage } from './app/services/customsecurestorage';
 import { AbstractSecurityStorage } from 'angular-auth-oidc-client';
@@ -70,7 +70,7 @@ bootstrapApplication(AppComponent, {
     { provide: AbstractSecurityStorage, useClass: CustomSecureStorage },
     AuthService,
     provideHttpClient(withInterceptorsFromDi()),
-    // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideNgToast(),
   ],
 });
