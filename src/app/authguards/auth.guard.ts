@@ -16,10 +16,10 @@ export class AuthGuard implements CanActivate {
     return this.oidc.isAuthenticated$.pipe(
       map((authResult: AuthenticatedResult) => {
         if (authResult?.isAuthenticated) {
-          console.log('authResult gives true: allow access');
+          // authResult gives true: allow access
           return true;
         }
-        console.log('authResult gives false: redirect to firstpage');
+        // authResult gives false: redirect to firstpage
         return this.router.parseUrl('/firstpage');
       })
     );
