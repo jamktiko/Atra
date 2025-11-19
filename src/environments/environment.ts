@@ -10,6 +10,7 @@ export const environment = {
   cognitoUserPoolAuthority:
     'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_v3KWSl9JX',
 };
+//sally test
 
 /*
  * For easier debugging in development mode, you can import the following file
