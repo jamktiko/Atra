@@ -13,16 +13,17 @@ import * as cdk from 'aws-cdk-lib';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
 import { HttpNoneAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2';
 
-// Props välitetään stackin konstruktoriin.
-// Interface määrittelee vaaditut propsit.
+
+// Props are relayed to stack's constructor
+// Interface defines the required props
 interface ApiStackProps extends StackProps {
   vpc: ec2.IVpc;
   rdsSecretName: string;
 }
 
-// API Stack joka luo API Gatewayn ja Lambda funktion
-// API GW käyttää cognitoa käyttäjien autentikointiin
-// lambda funktio hoitaa CRUD operaatiot tietokantaan
+// API Stack that creates API Gateway and Lambda function
+// API GW uses cognito to authenticate users
+// Lambda functions deal with the CRUD operations to the db
 export class ApiStack extends Stack {
   private api: apigw2.HttpApi;
   private vpc: ec2.IVpc;
@@ -51,7 +52,7 @@ export class ApiStack extends Stack {
       ssm.cognitoUserPoolId
     );
 
-    // Kutsutaan apin luontimetodia ja reittien metodia
+    // api's create method and routes method are called
     this.api = this.createApi(
       'AtraApi',
       cognitoUserPool,
@@ -59,13 +60,14 @@ export class ApiStack extends Stack {
       frontendDomain
     );
 
-    // Annetaan luodun APIn url CloudFormation outputtina
+    // TODO: test that this works
+    // API's url as CloudFormation output
     new cdk.CfnOutput(this, 'ApiEndpoint', {
       value: this.api.apiEndpoint,
       exportName: 'ApiEndpoint',
     });
 
-    // ei tarpeellinen tässä vaiheessa
+    // routes for the api, each route is its own method
     this.migrationsRoute();
     this.dropSchemaRoute();
 
@@ -76,17 +78,18 @@ export class ApiStack extends Stack {
     this.userRoute();
   }
 
+  // creates the API GW with cognito authorizer, CORS settings etc.
   private createApi(
     name: string,
     cognitoUserPool: cognito.IUserPool,
     cognitoClientId: string,
     frontendDomain: string
   ) {
-    const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user poolin URL
+    const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user pool's URL
 
-    // JWT authorizer Cognito User Poolia varten
-    // Authorizer tarkistaa, että token on validi ja peräisin oikeasta user poolista
-    // Audience on client ID, eli siis sovellus, joka käyttää kyseistä user poolia
+    // JWT authorizer for Cognito User Pool
+    // Authorizer checks that token is valid and from the correct user pool
+    // Audience is Client ID - the app that uses the user pool
     const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
       jwtAudience: [cognitoClientId],
     });
@@ -94,9 +97,8 @@ export class ApiStack extends Stack {
       apiName: name,
       defaultAuthorizer: authorizer,
 
-      // tässä määritellään CORS asetukset, eli sallitut domainit, metodit ja headerit
-      // jotta frontti voi tehdä pyyntöjä apille
-      // Muista lisätä frontin domaini allowOrigins:iin !!!!
+      // CORS settings, allowed domains, methods and headers
+      // so that frontend can make requests
       corsPreflight: {
         allowHeaders: ['Content-Type', 'Authorization'],
         allowMethods: [
@@ -146,9 +148,8 @@ export class ApiStack extends Stack {
     });
   }
 
-  // Reitti CRUD operaatioille
-  // Integraationa Lambda funktio
-  // Funktio on rakennettu erillisellä builderilla (helpers kansiossa)
+  // Routes for CRUD operations, Lambda functions integrated
+  // functions are built with a separate builder (in helpers file)
   private customerRoute() {
     const fn = new LambdaBuilder(this, 'api-customer-calls')
       .setDescription('CRUD operations for customer management')
@@ -161,7 +162,7 @@ export class ApiStack extends Stack {
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
       .build();
 
-    // API GW kutsuu tätä funktiota kun reittiä /customer kutsutaan
+    // API GW calls this function when route /customer is called
     const integration = new HttpLambdaIntegration('CustomerCallsFn', fn);
 
     this.api.addRoutes({
@@ -180,8 +181,6 @@ export class ApiStack extends Stack {
       ],
       integration,
     });
-
-    /* Tänne loput reitit */
   }
 
   private publicInkRoute() {
@@ -195,7 +194,6 @@ export class ApiStack extends Stack {
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
       .build();
 
-    // API GW kutsuu tätä funktiota kun reittiä /publicInk kutsutaan
     const integration = new HttpLambdaIntegration('publicInkCallsFn', fn);
 
     this.api.addRoutes({
@@ -211,8 +209,6 @@ export class ApiStack extends Stack {
       integration,
       authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
-
-    /* Tänne loput reitit */
   }
 
   private userInkRoute() {
@@ -226,7 +222,6 @@ export class ApiStack extends Stack {
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
       .build();
 
-    // API GW kutsuu tätä funktiota kun reittiä /userInk kutsutaan
     const integration = new HttpLambdaIntegration('userInkCallsFn', fn);
 
     this.api.addRoutes({
@@ -245,8 +240,6 @@ export class ApiStack extends Stack {
       ],
       integration,
     });
-
-    /* Tänne loput reitit */
   }
 
   private entryRoute() {
@@ -260,7 +253,6 @@ export class ApiStack extends Stack {
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
       .build();
 
-    // API GW kutsuu tätä funktiota kun reittiä /entry kutsutaan
     const integration = new HttpLambdaIntegration('entryCallsFn', fn);
 
     this.api.addRoutes({
@@ -279,8 +271,6 @@ export class ApiStack extends Stack {
       ],
       integration,
     });
-
-    /* Tänne loput reitit */
   }
 
   // mainly for dev (for now)
@@ -295,7 +285,6 @@ export class ApiStack extends Stack {
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
       .build();
 
-    // API GW kutsuu tätä funktiota kun reittiä /user kutsutaan
     const integration = new HttpLambdaIntegration('userCallsFn', fn);
 
     this.api.addRoutes({
@@ -311,7 +300,5 @@ export class ApiStack extends Stack {
       integration,
       authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
-
-    /* Tänne loput reitit */
   }
 }
