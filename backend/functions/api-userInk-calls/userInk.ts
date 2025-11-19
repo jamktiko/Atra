@@ -15,7 +15,7 @@ export async function listOwnInks(userId: string) {
     FROM UserInk ui
     INNER JOIN PublicInk pi
     ON ui.PublicInk_ink_id = pi.ink_id  
-    WHERE ui.User_user_id = ?;`,
+    WHERE ui.User_cognito_sub = ?;`,
     [userId]
   );
   return successResponse(rows);
@@ -29,7 +29,7 @@ export async function getUserInk(user_ink_id: string, userId: string) {
     pi.ink_id, pi.product_name, pi.manufacturer, pi.color, pi.size
     FROM UserInk ui
     JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
-    WHERE ui.user_ink_id = ? AND ui.User_user_id = ? `,
+    WHERE ui.user_ink_id = ? AND ui.User_cognito_sub = ? `,
     [user_ink_id, userId]
   );
 
@@ -56,7 +56,7 @@ export async function addUserInk(userId: string, body: any) {
   // Insert values into UserInk
   const [result] = await pool.query(
     `INSERT INTO UserInk 
-    (batch_number, opened_at, expires_at, PublicInk_ink_id, User_user_id)
+    (batch_number, opened_at, expires_at, PublicInk_ink_id, User_cognito_sub)
     VALUES ?`,
     [values]
   );
@@ -71,7 +71,7 @@ export async function deleteUserInk(user_ink_id: string, userId: string) {
   try {
     const pool = await getPool();
     const [result] = await pool.query(
-      'DELETE FROM UserInk ui WHERE user_ink_id = ? AND ui.User_user_id = ?',
+      'DELETE FROM UserInk ui WHERE user_ink_id = ? AND ui.User_cognito_sub = ?',
       [user_ink_id, userId]
     );
     const { affectedRows } = result as any;
@@ -89,7 +89,7 @@ export async function deleteUserInk(user_ink_id: string, userId: string) {
 // Päivitetään userink tiedot
 export async function updateUserInk(
   user_ink_id: string,
-  user_id: string,
+  userId: string,
   body: string | null
 ) {
   const pool = await getPool();
@@ -128,12 +128,12 @@ export async function updateUserInk(
   }
 
   // Lisätään where ehtoon ink id ja käyttäjä id
-  values.push(user_ink_id, user_id);
+  values.push(user_ink_id, userId);
 
   const [result] = await pool.query(
     `UPDATE UserInk
      SET ${fields.join(', ')}
-     WHERE user_ink_id = ? AND User_user_id = ?`,
+     WHERE user_ink_id = ? AND User_cognito_sub = ?`,
     values
   );
 
@@ -146,8 +146,8 @@ export async function updateUserInk(
   const [rows] = await pool.query(
     `SELECT user_ink_id, batch_number, opened_at, expires_at, favorite, PublicInk_ink_id
      FROM UserInk
-     WHERE user_ink_id = ? AND User_user_id = ?`,
-    [user_ink_id, user_id]
+     WHERE user_ink_id = ? AND User_cognito_sub = ?`,
+    [user_ink_id, userId]
   );
 
   const updatedInk = (rows as any[])[0];

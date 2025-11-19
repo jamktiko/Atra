@@ -8,7 +8,7 @@ import { getPool } from '../shared/db';
 export async function listCustomers(userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT c.customer_id, c.first_name, c.last_name, c.email FROM Customer c WHERE User_user_id = ?`,
+    `SELECT c.customer_id, c.first_name, c.last_name, c.email FROM Customer c WHERE User_cognito_sub = ?`,
     [userId]
   );
   return successResponse(rows);
@@ -19,7 +19,7 @@ export async function getCustomer(customer_id: string, userId: string) {
   const [rows] = await pool.query(
     `SELECT c.customer_id, c.first_name, c.last_name, c.email, c.notes
     FROM Customer c
-    WHERE c.customer_id = ? AND c.User_user_id = ?`,
+    WHERE c.customer_id = ? AND c.User_cognito_sub = ?`,
     [customer_id, userId]
   );
 
@@ -49,7 +49,7 @@ export async function addCustomer(userId: string, body: string) {
   }
 
   const [result] = await pool.query(
-    `INSERT INTO Customer (User_user_id, email, first_name, last_name, phone) 
+    `INSERT INTO Customer (User_cognito_sub, email, first_name, last_name, phone) 
     VALUES (?, ?, ?, ?, ?)`,
     [userId, data.email, data.first_name, data.last_name, data.phone ?? null]
   );
@@ -86,7 +86,7 @@ export async function deleteCustomer(customer_id: string, userId: string) {
   try {
     const pool = await getPool();
     const [result] = await pool.query(
-      'DELETE FROM Customer WHERE customer_id = ? AND User_user_id = ?',
+      'DELETE FROM Customer WHERE customer_id = ? AND User_cognito_sub = ?',
       [customer_id, userId]
     );
     const { affectedRows } = result as any;
@@ -153,7 +153,7 @@ export async function updateCustomer(
   const [result] = await pool.query(
     `UPDATE Customer
      SET ${fields.join(', ')}
-     WHERE customer_id = ? AND User_user_id = ?`,
+     WHERE customer_id = ? AND User_cognito_sub = ?`,
     values
   );
 
@@ -166,7 +166,7 @@ export async function updateCustomer(
   const [rows] = await pool.query(
     `SELECT customer_id, email, first_name, last_name, phone
      FROM Customer
-     WHERE customer_id = ? AND User_user_id = ?`,
+     WHERE customer_id = ? AND User_cognito_sub = ?`,
     [customer_id, userId]
   );
 
