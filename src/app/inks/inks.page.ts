@@ -108,11 +108,10 @@ export class InksPage implements OnInit {
 
   toggleUpdateModal(isOpen: boolean) {
     this.showUpdateModal = isOpen;
-    console.log(this.showUpdateModal);
   }
 
   addNew() {
-    this.router.navigate(['/tabs/inks/addnewink']);
+    this.router.navigate(['/inks/addnewink']);
   }
 
   toPublic() {

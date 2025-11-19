@@ -9,6 +9,7 @@ import {
 } from '@ionic/angular/standalone';
 import { User } from 'src/interface';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mainpage',
@@ -37,7 +38,11 @@ export class MainpagePage implements OnInit {
    */
   greeting: string = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
+
+  navigateToFirstpage() {
+    this.router.navigate(['/firstpage']);
+  }
 
   ngOnInit() {}
 }

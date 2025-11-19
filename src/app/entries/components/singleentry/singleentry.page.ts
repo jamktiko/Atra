@@ -69,10 +69,10 @@ export class SingleentryPage implements OnInit {
     this.getUserInks();
   }
 
-  ionViewWillEnter() {
-    console.log('Ion view changed');
-    this.initializeChosenInks();
-  }
+  // ionViewWillEnter() {
+  //   console.log('Ion view changed');
+  //   this.initializeChosenInks();
+  // }
 
   initializeChosenInks() {
     const formArray = this.chosenInks;

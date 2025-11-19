@@ -1,9 +1,15 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'ion-atraproto',
+  appId: 'io.ionic.atra',
+  appName: 'Atra',
   webDir: 'hosting',
+  server: {
+    androidScheme: 'https',
+  },
+  plugins: {
+    CapacitorHttp: { enabled: true },
+  },
 };
 
 export default config;

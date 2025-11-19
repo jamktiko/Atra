@@ -1,41 +1,37 @@
 <ion-content [fullscreen]="true">
-  <div class="flex bg-slate-900 my-4">
-    <div class="flex-1 p-3 md:p-5">
-      <h2 class="text-lg font-lato text-neutral-50 dark:text-white">Hi username</h2>
-      <img src="https://cdn.pixabay.com/photo/2020/06/30/10/23/icon-5355896_1280.png" width="40%" />
 
 
+
+  <div class="flex justify-center">
+    <img src="https://cdn.pixabay.com/photo/2020/06/30/10/23/icon-5355896_1280.png" class="flex w-50 justify-center" />
+  </div>
+
+  <div class="flex items-center">
+    <div class="flex-1 p-3 md:p-5 space-y-4">
       <div>
-        <button
-          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+        <button class="w-full items-center bg-slate-700 text-neutral-50 font-lato text-xl px-18 py-4 px-4 rounded-2xl"
           (click)="usersettingsNavigate()">User Settings</button>
       </div>
 
       <div>
-        <button
-          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+        <button class="w-full items-center bg-slate-700 text-neutral-50 font-lato text-xl px-18 py-4 px-4 rounded-2xl"
           (click)="appsettingsNavigate()">App Settings</button>
       </div>
 
       <div>
-        <button
-          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+        <button class="w-full items-center bg-slate-700 text-neutral-50 font-lato text-xl px-18 py-4 px-4 rounded-2xl"
           (click)="contacthelpNavigate()">Help</button>
       </div>
 
 
       <div>
-        <button
-          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+        <button class="w-full items-center bg-slate-700 text-neutral-50 font-lato text-xl px-18 py-4 px-4 rounded-2xl"
           (click)="privacyNavigate()">Privacy
           policy</button>
       </div>
 
       <div>
-        <button
-          class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
-          (click)="logout()">Log
-          out </button>
+        <app-logout></app-logout>
       </div>
 
     </div>

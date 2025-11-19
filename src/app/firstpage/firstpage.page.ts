@@ -1,20 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+} from '@ionic/angular/standalone';
+import { LoginPage } from './components/login/login.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-firstpage',
   templateUrl: './firstpage.page.html',
-  styleUrls: ['./firstpage.page.scss'],
+  styleUrls: ['./firstpage.page.css'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, CommonModule, FormsModule, LoginPage],
 })
 export class FirstpagePage implements OnInit {
+  constructor(private router: Router) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  navigateToMain() {
+    this.router.navigate(['/tabs/mainpage']);
   }
-
 }
