@@ -18,7 +18,7 @@ export async function getUser(user_id: string) {
   const [rows] = await pool.query(
     `SELECT user_id, cognito_sub, email, first_name, last_name
     FROM User
-    WHERE user_id = ?`,
+    WHERE cognito_sub = ?`,
     [user_id]
   );
 
