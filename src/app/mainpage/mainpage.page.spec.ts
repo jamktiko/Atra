@@ -1,18 +1,24 @@
-//commented out temporarily for fixes
-
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { provideRouter } from '@angular/router';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MainpagePage } from './mainpage.page';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from '../services/auth.service';
 
 describe('MainpagePage', () => {
   let component: MainpagePage;
   let fixture: ComponentFixture<MainpagePage>;
 
+  const mockAuthService = {
+    getUser: jasmine
+      .createSpy('getUser')
+      .and.returnValue({ name: 'Test User' }),
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MainpagePage, HttpClientTestingModule],
-      providers: [provideRouter([])],
+      imports: [MainpagePage, RouterTestingModule, HttpClientTestingModule],
+      providers: [{ provide: AuthService, useValue: mockAuthService }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MainpagePage);
@@ -20,16 +26,19 @@ describe('MainpagePage', () => {
     fixture.detectChanges();
   });
 
-  // tests that the component was created successfully
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  // test that the header title is rendered correctly
   it('should render the header with title "ATRA"', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const title = compiled.querySelector('ion-title');
     expect(title?.textContent?.trim()).toBe('ATRA');
   });
+  it('should navigate to firstpage when navigateToFirstpage() is called', () => {
+    const router = TestBed.inject(Router);
+    spyOn(router, 'navigate');
+    component.navigateToFirstpage();
+    expect(router.navigate).toHaveBeenCalledWith(['/firstpage']);
+  });
 });
- */
