@@ -23,6 +23,18 @@ jobs:
             echo "Deleting $LOG_GROUP"
             aws logs delete-log-group --log-group-name "$LOG_GROUP"
           done
+      - name: Delete Cognito domains
+        run: |
+          USER_POOLS=$(aws cognito-idp list-user-pools --max-results 10 --query "UserPools[].Id" --output text)
+          for POOL_ID in $USER_POOLS; do
+            DOMAIN=$(aws cognito-idp describe-user-pool --user-pool-id $POOL_ID --query "UserPool.Domain" --output text)
+            if [ "$DOMAIN" != "None" ]; then
+              echo "Deleting domain: $DOMAIN from pool: $POOL_ID"
+              aws cognito-idp delete-user-pool-domain --user-pool-id $POOL_ID --domain $DOMAIN
+            else
+              echo "No domain found for pool: $POOL_ID"
+            fi
+          done
       - name: Delete Cognito users and user pools
         run: |
           USER_POOLS=$(aws cognito-idp list-user-pools --max-results 10 --query "UserPools[].Id" --output text)
