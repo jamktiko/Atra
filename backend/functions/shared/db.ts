@@ -17,7 +17,7 @@ export async function getPool() {
   pool = mysql.createPool({
     user: dbSecret.username,
     host: RDS_INSTANCE_HOST || dbSecret.host,
-    database: dbSecret.dbname,
+    database: 'AtraDatabase',
     password: dbSecret.password,
     port: dbSecret.port,
     ssl: { rejectUnauthorized: false },
