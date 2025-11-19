@@ -34,10 +34,10 @@ export async function listEntries(userId: string) {
   const pool = await getPool();
   try {
     const [rows] = await pool.query(
-      `SELECT e.entry_id, e.entry_date, e.Customer_customer_id, c.first_name, c.last_name
+      `SELECT e.entry_id, e.entry_date, e.customer_id, c.first_name, c.last_name
        FROM Entry e
-       LEFT JOIN Customer c ON e.Customer_customer_id = c.customer_id
-       WHERE e.User_user_id = ?
+       LEFT JOIN Customer c ON e.customer_id = c.customer_id
+       WHERE e.user_id = ?
        ORDER BY e.entry_date DESC`,
       [userId]
     );
@@ -55,8 +55,8 @@ export async function getEntry(entry_id: string, userId: string) {
     const [rows]: any = await pool.query(
       `SELECT e.entry_id, e.entry_date, e.comments, c.customer_id, c.first_name, c.last_name
        FROM Entry e
-       LEFT JOIN Customer c ON e.Customer_customer_id = c.customer_id
-       WHERE e.entry_id = ? AND e.User_user_id = ?`,
+       LEFT JOIN Customer c ON e.customer_id = c.customer_id
+       WHERE e.entry_id = ? AND e.user_id = ?`,
       [entry_id, userId]
     );
     if (!rows.length) return notFoundResponse('Entry not found');
@@ -113,7 +113,7 @@ export async function addEntry(
     // validate customer if provided
     if (customer_id !== null) {
       const [cust]: any = await conn.query(
-        `SELECT 1 FROM Customer WHERE customer_id = ? AND User_user_id = ?`,
+        `SELECT 1 FROM Customer WHERE customer_id = ? AND user_id = ?`,
         [customer_id, userId]
       );
       if (!cust.length) {
@@ -123,7 +123,7 @@ export async function addEntry(
     }
 
     const [entryResult]: any = await conn.query(
-      `INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id)
+      `INSERT INTO Entry (entry_date, comments, user_id, customer_id)
        VALUES (?, ?, ?, ?)`,
       [entry_date, comments, userId, customer_id]
     );
@@ -146,116 +146,7 @@ export async function addEntry(
   }
 }
 
-// remove and add inks in two separate arrays:
-/*
-// Update entry fields and optionally replace attached inks
-export async function updateEntry(
-  entry_id: number,
-  userId: string,
-  entry_date?: string,
-  comments?: string,
-  customer_id?: number | null,
-  add_user_ink_id?: number[],
-  remove_user_ink_id?: number[]
-) {
-  const pool = await getPool();
-  const conn = await pool.getConnection();
 
-  // Validation
-  if (entry_date && isNaN(Date.parse(entry_date))) {
-    return clientErrorResponse('Invalid entry_date');
-  }
-  if (add_user_ink_id && !Array.isArray(add_user_ink_id)) {
-    return clientErrorResponse('add_user_ink_id must be an array');
-  }
-  if (remove_user_ink_id && !Array.isArray(remove_user_ink_id)) {
-    return clientErrorResponse('remove_user_ink_id must be an array');
-  }
-
-  const updates = [];
-  const values: any[] = [];
-
-  if (entry_date !== undefined) {
-    updates.push('entry_date = ?');
-    values.push(entry_date);
-  }
-  if (comments !== undefined) {
-    updates.push('comments = ?');
-    values.push(comments);
-  }
-  if (customer_id !== undefined) {
-    updates.push('Customer_customer_id = ?');
-    values.push(customer_id);
-  }
-
-  // If nothing to do:
-  if (
-    updates.length === 0 &&
-    !add_user_ink_id?.length &&
-    !remove_user_ink_id?.length
-  ) {
-    conn.release();
-    return clientErrorResponse('No fields to update');
-  }
-
-  try {
-    await conn.beginTransaction();
-    // Update Entry base fields:
-    if (updates.length > 0) {
-      values.push(entry_id, userId);
-      const [result]: any = await conn.query(
-        `UPDATE Entry 
-        SET ${updates.join(', ')} 
-        WHERE entry_id = ? AND User_user_id = ?`,
-        values
-      );
-      if (result.affectedRows === 0) {
-        await conn.rollback();
-        conn.release();
-        return notFoundResponse('Entry not found or not owned by user');
-      }
-    }
-
-    // Add inks:
-    if (add_user_ink_id && add_user_ink_id.length > 0) {
-      // avoiding duplicates here: only insert inks not already linked
-      const [existing]: any = await conn.query(
-        `SELECT UserInk_user_ink_id FROM UserInk_has_Entry WHERE Entry_entry_id = ?`,
-        [entry_id]
-      );
-      const existingIds = existing.map((e: any) => e.UserInk_user_ink_id);
-      const newIds = add_user_ink_id.filter((id) => !existingIds.includes(id));
-
-      if (newIds.length > 0) {
-        const valuesToInsert = newIds.map((id) => [id, entry_id]);
-        await conn.query(
-          `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id) VALUES ?`,
-          [valuesToInsert]
-        );
-      }
-    }
-    
-
-    //Remove inks:
-    if (remove_user_ink_id && remove_user_ink_id.length > 0) {
-      await conn.query(
-        `DELETE FROM UserInk_has_Entry
-        WHERE Entry_entry_id = ?
-        AND UserInk_user_ink_id IN (?)`,
-        [entry_id, remove_user_ink_id]
-      );
-    }
-    await conn.commit();
-    return successResponse({ message: 'Entry updated' });
-  } catch (error) {
-    await conn.rollback();
-    console.error('updateEntry error:', error);
-    return clientErrorResponse('Could not update entry');
-  } finally {
-    conn.release();
-  }
-}
-*/
 
 export async function updateEntry(
   entry_id: number,
@@ -288,7 +179,7 @@ export async function updateEntry(
     values.push(comments);
   }
   if (customer_id !== undefined) {
-    updates.push('Customer_customer_id = ?');
+    updates.push('customer_id = ?');
     values.push(customer_id);
   }
   if (updates.length === 0 && !replace_user_ink_id) {
@@ -303,7 +194,7 @@ export async function updateEntry(
       const [result]: any = await conn.query(
         `UPDATE Entry 
         SET ${updates.join(', ')} 
-        WHERE entry_id = ? AND User_user_id = ?`,
+        WHERE entry_id = ? AND user_id = ?`,
         values
       );
       if (result.affectedRows === 0) {
@@ -353,7 +244,7 @@ export async function deleteEntry(entry_id: number, userId: string) {
     ]);
     // Delete entry itself
     const [result]: any = await conn.query(
-      `DELETE FROM Entry WHERE entry_id = ? AND User_user_id = ?`,
+      `DELETE FROM Entry WHERE entry_id = ? AND user_id = ?`,
       [entry_id, userId]
     );
 

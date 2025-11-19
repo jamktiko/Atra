@@ -14,7 +14,7 @@ export async function listOwnInks(userId: string) {
     ui.expires_at, ui.favorite, ui.user_ink_id, pi.recalled, pi.image_url  
     FROM UserInk ui
     INNER JOIN PublicInk pi
-    ON ui.PublicInk_ink_id = pi.ink_id  
+    ON ui.public_ink_id = pi.ink_id  
     WHERE ui.user_id = ?;`,
     [userId]
   );
@@ -28,7 +28,7 @@ export async function getUserInk(user_ink_id: string, userId: string) {
     `SELECT ui.user_ink_id, ui.batch_number, ui.opened_at, ui.expires_at, ui.favorite, ui.user_ink_id,
     pi.ink_id, pi.product_name, pi.manufacturer, pi.color, pi.size
     FROM UserInk ui
-    JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
+    JOIN PublicInk pi ON ui.public_ink_id = pi.ink_id
     WHERE ui.user_ink_id = ? AND ui.user_id = ? `,
     [user_ink_id, userId]
   );
@@ -56,7 +56,7 @@ export async function addUserInk(userId: string, body: any) {
   // Insert values into UserInk
   const [result] = await pool.query(
     `INSERT INTO UserInk 
-    (batch_number, opened_at, expires_at, PublicInk_ink_id, user_id)
+    (batch_number, opened_at, expires_at, public_ink_id, user_id)
     VALUES ?`,
     [values]
   );
@@ -144,7 +144,7 @@ export async function updateUserInk(
 
   // Palautetaan päivitetty
   const [rows] = await pool.query(
-    `SELECT user_ink_id, batch_number, opened_at, expires_at, favorite, PublicInk_ink_id
+    `SELECT user_ink_id, batch_number, opened_at, expires_at, favorite, public_ink_id
      FROM UserInk
      WHERE user_ink_id = ? AND user_id = ?`,
     [user_ink_id, userId]

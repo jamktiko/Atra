@@ -15,11 +15,10 @@ export const handler: Handler = async (event, ctx) => {
 
       CREATE TABLE IF NOT EXISTS User (
         user_id VARCHAR(255) NOT NULL,
-        email VARCHAR(45) NOT NULL,
-        first_name VARCHAR(25) NOT NULL,
-        last_name VARCHAR(45) NOT NULL,
-        PRIMARY KEY (user_id),
-        UNIQUE KEY idUser_UNIQUE (user_id)
+        email VARCHAR(100) NOT NULL,
+        first_name VARCHAR(25),
+        last_name VARCHAR(45),
+        PRIMARY KEY (user_id)
       ) ENGINE=InnoDB;
 
       CREATE TABLE IF NOT EXISTS Customer (
@@ -31,9 +30,10 @@ export const handler: Handler = async (event, ctx) => {
         notes TEXT,
         user_id VARCHAR(255) NOT NULL,
         PRIMARY KEY (customer_id),
-        UNIQUE KEY ux_customer_email (email, User_user_id),
-        INDEX fk_Customer_User1_idx (User_user_id),
-        CONSTRAINT fk_Customer_User1 FOREIGN KEY (User_user_id) REFERENCES User(user_id)
+        UNIQUE KEY ux_customer_email_per_user (email, user_id),
+        INDEX idx_customer_user (user_id),
+        CONSTRAINT fk_customer_user FOREIGN KEY (user_id)
+          REFERENCES User(user_id)
           ON DELETE RESTRICT
       ) ENGINE=InnoDB;
 
@@ -55,31 +55,37 @@ export const handler: Handler = async (event, ctx) => {
         opened_at DATE,
         expires_at DATE,
         favorite TINYINT,
-        PublicInk_ink_id INT NOT NULL,
+        public_ink_id INT NOT NULL,
         user_id VARCHAR(255) NOT NULL,
         PRIMARY KEY (user_ink_id),
-        INDEX fk_UserInk_PublicInk1_idx (PublicInk_ink_id),
-        INDEX fk_UserInk_User1_idx (User_user_id),
-        UNIQUE KEY user_ink_id_UNIQUE (user_ink_id),
-        CONSTRAINT fk_UserInk_PublicInk1 FOREIGN KEY (PublicInk_ink_id) REFERENCES PublicInk(ink_id)
+        INDEX idx_userink_publicink (public_ink_id),
+        INDEX idx_userink_user (user_id),
+
+        CONSTRAINT fk_userink_publicink FOREIGN KEY (public_ink_id)
+          REFERENCES PublicInk(ink_id)
           ON DELETE RESTRICT,
-        CONSTRAINT fk_UserInk_User1 FOREIGN KEY (User_user_id) REFERENCES User(user_id)
+
+        CONSTRAINT fk_userink_user FOREIGN KEY (user_id)
+          REFERENCES User(user_id)
           ON DELETE RESTRICT
-      ) ENGINE=InnoDB; 
+      ) ENGINE=InnoDB;
 
       CREATE TABLE IF NOT EXISTS Entry (
         entry_id INT NOT NULL AUTO_INCREMENT,
         entry_date DATETIME NOT NULL,
         comments TEXT,
         user_id VARCHAR(255) NOT NULL,
-        Customer_customer_id INT NULL,
+        customer_id INT NULL,
         PRIMARY KEY (entry_id),
-        UNIQUE KEY idEntry_UNIQUE (entry_id),
-        INDEX fk_Entry_User1_idx (User_user_id),
-        INDEX fk_Entry_Customer1_idx (Customer_customer_id),
-        CONSTRAINT fk_Entry_User1 FOREIGN KEY (User_user_id) REFERENCES User(user_id)
+        INDEX idx_entry_user (user_id),
+        INDEX idx_entry_customer (customer_id),
+
+        CONSTRAINT fk_entry_user FOREIGN KEY (user_id)
+          REFERENCES User(user_id)
           ON DELETE RESTRICT,
-        CONSTRAINT fk_Entry_Customer1 FOREIGN KEY (Customer_customer_id) REFERENCES Customer(customer_id)
+
+        CONSTRAINT fk_entry_customer FOREIGN KEY (customer_id)
+          REFERENCES Customer(customer_id)
           ON DELETE SET NULL
       ) ENGINE=InnoDB;`);
 
