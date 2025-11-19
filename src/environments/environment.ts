@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   gitBranch: '',
-  apiUrl: 'https://ozgjxrff5f.execute-api.eu-north-1.amazonaws.com',
+  apiUrl: 'https://dqb2a3s7q1.execute-api.eu-north-1.amazonaws.com',
 };
 
 /*
