@@ -15,7 +15,7 @@ export async function listOwnInks(userId: string) {
     FROM UserInk ui
     INNER JOIN PublicInk pi
     ON ui.PublicInk_ink_id = pi.ink_id  
-    WHERE ui.User_cognito_sub = ?;`,
+    WHERE ui.cognito_sub = ?;`,
     [userId]
   );
   return successResponse(rows);
@@ -29,7 +29,7 @@ export async function getUserInk(user_ink_id: string, userId: string) {
     pi.ink_id, pi.product_name, pi.manufacturer, pi.color, pi.size
     FROM UserInk ui
     JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
-    WHERE ui.user_ink_id = ? AND ui.User_cognito_sub = ? `,
+    WHERE ui.user_ink_id = ? AND ui.cognito_sub = ? `,
     [user_ink_id, userId]
   );
 
@@ -56,7 +56,7 @@ export async function addUserInk(userId: string, body: any) {
   // Insert values into UserInk
   const [result] = await pool.query(
     `INSERT INTO UserInk 
-    (batch_number, opened_at, expires_at, PublicInk_ink_id, User_cognito_sub)
+    (batch_number, opened_at, expires_at, PublicInk_ink_id, cognito_sub)
     VALUES ?`,
     [values]
   );
@@ -71,7 +71,7 @@ export async function deleteUserInk(user_ink_id: string, userId: string) {
   try {
     const pool = await getPool();
     const [result] = await pool.query(
-      'DELETE FROM UserInk ui WHERE user_ink_id = ? AND ui.User_cognito_sub = ?',
+      'DELETE FROM UserInk ui WHERE user_ink_id = ? AND ui.cognito_sub = ?',
       [user_ink_id, userId]
     );
     const { affectedRows } = result as any;
@@ -133,7 +133,7 @@ export async function updateUserInk(
   const [result] = await pool.query(
     `UPDATE UserInk
      SET ${fields.join(', ')}
-     WHERE user_ink_id = ? AND User_cognito_sub = ?`,
+     WHERE user_ink_id = ? AND cognito_sub = ?`,
     values
   );
 
@@ -146,7 +146,7 @@ export async function updateUserInk(
   const [rows] = await pool.query(
     `SELECT user_ink_id, batch_number, opened_at, expires_at, favorite, PublicInk_ink_id
      FROM UserInk
-     WHERE user_ink_id = ? AND User_cognito_sub = ?`,
+     WHERE user_ink_id = ? AND cognito_sub = ?`,
     [user_ink_id, userId]
   );
 
