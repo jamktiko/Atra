@@ -11,7 +11,6 @@ import { CustomSecureStorage } from './customsecurestorage';
 export class AuthService {
   constructor(
     public oidc: OidcSecurityService,
-    private router: Router,
     private storage: CustomSecureStorage
   ) {}
 
@@ -29,11 +28,6 @@ export class AuthService {
 
   async logout(): Promise<void> {
     try {
-      // 1️⃣ Clear stored tokens
-      this.storage.clear();
-      console.log('CustomSecureStorage cleared');
-
-      // 2️⃣ Call OIDC logoff
       await this.oidc.logoff().subscribe({
         next: (data) => {
           console.log(data);
@@ -46,6 +40,8 @@ export class AuthService {
     } catch (err) {
       console.error('Logout failed: ', err);
     }
+    console.log('Clearing CustomSecurityStorage: ');
+    this.storage.clear();
   }
 
   /*

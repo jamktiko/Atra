@@ -19,5 +19,6 @@ export class CustomSecureStorage implements AbstractSecurityStorage {
 
   clear(): void {
     localStorage.clear();
+    console.log('Localstorage cleared');
   }
 }

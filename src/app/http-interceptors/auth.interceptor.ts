@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return from(this.oidc.getIdToken()).pipe(
+    return from(this.oidc.getAccessToken()).pipe(
       mergeMap((token) => {
         if (token) {
           const clonedReq = req.clone({
@@ -29,12 +29,9 @@ export class AuthInterceptor implements HttpInterceptor {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log('Format: ', clonedReq);
-          console.log('Token: ', token);
+          console.log('Sending to backend: ', clonedReq);
           return next.handle(clonedReq);
         }
-
-        console.log('Wrong format: ', next.handle(req));
         return next.handle(req);
       })
     );
