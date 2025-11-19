@@ -1,6 +1,4 @@
-//commented out temporarily for fixes
-
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CallbackPage } from './callback.page';
 
 describe('CallbackPage', () => {
@@ -17,4 +15,3 @@ describe('CallbackPage', () => {
     expect(component).toBeTruthy();
   });
 });
- */

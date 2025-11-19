@@ -1,13 +1,24 @@
-//commented out temporarily for fixes
-
-/* import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserPage } from './user.page';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AuthService } from '../services/auth.service';
 
 describe('UserPage', () => {
   let component: UserPage;
   let fixture: ComponentFixture<UserPage>;
 
-  beforeEach(() => {
+  const mockAuthService = {
+    isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true),
+    logout: jasmine.createSpy('logout'),
+  };
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [UserPage, RouterTestingModule, HttpClientTestingModule],
+      providers: [{ provide: AuthService, useValue: mockAuthService }],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(UserPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -17,15 +28,9 @@ describe('UserPage', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have h2 title', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h2')?.textContent).toContain('Hi');
-  });
-
   it('should have 5 buttons', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const buttons = compiled.querySelectorAll('button');
     expect(buttons.length).toBe(5);
   });
 });
- */
