@@ -19,7 +19,7 @@ export const handler: Handler = async (event, ctx) => {
         email VARCHAR(45) NOT NULL,
         first_name VARCHAR(25) NOT NULL,
         last_name VARCHAR(45) NOT NULL,
-        PRIMARY KEY (user_id),
+        PRIMARY KEY (cognito_sub),
         UNIQUE KEY idUser_UNIQUE (user_id)
       ) ENGINE=InnoDB;
 
@@ -30,11 +30,11 @@ export const handler: Handler = async (event, ctx) => {
         first_name VARCHAR(25),
         last_name VARCHAR(45),
         notes TEXT,
-        User_user_id VARCHAR(255) NOT NULL,
+        User_user_id VARCHAR(255) UNIQUE NOT NULL,
         PRIMARY KEY (customer_id),
         UNIQUE KEY ux_customer_email (email, User_user_id),
         INDEX fk_Customer_User1_idx (User_user_id),
-        CONSTRAINT fk_Customer_User1 FOREIGN KEY (User_user_id) REFERENCES User(user_id)
+        CONSTRAINT fk_Customer_User1 FOREIGN KEY (User_user_id) REFERENCES User(cognito_sub)
           ON DELETE RESTRICT
       ) ENGINE=InnoDB;
 
@@ -57,14 +57,14 @@ export const handler: Handler = async (event, ctx) => {
         expires_at DATE,
         favorite TINYINT,
         PublicInk_ink_id INT NOT NULL,
-        User_user_id VARCHAR(255) NOT NULL,
+        User_user_id VARCHAR(255) UNIQUE NOT NULL,
         PRIMARY KEY (user_ink_id),
         INDEX fk_UserInk_PublicInk1_idx (PublicInk_ink_id),
         INDEX fk_UserInk_User1_idx (User_user_id),
         UNIQUE KEY user_ink_id_UNIQUE (user_ink_id),
         CONSTRAINT fk_UserInk_PublicInk1 FOREIGN KEY (PublicInk_ink_id) REFERENCES PublicInk(ink_id)
           ON DELETE RESTRICT,
-        CONSTRAINT fk_UserInk_User1 FOREIGN KEY (User_user_id) REFERENCES User(user_id)
+        CONSTRAINT fk_UserInk_User1 FOREIGN KEY (User_user_id) REFERENCES User(cognito_sub)
           ON DELETE RESTRICT
       ) ENGINE=InnoDB; 
 
@@ -72,19 +72,19 @@ export const handler: Handler = async (event, ctx) => {
         entry_id INT NOT NULL AUTO_INCREMENT,
         entry_date DATETIME NOT NULL,
         comments TEXT,
-        User_user_id VARCHAR(255) NOT NULL,
+        User_user_id VARCHAR(255) UNIQUE NOT NULL,
         Customer_customer_id INT NULL,
         PRIMARY KEY (entry_id),
         UNIQUE KEY idEntry_UNIQUE (entry_id),
         INDEX fk_Entry_User1_idx (User_user_id),
         INDEX fk_Entry_Customer1_idx (Customer_customer_id),
-        CONSTRAINT fk_Entry_User1 FOREIGN KEY (User_user_id) REFERENCES User(user_id)
+        CONSTRAINT fk_Entry_User1 FOREIGN KEY (User_user_id) REFERENCES User(cognito_sub)
           ON DELETE RESTRICT,
         CONSTRAINT fk_Entry_Customer1 FOREIGN KEY (Customer_customer_id) REFERENCES Customer(customer_id)
           ON DELETE SET NULL
       ) ENGINE=InnoDB;`);
 
-      await conn.query(`
+    await conn.query(`
       INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size)
       VALUES
       ('Panthera Black', 'Panthera Ink', 'Black', 0, 'https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg', '30ml'),
