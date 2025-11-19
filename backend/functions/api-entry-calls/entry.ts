@@ -37,7 +37,7 @@ export async function listEntries(userId: string) {
       `SELECT e.entry_id, e.entry_date, e.Customer_customer_id, c.first_name, c.last_name
        FROM Entry e
        LEFT JOIN Customer c ON e.Customer_customer_id = c.customer_id
-       WHERE e.User_cognito_sub = ?
+       WHERE e.User_user_id = ?
        ORDER BY e.entry_date DESC`,
       [userId]
     );
@@ -56,7 +56,7 @@ export async function getEntry(entry_id: string, userId: string) {
       `SELECT e.entry_id, e.entry_date, e.comments, c.customer_id, c.first_name, c.last_name
        FROM Entry e
        LEFT JOIN Customer c ON e.Customer_customer_id = c.customer_id
-       WHERE e.entry_id = ? AND e.User_cognito_sub = ?`,
+       WHERE e.entry_id = ? AND e.User_user_id = ?`,
       [entry_id, userId]
     );
     if (!rows.length) return notFoundResponse('Entry not found');
@@ -113,7 +113,7 @@ export async function addEntry(
     // validate customer if provided
     if (customer_id !== null) {
       const [cust]: any = await conn.query(
-        `SELECT 1 FROM Customer WHERE customer_id = ? AND User_cognito_sub = ?`,
+        `SELECT 1 FROM Customer WHERE customer_id = ? AND User_user_id = ?`,
         [customer_id, userId]
       );
       if (!cust.length) {
@@ -123,7 +123,7 @@ export async function addEntry(
     }
 
     const [entryResult]: any = await conn.query(
-      `INSERT INTO Entry (entry_date, comments, User_cognito_sub, Customer_customer_id)
+      `INSERT INTO Entry (entry_date, comments, User_user_id, Customer_customer_id)
        VALUES (?, ?, ?, ?)`,
       [entry_date, comments, userId, customer_id]
     );
@@ -206,7 +206,7 @@ export async function updateEntry(
       const [result]: any = await conn.query(
         `UPDATE Entry 
         SET ${updates.join(', ')} 
-        WHERE entry_id = ? AND User_cognito_sub = ?`,
+        WHERE entry_id = ? AND User_user_id = ?`,
         values
       );
       if (result.affectedRows === 0) {
@@ -303,7 +303,7 @@ export async function updateEntry(
       const [result]: any = await conn.query(
         `UPDATE Entry 
         SET ${updates.join(', ')} 
-        WHERE entry_id = ? AND User_cognito_sub = ?`,
+        WHERE entry_id = ? AND User_user_id = ?`,
         values
       );
       if (result.affectedRows === 0) {
@@ -353,7 +353,7 @@ export async function deleteEntry(entry_id: number, userId: string) {
     ]);
     // Delete entry itself
     const [result]: any = await conn.query(
-      `DELETE FROM Entry WHERE entry_id = ? AND User_cognito_sub = ?`,
+      `DELETE FROM Entry WHERE entry_id = ? AND User_user_id = ?`,
       [entry_id, userId]
     );
 
