@@ -13,7 +13,7 @@ interface CognitoStackProps extends StackProps {
   rdsSecretName: string;
 }
 
-// Cognito Stack joka luo User Poolin ja User Pool Clientin
+// Cognito stack that creates User Pool and User Pool Client
 export class CognitoStack extends Stack {
   private vpc: ec2.IVpc;
   private rdsSecretName: string;
@@ -38,13 +38,12 @@ export class CognitoStack extends Stack {
 
     const frontendDomain = ssm.distributionDomainName;
 
+    // Lambda function that is triggered when a new user registers
     this.postConfirmationFn = new LambdaBuilder(
       this,
-      'cognito-post-confirmation'
-    )
+      'cognito-post-confirmation')
       .setDescription(
-        'Handles Cognito Post Confirmation trigger to create user in DB'
-      )
+        'Handles Cognito Post Confirmation trigger to create user in DB')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
         RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
@@ -53,6 +52,7 @@ export class CognitoStack extends Stack {
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
       .build();
 
+      
     const userPool = this.createUserPool();
     const domain = userPool.addDomain("CognitoHostedUiDomain", {
       cognitoDomain: {
@@ -66,13 +66,13 @@ export class CognitoStack extends Stack {
     ssm.cognitoDomainUrl = domain.baseUrl();
   }
 
-  // Luo User Poolin (eli käyttäjätietokanta)
+  // Creates User Pool
   createUserPool() {
     const userPool = new cognito.UserPool(this, 'UserPool', {
       userPoolName: 'AtraAppUsers',
-      selfSignUpEnabled: true, // salli käyttäjien itse rekisteröityä
-      signInAliases: { email: true }, // kirjaudu sisään sähköpostilla
-      autoVerify: { email: true }, // vahvista sähköposti automaattisesti
+      selfSignUpEnabled: true, // allows users to register 
+      signInAliases: { email: true }, // sign in with email
+      autoVerify: { email: true },
       lambdaTriggers: {
         postConfirmation: this.postConfirmationFn,
       },
@@ -87,15 +87,14 @@ export class CognitoStack extends Stack {
         }
       },
       passwordPolicy: {
-        // salasanapolitiikka
         minLength: 8,
         requireLowercase: true,
         requireUppercase: true,
         requireSymbols: false,
         requireDigits: true,
       },
-      removalPolicy: cdk.RemovalPolicy.DESTROY, // tämä tarkoittaa, että user pool poistetaan stackin poistamisen yhteydessä -> ei tuotantokäytössä (RETAIN)!
-      deletionProtection: false, // poista suojaus, jotta pool voidaan poistaa
+      removalPolicy: cdk.RemovalPolicy.DESTROY, // user pool is removed when stack is removed -> not for production (RETAIN)!
+      deletionProtection: false,
       //accountRecovery: cognito.AccountRecovery.EMAIL_ONLY,
       //userVerification: {
       // emailSubject: 'Welcome to Atra App!',
@@ -106,10 +105,10 @@ export class CognitoStack extends Stack {
     return userPool;
   }
 
-  // Luo User Pool Clientin (= sovellus, joka käyttää User Poolia)
-  // client on se, joka hoitaa kirjautumisen ja tokenien hallinnan
+ 
   // clientin kautta käyttäjät voi kirjautua sisään ja saada JWT tokenit,
   // joita API GW voi sitten validoida
+  // Creates User Pool Client, client is the thing that handles sign in and token management
   createUserPoolClient(userPool: cognito.UserPool, frontendDomain: string) {
     const client = userPool.addClient('cognitoClient', {
       userPoolClientName: 'AtraAppClient',
