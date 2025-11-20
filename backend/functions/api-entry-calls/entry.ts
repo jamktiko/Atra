@@ -22,9 +22,8 @@ export async function insertAssociation(
     SELECT ui.user_ink_id, ?, pi.product_name, pi.manufacturer, pi.color,
     ui.batch_number, pi.image_url, pi.size
     FROM UserInk ui
-    JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
-    WHERE ui.user_ink_id = ?
-    ON DUPLICATE KEY UPDATE created_at = created_at;`,
+    JOIN PublicInk pi ON ui.public_ink_id = pi.ink_id
+    WHERE ui.user_ink_id = ?`,
     [entry_id, user_ink_id]
   );
 }
@@ -74,7 +73,7 @@ export async function getEntry(entry_id: string, userId: string) {
         COALESCE(uhe.snapshot_size, pi.size) AS size
       FROM UserInk_has_Entry uhe
       LEFT JOIN UserInk ui ON uhe.UserInk_user_ink_id = ui.user_ink_id
-      LEFT JOIN PublicInk pi ON ui.PublicInk_ink_id = pi.ink_id
+      LEFT JOIN PublicInk pi ON ui.public_ink_id = pi.ink_id
       WHERE uhe.Entry_entry_id = ?
       ORDER BY uhe.created_at ASC
       `,
@@ -211,14 +210,14 @@ export async function updateEntry(
       for (const inkId of replace_user_ink_id) {
         await insertAssociation(conn, inkId, entry_id);
       }
-      if (replace_user_ink_id.length > 0) {
-        const inkValues = replace_user_ink_id.map((id) => [id, entry_id]);
-        await conn.query(
-          `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id)
-          VALUES ?`,
-          [inkValues]
-        );
-      }
+      //if (replace_user_ink_id.length > 0) {
+      //const inkValues = replace_user_ink_id.map((id) => [id, entry_id]);
+      //await conn.query(
+      //  `INSERT INTO UserInk_has_Entry (UserInk_user_ink_id, Entry_entry_id)
+      //  VALUES ?`,
+      //  [inkValues]
+      //);
+      //}
     }
     await conn.commit();
     return successResponse({ message: 'Entry updated' });

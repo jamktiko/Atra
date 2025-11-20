@@ -16,7 +16,7 @@ export async function listUsers() {
 export async function getUser(user_id: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT user_id, cemail, first_name, last_name
+    `SELECT user_id, email, first_name, last_name
     FROM User
     WHERE user_id = ?`,
     [user_id]

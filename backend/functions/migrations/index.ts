@@ -87,7 +87,32 @@ export const handler: Handler = async (event, ctx) => {
         CONSTRAINT fk_entry_customer FOREIGN KEY (customer_id)
           REFERENCES Customer(customer_id)
           ON DELETE SET NULL
-      ) ENGINE=InnoDB;`);
+      ) ENGINE=InnoDB;
+      
+      CREATE TABLE IF NOT EXISTS UserInk_has_Entry (
+        id INT NOT NULL AUTO_INCREMENT,
+        UserInk_user_ink_id INT NULL,
+        Entry_entry_id INT NULL,
+        snapshot_product_name VARCHAR(100),
+        snapshot_manufacturer VARCHAR(100),
+        snapshot_color VARCHAR(100),
+        snapshot_batch_number VARCHAR(40),
+        snapshot_image_url VARCHAR(255),
+        snapshot_size VARCHAR(45),
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        INDEX idx_uhe_userink (UserInk_user_ink_id),
+        INDEX idx_uhe_entry (Entry_entry_id),
+
+        CONSTRAINT fk_uhe_userink FOREIGN KEY (UserInk_user_ink_id)
+          REFERENCES UserInk(user_ink_id)
+          ON DELETE SET NULL,
+
+        CONSTRAINT fk_uhe_entry FOREIGN KEY (Entry_entry_id)
+          REFERENCES Entry(entry_id)
+          ON DELETE CASCADE
+      ) ENGINE=InnoDB;
+   `);
 
     await conn.query(`
       INSERT INTO PublicInk (product_name, manufacturer, color, recalled, image_url, size)
