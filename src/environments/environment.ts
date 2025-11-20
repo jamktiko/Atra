@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   gitBranch: '',
-  apiUrl: 'https://tulnpy3a9j.execute-api.eu-north-1.amazonaws.com',
-  cognitoClientId: '48gn8936oo6nrrnbura271mc8j',
+  apiUrl: 'https://3mhyxxr99b.execute-api.eu-north-1.amazonaws.com',
+  cognitoClientId: '5kvpd5lva11atb5sll1u0nq69m',
   cognitoUserPoolAuthority:
-    'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_AAeXTWJo1',
+    'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_YcALSuw12',
 };
 //sally test
 

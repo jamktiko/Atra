@@ -43,9 +43,8 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideAuth({
       config: {
-        clientId: '3sfdbebp66d23d5kj6svpi3qbj',
-        authority:
-          'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_v3KWSl9JX',
+        clientId: environment.cognitoClientId,
+        authority: environment.cognitoUserPoolAuthority,
         redirectUrl,
         postLogoutRedirectUri,
         responseType: 'code',
@@ -59,11 +58,11 @@ bootstrapApplication(AppComponent, {
           userInfoEndpoint:
             'https://atra-app.auth.eu-north-1.amazoncognito.com/oauth2/userInfo',
 
-          endSessionEndpoint: `https://atra-app.auth.eu-north-1.amazoncognito.com/logout?client_id=3sfdbebp66d23d5kj6svpi3qbj&logout_uri=${encodeURIComponent(
-            postLogoutRedirectUri
-          )}`,
+          endSessionEndpoint: `https://atra-app.auth.eu-north-1.amazoncognito.com/logout?client_id=${
+            environment.cognitoClientId
+          }&logout_uri=${encodeURIComponent(postLogoutRedirectUri)}`,
           jwksUri:
-            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_AAeXTWJo1/.well-known/jwks.json',
+            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_YcALSuw12/.well-known/jwks.json',
         },
       },
     }),

@@ -188,11 +188,7 @@ export class ApiService {
    * Backend-kutsu updateUserInk
    * TODO: mock data usage in else-block
    */
-  updateUserInk(
-    userInkId: string,
-    userId: string,
-    userInkData: UserInk
-  ): Observable<UserInk> {
+  updateUserInk(userInkId: string, userInkData: UserInk): Observable<UserInk> {
     if (this.isProd) {
       return this.http.put<UserInk>(
         `${this.apiUrl}/userInk/${userInkId}`,
@@ -211,7 +207,6 @@ export class ApiService {
           ...this.localUserInks[index],
           ...userInkData,
           user_ink_id: id, // Ensure ID stays consistent
-          User_user_id: userId, // Ensure user ID is updated
         };
 
         return of(this.localUserInks[index]);
@@ -230,7 +225,7 @@ export class ApiService {
           recalled: userInkData.recalled ?? false,
           image_url: userInkData.image_url ?? 'N/A',
           size: userInkData.size ?? 'N/A',
-          User_user_id: userId,
+          User_user_id: '1',
         };
 
         this.localUserInks.push(mockInk);

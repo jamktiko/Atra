@@ -47,7 +47,6 @@ console.log('Is it prod? ' + isProd); */
   ],
 })
 export class InksPage implements OnInit {
-  userId: string = '1';
   /*searchItem-muuttuja on sidottu ion-searchbariin ngModel-toiminnalla, joka mahdollistaa
    * muuttujien kaksisuuntaisen sitomisen. Täten searchItemin arvo päivittyy reaktiivisesti
    */
@@ -152,24 +151,21 @@ export class InksPage implements OnInit {
   //HUOM. userID kovakoodattu toistaiseksi
   updateInk() {
     const userInkId = this.selectedInk.user_ink_id;
-    const userId = this.userId;
 
-    this.apiService
-      .updateUserInk(userInkId, userId, this.selectedInk)
-      .subscribe({
-        next: (updatedInk) => {
-          console.log('Ink updated: ', updatedInk);
-          this.updatedInk = updatedInk;
-          this.toggleUpdateModal(false);
-          this.setClosed(false);
-          this.toast.success('Ink updated successfully');
-        },
-        error: (err) => {
-          console.error('Something went wrong: ', err);
+    this.apiService.updateUserInk(userInkId, this.selectedInk).subscribe({
+      next: (updatedInk) => {
+        console.log('Ink updated: ', updatedInk);
+        this.updatedInk = updatedInk;
+        this.toggleUpdateModal(false);
+        this.setClosed(false);
+        this.toast.success('Ink updated successfully');
+      },
+      error: (err) => {
+        console.error('Something went wrong: ', err);
 
-          //error message toast
-        },
-      });
+        //error message toast
+      },
+    });
   }
 
   /*
