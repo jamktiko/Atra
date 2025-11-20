@@ -72,7 +72,7 @@ export class CognitoStack extends Stack {
       userPoolName: 'AtraAppUsers',
       selfSignUpEnabled: true, // allows users to register 
       signInAliases: { email: true }, // sign in with email
-      autoVerify: { email: true },
+      //autoVerify: { email: true },
       lambdaTriggers: {
         postConfirmation: this.postConfirmationFn,
       },
