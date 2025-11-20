@@ -6,8 +6,8 @@
 
 <ion-content>
 
+  <ng-toast></ng-toast>
 
-  <!--Menee myös for-loopin ympärille-->
   <div>
     <div class="flex flex-col items-center justify-center px-4 py-4 my-2 text-neutral-50 text-center">
       <h2 class="text-3xl sm:text-4xl md:text-5xl font-pt-serif">
@@ -42,7 +42,6 @@
       </label>
     </div>
 
-    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
     <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
 
     <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
