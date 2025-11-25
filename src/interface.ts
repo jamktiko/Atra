@@ -101,6 +101,13 @@ interface EntryInk {
   size: string | null; // fallback
 }
 
+interface RecalledInk {
+  name: string;
+  url: string;
+  batchnumber: string;
+  risk: string;
+}
+
 export {
   UserInk,
   PublicInk,
@@ -112,4 +119,5 @@ export {
   EntryInk,
   ListEntries,
   EntryUpdate,
+  RecalledInk,
 };

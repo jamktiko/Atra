@@ -1,14 +1,38 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="atra"> ATRA</ion-title>
+    <ion-title class="atra">ATRA</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content [fullscreen]="true">
-  <div class="flex-1 p-6 text-center space-y-2 justify-center">
-    <h2 class="text-4xl font-pt-serif text-neutral-50">Hello, USERNAME!</h2>
-    <!-- <button class="p-2 bg-slate-700 rounded-lg" (click)="navigateToFirstpage()">DEV: Quick access to firstpage</button> -->
+  <div class="flex justify-between py-4 my-2">
+    <div class="">
+      <h2 class="text-xl font-pt-serif text-neutral-50 p-2 text-left">Hello, USERNAME!</h2>
+
+
+    </div>
+    <div class="">
+      <h3 class="justify-end text-lg font-pt-serif text-slate-200 p-2 text-right"> {{greeting}}</h3>
+    </div>
+  </div>
+
+
+  <div class="py-2 text-center">
+
+    <h2 class="my-2 text-3xl text-neutral-50 font-bold tracking-widest">Latest recalls</h2>
+    <p class="my-2 text-lg text-slate-50">Always check your batchnumber and contact your supplier for further
+      instructions.</p>
+    <div class="bg-slate-600 border-2 border-slate-500 justify-items-center text-center rounded-lg p-1 m-4">
+
+
+      <img src="{{recalledInk.url}}" width="60%" />
+      <div>
+        <h3 class="mt-2 text-lg text-neutral-50 tracking-wide">Name: {{recalledInk.name}}</h3>
+        <p class="mt-2 text-lg font-bold tracking-widest">Batch: {{recalledInk.batchnumber}}</p>
+        <p class="mt-2 text-lg text-neutral-50 tracking-wide">Risk: {{recalledInk.risk}}</p>
+      </div>
+    </div>
 
   </div>
 

@@ -7,9 +7,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/angular/standalone';
-import { User } from 'src/interface';
+import { RecalledInk } from 'src/interface';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
+import { greetingsData } from 'src/greetings';
+import { inkData } from 'src/inkdata';
 
 @Component({
   selector: 'app-mainpage',
@@ -27,22 +30,44 @@ import { Router } from '@angular/router';
 })
 export class MainpagePage implements OnInit {
   /**
-   * Hakee käyttäjätiedot myöhemmin AuthServicen avulla tietokannasta, mutta tässä vaiheessa
-   * kovakoodattu käyttäjädata temporarydata.ts-tiedostosta
-   */
-  // user!: User;
-
-  /**
-   * Tervehdys, joka käyttäjälle generoidaan etusivulle. Ottaa src-kansiossa olevan greet.js-tiedoston
-   * funktion ja toteuttaa sen greetings.json välittämällä datalla
+   * Greeting that is generated to front page. Gets data from greetings.ts
    */
   greeting: string = '';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  /*
+   *
+   */
+  username: string = '';
 
-  navigateToFirstpage() {
-    this.router.navigate(['/firstpage']);
+  recalledInk: RecalledInk = { name: '', url: '', batchnumber: '', risk: '' };
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
+
+  ngOnInit() {
+    this.greeting = this.getRandomGreeting(greetingsData);
+    this.generateRecall(inkData);
   }
 
-  ngOnInit() {}
+  getRandomGreeting(greetingsData: string[]) {
+    const greetings = greetingsData;
+    const index = Math.floor(Math.random() * greetings.length);
+    return greetings[index];
+  }
+
+  generateRecall(inkData: any) {
+    const inks = inkData;
+
+    inks.forEach((ink: RecalledInk, index: number) => {
+      setTimeout(() => {
+        this.recalledInk = ink;
+        if (this.recalledInk.name === 'RELOOP') {
+          this.generateRecall(inkData);
+        }
+      }, index * 4000);
+    });
+  }
 }
