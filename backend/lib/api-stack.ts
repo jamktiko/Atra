@@ -295,10 +295,9 @@ export class ApiStack extends Stack {
     });
 
     this.api.addRoutes({
-      path: '/user/{id}',
+      path: '/user/me',
       methods: [apigw2.HttpMethod.GET],
       integration,
-      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
   }
 }
