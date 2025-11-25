@@ -64,7 +64,6 @@ export class MainpagePage implements OnInit {
     inks.forEach((ink: RecalledInk, index: number) => {
       setTimeout(() => {
         this.recalledInk = ink;
-        console.log('recalledInk = ', this.recalledInk);
         if (this.recalledInk.name === 'RELOOP') {
           this.generateRecall(inkData);
         }

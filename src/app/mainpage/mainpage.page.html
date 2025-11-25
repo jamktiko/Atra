@@ -6,7 +6,7 @@
 
 
 <ion-content [fullscreen]="true">
-  <div class="flex justify-between">
+  <div class="flex justify-between py-4 my-2">
     <div class="">
       <h2 class="text-xl font-pt-serif text-neutral-50 p-2 text-left">Hello, USERNAME!</h2>
 
@@ -18,15 +18,20 @@
   </div>
 
 
-  <div>
-    <h1>Important</h1>
+  <div class="py-2 text-center">
 
-    <h2>Latest recalls</h2>
+    <h2 class="my-2 text-3xl text-neutral-50 font-bold tracking-widest">Latest recalls</h2>
+    <p class="my-2 text-lg text-slate-50">Always check your batchnumber and contact your supplier for further
+      instructions.</p>
+    <div class="bg-slate-600 border-2 border-slate-500 justify-items-center text-center rounded-lg p-1 m-4">
 
-    <div class="bg-slate-700 rounded-lg shadow p-1 m-4">
-      <img src="{{recalledInk.url}}" width="90%" />
-      <h3 class="mt-2 text-m text-neutral-50">Name: {{recalledInk.name}}</h3>
-      <p class="mt-2 text-sm text-gray-400">Batch: {{recalledInk.batchnumber}}</p>
+
+      <img src="{{recalledInk.url}}" width="60%" />
+      <div>
+        <h3 class="mt-2 text-lg text-neutral-50 tracking-wide">Name: {{recalledInk.name}}</h3>
+        <p class="mt-2 text-lg font-bold tracking-widest">Batch: {{recalledInk.batchnumber}}</p>
+        <p class="mt-2 text-lg text-neutral-50 tracking-wide">Risk: {{recalledInk.risk}}</p>
+      </div>
     </div>
 
   </div>
