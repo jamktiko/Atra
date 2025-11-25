@@ -1,14 +1,33 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="atra"> ATRA</ion-title>
+    <ion-title class="atra">ATRA</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content [fullscreen]="true">
-  <div class="flex-1 p-6 text-center space-y-2 justify-center">
-    <h2 class="text-4xl font-pt-serif text-neutral-50">Hello, USERNAME!</h2>
-    <!-- <button class="p-2 bg-slate-700 rounded-lg" (click)="navigateToFirstpage()">DEV: Quick access to firstpage</button> -->
+  <div class="flex justify-between">
+    <div class="">
+      <h2 class="text-xl font-pt-serif text-neutral-50 p-2 text-left">Hello, USERNAME!</h2>
+
+
+    </div>
+    <div class="">
+      <h3 class="justify-end text-lg font-pt-serif text-slate-200 p-2 text-right"> {{greeting}}</h3>
+    </div>
+  </div>
+
+
+  <div>
+    <h1>Important</h1>
+
+    <h2>Latest recalls</h2>
+
+    <div class="bg-slate-700 rounded-lg shadow p-1 m-4">
+      <img src="{{recalledInk.url}}" width="90%" />
+      <h3 class="mt-2 text-m text-neutral-50">Name: {{recalledInk.name}}</h3>
+      <p class="mt-2 text-sm text-gray-400">Batch: {{recalledInk.batchnumber}}</p>
+    </div>
 
   </div>
 
