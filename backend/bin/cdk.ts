@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+// this is the entry point to the CDK application
 import * as cdk from 'aws-cdk-lib';
 import 'source-map-support/register';
 import { aws_ec2 as ec2 } from 'aws-cdk-lib';

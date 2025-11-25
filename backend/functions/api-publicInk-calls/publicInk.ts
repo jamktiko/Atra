@@ -29,5 +29,3 @@ export async function getPublicInk(ink_id: string) {
   }
   return successResponse((rows as any)[0]);
 }
-
-/* More calls */

@@ -1,4 +1,4 @@
-// utils.ts sisältää yleisiä apufunktioita, kuten HTTP-vastausten luomisen
+// utils.ts has common reponse functions
 
 export function successResponse(body: any = {}, statusCode = 200) {
   return {

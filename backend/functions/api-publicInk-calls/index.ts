@@ -1,18 +1,11 @@
-// tiedosto joka hoitaa reitityksen eri API-kutsuille
-// handleri funktio tarkistaa HTTP metodin ja reitittää kutsun oikeaan käsittelijään
-// handleria kutsutaan API GW:n kautta
-
-//import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
 import { APIGatewayProxyHandlerV2 } from 'aws-lambda';
 import * as publicInk from './publicInk';
 import { notAllowedResponse, clientErrorResponse } from '../shared/utils';
 
-// reititetään kutsut oikeisiin käsittelijöihin
 export const handler: APIGatewayProxyHandlerV2 = async (
   event
 ): Promise<any> => {
   const httpMethod = event.requestContext.http.method;
-  // routeKey on muotoa "GET /key" ym.
   const routeKey = event.routeKey.split(' ')[1];
   const pathParameters = event.pathParameters;
 
@@ -27,6 +20,4 @@ export const handler: APIGatewayProxyHandlerV2 = async (
     return publicInk.getPublicInk(pathParameters.id);
   }
   return notAllowedResponse();
-
-  /* lisää reitityksiä */
 };

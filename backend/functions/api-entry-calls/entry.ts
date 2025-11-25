@@ -146,7 +146,7 @@ export async function addEntry(
 }
 
 
-
+// Update entry details and replace inks if provided
 export async function updateEntry(
   entry_id: number,
   userId: string,

@@ -1,4 +1,4 @@
-// aws.ts hakee salaisuudet AWS Secrets Managerista
+// aws.ts gets secrets from AWS Secrets Manager
 
 import {
   SecretsManager,
