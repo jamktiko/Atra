@@ -5,6 +5,7 @@ import {
 } from '../shared/utils';
 import { getPool } from '../shared/db';
 
+// List all customers for a user
 export async function listCustomers(userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
@@ -14,6 +15,7 @@ export async function listCustomers(userId: string) {
   return successResponse(rows);
 }
 
+// Get specific customer by id
 export async function getCustomer(customer_id: string, userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
@@ -29,6 +31,7 @@ export async function getCustomer(customer_id: string, userId: string) {
   return successResponse((rows as any)[0]);
 }
 
+// Add new customer
 export async function addCustomer(userId: string, body: string) {
   const pool = await getPool();
   let data: {
@@ -48,6 +51,7 @@ export async function addCustomer(userId: string, body: string) {
     return clientErrorResponse('Missing some required fields');
   }
 
+  // Insert new customer to database
   const [result] = await pool.query(
     `INSERT INTO Customer (user_id, email, first_name, last_name, phone) 
     VALUES (?, ?, ?, ?, ?)`,
@@ -56,28 +60,7 @@ export async function addCustomer(userId: string, body: string) {
   return successResponse({ insertedId: (result as any).insertId });
 }
 
-/*
-export async function deleteCustomer(customer_id: string) {
-  try {
-    const pool = await getPool();
-    const [result] = await pool.query(
-      'DELETE FROM Customer WHERE customer_id = ?',
-      [customer_id]
-    );
-    const { affectedRows } = result as any;
-
-    if (affectedRows === 0) {
-      return notFoundResponse('Customer not found');
-    }
-
-    return successResponse({ message: 'Customer deleted successfully' });
-  } catch (err) {
-    console.error('Delete error:', err);
-    return clientErrorResponse('Delete failed');
-  }
-}
-*/
-
+// Delete customer by id
 export async function deleteCustomer(customer_id: string, userId: string) {
   if (!customer_id) {
     return clientErrorResponse('Missing customer id');
@@ -102,7 +85,7 @@ export async function deleteCustomer(customer_id: string, userId: string) {
   }
 }
 
-// Tämä on erittäin huono tapa tehdä päivitys --> pitääkö siirtyä ORMeihin vai onko joku toinen tapa??
+// Updating customer info
 export async function updateCustomer(
   customer_id: string,
   userId: string,
@@ -122,7 +105,7 @@ export async function updateCustomer(
     return clientErrorResponse('Invalid jason body'); //jason lol
   }
 
-  // Dynaamiset SQL kentät
+  // Dynamic query construction
   const fields: string[] = [];
   const values: any[] = [];
 
@@ -149,7 +132,7 @@ export async function updateCustomer(
 
   values.push(customer_id, userId);
 
-  // Update kysely
+  // Execute update query
   const [result] = await pool.query(
     `UPDATE Customer
      SET ${fields.join(', ')}
@@ -162,7 +145,7 @@ export async function updateCustomer(
     return notFoundResponse('Customer not found');
   }
 
-  // Hae ja palauta päivitetty
+  // Fetch and return updated customer
   const [rows] = await pool.query(
     `SELECT customer_id, email, first_name, last_name, phone
      FROM Customer
@@ -177,5 +160,3 @@ export async function updateCustomer(
     customer: updatedCustomer,
   });
 }
-
-/* More calls */

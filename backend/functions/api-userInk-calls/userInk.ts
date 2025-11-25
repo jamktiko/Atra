@@ -53,7 +53,7 @@ export async function addUserInk(userId: string, body: any) {
     userId,
   ]);
 
-  // Insert values into UserInk
+  // Insert values into userink
   const [result] = await pool.query(
     `INSERT INTO UserInk 
     (batch_number, opened_at, expires_at, public_ink_id, user_id)
@@ -66,7 +66,7 @@ export async function addUserInk(userId: string, body: any) {
   });
 }
 
-// Poistetaan userink
+// Remove userink
 export async function deleteUserInk(user_ink_id: string, userId: string) {
   try {
     const pool = await getPool();
@@ -86,7 +86,7 @@ export async function deleteUserInk(user_ink_id: string, userId: string) {
   }
 }
 
-// Päivitetään userink tiedot
+// Update user ink
 export async function updateUserInk(
   user_ink_id: string,
   userId: string,
@@ -106,7 +106,7 @@ export async function updateUserInk(
     return clientErrorResponse('Invalid jason body');
   }
 
-  // Vain sallitut kentät, vältetään kaikella tavalla public inkiin koskemista
+  // Only allowed filds
   const allowedFields = ['batch_number', 'opened_at', 'expires_at', 'favorite'];
   const fields: string[] = [];
   const values: any[] = [];
@@ -127,7 +127,7 @@ export async function updateUserInk(
     return clientErrorResponse('No valid fields to update');
   }
 
-  // Lisätään where ehtoon ink id ja käyttäjä id
+  // Add ink id and user id to where clause
   values.push(user_ink_id, userId);
 
   const [result] = await pool.query(
@@ -142,7 +142,7 @@ export async function updateUserInk(
     return notFoundResponse('User ink not found or not owned by user');
   }
 
-  // Palautetaan päivitetty
+  // Return updated ink
   const [rows] = await pool.query(
     `SELECT user_ink_id, batch_number, opened_at, expires_at, favorite, public_ink_id
      FROM UserInk
@@ -157,5 +157,3 @@ export async function updateUserInk(
     ink: updatedInk,
   });
 }
-
-/* More calls */

@@ -83,8 +83,6 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       comments,
       customer_id,
       replace_user_ink_id
-      //add_user_ink_id,
-      //remove_user_ink_id
     );
   }
 

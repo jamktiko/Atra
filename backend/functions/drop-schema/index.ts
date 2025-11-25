@@ -2,6 +2,8 @@ import { Handler } from 'aws-lambda';
 import { getPool } from '../shared/db';
 
 /**
+ * FOR DEV/TESTING PURPOSES ONLY
+ * 
  * Drop the AtraDatabase schema. To run this handler you MUST set environment variable:
  *   DROP_SCHEMA_CONFIRM = "YES"
  *

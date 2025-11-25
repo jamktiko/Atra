@@ -1,3 +1,5 @@
+// This function is triggered after the user signs up and confirms their email
+
 import { PostConfirmationTriggerEvent } from 'aws-lambda';
 import { Handler } from 'aws-lambda';
 import { getPool } from '../shared/db';
@@ -5,11 +7,13 @@ import { getPool } from '../shared/db';
 export const handler: Handler<PostConfirmationTriggerEvent> = async (event) => {
   console.log('PostConfirmation event: ', JSON.stringify(event));
 
+  // Only handle sign up confirmation events
   if (event.triggerSource !== 'PostConfirmation_ConfirmSignUp') {
     console.log('Not a sign up confirmation event, exiting.');
     return event;
   }
 
+  // Extract user attributes
   const user_id = event.request.userAttributes.sub;
   const email = event.request.userAttributes.email;
   const firstName = event.request.userAttributes.given_name;

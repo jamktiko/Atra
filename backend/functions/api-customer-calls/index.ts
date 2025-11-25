@@ -1,6 +1,5 @@
-// tiedosto joka hoitaa reitityksen eri API-kutsuille
-// handleri funktio tarkistaa HTTP metodin ja reitittää kutsun oikeaan käsittelijään
-// handleria kutsutaan API GW:n kautta
+// index.ts handles routing of API calls to appropriate handlers
+// the handler function checks the HTTP method and routes the call to the correct handler
 
 import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
 import * as customer from './customer';
@@ -11,10 +10,10 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   event
 ): Promise<any> => {
   const httpMethod = event.requestContext.http.method;
-  // routeKey on muotoa "GET /customer" ym.
+  // routeKey is in the form "GET /customer" etc.
   const routeKey = event.routeKey.split(' ')[1];
   const pathParameters = event.pathParameters;
-  // käyttäjän ID löytyy JWT tokenista, sub on käyttäjän uniikki tunniste Cognitossa
+  // userId is found from JWT token, sub is the unique id in cognito
   const userId = event.requestContext.authorizer.jwt.claims.sub as string;
   //const userId = process.env.DEMO_USER_ID || 'demo-user-123';
 
@@ -47,6 +46,4 @@ export const handler: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   }
 
   return notAllowedResponse();
-
-  /* lisää reitityksiä */
 };

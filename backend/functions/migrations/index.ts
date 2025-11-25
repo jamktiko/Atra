@@ -1,3 +1,21 @@
+// This migration script sets up the initial database schema for the Atra database
+
+/**
+ * About the schema:
+ * - db name is AtraDatabase
+ * - tables: User, Customer, PublicInk, UserInk, Entry, UserInk_has_Entry
+ * - about the constraints:
+ *      - UserInk references PublicInk and User
+ *      - Customer references User
+ *      - Entry references User and Customer
+ *      - UserInk_has_Entry references UserInk and Entry
+ * - on delete behaviors:
+ *      - Deleting a User is restricted if there are related Customers, UserInks, or Entries
+ *      - Deleting a Customer sets the customer_id in Entry to NULL
+ *      - Deleting an Entry cascades to UserInk_has_Entry
+ *      - Deleting a UserInk sets the UserInk_user_ink_id in UserInk_has_Entry to NULL
+ */
+
 import { Handler } from 'aws-lambda';
 import { getPool } from '../shared/db';
 

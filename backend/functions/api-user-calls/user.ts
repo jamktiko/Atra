@@ -13,13 +13,13 @@ export async function listUsers() {
     return successResponse(rows);
 }
 
-export async function getUser(user_id: string) {
+export async function getUser(userId: string) {
   const pool = await getPool();
   const [rows] = await pool.query(
-    `SELECT user_id, email, first_name, last_name
+    `SELECT first_name
     FROM User
     WHERE user_id = ?`,
-    [user_id]
+    [userId]
   );
 
   if ((rows as any).length === 0) {

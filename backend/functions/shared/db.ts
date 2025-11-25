@@ -1,4 +1,4 @@
-// db.ts hoitaa yhteyden MySQL tietokantaan käyttäen AWS RDS Insancea ja Secrets Manageria
+// db.ts deals wuth database connection pooling using mysql2 and gets credentials from Secrets Manager
 
 import mysql from 'mysql2/promise';
 import * as aws from './aws';
@@ -21,7 +21,7 @@ export async function getPool() {
     password: dbSecret.password,
     port: dbSecret.port,
     ssl: { rejectUnauthorized: false },
-    // voi lisätä monta CREATE TABLE tms.
+    // can add multiple tables in one query etc
     multipleStatements: true,
   });
   return pool;
