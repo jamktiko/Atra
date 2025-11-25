@@ -4,7 +4,7 @@
   @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()"
     (delete)="handleDelete($event)" (confirm)="handleConfirm()"></app-modalink>
   }
-  <ng-toast></ng-toast>
+
   <div class="">
     <div class="flex-1 p-6 text-neutral-50 text-center space-y-3">
       <h1 class="text-4xl font-pt-serif">Adding a new ink to your library</h1>

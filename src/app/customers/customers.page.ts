@@ -27,7 +27,6 @@ import {
   styleUrls: ['./customers.page.css'],
   standalone: true,
   imports: [
-    NgToastComponent,
     IonContent,
     IonHeader,
     IonTitle,

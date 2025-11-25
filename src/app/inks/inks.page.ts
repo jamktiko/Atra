@@ -35,7 +35,6 @@ console.log('Is it prod? ' + isProd); */
   styleUrls: ['./inks.page.css'],
   standalone: true,
   imports: [
-    NgToastComponent,
     IonContent,
     CommonModule,
     FormsModule,

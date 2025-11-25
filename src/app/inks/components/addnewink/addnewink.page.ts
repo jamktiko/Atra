@@ -32,7 +32,6 @@ import {
   styleUrls: ['./addnewink.page.css'],
   standalone: true,
   imports: [
-    NgToastComponent,
     IonContent,
     CommonModule,
     FormsModule,

@@ -37,7 +37,7 @@ import { SingleentryPage } from './components/singleentry/singleentry.page';
     IonSearchbar,
     CommonModule,
     FormsModule,
-    NgToastComponent,
+
     SingleentryPage,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
