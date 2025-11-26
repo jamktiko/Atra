@@ -26,6 +26,10 @@ import { CustomSecureStorage } from './app/services/customsecurestorage';
 import { AbstractSecurityStorage } from 'angular-auth-oidc-client';
 import { provideAuth, LogLevel } from 'angular-auth-oidc-client';
 
+const cognitoClientId = '5ifolu2c38cugpo5g648h9vhma';
+const cognitoUserPoolAuthority =
+  'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_rg6zvz3Ix';
+
 const isHybrid = Capacitor.isNativePlatform();
 
 const redirectUrl = isHybrid
@@ -43,8 +47,8 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideAuth({
       config: {
-        clientId: environment.cognitoClientId,
-        authority: environment.cognitoUserPoolAuthority,
+        clientId: cognitoClientId,
+        authority: cognitoUserPoolAuthority,
         redirectUrl,
         postLogoutRedirectUri,
         responseType: 'code',
@@ -58,9 +62,9 @@ bootstrapApplication(AppComponent, {
           userInfoEndpoint:
             'https://atra-app.auth.eu-north-1.amazoncognito.com/oauth2/userInfo',
 
-          endSessionEndpoint: `https://atra-app.auth.eu-north-1.amazoncognito.com/logout?client_id=${
-            environment.cognitoClientId
-          }&logout_uri=${encodeURIComponent(postLogoutRedirectUri)}`,
+          endSessionEndpoint: `https://atra-app.auth.eu-north-1.amazoncognito.com/logout?client_id=${cognitoClientId}&logout_uri=${encodeURIComponent(
+            postLogoutRedirectUri
+          )}`,
           jwksUri:
             'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_rg6zvz3Ix/.well-known/jwks.json',
         },

@@ -6,9 +6,6 @@ export const environment = {
   production: false,
   gitBranch: '',
   apiUrl: 'https://gwuy6xxvqi.execute-api.eu-north-1.amazonaws.com',
-  cognitoClientId: '5ifolu2c38cugpo5g648h9vhma',
-  cognitoUserPoolAuthority:
-    'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_rg6zvz3Ix',
 };
 //sally test
 
