@@ -39,6 +39,7 @@ export async function addCustomer(userId: string, body: string) {
     first_name: string;
     last_name: string;
     phone?: string;
+    notes?: string;
   };
 
   try {
@@ -53,9 +54,9 @@ export async function addCustomer(userId: string, body: string) {
 
   // Insert new customer to database
   const [result] = await pool.query(
-    `INSERT INTO Customer (user_id, email, first_name, last_name, phone) 
-    VALUES (?, ?, ?, ?, ?)`,
-    [userId, data.email, data.first_name, data.last_name, data.phone ?? null]
+    `INSERT INTO Customer (user_id, email, first_name, last_name, phone, notes) 
+    VALUES (?, ?, ?, ?, ?, ?)`,
+    [userId, data.email, data.first_name, data.last_name, data.phone ?? null, data.notes ?? null]
   );
   return successResponse({ insertedId: (result as any).insertId });
 }
@@ -97,6 +98,7 @@ export async function updateCustomer(
     first_name?: string;
     last_name?: string;
     phone?: string;
+    notes?: string;
   };
 
   try {
@@ -125,6 +127,10 @@ export async function updateCustomer(
     fields.push('phone = ?');
     values.push(data.phone);
   }
+  if (data.notes !== undefined) {
+    fields.push('notes = ?');
+    values.push(data.notes);
+  }
 
   if (fields.length === 0) {
     return clientErrorResponse('No fields to update');
@@ -147,7 +153,7 @@ export async function updateCustomer(
 
   // Fetch and return updated customer
   const [rows] = await pool.query(
-    `SELECT customer_id, email, first_name, last_name, phone
+    `SELECT customer_id, email, first_name, last_name, phone, notes
      FROM Customer
      WHERE customer_id = ? AND user_id = ?`,
     [customer_id, userId]
