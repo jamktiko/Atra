@@ -20,21 +20,17 @@
         <input type="checkbox" class="sr-only peer" />
 
         <!-- Liukuva tausta-->
-        <div
-          class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300 peer-checked:translate-x-full">
+        <div class="absolute top-0 left-0 w-1/2 h-full bg-slate-800 rounded-full transition-transform duration-300">
         </div>
 
         <!-- Own -->
-        <button
-          class="relative z-10 flex-1 text-center py-2 text-neutral-50 font-lato transition-colors peer-checked:text-neutral-300"
+        <button class="relative z-10 flex-1 text-center py-2 text-neutral-50  transition-colors"
           (click)="alreadyHere()">
           Own
         </button>
 
         <!-- Public -->
-        <button
-          class="relative z-10 flex-1 text-center py-2 text-neutral-300 font-lato transition-colors peer-checked:text-neutral-50"
-          (click)="toPublic()">
+        <button class="relative z-10 flex-1 text-center py-2 text-neutral-300 transition-colors " (click)="toPublic()">
           Public
         </button>
       </label>

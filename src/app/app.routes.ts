@@ -11,7 +11,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./user/components/logout/logout.page').then((m) => m.LogoutPage),
   },
-
   {
     path: 'inks/addnewink',
     canActivate: [AuthGuard],
@@ -44,7 +43,6 @@ export const routes: Routes = [
         (m) => m.AddentryPage
       ),
   },
-
   {
     path: 'entries/singleentry',
     canActivate: [AuthGuard],
@@ -93,13 +91,11 @@ export const routes: Routes = [
         (m) => m.AppsettingsPage
       ),
   },
-
   {
     path: 'firstpage',
     loadComponent: () =>
       import('./firstpage/firstpage.page').then((m) => m.FirstpagePage),
   },
-
   {
     path: 'login',
     loadComponent: () =>
@@ -111,10 +107,5 @@ export const routes: Routes = [
     path: '',
     redirectTo: '/firstpage',
     pathMatch: 'full',
-  },
-  {
-    path: 'callback',
-    loadComponent: () =>
-      import('./callback/callback.page').then((m) => m.CallbackPage),
   },
 ];

@@ -4,12 +4,12 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content [fullscreen]="true">
-  @if (chosenEntry && singleEntryModal) {
-  <app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry"
-    [entries]="entries" [groupedEntries]="groupedEntries"></app-singleentry>
-  } @else {
 
+@if (chosenEntry && singleEntryModal) {
+<app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry" [entries]="entries"
+  [groupedEntries]="groupedEntries"></app-singleentry>
+} @else {
+<ion-content [fullscreen]="true">
 
 
   <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
@@ -48,5 +48,6 @@
   }
   }
 
-  }
+
 </ion-content>
+}
