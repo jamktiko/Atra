@@ -35,11 +35,11 @@ const cognitoUserpoolId = 'eu-north-1_rg6zvz3Ix';
 const isHybrid = Capacitor.isNativePlatform();
 
 const redirectUrl = isHybrid
-  ? 'io.ionic.atra:/tabs/mainpage'
+  ? 'io.ionic.atra://callback'
   : window.location.origin + '/tabs/mainpage';
 
 const postLogoutRedirectUri = isHybrid
-  ? 'io.ionic.atra:/firstpage'
+  ? 'io.ionic.atra://logout'
   : window.location.origin + '/firstpage';
 
 bootstrapApplication(AppComponent, {
