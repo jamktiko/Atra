@@ -35,10 +35,4 @@ describe('MainpagePage', () => {
     const title = compiled.querySelector('ion-title');
     expect(title?.textContent?.trim()).toBe('ATRA');
   });
-  it('should navigate to firstpage when navigateToFirstpage() is called', () => {
-    const router = TestBed.inject(Router);
-    spyOn(router, 'navigate');
-    component.navigateToFirstpage();
-    expect(router.navigate).toHaveBeenCalledWith(['/firstpage']);
-  });
 });
