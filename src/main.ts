@@ -34,13 +34,9 @@ const cognitoUserpoolId = 'eu-north-1_rg6zvz3Ix';
 
 const isHybrid = Capacitor.isNativePlatform();
 
-const redirectUrl = isHybrid
-  ? 'io.ionic.atra://callback'
-  : window.location.origin + '/tabs/mainpage';
+const redirectUrl = 'd1emavqkmxufn7.cloudfront.net/tabs/mainpage';
 
-const postLogoutRedirectUri = isHybrid
-  ? 'io.ionic.atra://logout'
-  : window.location.origin + '/firstpage';
+const postLogoutRedirectUri = 'd1emavqkmxufn7.cloudfront.net/firstpage';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -67,7 +63,8 @@ bootstrapApplication(AppComponent, {
           endSessionEndpoint: `https://atra-app.auth.eu-north-1.amazoncognito.com/logout?client_id=${cognitoClientId}&logout_uri=${encodeURIComponent(
             postLogoutRedirectUri
           )}`,
-          jwksUri: `https://cognito-idp.eu-north-1.amazonaws.com/${cognitoUserpoolId}/.well-known/jwks.json`,
+          jwksUri:
+            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_rg6zvz3Ix/.well-known/jwks.json',
         },
       },
     }),
