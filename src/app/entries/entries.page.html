@@ -15,7 +15,12 @@
     <h2 class="text-neutral-50">Your entries and their information.</h2>
   </div>
 
-  <ion-searchbar class="custom" animated="true" placeholder="Search" />
+  <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+  <div class="text-center">
+    <button class="text-neutral-50 bg-slate-600 focus:ring-2 focus:outline-none 
+               focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center" (click)="resetSearch()">Reset
+      search</button>
+  </div>
 
   <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
     <button
@@ -28,7 +33,7 @@
 
   <!--Ulkoinen silmukka käy läpi jokaisen groupedEntriesin, joka on asetettu taulukkomuotoon ger groupedEntriesArray-funktiolla.
   -->
-  @for (group of groupedEntries; track group.date) {
+  @for (group of (searchItem ? filteredEntries() : groupedEntries); track group.date) {
   <h3 class="text-lg font-lato text-slate-50 px-2 mx-4">{{ group.date | date:'mediumDate' }}</h3>
 
   <!--Sisäinen silmukka iteroi läpi jokaisen entryn, joka sisältää entry_id, entry_date, comments, User_user_id, Customer_customer_id.
