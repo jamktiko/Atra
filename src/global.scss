@@ -104,6 +104,7 @@ ion-toolbar {
 
 ion-title {
   font-size: x-large;
+  font-weight: 200;
 }
 
 ion-tab-bar {
@@ -198,18 +199,21 @@ ion-modal.transparent-modal .ion-page {
   margin: 0.5em;
 }
 
+/*
+TÄSTÄ ETEENPÄIN VOI MUOKATA 
+*/
 p {
   font-family: "Quattrocento Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 h3 {
   font-family: "Crimson Text", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 22px;
+  font-size: 24px;
 }
 
 h2 {
