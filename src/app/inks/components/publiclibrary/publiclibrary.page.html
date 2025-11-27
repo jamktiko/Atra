@@ -4,19 +4,17 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content>
-
-  <div>
+<ion-content class="bg-slate-950">
+  <div class="pb-24">
     <!--^ Menee myös for-loopin ympärille-->
     <ng-toast></ng-toast>
-    <div class="flex flex-col items-center justify-center px-4 py-4 my-2 text-neutral-50 text-center">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-pt-serif">Ink Library</h2>
-      <h3 class="sm:text-lg md:text-xl font-lato">All application inks. Browse, admire, or find
-        something new to try.</h3>
+    <div class="flex flex-col items-center justify-center pt-8 pb-4 text-neutral-50">
+      <h1 class="mb-1">Ink Library</h1>
+      <p class="text-neutral-400">All public inks in one place.</p>
 
 
       <label
-        class="relative flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-black rounded-full cursor-pointer overflow-hidden mt-4 px-1 py-1">
+        class="relative flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-black rounded-full overflow-hidden mt-4 px-1 py-1">
         <input type="checkbox" class="sr-only peer" checked />
         <!-- Liukuva tausta -->
         <div
@@ -37,17 +35,23 @@
       </label>
     </div>
 
-    <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+    <!-- Search Bar -->
+    <div class="px-4 pb-4">
+      <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+    </div>
 
     <!--Musteet käydään läpi for-loopissa, noutamalla musteet filteredSearch()-metodin avulla-->
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-2 gap-3 px-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
       @for (ink of filteredSearch(); track ink.ink_id) {
 
-      <div class="bg-slate-700 rounded-lg shadow p-1 m-1" (click)="chooseInk(true, ink)">
-        <img src="{{ink.image_url}}" width="90%" />
-        <h3 class="mt-2 text-m text-neutral-50">
-          {{ink.product_name}}
-        </h3>
+      <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm transition-shadow" 
+        (click)="chooseInk(true, ink)">
+        <div class="aspect-square overflow-hidden">
+          <img src="{{ink.image_url}}" class="w-full h-full object-cover" alt="{{ink.product_name}}" />
+        </div>
+        <div class="p-2">
+          <p class="text-neutral-50">{{ink.product_name}}</p>
+        </div>
         <!-- <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
         <a>Open </a>
       </button> -->
@@ -58,18 +62,41 @@
   </div>
 </ion-content>
 
-<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
+<ion-modal id="publicink-details-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
   <ng-template>
-    <!--Tähän saa Milja tehtyä tyylit, HUOM. väliaikaiset tyylit publiclibrary.page.css jotka saa ottaa pois-->
-    <div class="bg-slate-900 my-2 p-3 text-neutral-50">
-      <h1>{{selectedInk.product_name}}</h1>
-      <img src="{{selectedInk.image_url}}" width="75%" />
-      <p>Manufacturer: {{selectedInk.manufacturer}}</p>
-      <p>Colour: {{selectedInk.color}}</p>
+    <div class="bg-slate-950/80 backdrop-blur-sm min-h-full flex items-center justify-center p-4">
+      <div class="rounded-2xl max-w-md w-full overflow-hidden shadow-2xl">
+        
+        <!-- Close Button (X) -->
+        <button 
+          class="absolute top-2 right-2 z-10 w-8 h-8 flex items-center justify-center bg-slate-600 text-neutral-400 rounded-full transition-colors"
+          (click)="setClosed(false)">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
 
-      <button class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
-        <a (click)="setClosed(false)">Close</a>
-      </button>
+        <!-- Image Section -->
+        <div class="p-6">
+          <img src="{{selectedInk.image_url}}" class="w-full h-48 object-cover rounded-lg" alt="{{selectedInk.product_name}}" />
+        </div>
+
+        <div class="p-6 pt-2">
+          <h2 class="text-neutral-50 mb-6">{{selectedInk.product_name}}</h2>
+
+          <div class="space-y-3 mb-6">
+            <div class="flex justify-between py-2 border-b border-slate-800">
+              <span class="text-neutral-400">Manufacturer</span>
+              <span class="text-neutral-50">{{selectedInk.manufacturer}}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-slate-800">
+              <span class="text-neutral-400">Color</span>
+              <span class="text-neutral-50">{{selectedInk.color}}</span>
+            </div>
+          </div>
+          <!-- Jatkoa ajatellen: nappi josta pysty lisäämään suoraan omaan kirjastoon???-->
+        </div>
+      </div>
     </div>
   </ng-template>
 </ion-modal>
