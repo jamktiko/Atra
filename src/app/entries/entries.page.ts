@@ -83,10 +83,25 @@ export class EntriesPage implements OnInit {
       });
   }
 
-  // toggleUpdateModal(show: boolean) {
-  //   this.showUpdateModal = show;
-  // }
+  filteredEntries() {
+    const search = this.searchItem.toLowerCase() ?? '';
 
+    const filtered = this.entries.filter(
+      (entry) =>
+        (entry.first_name?.toLowerCase() ?? '').includes(search) ||
+        (entry.last_name?.toLowerCase() ?? '').includes(search) ||
+        (entry.entry_date?.toLowerCase?.() ?? '').includes(search)
+    );
+
+    this.sortByDate(filtered);
+
+    return this.groupedEntries;
+  }
+
+  resetSearch() {
+    this.searchItem = '';
+    this.loadEntries();
+  }
   handleClosed() {
     this.singleEntryModal = false;
     this.loadEntries();
