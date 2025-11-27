@@ -227,8 +227,8 @@ export class AddentryPage implements OnInit {
 
   handleConfirm(newEntry: EntryCreation) {
     this.addNewEntry(newEntry);
-    this.router.navigate(['/tabs/entries']);
     this.toast.success('Entry added successfully');
+    this.router.navigate(['/tabs/entries']);
     this.showModal(false);
   }
 

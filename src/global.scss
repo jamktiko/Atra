@@ -107,7 +107,7 @@ ion-title {
 }
 
 ion-tab-bar {
-  font-family: "Macondo Swash Caps", cursive;
+  font-family: "Crimson Text", serif;
 }
 
 @layer components {
@@ -133,7 +133,7 @@ ion-tab-bar {
     min-height: 8%;
   }
   ion-tab-button {
-    font-size: 14px;
+    font-size: 16px;
     letter-spacing: 1px;
   }
   ion-icon {
@@ -202,14 +202,28 @@ p {
   font-family: "Quattrocento Sans", sans-serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 16px;
+  font-size: 18px;
+}
+
+h3 {
+  font-family: "Crimson Text", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 22px;
 }
 
 h2 {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+}
+
+h1 {
   font-family: "Crimson Text", serif;
   font-weight: 700;
   font-style: normal;
-  font-size: 27px;
+  font-size: 30px;
 }
 
 button {

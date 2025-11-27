@@ -31,9 +31,9 @@ import { SingleentryPage } from './components/singleentry/singleentry.page';
   standalone: true,
   imports: [
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     IonSearchbar,
     CommonModule,
     FormsModule,
@@ -59,10 +59,28 @@ export class EntriesPage implements OnInit {
     private toast: NgToastService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadEntries();
+  }
 
   ionViewDidEnter() {
-    this.loadEntries();
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/tabs/entries') {
+          this.loadEntries();
+        }
+      });
+  }
+
+  ionViewWillEnter() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/tabs/entries') {
+          this.loadEntries();
+        }
+      });
   }
 
   // toggleUpdateModal(show: boolean) {

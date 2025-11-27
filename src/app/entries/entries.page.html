@@ -4,19 +4,15 @@
   </ion-toolbar>
 </ion-header> -->
 
-
 @if (chosenEntry && singleEntryModal) {
 <app-singleentry (delete)="deleteEntry($event)" (close)="handleClosed()" [chosenEntry]="chosenEntry" [entries]="entries"
   [groupedEntries]="groupedEntries"></app-singleentry>
 } @else {
 <ion-content [fullscreen]="true">
 
-
   <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
-    <h2 class="text-4xl font-pt-serif text-neutral-50">Entries</h2>
-    <h3 class="font-lato text-neutral-50">Your entries and their information.</h3>
-
-
+    <h1 class="text-neutral-50">Entries</h1>
+    <h2 class="text-neutral-50">Your entries and their information.</h2>
   </div>
 
   <ion-searchbar class="custom" animated="true" placeholder="Search" />
@@ -41,8 +37,8 @@
   {
   <div class="flex flex-col bg-slate-800 border p-2 border-neutral-50/60 rounded-xl my-2 mx-4"
     (click)="chooseEntry(true, entry.entry_id)">
-    <h2 class="text-m font-lato text-neutral-50">{{entry.entry_date | date:'HH:mm'}}</h2>
-    <p class="text-sm font-lato text-neutral-400">Customer: {{ entry.first_name }}, {{entry.last_name}}</p>
+    <h2 class="text-m text-neutral-50">{{entry.entry_date | date:'HH:mm'}}</h2>
+    <p class="text-sm text-neutral-400">Customer: {{ entry.first_name }}, {{entry.last_name}}</p>
 
   </div>
   }

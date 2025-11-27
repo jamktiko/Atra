@@ -28,9 +28,9 @@ import {
   standalone: true,
   imports: [
     IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
+    // IonHeader,
+    // IonTitle,
+    // IonToolbar,
     CommonModule,
     FormsModule,
     IonSearchbar,
