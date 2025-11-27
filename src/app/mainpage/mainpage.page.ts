@@ -34,6 +34,8 @@ export class MainpagePage implements OnInit {
    */
   greeting: string = '';
 
+  greeting1: string = '';
+
   /*
    *
    */
@@ -50,6 +52,7 @@ export class MainpagePage implements OnInit {
   ngOnInit() {
     this.greeting = this.getRandomGreeting(greetingsData);
     this.generateRecall(inkData);
+    this.setGreeting1();
   }
 
   getRandomGreeting(greetingsData: string[]) {
@@ -69,5 +72,17 @@ export class MainpagePage implements OnInit {
         }
       }, index * 4000);
     });
+  }
+
+  setGreeting1() {
+    const hour = new Date().getHours();
+
+    if (hour < 12) {
+      this.greeting1 = 'Good morning';
+    } else  if (hour >= 12 && hour < 17) {
+      this.greeting1 = 'Good afternoon';
+    } else {
+      this.greeting1 = 'Good evening';
+    }
   }
 }

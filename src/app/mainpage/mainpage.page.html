@@ -1,39 +1,40 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title class="atra">ATRA</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="bg-slate-950">
+  <div class="flex flex-col min-h-full">
+    
+    <div class="px-6 pt-8">
+      <h1 class="text-neutral-50 mb-3 pt-6">
+        {{greeting1}},<br>Sally
+      </h1>
 
-
-<ion-content [fullscreen]="true">
-  <div class="flex justify-between py-4 my-2">
-    <div class="">
-      <h2 class="text-xl font-pt-serif text-neutral-50 p-2 text-left">Hello, USERNAME!</h2>
-
-
-    </div>
-    <div class="">
-      <h3 class="justify-end text-lg font-pt-serif text-slate-200 p-2 text-right"> {{greeting}}</h3>
-    </div>
-  </div>
-
-
-  <div class="py-2 text-center">
-
-    <h2 class="my-2 text-3xl text-neutral-50 font-bold tracking-widest">Latest recalls</h2>
-    <p class="my-2 text-lg text-slate-50">Always check your batchnumber and contact your supplier for further
-      instructions.</p>
-    <div class="bg-slate-600 border-2 border-slate-500 justify-items-center text-center rounded-lg p-1 m-4">
-
-
-      <img src="{{recalledInk.url}}" width="60%" />
-      <div>
-        <h3 class="mt-2 text-lg text-neutral-50 tracking-wide">Name: {{recalledInk.name}}</h3>
-        <p class="mt-2 text-lg font-bold tracking-widest">Batch: {{recalledInk.batchnumber}}</p>
-        <p class="mt-2 text-lg text-neutral-50 tracking-wide">Risk: {{recalledInk.risk}}</p>
+      <div class="mb-8">
+        <p class="text-slate-100"><i>{{greeting}}</i></p>
       </div>
     </div>
 
-  </div>
+    <div class="flex-grow"></div>
 
+    <div class="px-6 pb-8">
+      <h2 class="text-neutral-50 mb-4">Recent recalls</h2>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="relative bg-slate-900 rounded-lg overflow-hidden">
+          <img src="{{recalledInk.url}}" class="w-full h-32 object-cover" alt="Recalled ink" />
+          <div class="p-3">
+            <p class="text-neutral-50 small-text">{{recalledInk.name}}</p>
+            <p class="text-neutral-400 small-text">{{recalledInk.batchnumber}}</p>
+          </div>
+          <div class="absolute top-2 right-2 w-6 h-6 bg-red-600 rounded-full flex items-center justify-center">
+            <span class="text-white text-xs"><b>!</b></span>
+          </div>
+        </div>
+        <div class="relative bg-slate-900 rounded-lg overflow-hidden">
+          <img src="{{recalledInk.url}}" class="w-full h-32 object-cover" alt="Recalled ink" />
+          <div class="p-3">
+            <p class="text-neutral-50 small-text">{{recalledInk.name}}</p>
+            <p class="text-neutral-400 small-text">{{recalledInk.batchnumber}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
 </ion-content>
