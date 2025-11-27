@@ -69,3 +69,6 @@ testem.log
 .DS_Store
 Thumbs.db
 .env
+
+# Ignore Cypress local environment file
+cypress.env.json

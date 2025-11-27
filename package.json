@@ -8,9 +8,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "lint": "ng lint",
-    "testq": "ng test --watch=false"
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "testq": "ng test --watch=false --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^20.0.0",
     "@angular/router": "^20.0.0",
     "@aws-amplify/cli": "^14.2.2",
+    "@aws-sdk/client-cognito-identity-provider": "^3.940.0",
     "@capacitor/android": "^7.4.4",
     "@capacitor/app": "7.1.0",
     "@capacitor/core": "^7.4.3",
@@ -60,7 +61,7 @@
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
-    "cypress": "^15.4.0",
+    "cypress": "^15.7.0",
     "eslint": "^9.16.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsdoc": "^48.2.1",
