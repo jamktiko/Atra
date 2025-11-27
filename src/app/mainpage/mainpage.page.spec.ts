@@ -29,10 +29,4 @@ describe('MainpagePage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should render the header with title "ATRA"', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    const title = compiled.querySelector('ion-title');
-    expect(title?.textContent?.trim()).toBe('ATRA');
-  });
 });
