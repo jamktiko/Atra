@@ -4,19 +4,16 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content>
+<ion-content class="bg-slate-950">
+  <div class="pb-24">
+    <!-- Header -->
+    <div class="flex flex-col items-center justify-center pt-8 pb-4 text-neutral-50">
+      <h1 class="mb-1">Your Library</h1>
+      <p class="text-neutral-400">We keep all your inks here</p>
 
-  <div>
-    <div class="flex flex-col items-center justify-center px-4 py-4 my-2 text-neutral-50 text-center">
-      <h2 class="text-3xl sm:text-4xl md:text-5xl font-pt-serif">
-        Your Library
-      </h2>
-      <h3 class="sm:text-lg md:text-xl font-lato">
-        We keep all your inks in this library.
-      </h3>
-
+      <!-- Toggle Mode -->
       <label
-        class="relative flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-black rounded-full cursor-pointer overflow-hidden mt-4 px-1 py-1">
+        class="relative flex w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg bg-black rounded-full overflow-hidden mt-4 px-1 py-1">
         <input type="checkbox" class="sr-only peer" />
 
         <!-- Liukuva tausta-->
@@ -36,29 +33,36 @@
       </label>
     </div>
 
-    <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+    <!-- Search Bar -->
+    <div class="px-4 pb-4">
+      <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
+    </div>
 
-    <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
+    <!-- Add Button -->
+    <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-20">
       <button
-        class="flex items-center gap-2 px-4 py-4 bg-slate-600 text-xl text-neutral-50 font-lato font-si border border-slate-900 rounded-full transition drop-shadow-xl drop-shadow-slate-800"
+        class="relative flex items-center gap-2 px-8 py-3 bg-slate-600 shadow-xl text-neutral-50 rounded-full"
         (click)="addNew()">
-        <span class="text-l"> + </span> Add new
+        <span class="text-xl leading-none">+</span>
+        <p>Add new</p>
       </button>
     </div>
 
-    <!-- Käy for-loopissa filteredSearch-metodia vastaavat musteet läpi omissa bokseissaan-->
-    <div class="grid grid-cols-2 gap-4">
+    <!-- Ink Grid -->
+    <div class="grid grid-cols-2 gap-3 px-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
       @for (ink of filteredSearch(); track ink.user_ink_id) {
-
-      <div class="bg-slate-700 rounded-lg shadow p-1 m-1" (click)="chooseInk(true, ink)">
-        <img src="{{ink.image_url}}" width="90%" />
-        <h3 class="mt-2 text-m text-neutral-50">{{ink.product_name}}</h3>
-        <p class="mt-2 text-sm text-gray-400">Batch: {{ink.batch_number}}</p>
-        <!-- <button class="bg-slate-300 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl">
-          <a>Open </a>
-        </button> -->
+      
+      <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm transition-shadow" 
+        (click)="chooseInk(true, ink)">
+        <div class="aspect-square overflow-hidden">
+          <img src="{{ink.image_url}}" class="w-full h-full object-cover" alt="{{ink.product_name}}" />
+        </div>
+        <div class="p-3">
+          <p class="text-neutral-50 truncate">{{ink.product_name}}</p>
+          <p class="text-neutral-500 mt-1">Batch: <span class="text-neutral-400">{{ink.batch_number}}</span></p>
+        </div>
       </div>
-
+      
       }
     </div>
   </div>
