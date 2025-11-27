@@ -2,8 +2,8 @@ ion-modal#example-modal .wrapper {
   margin-bottom: 10px;
 }
 
-ion-modal#example-modal {
-  --width: fit-content;
+ion-modal#publicink-details-modal {
+  --width: 350px;
   --min-width: 250px;
   --height: fit-content;
   --border-radius: 6px;
