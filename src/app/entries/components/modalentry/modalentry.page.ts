@@ -27,6 +27,8 @@ export class ModalentryPage implements OnInit {
 
   reviewInks: UserInk[] = [];
 
+  customerInfo!: any;
+
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -36,6 +38,8 @@ export class ModalentryPage implements OnInit {
   ngOnInit() {
     this.loopThroughInks();
   }
+
+  getCustomerInfo() {}
 
   ionViewWillEnter() {
     this.loopThroughInks();

@@ -133,7 +133,8 @@ export class AddentryPage implements OnInit {
       (ink) =>
         ink.product_name.toLowerCase().includes(search) ||
         ink.color.toLowerCase().includes(search) ||
-        ink.manufacturer.toLowerCase().includes(search)
+        ink.manufacturer.toLowerCase().includes(search) ||
+        ink.batch_number.toLowerCase().includes(search)
     );
   }
 
