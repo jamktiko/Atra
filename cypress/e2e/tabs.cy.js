@@ -18,12 +18,34 @@ const formattedDate = oneYearLater.toISOString().split("T")[0];
 
 //only run tests in prod
 if (environment.apiUrl !== "") {
-  /*   beforeEach(() => {
-    //TODO: LOG IN
+  beforeEach(() => {
+    cy.task("loginCognito", {
+      username: Cypress.env("TEST_USER_EMAIL"),
+      password: Cypress.env("TEST_USER_PW"),
+    }).then((tokens) => {
+      // Log to Cypress runner
+      cy.log(`IdToken: ${tokens.IdToken}`);
+
+      // Log to browser console
+      console.log("Cognito Tokens:", tokens);
+
+      cy.visit(`${url}/tabs/mainpage`, {
+        onBeforeLoad(win) {
+          win.localStorage.setItem("idToken", tokens.IdToken);
+          win.localStorage.setItem("accessToken", tokens.AccessToken);
+          win.localStorage.setItem("refreshToken", tokens.RefreshToken);
+        },
+      });
+    });
   });
+
   afterEach(() => {
-    //TODO: LOG OUT
-  }); */
+    cy.visit(`${url}/tabs/user`);
+    cy.window().then((win) => {
+      win.localStorage.removeItem("idToken");
+    });
+    cy.visit(`${url}/firstpage`);
+  });
 
   describe("Test CRUD-operations for customers", () => {
     it("Can move to customers-page", () => {
