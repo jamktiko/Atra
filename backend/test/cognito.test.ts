@@ -10,7 +10,7 @@ describe('CognitoStack', () => {
   beforeEach(() => {
     app = new App();
 
-    // Luo erillinen VPC-stack
+    // need to set up a fake VPC
     const vpcStack = new Stack(app, 'TestVpcStack');
     const vpc = new ec2.Vpc(vpcStack, 'TestVpc', {
       maxAzs: 1,
@@ -29,6 +29,7 @@ describe('CognitoStack', () => {
       ],
     });
 
+    //set up a fake cognito stack
     const stack = new CognitoStack(app, 'TestStack', {
       vpc,
       rdsSecretName: 'dummy-secret',

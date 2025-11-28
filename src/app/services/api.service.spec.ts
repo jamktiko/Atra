@@ -1,5 +1,6 @@
-//temporarily commented out
-/* //commented out temporarily
+//temporarily commented out; apiservice changes will change code structure, implement once stabile
+
+/*
 import { TestBed } from '@angular/core/testing';
 import {
   HttpClientTestingModule,

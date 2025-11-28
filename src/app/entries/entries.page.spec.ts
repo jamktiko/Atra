@@ -10,6 +10,7 @@ describe('EntriesPage', () => {
   let apiService: jasmine.SpyObj<ApiService>;
   let toastService: jasmine.SpyObj<NgToastService>;
 
+  //create all needed mock objects
   beforeEach(async () => {
     const apiSpy = jasmine.createSpyObj('ApiService', [
       'getAllEntries',

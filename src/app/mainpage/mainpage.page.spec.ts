@@ -9,6 +9,7 @@ describe('MainpagePage', () => {
   let component: MainpagePage;
   let fixture: ComponentFixture<MainpagePage>;
 
+  //fakes authentication
   const mockAuthService = {
     getUser: jasmine
       .createSpy('getUser')

@@ -27,6 +27,7 @@ describe('InksPage', () => {
   });
 
   it('should filter inks by product_name', () => {
+    //mock userInks; follows Interface
     component.userInks = [
       {
         user_ink_id: 1,

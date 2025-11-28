@@ -24,6 +24,7 @@ describe('PubliclibraryPage', () => {
 
   it('should filter public inks by product_name, manufacturer or color', () => {
     component.allInks = [
+      // fake publicInks; follows Interface
       {
         ink_id: 1,
         product_name: 'Pilot Blue',

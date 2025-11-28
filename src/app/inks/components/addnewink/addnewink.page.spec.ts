@@ -1,4 +1,4 @@
-// This is a temporary workaround to make the test suite pass until we can fix the underlying issues.
+// Temporarily commented out, does not work as it is
 
 /* import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddnewinkPage } from './addnewink.page';

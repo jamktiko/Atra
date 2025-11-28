@@ -8,6 +8,7 @@ describe('LogoutPage', () => {
   let component: LogoutPage;
   let fixture: ComponentFixture<LogoutPage>;
 
+  //fakes logging out
   const mockAuthService = {
     logout: jasmine.createSpy('logout').and.returnValue(Promise.resolve()),
   };
