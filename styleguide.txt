@@ -1,0 +1,23 @@
+These need double-checking!!
+
+h1
+  class="text-neutral-50 mb-3 pt-6"
+
+h2
+  - 
+
+h3
+  -
+
+p
+  class="text-slate-100"
+
+buttons
+  -
+
+backgrounds?
+  -
+
+div?
+  -
+
