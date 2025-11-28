@@ -1,9 +1,84 @@
-<ion-content [fullscreen]="true">
+<!-- No real functionalities here yet! -->
 
-  <h2> Appsettings </h2>
+<ion-content [fullscreen]="true" class="bg-slate-950">
+  <div class="flex flex-col min-h-full">
+    <!-- Header -->
+    <div class="px-6 pt-8">
+      <h1 class="text-neutral-50 mb-3 pt-6">App Settings</h1>
+      <p class="text-slate-100"><i>Configure your app preferences</i></p>
+    </div>
 
-  <button
-    class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
-    (click)="return()">Back to Settings</button>
+    <div class="px-6 pb-8">
+      <button
+        class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+        (click)="return()"
+      >
+        Back to Settings
+      </button>
+    </div>
 
+    <!-- Settings Content -->
+    <div class="flex-grow px-6 overflow-y-auto mt-6 space-y-6">
+      <!-- Theme -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">Theme</h2>
+        <p class="text-slate-100">
+          Current theme: <span class="text-neutral-300">Dark</span>
+        </p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          Change Theme
+        </button>
+      </div>
+
+      <!-- Notifications -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">Notifications</h2>
+        <p class="text-slate-100">Enable or disable app notifications.</p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          Manage Notifications
+        </button>
+      </div>
+
+      <!-- Language -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">Language</h2>
+        <p class="text-slate-100">
+          Current language: <span class="text-neutral-300">English</span>
+        </p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          Change Language
+        </button>
+      </div>
+
+      <!-- Data & Storage -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">Data & Storage</h2>
+        <p class="text-slate-100">Manage cached data and storage usage.</p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          Clear Cache
+        </button>
+      </div>
+
+      <!-- About App -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">About</h2>
+        <p class="text-slate-100">
+          Version: <span class="text-neutral-300">1.0.0</span>
+        </p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          View Details
+        </button>
+      </div>
+    </div>
+  </div>
 </ion-content>
