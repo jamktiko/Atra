@@ -90,7 +90,7 @@ export class EntriesPage implements OnInit {
       (entry) =>
         (entry.first_name?.toLowerCase() ?? '').includes(search) ||
         (entry.last_name?.toLowerCase() ?? '').includes(search) ||
-        (entry.entry_date?.toLowerCase?.() ?? '').includes(search)
+        (entry.entry_date ?? '').includes(search)
     );
 
     return this.sortByDate(filtered);
@@ -169,7 +169,11 @@ export class EntriesPage implements OnInit {
 
     for (let i = 0; i < entries.length; i++) {
       const dateObj = new Date(entries[i].entry_date);
-      const date = dateObj.toLocaleDateString('fi-FI').split('T')[0];
+      // const testObj = entries[i].entry_date;
+      // console.log('testObj: ', testObj);
+      // console.log('Dateobjektit: ', dateObj);
+      const date = dateObj.toLocaleDateString('en-FI').split('T')[0];
+      // const date = testObj;
 
       if (!(date in sorted)) {
         sorted[date] = [];

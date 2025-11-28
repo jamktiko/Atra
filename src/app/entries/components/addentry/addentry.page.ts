@@ -49,17 +49,13 @@ export class AddentryPage implements OnInit {
   comments: string = '';
   searchInk: string = '';
 
+  continueBoolean: boolean = true;
+
   entries: any = [];
 
   /*Annetaan newEntrylle musteiden id-numerot lomakkeeseen
    */
   chosenInkIds: number[] = [];
-
-  /*
-   * Kovakoodattu userID, joka tulee myöhemmin Cogniton kautta
-   */
-
-  userId: string = 'USR1';
 
   /*
    * Muuttuja ng-select-komponenttiin asiakkaan hakemiseen ja valitsemiseen
@@ -71,10 +67,9 @@ export class AddentryPage implements OnInit {
   customers: Customer[] = [];
   inksToAdd: any = [];
 
-  newEntry: EntryCreation = {
+  newEntry: any = {
     entry_date: new Date(),
     comments: '',
-    User_user_id: this.userId,
     Customer_customer_id: this.selectedCustomerId, //undefined kunnes continue() alustaa
     inks: [],
   };
@@ -83,7 +78,6 @@ export class AddentryPage implements OnInit {
     this.newEntry = {
       entry_date: new Date(),
       comments: '',
-      User_user_id: this.userId,
       Customer_customer_id: this.selectedCustomerId,
       inks: [],
     };
@@ -142,8 +136,11 @@ export class AddentryPage implements OnInit {
     const inks = this.getChosenInks();
 
     if (
-      !inks.value.some((chosenInk: any) => chosenInk.id === ink.user_ink_id)
+      !inks.value.some(
+        (chosenInk: any) => chosenInk.user_ink_id === ink.user_ink_id
+      )
     ) {
+      console.log('chosenInk id: ', ink.user_ink_id);
       inks.push(
         new FormGroup({
           user_ink_id: new FormControl(ink.user_ink_id),
@@ -162,7 +159,7 @@ export class AddentryPage implements OnInit {
         })
       );
 
-      console.log(inks.value);
+      console.log('Inks.value tällä hetkellä: ', inks.value);
     } else {
       console.log('Ink already chosen: ', ink.user_ink_id);
       console.log(inks.value);
@@ -256,5 +253,14 @@ export class AddentryPage implements OnInit {
   back() {
     this.resetForm();
     this.router.navigate(['/tabs/entries']);
+  }
+
+  formNotValid() {
+    return (
+      !this.selectedCustomerId ||
+      !this.newEntry.entry_date ||
+      this.getChosenInks().length === 0 ||
+      this.getChosenInks.length > 0
+    );
   }
 }
