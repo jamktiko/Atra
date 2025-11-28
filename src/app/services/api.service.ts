@@ -5,6 +5,7 @@ import {
   EntryCreation,
   ListEntries,
   PublicInk,
+  User,
   UserInk,
 } from 'src/interface';
 import { Observable } from 'rxjs';
@@ -454,5 +455,9 @@ export class ApiService {
    */
   deleteEntry(entry_id: number): Observable<Entry> {
     return this.http.delete<Entry>(`${this.apiUrl}/entry/${entry_id}`);
+  }
+
+  getUser(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/user/me`);
   }
 }
