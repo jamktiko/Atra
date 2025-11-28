@@ -8,6 +8,7 @@ describe('UserPage', () => {
   let component: UserPage;
   let fixture: ComponentFixture<UserPage>;
 
+  //fakes being authenticated
   const mockAuthService = {
     isAuthenticated: jasmine.createSpy('isAuthenticated').and.returnValue(true),
     logout: jasmine.createSpy('logout'),

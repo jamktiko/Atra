@@ -20,6 +20,7 @@ describe('CustomersPage', () => {
 
   it('should filter customers by search term', () => {
     component.allcustomers = [
+      //mock customers; follows Interface
       {
         customer_id: 1,
         first_name: 'Tapio',
@@ -40,30 +41,25 @@ describe('CustomersPage', () => {
       },
     ];
 
-    // Testataan etunimellä
     component.searchItem = 'tapio';
     let result = component.filteredCustomers();
     expect(result.length).toBe(1);
     expect(result[0].first_name).toBe('Tapio');
 
-    // Testataan sukunimellä
     component.searchItem = 'meikäläinen';
     result = component.filteredCustomers();
     expect(result.length).toBe(1);
     expect(result[0].last_name).toBe('Meikäläinen');
 
-    // Testataan sähköpostilla
     component.searchItem = 'matti@';
     result = component.filteredCustomers();
     expect(result.length).toBe(1);
     expect(result[0].email).toBe('matti@example.com');
 
-    // Testataan tyhjällä hakusanalla
     component.searchItem = '';
     result = component.filteredCustomers();
     expect(result.length).toBe(2);
 
-    // Testataan ei-osuvalla hakusanalla
     component.searchItem = 'xyz';
     result = component.filteredCustomers();
     expect(result.length).toBe(0);

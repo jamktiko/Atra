@@ -19,6 +19,7 @@ const formattedDate = oneYearLater.toISOString().split("T")[0];
 //only run tests in prod
 if (environment.apiUrl !== "") {
   beforeEach(() => {
+    //log test user in
     cy.task("loginCognito", {
       username: Cypress.env("TEST_USER_EMAIL"),
       password: Cypress.env("TEST_USER_PW"),
@@ -39,6 +40,7 @@ if (environment.apiUrl !== "") {
     });
   });
 
+  //log out test user
   afterEach(() => {
     cy.visit(`${url}/tabs/user`);
     cy.window().then((win) => {
