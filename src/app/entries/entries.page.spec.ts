@@ -42,7 +42,7 @@ describe('EntriesPage', () => {
   });
 
   //temporarily commented out until filteredsearch is stabile
-/*   it('should load entries and sort by date', () => {
+  /*   it('should load entries and sort by date', () => {
     const mockEntries = [
       { entry_date: '2025-11-18', entry_id: 1 },
       { entry_date: '2025-11-17', entry_id: 2 },
@@ -52,8 +52,8 @@ describe('EntriesPage', () => {
     component.loadEntries();
 
     expect(component.entries.length).toBe(2);
-    expect(component.groupedEntries[0].date).toBe('2025-11-18'); */
-  });
+    expect(component.groupedEntries[0].date).toBe('2025-11-18');
+  });*/
 
   it('should handle loadEntries error', () => {
     apiService.getAllEntries.and.returnValue(

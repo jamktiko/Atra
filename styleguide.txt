@@ -12,6 +12,9 @@ h3
 p
   class="text-slate-100"
 
+warnings
+  -
+
 buttons
   -
 
