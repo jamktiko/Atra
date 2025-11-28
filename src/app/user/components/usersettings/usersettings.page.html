@@ -1,7 +1,64 @@
-<ion-content [fullscreen]="true">
-  <h2>usersettings</h2>
+<!-- No real functionalities here yet! -->
 
-  <button
-    class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
-    (click)="return()">Back to Settings</button>
+<ion-content [fullscreen]="true" class="bg-slate-950">
+  <div class="flex flex-col min-h-full">
+    <!-- Header -->
+    <div class="px-6 pt-8">
+      <h1 class="text-neutral-50 mb-3 pt-6">User Settings</h1>
+      <p class="text-slate-100"><i>Manage your profile and preferences</i></p>
+    </div>
+
+    <!-- Settings Content -->
+    <div class="flex-grow px-6 overflow-y-auto mt-6 space-y-6">
+      <!-- Profile Info -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">Profile</h2>
+        <p class="text-slate-100">
+          Name: <span class="text-neutral-300">[User Name]</span>
+        </p>
+        <p class="text-slate-100">
+          Email: <span class="text-neutral-300">[User Email]</span>
+        </p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          Edit Profile
+        </button>
+      </div>
+
+      <!-- Preferences -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">Preferences</h2>
+        <p class="text-slate-100">
+          Theme: <span class="text-neutral-300">Dark</span>
+        </p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          Change Theme
+        </button>
+      </div>
+
+      <!-- Privacy -->
+      <div class="bg-slate-900 rounded-lg p-4">
+        <h2 class="text-neutral-50 mb-2">Privacy</h2>
+        <p class="text-slate-100">Manage your privacy settings and data.</p>
+        <button
+          class="mt-3 px-4 py-2 bg-slate-700 text-neutral-50 rounded-full border border-neutral-50/80"
+        >
+          Manage Privacy
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="px-6 pb-8">
+      <button
+        class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
+        (click)="return()"
+      >
+        Back to Settings
+      </button>
+    </div>
+  </div>
 </ion-content>
