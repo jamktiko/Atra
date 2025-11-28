@@ -93,15 +93,9 @@ export class EntriesPage implements OnInit {
         (entry.entry_date?.toLowerCase?.() ?? '').includes(search)
     );
 
-    this.sortByDate(filtered);
-
-    return this.groupedEntries;
+    return this.sortByDate(filtered);
   }
 
-  resetSearch() {
-    this.searchItem = '';
-    this.loadEntries();
-  }
   handleClosed() {
     this.singleEntryModal = false;
     this.loadEntries();
@@ -123,7 +117,7 @@ export class EntriesPage implements OnInit {
     this.apiService.getAllEntries().subscribe({
       next: (data) => {
         this.entries = data;
-        this.sortByDate(this.entries);
+        this.groupedEntries = this.sortByDate(this.entries);
       },
       error: (err) => {
         console.error('No entries found: ', err);
@@ -175,7 +169,7 @@ export class EntriesPage implements OnInit {
 
     for (let i = 0; i < entries.length; i++) {
       const dateObj = new Date(entries[i].entry_date);
-      const date = dateObj.toLocaleDateString('en-CA').split('T')[0];
+      const date = dateObj.toLocaleDateString('fi-FI').split('T')[0];
 
       if (!(date in sorted)) {
         sorted[date] = [];
@@ -184,7 +178,7 @@ export class EntriesPage implements OnInit {
       sorted[date].push(entries[i]);
     }
 
-    this.groupedEntries = Object.entries(sorted)
+    return Object.entries(sorted)
       .map(([date, entries]) => ({ date, entries }))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
