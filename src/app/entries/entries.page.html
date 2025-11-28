@@ -12,21 +12,19 @@
 
   <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
     <h1 class="text-neutral-50">Entries</h1>
-    <h2 class="text-neutral-50">Your entries and their information.</h2>
+    <div class="pcustom">Your entries and their information.</div>
   </div>
 
   <ion-searchbar clear-icon="trash-bin" value="Custom Clear Icon" class="custom" animated="true" placeholder="Search"
     [(ngModel)]="searchItem" />
 
-  <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
-    <button
-      class="flex items-center text-xl gap-2 px-4 py-4 bg-slate-600 text-neutral-50 font-lato font-si border border-slate-900 rounded-full transition drop-shadow-xl drop-shadow-slate-800"
+  <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-20">
+    <button class="relative flex items-center gap-2 px-8 py-3 bg-slate-600 shadow-xl text-neutral-50 rounded-full"
       (click)="addNew()">
-
-      <span class="text-l"> + </span> Add new
+      <span class="text-xl leading-none">+</span>
+      <p>Add new</p>
     </button>
   </div>
-
 
   @for (group of (searchItem !== '' ? filteredEntries() : groupedEntries); track group.date) {
   <h3 class="text-lg font-lato text-slate-50 px-2 mx-4">{{ group.date}}</h3>
@@ -43,7 +41,6 @@
   </div>
   }
   }
-
 
 </ion-content>
 }

@@ -1,24 +1,21 @@
 <ion-content [fullscreen]="true">
 
-  <!--MODAALI-->
-
   @if (showReview) {
   <app-modalentry (cancel)="handleCancel()" [reviewEntry]="newEntry" (confirm)="handleConfirm($event)"></app-modalentry>
   } @else {
-  <div class="justify-center my-4">
+  <div class="justify-center">
 
-    <h1 class="my-2 text-neutral-50 text-center">Adding a new entry</h1>
-    <h2 class="text-neutral-50 text-center">Please ensure that the information is correct.</h2>
+    <h1 class="text-neutral-50 text-center">Adding a new entry</h1>
+    <div class="pcustom text-center">Please ensure that the information is correct.</div>
 
-    <div class="space-y-2 mx-3">
+    <div class="mx-3">
 
-      <!-- Customer -->
       <div>
         <h3 class="block mb-1 text-xl font-lato text-neutral-50 mx-1 border-gray-600">Customer</h3>
 
         <!--antaa formiin customerId item_customer.id perusteella-->
         <ng-select [items]="customers" [(ngModel)]="selectedCustomerId" bindValue="customer_id"
-          [searchFn]="filteredCustomers" class="custom">
+          [searchFn]="filteredCustomers" class="custom" required #customerCtrl="ngModel">
           <ng-template ng-option-tmp let-item="item" class="custom">
             {{item.last_name}}, {{item.first_name}}
           </ng-template>
@@ -27,13 +24,25 @@
           </ng-template>
         </ng-select>
 
+        @if (customerCtrl.invalid && customerCtrl.touched) {
+        <div class="text-red-400 text-sm">
+          Please select a customer.
+        </div>
+        }
       </div>
 
       <div>
         <h3 class="text-neutral-50 mx-1">Date</h3>
         <input id="date" type="datetime-local"
           class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
-          [(ngModel)]="newEntry.entry_date" />
+          [(ngModel)]="newEntry.entry_date" name="date" required #dateCtrl="ngModel" />
+
+        @if (dateCtrl.invalid && dateCtrl.touched) {
+        <div class="text-red-400 text-sm">
+          Date is required.
+        </div>
+        }
+
       </div>
 
       <div>
@@ -67,6 +76,10 @@
           <span class="text-2xl font-pt-serif"> Inks chosen</span>
 
         </div>
+        } @else {
+        <p>
+          At least one ink has to be chosen.
+        </p>
         }
 
       </div>
@@ -84,8 +97,10 @@
                rounded-lg text-lg px-4 py-2 text-center" (click)="back()">
           Back
         </button>
-        <button (click)="continue()" type="submit" class="text-neutral-50 bg-slate-600 focus:ring-2 focus:outline-none 
-               focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
+        <button (click)="continue()" type="submit"
+          class="text-neutral-50 bg-slate-600 focus:ring-2 focus:outline-none 
+               focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center disabled:bg-slate-800 disabled:text-gray-400"
+          [disabled]="formNotValid()">
           Continue
         </button>
       </div>

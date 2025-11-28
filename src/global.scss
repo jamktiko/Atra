@@ -208,7 +208,7 @@ h1 {
   font-weight: 700;
   font-style: normal;
   font-size: 28px;
-} 
+}
 
 h2 {
   font-family: "Quattrocento Sans", sans-serif;
@@ -229,6 +229,17 @@ p {
   font-weight: 400;
   font-style: normal;
   font-size: 16px;
+}
+
+/*
+* example custom class
+*/
+.pcustom {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 16px;
+  color: white;
 }
 
 button p {

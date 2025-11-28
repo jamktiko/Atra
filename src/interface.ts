@@ -45,7 +45,6 @@ interface Entry {
 interface EntryCreation {
   entry_date: Date;
   comments: string;
-  User_user_id: string;
   Customer_customer_id: number;
   inks: number[];
 }
