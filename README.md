@@ -48,20 +48,23 @@ Go to project root file and run following commands
 ## Tests
 
 Go to project root file and run the following command:
-_npm run test_
+
+- _npm run test_
 
 This runs Jasmine tests.
 
 To run only Jest tests, run commands:
-_cd backend_
-_npm test_
-!!Remember to move back to project root if needed!!
+
+- _cd backend_
+- _npm test_
+- !!Remember to move back to project root if needed!!
 
 To run Cypress tests run the following command in project root:
-_npx cypress run_
-or
-_npx cypress open_
-!!! For Cypress-tests to run, you need to run ionic serve !!!
+
+- _npx cypress run_
+  or
+- _npx cypress open_
+- !!! For Cypress-tests to run, you need to run ionic serve !!!
 
 To make your life easier, create a Powershell profile, and add the following script:
 
@@ -73,7 +76,7 @@ npm test
 Set-Location 'projectRootHere'
 }
 
-Replace _nameHere_ with the desired name. Replace _projectRootHere_ by the absolute path of your working directory.
-You call the function by the name you give.
-Don't forget to close Powershell after adding functions, or they won't work!
-This script runs Jest and Jasmine tests, and then returns you to project root.
+- Replace _nameHere_ with the desired name. Replace _projectRootHere_ by the absolute path of your working directory.
+- You call the function by the name you give.
+- Don't forget to close Powershell after adding functions, or they won't work!
+- This script runs Jest and Jasmine tests, and then returns you to project root.
