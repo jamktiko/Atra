@@ -13,7 +13,6 @@ import * as cdk from 'aws-cdk-lib';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
 import { HttpNoneAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2';
 
-
 // Props are relayed to stack's constructor
 // Interface defines the required props
 interface ApiStackProps extends StackProps {
@@ -200,14 +199,14 @@ export class ApiStack extends Stack {
       path: '/publicInk',
       methods: [apigw2.HttpMethod.GET],
       integration,
-      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
+      authorizer: new HttpNoneAuthorizer(), // tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
 
     this.api.addRoutes({
       path: '/publicInk/{id}',
       methods: [apigw2.HttpMethod.GET],
       integration,
-      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
+      authorizer: new HttpNoneAuthorizer(), // tän voisi ottaa prod vaiheessa pois --> fix handlers
     });
   }
 
@@ -286,13 +285,6 @@ export class ApiStack extends Stack {
       .build();
 
     const integration = new HttpLambdaIntegration('userCallsFn', fn);
-
-    this.api.addRoutes({
-      path: '/user',
-      methods: [apigw2.HttpMethod.GET],
-      integration,
-      authorizer: new HttpNoneAuthorizer(),// tän voisi ottaa prod vaiheessa pois --> fix handlers
-    });
 
     this.api.addRoutes({
       path: '/user/me',
