@@ -64,7 +64,7 @@ bootstrapApplication(AppComponent, {
             postLogoutRedirectUri
           )}`,
           jwksUri:
-            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_rg6zvz3Ix/.well-known/jwks.json',
+            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_pPH1k6fzK/.well-known/jwks.json',
         },
       },
     }),
