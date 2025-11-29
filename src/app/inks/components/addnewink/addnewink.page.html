@@ -1,57 +1,181 @@
-<ion-content fullscreen="true">
+<ion-content fullscreen="true" class="bg-slate-950">
 
   <!--MODALINK tarvitsee form arrayn tiedot => lähetettävä sille kopio formarraysta-->
-  @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()"
-    (delete)="handleDelete($event)" (confirm)="handleConfirm()"></app-modalink>
-  }
+  <!-- Modal Component 
+  @if (showReview) {
+  <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()" (delete)="handleDelete($event)"
+    (confirm)="handleConfirm()">
+  </app-modalink>
+  }-->
 
-  <div class="">
-    <div class="flex-1 p-6 text-neutral-50 text-center space-y-3">
-      <h1 class="text-4xl font-pt-serif">Adding a new ink to your library</h1>
-
-      <h3 class="font-lato">Start by searching for inks</h3>
+  <div class="pb-32">
+    <!-- Header -->
+    <div class="flex flex-col items-center px-6 pt-8 pb-4 text-neutral-50 text-center">
+      <h2 class="mb-2">Add new inks</h2>
+      <p class="text-neutral-400">Search and select inks to add to your library</p>
     </div>
-    <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
-    <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchItem" />
 
+    <!--Search Bar-->
+    <div class="px-4 pb-4">
+      <ion-searchbar class="custom" animated="true" placeholder="Search inks..." [(ngModel)]="searchItem" />
+    </div>
+
+    <!-- Public inks -->
+    <div class="px-4 space-y-3 pb-4">
+      @for (ink of filteredInks(); track ink.ink_id) {
+
+      <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4">
+        <!-- Ink Image -->
+        <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
+          <img src="{{ink.image_url}}" class="w-full h-full object-cover" alt="{{ink.product_name}}" />
+        </div>
+
+        <!-- Ink Info-->
+        <div class="flex-1 min-w-0">
+          <p class="text-neutral-50 truncate">{{ink.product_name}}</p>
+          <p class="text-neutral-400 truncate">{{ink.manyfacturer}}</p>
+          <p class="text-neutral-500 mt-1">{{ink.color}}</p>
+        </div>
+
+        <!-- Select Button -->
+        <button class="flex-shrink-0 bg-slate-700 text-neutral-50 px-4 py-2 rounded-lg transition-colors"
+          (click)="chooseInk(ink)">
+          Select
+        </button>
+      </div>
+
+      }
+    </div>
   </div>
 
   <!--LUODAAN TÄSTÄ VISUAL SCROLLING css sijaan! renders when scrolled-->
   <!--Käy musteet läpi for-loopissa käyttämällä filteredInks()-funktiota, eli vain hakutulosta vastaavat -->
 
-  <div class="scrollable">
+  <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 p-4 z-20">
+    <div class="max-w-2xl mx-auto">
 
-    @for (ink of filteredInks(); track ink.ink_id) {
-    <!--Tätä voi muokata-->
-    <div class="bg-slate-950 my-2 p-3">
-      <img src="{{ink.image_url}}" width="20%" />
+      <!--Selected count:-->
+      @if (getChosenInks().length > 0 ) {
+      <div class="flex items-center justify-center gap-2 mb-4">
+        <span class="text-neutral-400">Inks selected:</span>
+        <span class="bg-slate-700 text-neutral-50 px-3 py-1 rounded-full">
+          {{getChosenInks().length}}
+        </span>
+      </div>
+      }
 
-      {{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}}
-
-      <input class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl" type="button"
-        value="Select" (click)="chooseInk(ink)">
+      <!-- Action buttonss -->
+      <div class="flex gap-3">
+        <button class="flex-1 bg-slate-700 text-neutral-50 py-3 px-4 rounded-lg transition-colors" (click)="back()">
+          Cancel
+        </button>
+        <button
+          class="flex-1 bg-slate-600 text-neutral-50 py-3 px-4 rounded-lg transition-colors disabled:bg-slate-800 disabled:text-slate-500"
+          (click)="review()" [disabled]="getChosenInks().length < 1">
+          Continue
+        </button>
+      </div>
     </div>
-    }
-
   </div>
-
-  <div class="flex-1 p-6 text-neutral-50 text-center">
-    @if (getChosenInks().length > 0 ) {
-    <div>
-      <ion-badge
-        style="--background: rgb(0, 0, 0); padding: 10px; color: white; border-color: white; border-width: 2px; ">{{getChosenInks().length}}</ion-badge>
-      <span class="text-2xl font-pt-serif"> Inks chosen</span>
-
-    </div>
-    }
-
-    <button class="bg-slate-600 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1" (click)="back()">
-      Cancel
-    </button>
-
-    <button
-      class="bg-slate-800 text-neutral-50 font-lato text-l py-4 px-4 rounded-xl m-1 disabled:bg-slate-700 disabled:text-gray-500"
-      (click)="review()" [disabled]="getChosenInks().length < 1">Continue</button>
-  </div>
-
 </ion-content>
+
+<!-- Review Modal -->
+<ion-modal [isOpen]="showReview" (didDismiss)="handleCancel()">
+  <ng-template>
+    <ion-content class="bg-slate-950">
+      <div class="min-h-full flex items-start justify-center p-4 pt-12">
+        <div class="bg-slate-900 rounded-2xl max-w-md w-full shadow-2xl relative">
+
+          <!-- Close Button (X) -->
+          <button
+            class="absolute top-4 right-4 z-10 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-neutral-300 hover:text-neutral-50 rounded-full transition-colors"
+            (click)="handleCancel()">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+
+          <!-- Header -->
+          <div class="flex flex-col items-center px-6 pt-8 pb-4 text-neutral-50 text-center border-b border-slate-800">
+            <h2 class="mb-2">Review your selections</h2>
+            <p class="text-neutral-400">Please insert batch numbers for each ink</p>
+          </div>
+
+          <div class="pb-20">
+            @if (getChosenInks().length > 0) {
+            <!-- Ink Review List -->
+            <div class="p-4 space-y-3 max-h-96 overflow-y-auto">
+              @for (ink of getChosenInks().controls; track $index) {
+
+              <div class="bg-slate-800 rounded-xl p-4" [formGroup]="asFormGroup(ink)">
+                <!-- Ink Header with Delete -->
+                <div class="flex items-start gap-3 mb-3">
+                  <div class="w-12 h-12 flex-shrink-0 rounded-lg overflow-hidden bg-slate-700">
+                    <img [src]="ink.value.image_url" class="w-full h-full object-cover"
+                      [alt]="ink.value.product_name" />
+                  </div>
+
+                  <div class="flex-1 min-w-0">
+                    <p class="text-neutral-50 truncate">{{ink.value.product_name}}</p>
+                    <p class="text-xs text-neutral-400">{{ink.value.manufacturer}} • {{ink.value.color}}</p>
+                  </div>
+
+                  <button class="flex-shrink-0 text-red-600 hover:text-red-500 p-1" (click)="handleDelete($index)">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd"
+                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                        clip-rule="evenodd"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Batch Number Input -->
+                <div>
+                  <label class="block text-neutral-400 mb-1.5">Batch number *</label>
+                  <input type="text"
+                    class="w-full bg-slate-700 border border-slate-600 text-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                    placeholder="Enter batch number" formControlName="batch_number" required />
+
+                  @if (ink.get('batch_number')?.invalid && ink.get('batch_number')?.touched) {
+                  <p class="text-red-500 mt-1">Batch number is required</p>
+                  }
+                </div>
+              </div>
+
+              }
+            </div>
+            }
+
+            <!-- If no inks selected -->
+            @else {
+            <div class="flex flex-col items-center justify-center px-6 py-12 text-center">
+              <p class="text-neutral-400 mb-4">No inks selected</p>
+              <button class="bg-slate-700 hover:bg-slate-600 text-neutral-50 px-6 py-2 rounded-lg transition-colors"
+                (click)="handleCancel()">
+                Go back
+              </button>
+            </div>
+            }
+          </div>
+
+          <!-- Action Bar -->
+          <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">
+            <div class="flex gap-3">
+              <button
+                class="flex-1 bg-slate-600 hover:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
+                (click)="handleCancel()">
+                Go back
+              </button>
+              <button
+                class="flex-1 bg-green-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
+                (click)="handleConfirm()" [disabled]="!isFormValid()">
+                Confirm & Add
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

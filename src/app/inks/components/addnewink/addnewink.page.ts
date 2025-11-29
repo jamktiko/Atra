@@ -6,14 +6,15 @@ import {
   FormGroup,
   FormArray,
   Validators,
+  ReactiveFormsModule,
 } from '@angular/forms';
 import {
   IonContent,
-  IonButton,
   IonBadge,
   IonLabel,
+  IonModal,
 } from '@ionic/angular/standalone';
-import { ModalinkPage } from '../modalink/modalink.page';
+//import { ModalinkPage } from '../modalink/modalink.page';
 import { PublicInk } from 'src/interface';
 import { IonSearchbar } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
@@ -35,9 +36,9 @@ import {
     IonContent,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonSearchbar,
-    IonSearchbar,
-    ModalinkPage,
+    IonModal,
     IonBadge,
   ],
 })
@@ -124,7 +125,7 @@ export class AddnewinkPage implements OnInit {
     //Tässä alustetaan FormGroup, jotka muodostavat FormArrayn
     //Eli jokaisessa FormGroupissa on yksittäinen FormControl id, product_name, manufacturer, color, recalled, imageUrl, size & batchnumber
     //Jokainen FormGroup sitten laitetaan push-metodilla FormArrayhin vain, jos kyseistä mustetta ei ole vielä lisätty: if-ehto tarkistaa, löytyykö kyseisellä id:llä jo mustetta taulukosta
-    if (!inks.value.some((chosenInk: any) => chosenInk.id === ink.ink_id)) {
+    if (!inks.value.some((chosenInk: any) => chosenInk.ink_id === ink.ink_id)) {
       inks.push(
         new FormGroup({
           ink_id: new FormControl(ink.ink_id),
@@ -134,7 +135,7 @@ export class AddnewinkPage implements OnInit {
           recalled: new FormControl(ink.recalled),
           image_url: new FormControl(ink.image_url),
           size: new FormControl(ink.size),
-          batchnumber: new FormControl('', Validators.required),
+          batch_number: new FormControl('', Validators.required),
         })
       );
 
@@ -155,15 +156,13 @@ export class AddnewinkPage implements OnInit {
   // Saa Outputina modalink-komponentilta tiedon delete-EventEmitteristä => käskee tätä komponenttia toteuttamaan handleDelete()
   // HTML-templaatissa tämä on (delete)="handleDelete($event)" app-modalink-komponentin propseissa
   // Ottaa parametrikseen kyseisen musteen id:n ja käsittelee removeAt (Angularin taulukonpoistometodi) sen indeksin perusteella, jossa id === inkId
-  handleDelete(inkId: number) {
+  handleDelete(index: number) {
     const inks = this.inkGroup.get('chosenInks') as FormArray;
 
-    const index = inks.value.indexOf(inkId);
-
-    if (index > -1) {
+    if (index > -1 && index < inks.length) {
       //angular equivalent of splice: removes item in array where index matches
       inks.removeAt(index);
-      console.log('Removed ink: ', inkId, 'New chosenInks: ', inks.value);
+      console.log('Removed ink: ', index, 'New chosenInks: ', inks.value);
     }
   }
 
@@ -200,6 +199,24 @@ export class AddnewinkPage implements OnInit {
   }
 
   back() {
+    // Clear all selections when going back
+    const inks = this.getChosenInks();
+    while (inks.length > 0) {
+      inks.removeAt(0);
+    }
     this.router.navigate(['/tabs/inks']);
+  }
+
+  asFormGroup(control: any): FormGroup {
+    return control as FormGroup;
+  }
+
+  isFormValid(): boolean {
+    const inks = this.getChosenInks();
+    return (
+      inks &&
+      inks.length > 0 &&
+      inks.controls.every((control) => control.get('batch_number')?.valid)
+    );
   }
 }
