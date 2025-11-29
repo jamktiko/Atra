@@ -30,7 +30,7 @@ const cognitoClientId = '77ip06h8mtrpsnthjno6h83je7';
 const cognitoUserPoolAuthority =
   'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_pPH1k6fzK';
 
-const cognitoUserpoolId = 'eu-north-1_pPH1k6fzK';
+// const cognitoUserpoolId = 'eu-north-1_pPH1k6fzK';
 
 const isHybrid = Capacitor.isNativePlatform();
 
