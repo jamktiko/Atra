@@ -46,32 +46,40 @@ console.log('Is it prod? ' + isProd); */
   ],
 })
 export class InksPage implements OnInit {
-  /*searchItem-muuttuja on sidottu ion-searchbariin ngModel-toiminnalla, joka mahdollistaa
-   * muuttujien kaksisuuntaisen sitomisen. Täten searchItemin arvo päivittyy reaktiivisesti
+  /**
+   * Variable that is tied to ion-searchbar with ngModel, which creates two-way data binding.
+   * Value of searchItem gets updated reactively and used in filteredSearch()-method
+   * to search for items
    */
   searchItem: string = '';
 
-  /* Hallinnoi ionmodalin näkyvyyttä: jos true niin näkyy, jos false niin ei näy
+  /* Manages the visibility of ionmodal: true > visible, false > not visible
    */
   isModalOpen: boolean = false;
 
-  /* Määrittelee chooseInk-metodin avulla valitun musteen, jonka tiedot välitetään ionmodalille */
+  /*
+   * Variable that defines chosen ink in chooseInk-method.
+   */
   selectedInk: any = null;
 
-  /* Tuotantovaiheessa hakee mustedatan apiservicen perusteeella
+  /* User's inks are fetched with apiService method within getInks() method. It gets called
+   * in ngOnInit() when components gets rendered.
    */
   userInks: UserInk[] = [];
 
   updatedInk!: UserInk;
 
   /*
-   * Hallinnoi musteen päivityksen updatemodal-näkyvyyttä */
+   * Manages the visibility of update-modal: true > visible, false > not visible
+   */
   showUpdateModal: boolean = false;
 
   /*Tuotantovaiheessa hakee käyttäjän authservicen perusteella, tässä vaiheessa kovakoodattu feikkidata
    */
 
-  /* Constructorissa otetaan käyttöön apiservice */
+  /* Apiservice, Router and NgToastService get stated within the constructor, which then allows
+   * these libraries and methods to be used within the class.
+   */
   constructor(
     private apiService: ApiService,
     private router: Router,
@@ -83,6 +91,9 @@ export class InksPage implements OnInit {
     this.loadInks();
   }
 
+  /*
+   * Method that initiates user's ink library and sets the value to userInks-variable
+   */
   getInks() {
     this.apiService.getAllUserInks().subscribe({
       next: (data) => {
@@ -94,6 +105,11 @@ export class InksPage implements OnInit {
     });
   }
 
+  /**
+   * Recalls user's ink library whenever router.redirect value is /tabs/inks
+   * Designed to ensure that render activates whenever there are changes to user's library
+   */
+
   loadInks() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -104,14 +120,27 @@ export class InksPage implements OnInit {
       });
   }
 
+  /**
+   * Function that manages showUpdateModal boolean, which controls update-modals visibility
+   * @param isOpen: boolean
+   * Given parameter value then determines showUdateModal value
+   */
   toggleUpdateModal(isOpen: boolean) {
     this.showUpdateModal = isOpen;
   }
 
+  /**
+   * Redirects user to addnewink-component, where user can add new inks to their library.
+   * Angular Router navigate() method allows literal URL string as parameter
+   */
   addNew() {
     this.router.navigate(['/inks/addnewink']);
   }
 
+  /**
+   * Redirects user to publicink-component, where user can find application's ink library.
+   * Angular Router navigate() method allows literal URL string as parameter
+   */
   toPublic() {
     this.router.navigate(['/tabs/inks/publiclibrary']);
   }
