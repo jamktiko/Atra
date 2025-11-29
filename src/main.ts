@@ -26,11 +26,11 @@ import { CustomSecureStorage } from './app/services/customsecurestorage';
 import { AbstractSecurityStorage } from 'angular-auth-oidc-client';
 import { provideAuth, LogLevel } from 'angular-auth-oidc-client';
 
-const cognitoClientId = '5ifolu2c38cugpo5g648h9vhma';
+const cognitoClientId = '77ip06h8mtrpsnthjno6h83je7';
 const cognitoUserPoolAuthority =
-  'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_rg6zvz3Ix';
+  'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_pPH1k6fzK';
 
-const cognitoUserpoolId = 'eu-north-1_rg6zvz3Ix';
+const cognitoUserpoolId = 'eu-north-1_pPH1k6fzK';
 
 const isHybrid = Capacitor.isNativePlatform();
 
@@ -64,7 +64,7 @@ bootstrapApplication(AppComponent, {
             postLogoutRedirectUri
           )}`,
           jwksUri:
-            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_rg6zvz3Ix/.well-known/jwks.json',
+            'https://cognito-idp.eu-north-1.amazonaws.com/eu-north-1_pPH1k6fzK/.well-known/jwks.json',
         },
       },
     }),
