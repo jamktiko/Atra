@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header> -->
 
-<ion-content class="bg-slate-950">
+<ion-content>
   <div class="pb-24">
     <!-- Header -->
     <div class="flex flex-col items-center justify-center pt-8 pb-4 text-neutral-50">
@@ -40,8 +40,7 @@
 
     <!-- Add Button -->
     <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-20">
-      <button
-        class="relative flex items-center gap-2 px-8 py-3 bg-slate-600 shadow-xl text-neutral-50 rounded-full"
+      <button class="relative flex items-center gap-2 px-8 py-3 bg-slate-600 shadow-xl text-neutral-50 rounded-full"
         (click)="addNew()">
         <span class="text-xl leading-none">+</span>
         <p>Add new</p>
@@ -51,9 +50,8 @@
     <!-- Ink Grid -->
     <div class="grid grid-cols-2 gap-3 px-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
       @for (ink of filteredSearch(); track ink.user_ink_id) {
-      
-      <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm transition-shadow" 
-        (click)="chooseInk(true, ink)">
+
+      <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm transition-shadow" (click)="chooseInk(true, ink)">
         <div class="aspect-square overflow-hidden">
           <img src="{{ink.image_url}}" class="w-full h-full object-cover" alt="{{ink.product_name}}" />
         </div>
@@ -62,7 +60,7 @@
           <p class="text-neutral-500 mt-1">Batch: <span class="text-neutral-400">{{ink.batch_number}}</span></p>
         </div>
       </div>
-      
+
       }
     </div>
   </div>
@@ -75,7 +73,7 @@
       <div class="rounded-2xl max-w-md w-full overflow-hidden shadow-2xl">
 
         <!-- Close Button (X) -->
-        <button 
+        <button
           class="absolute top-2 right-2 z-10 w-8 h-8 flex items-center justify-center bg-slate-600 text-neutral-400 rounded-full transition-colors"
           (click)="setClosed(false)">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -83,10 +81,11 @@
           </svg>
         </button>
 
-        
+
         <!-- Image Section -->
         <div class="p-6">
-          <img src="{{selectedInk.image_url}}" class="w-full h-48 object-cover rounded-lg" alt="{{selectedInk.product_name}}" />
+          <img src="{{selectedInk.image_url}}" class="w-full h-48 object-cover rounded-lg"
+            alt="{{selectedInk.product_name}}" />
         </div>
 
         <!-- Content Section -->
@@ -121,9 +120,7 @@
           <!-- Action Buttons -->
           <div class="flex gap-3 mb-4">
 
-            <button
-              class="flex-1 bg-slate-600 text-neutral-50 rounded-lg px-3 py-2"
-              (click)="toggleUpdateModal(true)">
+            <button class="flex-1 bg-slate-600 text-neutral-50 rounded-lg px-3 py-2" (click)="toggleUpdateModal(true)">
               Update info
             </button>
 
@@ -137,7 +134,7 @@
               </svg>
               Delete
             </button>
-            
+
           </div>
 
           <!-- Close Button at bottom 
@@ -159,27 +156,33 @@
       <div class="bg-slate-900/80 rounded-3xl p-5 border border-white/10 max-w-md w-full mx-4">
         <div class="pb-6">
           <h2 class="text-neutral-50 text-center">
-          You're updating:
-        </h2>
-        <h3 class="text-center">
-          {{selectedInk.product_name}}, {{selectedInk.color}},
-          {{selectedInk.size}}
-        </h3>
+            You're updating:
+          </h2>
+          <h3 class="text-center">
+            {{selectedInk.product_name}}, {{selectedInk.color}},
+            {{selectedInk.size}}
+          </h3>
         </div>
 
         <p class="text-center pb-3"><i>Please fill in the information below:</i></p>
 
 
         <label for="opened_at" class="block mb-2 text-neutral-50">Opened at:</label>
-        <input type="date" class="bg-slate-800 border border-gray-300 text-gray-400 small-text rounded-lg block w-full p-2.5" id="opened_at" [(ngModel)]="selectedInk.opened_at" />
+        <input type="date"
+          class="bg-slate-800 border border-gray-300 text-gray-400 small-text rounded-lg block w-full p-2.5"
+          id="opened_at" [(ngModel)]="selectedInk.opened_at" />
         <p class="text-gray-400 mb-2">(current: {{selectedInk.opened_at | date: 'MMM dd, yyyy'}})</p>
-        
+
         <label for="expires_at" class="block mb-2 text-neutral-50">Expires at: </label>
-        <input type="date" class="bg-slate-800 border border-gray-300 text-gray-400 small-text rounded-lg block w-full p-2.5" id="expires_at" [(ngModel)]="selectedInk.expires_at" />
+        <input type="date"
+          class="bg-slate-800 border border-gray-300 text-gray-400 small-text rounded-lg block w-full p-2.5"
+          id="expires_at" [(ngModel)]="selectedInk.expires_at" />
         <p class="text-gray-400 mb-2">(current: {{selectedInk.expires_at | date: 'MMM dd, yyyy'}})</p>
 
         <label for="batchnumber" class="block mb-2 text-neutral-50">Batchnumber:</label>
-        <input type="text" class="bg-slate-800 border border-gray-300 text-gray-400 small-text rounded-lg block w-full p-2.5" id="batchnumber" [(ngModel)]="selectedInk.batch_number" />
+        <input type="text"
+          class="bg-slate-800 border border-gray-300 text-gray-400 small-text rounded-lg block w-full p-2.5"
+          id="batchnumber" [(ngModel)]="selectedInk.batch_number" />
 
         <div class="justify-center text-center py-2 pt-4">
           <p class="my-2">Check your info before confirming.</p>

@@ -149,11 +149,12 @@ export class InksPage implements OnInit {
     this.toast.success('Already here!');
     console.log('At own library already.');
   }
-  /*
-   * Chooseink-metodi valitsee tietyn musteen, ja ottaa parametriksi booleanin ja ink-datan,
-   * eli yksittäisen musteen tiedot. Boolean asetetaan isModalOpen-muuttujan arvoksi, ja musteen
-   * data selectedInk-muuttujan arvoksi. Näin tiedot saadaan ionmodalille, jossa yksittäinen
-   * muste esitellään.
+
+  /**
+   * Chooseink method chooses a specific ink and modal gets opened (true) and that ink is presented
+   * in the modal (selectedInk).
+   * @param boolean isOpen, defines isModalOpen variable's value
+   * @param UserInk ink, defines selectedInk variable's value
    */
   chooseInk(isOpen: boolean, ink: any) {
     this.isModalOpen = isOpen;
@@ -164,7 +165,6 @@ export class InksPage implements OnInit {
     const userInkId = this.selectedInk.user_ink_id;
     this.apiService.deleteUserInk(userInkId).subscribe({
       next: () => {
-        console.log('Deleted succesfully ink with ID-number: ', userInkId);
         this.getInks();
         this.setClosed(false);
         this.toast.success('Ink deleted successfully');
@@ -198,10 +198,11 @@ export class InksPage implements OnInit {
 
   /*
    * Käsittelee ionmodalin sulkeutumisen silloin, jos käyttäjä klikkaa modaalin ulkopuolelta
-   * tai close-nappulasta. Ionmodalin omilla ominaisuuksilla voidaan hallinnoida tätä HTML-templaatissa
-   * (didDismiss)="setClosed(false)" pätkän avulla: didDismiss viittaa modaalin ulkopuolelle
+   * tai close-nappulasta. Ionmodalin omilla ominaisuuksilla voidaan hallinnoida tätä HTML-
+   * templaatissa (didDismiss)="setClosed(false)" pätkän avulla: didDismiss viittaa modaalin ulkopuolelle
    * klikkaamiseen, jolloin templaatissa käsketään toteuttamaan setClosed-metodi
    */
+
   setClosed(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
