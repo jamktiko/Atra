@@ -6,14 +6,14 @@ The `cdk.json` file tells the CDK Toolkit how to execute the app.
 
 ## Useful commands
 
-- `npm run build` compile typescript to js
-- `npm run watch` watch for changes and compile
+- `npm run build` compile typescript to js (in project root)
+- `npm run watch` watch for changes and compile (in project root)
 - `npm run test` perform the jest unit tests
 - `cdk deploy` deploy this stack to your default AWS account/region
 - `cdk diff` compare deployed stack with current state
 - `cdk synth` emits the synthesized CloudFormation template
 - `cdk deploy --all --outputs-file ./cdk-outputs.json` deploy whole stack within a project
-- `cdk deploy --hotswap` quickly deploy lambda
+- `cdk deploy --hotswap` quickly deploy lambda in development; do not use in production!
 
 ## Folder structure
 
@@ -23,7 +23,7 @@ Under lib/ we have the stack files. A stack file defines AWS resources and prope
 
 - lib/api-stack = creates the api gateway and lambda function.
 - lib/cognito-stack = creates the user pool and user pool client for Cognito.
-- lib/database-stack = creates the RDS instance and Proxy.
+- lib/database-stack = creates the RDS instance.
 - lib/frontend-stack = creates the Cloudfront distribution to serve the frontend and S3 bucket to store the objects.
 - lib/vpc-stack = creates VPC, private and public subnets and security groups for Lambda and RDS.
 
@@ -72,11 +72,11 @@ Api Gateway receives the requests and verifies the JWT token is valid and from t
 
 ### Lambdas
 
-The Lambda queries the database via RDS Proxy (not directly to the database, for better pooling/scaling).
+The Lambda queries the database. In the future, this is supposed to be done via RDS Proxy (for better pooling/scaling).
 
 ### Database
 
-The RDS Proxy forwards the request to the MySQL database.
+After query:
 
 - Data is returned to the Lambda.
 - Lambda processes and sends the response back through API Gateway -> to the frontend.

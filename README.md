@@ -4,7 +4,9 @@ This README-file will give step-by-step instructions on how to set up Angular/Io
 
 ## Copy repository locally
 
-Clone git repository to your computer to run locally.
+Clone git repository to your computer to run locally:
+
+- _git clone https://github.com/jamktiko/Atra.git_
 
 ## How to install prerequisities
 
@@ -45,6 +47,15 @@ Go to project root file and run following commands
 - npm install
 - ionic serve (starts developer mode in localhost:8100)
 
+## Deploying to cloud
+
+Deploy your CDK stacks in the backend folder, following the backend README.md.
+
+Once your backend stacks are deployed with CDK, build your app.
+After that, upload the created files (in the hosting folder) into the atra-frontend-bucket S3-bucket.
+
+To reach the deployed app, use the created CloudFront distribution domain name in your browser.
+
 ## Tests
 
 Go to project root file and run the following command:
@@ -57,7 +68,7 @@ To run only Jest tests, run commands:
 
 - _cd backend_
 - _npm test_
-- !!Remember to move back to project root if needed!!
+- !!! Remember to move back to project root if needed !!!
 
 To run Cypress tests run the following command in project root:
 
@@ -68,6 +79,7 @@ To run Cypress tests run the following command in project root:
 
 To make your life easier, create a Powershell profile, and add the following script:
 
+```
 function nameHere {
 Set-Location 'projectRootHere'
 npm run test
@@ -75,6 +87,7 @@ Set-Location 'projectRootHere/backend'
 npm test
 Set-Location 'projectRootHere'
 }
+```
 
 - Replace _nameHere_ with the desired name. Replace _projectRootHere_ by the absolute path of your working directory.
 - You call the function by the name you give.
