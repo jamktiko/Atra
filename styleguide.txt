@@ -44,6 +44,10 @@ buttons
   - Secondary action (Update, Cancel)
     > bg-slate-400
     > text-neutral-50
+  
+  - Select
+    > bg-slate-700
+    > text-neutral-50
 
   - Add new
   <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-20">

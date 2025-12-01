@@ -39,7 +39,6 @@ import {
     ReactiveFormsModule,
     IonSearchbar,
     IonModal,
-    IonBadge,
   ],
 })
 export class AddnewinkPage implements OnInit {
