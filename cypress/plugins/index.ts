@@ -20,10 +20,7 @@ interface PluginConfig {
 
 module.exports = (on: PluginOn, config: PluginConfig) => {
   on('task', {
-    async loginCognito({
-      username,
-      password,
-    }: LoginCognitoCredentials): Promise<string | undefined> {
+    async loginCognito({ username, password }: LoginCognitoCredentials) {
       const client = new CognitoIdentityProviderClient({
         region: 'eu-north-1',
       });
@@ -36,7 +33,7 @@ module.exports = (on: PluginOn, config: PluginConfig) => {
         },
       });
       const response = await client.send(command);
-      return response.AuthenticationResult.IdToken;
+      return response.AuthenticationResult; // ✅ Return IdToken, AccessToken, RefreshToken
     },
   });
 };
