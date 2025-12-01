@@ -101,7 +101,6 @@ export class AddnewinkPage implements OnInit {
   //HTML-templaatissa @for (ink of filteredInks(); track ink.id)
   filteredInks(): any {
     const search = this.searchItem.toLowerCase() ?? '';
-
     return this.publicInks.filter(
       (ink) =>
         ink.product_name.toLowerCase().includes(search) ||
@@ -120,7 +119,6 @@ export class AddnewinkPage implements OnInit {
   //Ottaa kyseisen musteen tiedot parametrina, ja lisää musteen FormArray
   chooseInk(ink: PublicInk) {
     const inks = this.getChosenInks();
-
     //Tässä alustetaan FormGroup, jotka muodostavat FormArrayn
     //Eli jokaisessa FormGroupissa on yksittäinen FormControl id, product_name, manufacturer, color, recalled, imageUrl, size & batchnumber
     //Jokainen FormGroup sitten laitetaan push-metodilla FormArrayhin vain, jos kyseistä mustetta ei ole vielä lisätty: if-ehto tarkistaa, löytyykö kyseisellä id:llä jo mustetta taulukosta
@@ -137,7 +135,6 @@ export class AddnewinkPage implements OnInit {
           batch_number: new FormControl('', Validators.required),
         })
       );
-
       console.log(inks.value);
     } else {
       console.log('Ink already chosen: ', ink.ink_id);
