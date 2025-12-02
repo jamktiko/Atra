@@ -1,3 +1,7 @@
+/** UNDER MAINTENANCE
+ * This component is out of use at the moment and replaced withj ion-modal,
+ * THEREFORE CODE DOCUMENTATION NOT UP TO DATE.
+ */
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
