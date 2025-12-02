@@ -232,7 +232,6 @@ export class InksPage implements OnInit {
 
     return this.userInks.filter(
       (ink) =>
-        //päivitetään apiservicen vaiheessa tarkistamaan myös publicinkistä tulevia attribuutteja: color, manufacturer etc.
         ink.product_name.toLowerCase().includes(search) ||
         ink.color.toLowerCase().includes(search) ||
         ink.manufacturer.toLowerCase().includes(search)
