@@ -73,6 +73,8 @@
 
   --ion-tab-button-justify-content: center;
   --ion-tab-button-align-items: center;
+
+  --ion-item-background: oklch(11% 0.05 195);
 }
 
 ion-tab-button {
@@ -111,6 +113,8 @@ ion-toolbar {
   background-repeat: no-repeat;
 }
 
+ion-list {
+}
 ion-title {
   font-size: x-large;
   font-weight: 200;
@@ -118,6 +122,16 @@ ion-title {
 
 ion-tab-bar {
   font-family: "Crimson Text", serif;
+}
+
+ion-item {
+  font-family: "Quattrocento Sans", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  font-size: 18px;
+  color: white;
+  letter-spacing: 1px;
+  padding-top: 1em;
 }
 
 @layer components {

@@ -24,15 +24,31 @@ import {
   imports: [IonContent, IonList, IonItem, CommonModule, FormsModule],
 })
 export class ModalcustomerPage implements OnInit {
+  /**
+   * Gets newcustomer-value from addnewCustomer as Input
+   */
   @Input() newcustomer?: CustomerCreation;
+  /**
+   * Value of openModal is taken in asInput
+   */
   @Input() openModal!: boolean;
+
   @Output() confirm = new EventEmitter<CustomerCreation>();
+
   @Output() cancel = new EventEmitter<void>();
 
+  /**
+   * Sends info of confirm as Output in form of EventEmitter: parent knows to call for
+   * method that is linked to confirm (handleConfirm)
+   */
   sendConfirm() {
     this.confirm.emit(this.newcustomer);
   }
 
+  /**
+   * Sends info of cancel as Output in form of EventEmitter: parent knows to call for
+   * method that is linked to cancel (handleCancel)
+   */
   sendCancel() {
     this.cancel.emit();
   }

@@ -1,53 +1,45 @@
 <ion-content>
-  <div
-    class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50"
-  >
+  <div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
     <div
-      class="relative bg-slate-800 text-neutral-50 rounded-2xl shadow-2xl w-[90%] p-6 border border-white/10 animate-modal-in"
-    >
-      <h2 class="text-2xl my-4 text-center">You're adding a new customer.</h2>
+      class="relative bg-slate-950 text-neutral-50 rounded-2xl shadow-2xl w-[90%] h-[75%] px-4 py-2 border border-white/10 animate-modal-in">
+      <h2 class="text-2xl my-4 text-center">You're adding a new customer:</h2>
 
-      <ion-list class="stext-slate-50 rounded-2xl">
-        <ion-item class="bg-slate-800 m-1 text-lg font-lato text-neutral-50"
-          >{{newcustomer?.first_name}}</ion-item
-        >
+      <ion-list class="">
+        <ion-item class="m-1 text-lg font-lato text-neutral-50">{{newcustomer?.first_name}}</ion-item>
 
-        <ion-item class="m-1 text-lg font-lato text-neutral-50"
-          >{{newcustomer?.last_name}}</ion-item
-        >
+        <ion-item class="m-1 text-lg font-lato text-neutral-50">{{newcustomer?.last_name}}</ion-item>
 
-        <ion-item class="m-1 text-lg font-lato text-neutral-50"
-          >{{newcustomer?.email}}</ion-item
-        >
+        <ion-item class="m-1 text-lg font-lato text-neutral-50">{{newcustomer?.email}}</ion-item>
 
-        <ion-item class="m-1 text-lg font-lato text-neutral-50"
-          >{{newcustomer?.phone}}</ion-item
-        >
+        <ion-item class="m-1 text-lg font-lato text-neutral-50">{{newcustomer?.phone}}</ion-item>
 
-        <ion-item class="m-1 text-lg font-lato text-neutral-50"
-          >{{newcustomer?.notes}}</ion-item
-        >
+        <ion-item class="m-1 text-lg font-lato text-neutral-50">
+          @if (newcustomer?.notes === '')
+          {<p class="text-slate-100"> No notes. </p>}
+          @else {{{newcustomer?.notes}}}
+        </ion-item>
       </ion-list>
 
-      <div class="flex flex-wrap justify-center gap-4 pt-2">
-        <p class="text-lg text-center">
-          Please check customer information before confirming.
-        </p>
-        <button
-          (click)="sendCancel()"
-          type="button"
-          class="text-red-600 inline-flex items-center hover:text-neutral-50 ring-2 ring-red-600 focus:ring-red-300 font-medium rounded-lg text-lg px-4 py-2 text-center"
-        >
-          Cancel
-        </button>
-        <button
-          (click)="sendConfirm()"
-          type="button"
-          class="text-neutral-50 bg-green-700 font-medium rounded-lg text-lg px-4 py-2 text-center"
-        >
-          Confirm
-        </button>
+      <div class="py-4">
+        <p class="text-center">Please check that the information is correct.</p>
       </div>
+
+      <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">
+
+        <div class="flex gap-3">
+          <button
+            class="flex-1 bg-slate-400 active:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
+            (click)="sendCancel()">
+            Cancel
+          </button>
+          <button
+            class="flex-1 bg-green-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
+            (click)="sendConfirm()">
+            Continue
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 </ion-content>

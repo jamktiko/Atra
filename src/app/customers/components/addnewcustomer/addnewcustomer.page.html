@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <ng-toast></ng-toast>
   <div class="items-center justify-center mx-4 py-4">
-    <form #customerForm="ngForm" (ngSubmit)="showModal()">
+    <form #customerForm="ngForm" (ngSubmit)="showModal(true)">
       <h1 class="text-2xl text-neutral-50 flex-1 text-center">
         Adding a new customer
       </h1>
@@ -78,11 +78,6 @@
 
     </form>
   </div>
-
-  @if (openModal) {
-  <app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel()"
-    [openModal]="openModal"></app-modalcustomer>
-  }
   <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">
 
     <div class="flex gap-3">
@@ -92,10 +87,15 @@
       </button>
       <button
         class="flex-1 bg-green-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
-        (click)="showModal()" [disabled]="!customerForm.valid">
+        (click)="showModal(true)" [disabled]="!customerForm.valid">
         Continue
       </button>
     </div>
 
   </div>
 </ion-content>
+
+@if (openModal) {
+<app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel(false)"
+  [openModal]="openModal"></app-modalcustomer>
+}
