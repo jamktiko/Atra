@@ -68,8 +68,8 @@
   --ion-toolbar-color: oklch(12.232% 0.02081 201.719);
 
   --ion-tab-bar-background: oklch(15% 0.05 190);
-  --ion-tab-bar-color: oklch(47.6% 0.02 150.416);
-  --ion-tab-bar-color-selected: oklch(87% 0.01 13);
+  --ion-tab-bar-color: oklch(50% 0.013 130.416);
+  --ion-tab-bar-color-selected: oklch(92% 0.01 13);
 
   --ion-tab-button-justify-content: center;
   --ion-tab-button-align-items: center;
@@ -84,9 +84,9 @@ ion-tab-button {
 //ADDCUSTOMER
 label {
   font-family: "Quattrocento Sans", sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   font-style: normal;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 ion-searchbar.custom {
@@ -154,7 +154,7 @@ ion-item {
 
 @media screen and (min-width: 319px) {
   ion-tab-bar {
-    min-height: 8%;
+    min-height: 8.5%;
   }
   ion-tab-button {
     font-size: 16px;
@@ -167,7 +167,7 @@ ion-item {
 
 @media screen and (min-width: 431px) {
   ion-tab-bar {
-    min-height: 8.5%;
+    min-height: 9%;
   }
 
   ion-tab-button {
