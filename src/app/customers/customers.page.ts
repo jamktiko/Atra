@@ -41,14 +41,16 @@ export class CustomersPage implements OnInit {
   searchItem: string = '';
 
   /**
-   * Allcustomers-arvo alustetaan ngOninit-metodissa eli renderöintivaiheessa
-   * !-merkintä kertoo Angularille, että arvo kyllä alustetaan ennen kuin muuttujaa käytetään
-   *
+   * Allcustomers-value is fetched in ngOnInit when component gets rendered
    */
 
   allcustomers: Customer[] = [];
 
   chosenCustomer: any;
+
+  /**
+   * Boolean that manages the visibility of customer-modal: true > visible, false > not visible
+   */
   isModalOpen: boolean = false;
 
   constructor(
@@ -69,6 +71,9 @@ export class CustomersPage implements OnInit {
       });
   }
 
+  /**
+   * Fetches customers with ApiService getAllcustomers()-method, and determines the value of allcustomers-variable
+   */
   loadCustomers() {
     this.apiService.getAllCustomers().subscribe({
       next: (data) => {
@@ -79,6 +84,12 @@ export class CustomersPage implements OnInit {
       },
     });
   }
+
+  /** Manages filtering search for customers: validation with toLowerCase to check whether search-variable value is included in
+   * customer's first_name, last_name or email.
+   * HTML-template loops through with @for (ink of filteredInks(); track ink.id) {...}
+   * @return allcustomers: []; Array of Customer
+   */
 
   filteredCustomers() {
     const search = this.searchItem.toLowerCase() ?? '';
@@ -91,10 +102,22 @@ export class CustomersPage implements OnInit {
     );
   }
 
+  /**
+   * Chooses customer and opens modal with customer's info. isModalOpen value is changed to value of isOpen, and
+   * customer's data comes from customer (value of interface Customer)
+   * @param isOpen: boolean
+   * @param customer: Customer
+   * No return-value
+   */
   chooseCustomer(isOpen: boolean, customer: any) {
     this.isModalOpen = isOpen;
     this.chosenCustomer = customer;
   }
+
+  /**
+   * Uses ApiService deleteCustomer()-method and passes the value of chosenCustomer.customer_id as argument.
+   * This customer is then deleted from user's library.
+   */
 
   deleteCustomer() {
     const customerId = this.chosenCustomer.customer_id;
@@ -107,11 +130,16 @@ export class CustomersPage implements OnInit {
         this.setClosed(false);
       },
       error: (err) => {
-        console.error('No success: ', err);
+        console.error('Error when deleting customer: ', err);
+        this.toast.warning('Something went wrong.');
       },
     });
   }
 
+  /**
+   * Uses ApiService updateCustomer()-method and passes customerData and customerId as arguments.
+   * This customer's data is then updated according to the values passed in the HTML input-form
+   */
   updateCustomer() {
     const customerId = this.chosenCustomer.customer_id;
     const customerData = this.chosenCustomer;
@@ -129,10 +157,17 @@ export class CustomersPage implements OnInit {
     });
   }
 
+  /**
+   * Sets the value of isModalOpen as the value of isOpen
+   * @param isOpen: boolean;
+   */
   setClosed(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
+  /**
+   * Redirects user to addnewcustomer.page where new customer-form lives
+   */
   addNew() {
     this.router.navigate(['/tabs/customers/addnewcustomer']);
   }
