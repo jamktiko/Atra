@@ -78,11 +78,6 @@
 
     </form>
   </div>
-
-  @if (openModal) {
-  <app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel(false)"
-    [openModal]="openModal"></app-modalcustomer>
-  }
   <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">
 
     <div class="flex gap-3">
@@ -99,3 +94,8 @@
 
   </div>
 </ion-content>
+
+@if (openModal) {
+<app-modalcustomer [newcustomer]="customer" (confirm)="handleConfirm($event)" (cancel)="handleCancel(false)"
+  [openModal]="openModal"></app-modalcustomer>
+}
