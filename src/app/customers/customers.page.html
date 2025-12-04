@@ -7,32 +7,41 @@
 
 <!--TÄMÄ ON ASIAKASSIVU-->
 <ion-content [fullscreen]="true">
-
-
   <div class="flex-1 p-6 text-neutral-950 text-center space-y-2">
     <h2 class="text-4xl font-pt-serif text-neutral-50">Customers</h2>
-    <h3 class="font-lato text-neutral-50">Your customers and their information</h3>
+    <h3 class="font-lato text-neutral-50">
+      Your customers and their information
+    </h3>
 
     <!--Jos searchbarin ulkoasua muokkaa, pitää tehdä style-elementin sisällä -->
   </div>
-  <ion-searchbar class="custom" placeholder="Search" [(ngModel)]="searchItem" animated="true" />
-
+  <div class="px-4 pb-4">
+    <ion-searchbar
+      class="custom"
+      placeholder="Search"
+      [(ngModel)]="searchItem"
+      animated="true"
+    />
+  </div>
 
   <div class="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-20">
     <button
       class="flex items-center gap-2 px-4 py-4 bg-slate-600 text-xl text-neutral-50 font-lato font-si border border-slate-900 rounded-full transition drop-shadow-xl drop-shadow-slate-800"
-      (click)="addNew()">
-
+      (click)="addNew()"
+    >
       <span class="text-l"> + </span>Add new
     </button>
   </div>
 
   <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
   @for (customer of filteredCustomers(); track customer.customer_id) {
-  <div class="flex flex-col bg-slate-900 border border-neutral-50/60 rounded-xl my-4 "
-    (click)="chooseCustomer(true, customer)">
-    <div class="p-3 md:p-5 ">
-      <h3 class="text-lg font-lato text-neutral-50">{{customer.last_name}}, {{customer.first_name}}
+  <div
+    class="flex flex-col bg-slate-900 border border-neutral-50/60 rounded-xl my-4"
+    (click)="chooseCustomer(true, customer)"
+  >
+    <div class="p-3 md:p-5">
+      <h3 class="text-lg font-lato text-neutral-50">
+        {{customer.last_name}}, {{customer.first_name}}
       </h3>
       <p class="mt-2 font-lato text-gray-500">{{customer.email}}</p>
     </div>
@@ -40,78 +49,139 @@
       Open</button> -->
   </div>
   }
-
 </ion-content>
 
-
-<ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
-
+<ion-modal
+  id="example-modal"
+  [isOpen]="isModalOpen"
+  (didDismiss)="setClosed(false)"
+>
   <ng-template>
     <div class="flex items-center justify-center w-95% h-90%">
-      <div class="bg-slate-900 text-neutral-50 rounded-3xl p-6 w-full shadow-lg border border-white/10">
+      <div
+        class="bg-slate-900 text-neutral-50 rounded-3xl p-6 w-full shadow-lg border border-white/10"
+      >
         <h2 class="text-center text-3xl font-pt-serif mb-6">Customer</h2>
         <!--Tähän saa Milja tehtyä tyylit sekä elementteihin yksittäisenä-->
         <div class="flex gap-3">
           <div class="w-1/2">
-            <label for="first-name" class="block mb-1 text-lg font-lato text-neutral-50">First Name</label>
-            <input type="text" name="first-name" id="first-name"
+            <label
+              for="first-name"
+              class="block mb-1 text-lg font-lato text-neutral-50"
+              >First Name</label
+            >
+            <input
+              type="text"
+              name="first-name"
+              id="first-name"
               class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
-              placeholder="First Name" required [(ngModel)]="chosenCustomer.first_name">
+              placeholder="First Name"
+              required
+              [(ngModel)]="chosenCustomer.first_name"
+            />
           </div>
 
           <div class="w-1/2">
-            <label for="last-name" class="block mb-1 text-lg font-lato text-neutral-50">Last Name</label>
-            <input type="text" name="last-name" id="last-name"
+            <label
+              for="last-name"
+              class="block mb-1 text-lg font-lato text-neutral-50"
+              >Last Name</label
+            >
+            <input
+              type="text"
+              name="last-name"
+              id="last-name"
               class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
-              placeholder="Last Name" required [(ngModel)]="chosenCustomer.last_name">
+              placeholder="Last Name"
+              required
+              [(ngModel)]="chosenCustomer.last_name"
+            />
           </div>
         </div>
 
-        <div class="flex gap-3">
-          <div class="w-1/2">
-            <label for="email" class="block mb-1 text-lg font-lato text-neutral-50">Email</label>
-            <input type="email" name="email" id="email"
+        <div class="flex flex-col gap-3">
+          <div class="w-full">
+            <label
+              for="email"
+              class="block mb-1 text-lg font-lato text-neutral-50"
+              >Email</label
+            >
+            <input
+              type="email"
+              name="email"
+              id="email"
               class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
-              placeholder="Email" required [(ngModel)]="chosenCustomer.email">
+              placeholder="Email"
+              required
+              [(ngModel)]="chosenCustomer.email"
+            />
           </div>
-          <div class="w-1/2">
-            <label for="phone-number" class="block mb-1 text-lg font-lato text-neutral-50">Phone Number</label>
-            <input type="text" name="phone-number" id="phone-number"
+          <div class="w-full">
+            <label
+              for="phone-number"
+              class="block mb-1 text-lg font-lato text-neutral-50"
+              >Phone Number</label
+            >
+            <input
+              type="text"
+              name="phone-number"
+              id="phone-number"
               class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
-              placeholder="Phone Number" required [(ngModel)]="chosenCustomer.phone">
+              placeholder="Phone Number"
+              required
+              [(ngModel)]="chosenCustomer.phone"
+            />
           </div>
         </div>
         <div>
-          <label for="notes" class="block mb-1 text-lg font-lato text-neutral-50">Notes</label>
-          <input type="text" id="notes" [(ngModel)]="chosenCustomer.notes"
+          <label
+            for="notes"
+            class="block mb-1 text-lg font-lato text-neutral-50"
+            >Notes</label
+          >
+          <input
+            type="text"
+            id="notes"
+            [(ngModel)]="chosenCustomer.notes"
             class="block p-2.5 w-full text-sm text-gray-200 bg-slate-700 rounded-lg border border-gray-300 focus:ring-slate-500 focus:border-slate-500"
-            placeholder="Write your comments about customer here.." />
+            placeholder="Write your comments about customer here.."
+          />
         </div>
         <div class="flex justify-end space-x-3 pt-2">
-          <button type="button"
+          <button
+            type="button"
             class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center"
-            (click)="deleteCustomer()">
-            <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
+            (click)="deleteCustomer()"
+          >
+            <svg
+              class="w-5 h-5 mr-1"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
                 d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"></path>
+                clip-rule="evenodd"
+              ></path>
             </svg>
             Delete
           </button>
 
-          <button type="submit"
+          <button
+            type="submit"
             class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center"
-            (click)="updateCustomer()">
+            (click)="updateCustomer()"
+          >
             Update
           </button>
         </div>
         <button
-          class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center">
-          <a (click)="setClosed(false)">Close</a></button>
-
-
+          class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center"
+        >
+          <a (click)="setClosed(false)">Close</a>
+        </button>
       </div>
     </div>
   </ng-template>
-
 </ion-modal>
