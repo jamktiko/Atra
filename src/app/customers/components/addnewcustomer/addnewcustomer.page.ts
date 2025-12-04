@@ -41,7 +41,7 @@ import {
     CommonModule,
     FormsModule,
     ModalcustomerPage,
-    IonText,
+    // IonText,
   ],
 })
 export class AddnewcustomerPage {
