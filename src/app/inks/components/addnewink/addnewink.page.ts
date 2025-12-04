@@ -157,16 +157,20 @@ export class AddnewinkPage implements OnInit {
     }
   }
 
-  // Saa Outputina modalink-komponentilta tiedon cancel-EventEmitterista => käskee tätä komponenttia toteuttamaan handleCancel()
-  //HTML-templaatissa tämä on (cancel)="handleCancel()" app-modalink komponentin propseissa
-  // Käsittelee showReview-muuttujan näkyvyyden muuttamalla sen falseksi
+  /**NOTE: Code updated and app-modalink suspended at the moment */
+  /* HTML-template (cancel)="handleCancel()" app-modalink component props */
+
+  /**
+   * Function switches showReview-variable to false > review-ionmodal is no longer visible
+   */
   handleCancel() {
     this.showReview = false;
   }
 
-  // Saa Outputina modalink-komponentilta tiedon delete-EventEmitteristä => käskee tätä komponenttia toteuttamaan handleDelete()
-  // HTML-templaatissa tämä on (delete)="handleDelete($event)" app-modalink-komponentin propseissa
-  // Ottaa parametrikseen kyseisen musteen id:n ja käsittelee removeAt (Angularin taulukonpoistometodi) sen indeksin perusteella, jossa id === inkId
+  /** Handles delete with given ink_id as a parameter.
+   * @param index: number; ink_id
+   */
+
   handleDelete(index: number) {
     const inks = this.inkGroup.get('chosenInks') as FormArray;
 
@@ -177,6 +181,10 @@ export class AddnewinkPage implements OnInit {
     }
   }
 
+  /**
+   * Gets inks that are in the chosenInks array
+   * @return addedInks: []; Array of Objects
+   */
   getInksToAdd() {
     const inks = this.inkGroup.get('chosenInks') as FormArray;
 
@@ -192,13 +200,16 @@ export class AddnewinkPage implements OnInit {
     return addedInks;
   }
 
+  /**
+   * Adds chosenInks to user's library with ApiService addNewUserInk()-method
+   * Gives @param inkData to addNewUserInk(inkData)
+   */
+
   handleConfirm() {
     const inkData = this.getInksToAdd();
-    console.log('Postin to backend: ', inkData);
 
     this.apiService.addNewUserInk(inkData).subscribe({
-      next: (data) => {
-        console.log('Added successfully: ', data);
+      next: () => {
         this.router.navigate(['/tabs/inks']);
         this.toast.success('Ink added succesfully!');
       },
@@ -209,8 +220,10 @@ export class AddnewinkPage implements OnInit {
     });
   }
 
+  /**
+   * Returns to tabs/inks and clears all selections
+   */
   back() {
-    // Clear all selections when going back
     const inks = this.getChosenInks();
     while (inks.length > 0) {
       inks.removeAt(0);
@@ -222,6 +235,10 @@ export class AddnewinkPage implements OnInit {
     return control as FormGroup;
   }
 
+  /**
+   * Checks form validity with Angular's FormControl validators
+   * @return boolean; true if form valid, otherwise false
+   */
   isFormValid(): boolean {
     const inks = this.getChosenInks();
     return (
