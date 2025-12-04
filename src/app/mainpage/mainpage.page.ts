@@ -8,7 +8,6 @@ import {
   IonToolbar,
 } from '@ionic/angular/standalone';
 import { RecalledInk } from 'src/interface';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { greetingsData } from 'src/greetings';
@@ -55,6 +54,7 @@ export class MainpagePage implements OnInit {
     this.generateRecall(inkData);
     this.setGreeting1();
     this.getUsername();
+    console.log('Username: ', this.username);
   }
 
   /**
@@ -64,7 +64,7 @@ export class MainpagePage implements OnInit {
   getUsername() {
     this.apiService.getUser().subscribe({
       next: (data) => {
-        this.username = data;
+        this.username = data.first_name;
         console.log(data);
       },
     });

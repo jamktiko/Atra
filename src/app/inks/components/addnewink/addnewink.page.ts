@@ -39,7 +39,6 @@ import {
     ReactiveFormsModule,
     IonSearchbar,
     IonModal,
-    IonBadge,
   ],
 })
 export class AddnewinkPage implements OnInit {
@@ -48,13 +47,15 @@ export class AddnewinkPage implements OnInit {
   inksToAdd: any = [];
   searchItem: string = '';
 
-  /* Muuttuja, jonka avulla ylläpidetään app-modalink-komponentin näkyvyyttä */
+  /**
+   * Variable that manages ionmodal-component visibility: true > visible, false > not visible
+   */
   showReview: boolean = false;
 
   /**
-   * FormGroup, johon tallennetaan valitut musteet eli chosenInks FormArraynaFormGroupeja
-   * Eli chosenInks: new FormArray([FormGroup: {inkid: value, productname: value...}])
-   * */
+   * FormGroup that keeps track of chosen inks as the chosenInks Form Array of FormGroup,
+   * meaning: chosenInks = new FormArray([FormGroup: {inkid: value, productname: value...}])
+   */
   inkGroup = new FormGroup({
     chosenInks: new FormArray([]),
   });
@@ -70,6 +71,10 @@ export class AddnewinkPage implements OnInit {
     this.loadInks();
   }
 
+  /**
+   * Uses Angular's NavigationEnd to check if a router.events has urlAfterRedirects '/tabs/inks'
+   * if TRUE > calls for class method getInks()
+   */
   loadInks() {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -80,6 +85,9 @@ export class AddnewinkPage implements OnInit {
       });
   }
 
+  /**
+   * Uses ApiService method getAllPublicInks() to load publicInks to present as a list
+   */
   getInks() {
     this.apiService.getAllPublicInks().subscribe({
       next: (data) => {
@@ -92,17 +100,19 @@ export class AddnewinkPage implements OnInit {
     });
   }
 
-  // Käsittelee showReview-muuttujan näkyvyyden muuttamalla sen trueksi
-  // HTML-templaatissa @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()" (delete)="handleDelete($event)"></app-modalink>}
+  /**NOTE: Code changed to ion-modal and modalink suspended for the moment!
+   * HTML-template @if (showReview) { <app-modalink [chosenInks]="getChosenInks()" (cancel)="handleCancel()" (delete)="handleDelete($event)"></app-modalink>}
+   */
   review() {
     this.showReview = true;
   }
 
-  //Hoitaa musteiden filtteröinnin: validoi toLowerCasella ja tarkistaa, että search-muuttujan sisältö on product_name, color tai manufacturer-tiedoissa
-  //HTML-templaatissa @for (ink of filteredInks(); track ink.id)
+  /*Manages ink filtering search: validation with toLowerCase to check whether search-variable value is included in
+   * ink.manufacturer, ink.color or ink.product_name.
+   * HTML-template loops through with @for (ink of filteredInks(); track ink.id) {...}
+   */
   filteredInks(): any {
     const search = this.searchItem.toLowerCase() ?? '';
-
     return this.publicInks.filter(
       (ink) =>
         ink.product_name.toLowerCase().includes(search) ||
@@ -111,20 +121,23 @@ export class AddnewinkPage implements OnInit {
     );
   }
 
-  //Palauttaa chosenInks-taulukon formArrayn muodossa
-  //Tarkoituksena antaa muille metodeille helppo tapa päästä FormArrayhin käsiksi
+  /**
+   * Returns the value of chosenInks FormArray from inkGroup-FormGroup
+   */
   getChosenInks(): FormArray {
     return this.inkGroup.get('chosenInks') as FormArray;
   }
-
-  // Valitsee tietyn musteen HTML-templaatissa ilmaistun buttonin perusteella => sidottu tiettyyn for-loopissa läpikäytyyn musteeseen
-  //Ottaa kyseisen musteen tiedot parametrina, ja lisää musteen FormArray
+  /**
+   * Chooses a specific ink in HTML-template via Select-button. The data of that ink is taken as an argument,
+   * and that ink is added to chosenInks-FormArray as a FormGroup via push.
+   * Validators.required is used with batchnumber to ensure that batchnumber is given before confirmation, and
+   * @if clause in function checks that chosenInk is not already in the FormArray > no duplicates.
+   * @param ink: PublicInk; parameter given to function via Select-button when inks are iterated in for-loop
+   * No return value, sets the value of chosenInks-FormArray
+   */
   chooseInk(ink: PublicInk) {
     const inks = this.getChosenInks();
 
-    //Tässä alustetaan FormGroup, jotka muodostavat FormArrayn
-    //Eli jokaisessa FormGroupissa on yksittäinen FormControl id, product_name, manufacturer, color, recalled, imageUrl, size & batchnumber
-    //Jokainen FormGroup sitten laitetaan push-metodilla FormArrayhin vain, jos kyseistä mustetta ei ole vielä lisätty: if-ehto tarkistaa, löytyykö kyseisellä id:llä jo mustetta taulukosta
     if (!inks.value.some((chosenInk: any) => chosenInk.ink_id === ink.ink_id)) {
       inks.push(
         new FormGroup({
@@ -138,11 +151,9 @@ export class AddnewinkPage implements OnInit {
           batch_number: new FormControl('', Validators.required),
         })
       );
-
-      console.log(inks.value);
     } else {
       console.log('Ink already chosen: ', ink.ink_id);
-      console.log(inks.value);
+      this.toast.info('Ink already chosen');
     }
   }
 

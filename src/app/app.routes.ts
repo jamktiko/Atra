@@ -19,14 +19,15 @@ export const routes: Routes = [
         (m) => m.AddnewinkPage
       ),
   },
-  {
-    path: 'inks/modalink',
-    canActivate: [AuthGuard],
-    loadComponent: () =>
-      import('./inks/components/modalink/modalink.page').then(
-        (m) => m.ModalinkPage
-      ),
-  },
+
+  // {
+  //   path: 'inks/modalink',
+  //   canActivate: [AuthGuard],
+  //   loadComponent: () =>
+  //     import('./inks/components/modalink/modalink.page').then(
+  //       (m) => m.ModalinkPage
+  //     ),
+  // },
   {
     path: 'tabs/customers/addnewcustomer',
     canActivate: [AuthGuard],

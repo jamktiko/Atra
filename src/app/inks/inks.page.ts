@@ -144,6 +144,12 @@ export class InksPage implements OnInit {
   toPublic() {
     this.router.navigate(['/tabs/inks/publiclibrary']);
   }
+
+  /**
+   * Informs user that they are already at the desired page
+   * Attempts to naviagate to (['/tabs/inks']) but already there
+   * Calls for NgToastService success message
+   */
   alreadyHere() {
     //toast to user that already at this page
     this.toast.success('Already here!');
@@ -161,6 +167,10 @@ export class InksPage implements OnInit {
     this.selectedInk = ink;
   }
 
+  /**
+   * DeleteInk method deletes ink from user's library. Gets value from selectedInk variable
+   * stated in the class > automatically deletes that one.
+   */
   deleteInk() {
     const userInkId = this.selectedInk.user_ink_id;
     this.apiService.deleteUserInk(userInkId).subscribe({
@@ -171,12 +181,16 @@ export class InksPage implements OnInit {
       },
       error: (err) => {
         console.error('Ink deletion failed: ', err);
-        //warning message to user
+        this.toast.warning('Something went wrong :(');
       },
     });
   }
 
-  //HUOM. userID kovakoodattu toistaiseksi
+  /**
+   * UpdateInk method updates data on the chosen ink. Gets value from selectedInk variable
+   * stated in the class > automatically updates that one.
+   */
+
   updateInk() {
     const userInkId = this.selectedInk.user_ink_id;
 
@@ -196,33 +210,31 @@ export class InksPage implements OnInit {
     });
   }
 
-  /*
-   * Käsittelee ionmodalin sulkeutumisen silloin, jos käyttäjä klikkaa modaalin ulkopuolelta
-   * tai close-nappulasta. Ionmodalin omilla ominaisuuksilla voidaan hallinnoida tätä HTML-
-   * templaatissa (didDismiss)="setClosed(false)" pätkän avulla: didDismiss viittaa modaalin ulkopuolelle
-   * klikkaamiseen, jolloin templaatissa käsketään toteuttamaan setClosed-metodi
+  /**
+   * Handles ionmodal visibility: isOpen parameter defines the value of isModalOpen variable stated in class:
+   * true > visible, false > not visible. Used also in ionmodal's method (didDismiss)="setClosed(false)",
+   * which automaticallu calls for function when user clicks outside of modal
+   * @param boolean isOpen
    */
 
   setClosed(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
 
-  /*
-   * Käsittelee musteiden filtteröinnin tarkistamalla, onko searchItem eli hakukentän arvo
-   * mukana musteen nimessä. Myöhemmässä vaiheessa otetaan myös muita ominaisuuksia, kuten
-   * väri, valmistaja tms. hakuun mukaan, mutta silloin oltava tietokantamuodossa
+  /**
+   * Manages filtered search in ion-searchbar. If searchItem variable (= searchbar value, value tied with ngModel)
+   * is included in product name, color or manufacturer, returns the filtered array of those inks
+   * @returns PublicInk[]; array of PublicInk interface based values
    */
 
   filteredSearch() {
     const search = this.searchItem!.toLowerCase();
 
-    return this.userInks.filter((ink) =>
-      //päivitetään apiservicen vaiheessa tarkistamaan myös publicinkistä tulevia attribuutteja: color, manufacturer etc.
-      ink.product_name.toLowerCase().includes(search)
+    return this.userInks.filter(
+      (ink) =>
+        ink.product_name.toLowerCase().includes(search) ||
+        ink.color.toLowerCase().includes(search) ||
+        ink.manufacturer.toLowerCase().includes(search)
     );
-  }
-
-  testaa() {
-    console.log(environment.apiUrl);
   }
 }
