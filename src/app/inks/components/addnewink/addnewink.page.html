@@ -67,11 +67,11 @@
 
       <!-- Action buttonss -->
       <div class="flex gap-3">
-        <button class="flex-1 bg-slate-700 text-neutral-50 py-3 px-4 rounded-lg transition-colors" (click)="back()">
+        <button class="flex-1 bg-slate-400 text-neutral-50 py-3 px-4 rounded-lg transition-colors" (click)="back()">
           Cancel
         </button>
         <button
-          class="flex-1 bg-slate-600 text-neutral-50 py-3 px-4 rounded-lg transition-colors disabled:bg-slate-800 disabled:text-slate-500"
+          class="flex-1 bg-slate-700 text-neutral-50 py-3 px-4 rounded-lg transition-colors disabled:bg-slate-800 disabled:text-slate-500"
           (click)="review()" [disabled]="getChosenInks().length < 1">
           Continue
         </button>

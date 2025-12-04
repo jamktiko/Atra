@@ -45,7 +45,7 @@ buttons
     > bg-slate-400
     > text-neutral-50
   
-  - Select
+  - Select, Continue, Update
     > bg-slate-700
     > text-neutral-50
 

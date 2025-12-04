@@ -153,7 +153,7 @@ export class AddnewinkPage implements OnInit {
       );
     } else {
       console.log('Ink already chosen: ', ink.ink_id);
-      this.toast.info('Ink already chosen');
+      this.toast.info(' is already chosen', ink.product_name);
     }
   }
 
