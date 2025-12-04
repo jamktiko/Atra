@@ -12,10 +12,8 @@
     <div
       class="flex flex-col items-center px-6 pt-8 pb-4 text-neutral-50 text-center"
     >
-      <h2 class="mb-2">Add new inks</h2>
-      <p class="text-neutral-400">
-        Search and select inks to add to your library
-      </p>
+      <h1 class="mb-2">Add new inks</h1>
+      <p class=".pcustom">Search and select inks to add to your library</p>
     </div>
 
     <!--Search Bar-->
@@ -136,9 +134,7 @@
             class="flex flex-col items-center px-6 pt-8 pb-4 text-neutral-50 text-center border-b border-slate-800"
           >
             <h2 class="mb-2">Review your selections</h2>
-            <p class="text-neutral-400">
-              Please insert batch numbers for each ink
-            </p>
+            <p class=".pcustom">Please insert batch numbers for each ink</p>
           </div>
 
           <div class="pb-20">
@@ -192,9 +188,7 @@
 
                 <!-- Batch Number Input -->
                 <div>
-                  <label class="block text-neutral-400 mb-1.5"
-                    >Batch number *</label
-                  >
+                  <label class="block mb-1.5">Batch number</label>
                   <input
                     type="text"
                     class="w-full bg-slate-700 border border-slate-600 text-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500"
@@ -224,7 +218,7 @@
                 class="bg-slate-700 hover:bg-slate-600 text-neutral-50 px-6 py-2 rounded-lg transition-colors"
                 (click)="handleCancel()"
               >
-                Go back
+                Cancel
               </button>
             </div>
             }
@@ -239,14 +233,14 @@
                 class="flex-1 bg-slate-600 hover:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
                 (click)="handleCancel()"
               >
-                Go back
+                Cancel
               </button>
               <button
                 class="flex-1 bg-green-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
                 (click)="handleConfirm()"
                 [disabled]="!isFormValid()"
               >
-                Confirm & Add
+                Confirm
               </button>
             </div>
           </div>
