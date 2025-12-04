@@ -143,7 +143,7 @@ export class AddnewcustomerPage {
   }
 
   /**
-   * REdirects user back to customers.page and resets customerform to null values by calling resetForm()
+   * Redirects user back to customers.page and resets customerform to null values by calling resetForm()
    */
   back() {
     this.router.navigate(['/tabs/customers']);
