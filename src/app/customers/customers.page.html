@@ -25,7 +25,6 @@
     </button>
   </div>
 
-  <!--JOKAINEN ASIAKAS OMASSA BOKSISSAAN-->
   @for (customer of filteredCustomers(); track customer.customer_id) {
   <div class="flex flex-col bg-slate-900 border border-neutral-50/60 rounded-xl my-4" style="
       padding-left: 0.5em;
@@ -37,12 +36,12 @@
       <h3 class="text-lg font-lato text-neutral-50">
         {{customer.last_name}}, {{customer.first_name}}
       </h3>
-      <p class="mt-2 font-lato text-gray-500">{{customer.email}}</p>
+      <p class="mt-2 font-lato text-slate-50">{{customer.email}}</p>
     </div>
-    <!-- <button class="bg-slate-200 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl my-2 mx-30">
-      Open</button> -->
+
   </div>
   }
+
 </ion-content>
 
 <ion-modal id="example-modal" [isOpen]="isModalOpen" (didDismiss)="setClosed(false)">
@@ -50,7 +49,7 @@
     <div class="flex items-center justify-center w-95% h-90% backdrop-blur-sm ">
       <div class="bg-slate-900 text-neutral-50 rounded-3xl p-6 w-full shadow-lg border border-white/10">
         <h2 class="text-center text-3xl font-pt-serif mb-6">Customer</h2>
-        <!--Tähän saa Milja tehtyä tyylit sekä elementteihin yksittäisenä-->
+
         <div class="flex gap-3 mb-4">
           <div class="w-1/2">
             <label for="first-name" class="block mb-1 text-lg font-lato text-neutral-50">First Name</label>
@@ -114,6 +113,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
+
       </div>
     </div>
   </ng-template>

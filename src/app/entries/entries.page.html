@@ -16,7 +16,7 @@
   </div>
 
   <div class="px-4 pb-4">
-    <ion-searchbar clear-icon="trash-bin" value="Custom Clear Icon" class="custom" animated="true" placeholder="Search"
+    <ion-searchbar value="Custom Clear Icon" class="custom" animated="true" placeholder="Search"
       [(ngModel)]="searchItem" />
   </div>
 
@@ -29,7 +29,7 @@
   </div>
 
   @for (group of (searchItem !== '' ? filteredEntries() : groupedEntries); track group.date) {
-  <h3 class="text-lg font-lato text-slate-50 px-2 mx-4">{{ group.date}}</h3>
+  <h3 class="px-2 mx-4">{{ group.date}}</h3>
 
   <!--Sisäinen silmukka iteroi läpi jokaisen entryn, joka sisältää entry_id, entry_date, comments, User_user_id, Customer_customer_id.
   -->
