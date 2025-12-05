@@ -18,7 +18,7 @@ import {
   templateUrl: './modalentry.page.html',
   styleUrls: ['./modalentry.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, NgToastComponent],
+  imports: [CommonModule, FormsModule, NgToastComponent, IonContent],
 })
 export class ModalentryPage implements OnInit {
   @Input() reviewEntry!: EntryCreation;
