@@ -8,7 +8,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { IonContent, IonModal } from '@ionic/angular/standalone';
+import { IonContent, IonModal, IonItem } from '@ionic/angular/standalone';
 import { ApiService } from 'src/app/services/api.service';
 import {
   NgToastComponent,
@@ -32,6 +32,7 @@ import { IonSearchbar } from '@ionic/angular/standalone';
     IonModal,
     IonSearchbar,
     ReactiveFormsModule,
+    IonItem,
   ],
 })
 export class SingleentryPage implements OnInit {
