@@ -2,11 +2,22 @@
 
 <ion-content [fullscreen]="true" class="bg-slate-950">
   <div class="flex flex-col min-h-full">
+    <!-- Back-button -->
     <button
       class="absolute top-4 left-4 z-10 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-neutral-300 hover:text-neutral-50 rounded-full transition-colors"
       (click)="return()"
     >
-      <img src="assets/icon/return.svg" alt="back to settings" />
+      <span
+        class="w-5 h-5"
+        style="
+          display: inline-block;
+          background-color: currentColor;
+          -webkit-mask: url('assets/icon/return.svg') no-repeat center / contain;
+          mask: url('assets/icon/return.svg') no-repeat center / contain;
+        "
+        aria-hidden="true"
+      ></span>
+      <span class="sr-only">Return</span>
     </button>
 
     <!-- Header -->

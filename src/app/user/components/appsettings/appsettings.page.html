@@ -2,19 +2,28 @@
 
 <ion-content [fullscreen]="true" class="bg-slate-950">
   <div class="flex flex-col min-h-full">
+    <!-- Back-button -->
+    <button
+      class="absolute top-4 left-4 z-10 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-neutral-300 hover:text-neutral-50 rounded-full transition-colors"
+      (click)="return()"
+    >
+      <span
+        class="w-5 h-5"
+        style="
+          display: inline-block;
+          background-color: currentColor;
+          -webkit-mask: url('assets/icon/return.svg') no-repeat center / contain;
+          mask: url('assets/icon/return.svg') no-repeat center / contain;
+        "
+        aria-hidden="true"
+      ></span>
+      <span class="sr-only">Return</span>
+    </button>
+
     <!-- Header -->
     <div class="px-6 pt-8">
       <h1 class="text-neutral-50 mb-3 pt-6">App Settings</h1>
       <p class="text-slate-100"><i>Configure your app preferences</i></p>
-    </div>
-
-    <div class="px-6 pb-8">
-      <button
-        class="items-center gap-2 px-4 py-1 mx-30 my-2 bg-slate-700 text-neutral-50 font-lato border border-neutral-50/80 rounded-full"
-        (click)="return()"
-      >
-        Back to Settings
-      </button>
     </div>
 
     <!-- Settings Content -->
