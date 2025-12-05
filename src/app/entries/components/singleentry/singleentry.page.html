@@ -2,47 +2,48 @@
 
 <div>
 
-  <h2 class="text-center text-5xl font-pt-serif">Entry {{chosenEntry.entry_id}}</h2>
+  <h2 class="text-center my-4">Entry {{chosenEntry.entry_id}}.</h2>
 
-  <h2 class="text-center text-3xl font-pt-serif mb-6">Date and time</h2>
-  <div class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg  block w-full p-2.5">
-    <p>
-      {{chosenEntry.entry_date | date:'MMM d, y, h:mm'}}
-    </p>
-  </div>
+  <div class="mx-4">
+    <label class="">Date and time</label>
+    <div class="bg-slate-700 border border-slate-400 text-gray-50 text-sm rounded-lg  block w-full p-2.5">
+      <p class="">
+        {{chosenEntry.entry_date | date:'MMM d, y, h:mm'}}
+      </p>
+    </div>
 
-  <h2 class="text-center text-3xl font-pt-serif mb-6">Customer</h2>
-  <div class="bg-slate-700 border border-gray-300 text-gray-50 text-sm rounded-lg block w-full p-2.5">
-    <p>
-      {{chosenEntry.first_name}} {{chosenEntry.last_name}} </p>
-  </div>
+    <label class="">Customer</label>
+    <div class="bg-slate-700 border border-slate-400 text-gray-50 text-sm rounded-lg block w-full p-2.5">
+      <p>
+        {{chosenEntry.first_name}} {{chosenEntry.last_name}} </p>
+    </div>
 
-  <h2 class="text-center text-3xl font-pt-serif mb-6">Inks</h2>
-  <div class="bg-gray-50 bg-slate-800 border border-gray-300 border-gray-600 rounded-lg p-3 
+    <label class="">Inks</label>
+    <div class="bg-gray-50 bg-slate-800 border border-slate-400 border-gray-600 rounded-lg p-3 
                   space-y-2 max-h-52 overflow-y-auto">
 
 
-    @for (ink of chosenEntry.inks; track ink.user_ink_id) {
-    <div class="flex bg-slate-900 my-2 p-1 mx-2">
-      <img src="{{ink.image_url}}" width="25%" />
-      <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
+      @for (ink of chosenEntry.inks; track ink.user_ink_id) {
+      <div class="flex bg-slate-900 my-2 p-1 mx-2">
+        <img src="{{ink.image_url}}" width="25%" />
+        <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
+      </div>
+      }
+
     </div>
-    }
 
-  </div>
-
-  <h2 class="text-center text-3xl font-pt-serif mb-6">Comments</h2>
-  <div class="block p-2.5 w-full max-h-28 text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 
+    <label class="">Comments</label>
+    <div class="block p-2.5 w-full max-h-28 text-lg text-gray-900 bg-gray-50 rounded-lg border border-slate-400 
                focus:ring-slate-500 focus:border-slate-500 bg-slate-800 border-gray-600 
                text-white">
 
-    @if (chosenEntry.comments === null) {
-    <p class="">No comments</p>
-    } @else {
-    <p>{{chosenEntry.comments}}</p>
-    }
+      @if (chosenEntry.comments === null) {
+      <p class="">No comments</p>
+      } @else {
+      <p>{{chosenEntry.comments}}</p>
+      }
+    </div>
   </div>
-
 
   <div class="flex justify-end space-x-3 pt-2">
     <button
@@ -63,11 +64,15 @@
     </button>
   </div>
 
-  <button
-    class="text-neutral-50 bg-slate-700 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 text-center"
-    (click)="sendClose()">
-    Close</button>
 
+
+  <button
+    class="absolute top-2 right-2 z-10 w-8 h-8 flex items-center justify-center bg-slate-600 text-neutral-400 rounded-full transition-colors"
+    (click)="sendClose()">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
 </div>
 
 
