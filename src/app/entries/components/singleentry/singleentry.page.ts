@@ -32,7 +32,6 @@ import { IonSearchbar } from '@ionic/angular/standalone';
     IonModal,
     IonSearchbar,
     ReactiveFormsModule,
-    IonItem,
   ],
 })
 export class SingleentryPage implements OnInit {
