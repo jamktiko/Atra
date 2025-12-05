@@ -1,0 +1,26 @@
+<div class="mx-4">
+  <h3 class="mx-2 my-2">Chosen inks:</h3>
+  <div class="border border-slate-600 border-gray-600 rounded-lg p-2 
+                  space-y-2 h-[50%] overflow-y-auto">
+    @for (inkCtrl of chosenInks.controls; let i = $index; track inkCtrl.value.user_ink_id) {
+
+    <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4">
+
+      <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
+        <img src="{{inkCtrl.value.image_url}}" class="w-full h-full object-cover"
+          alt="{{inkCtrl.value.product_name}}" />
+      </div>
+
+      <div class="flex-1 min-w-0">
+        <p class="text-neutral-50 truncate">{{inkCtrl.value.product_name}}</p>
+        <p class="text-neutral-400 truncate">{{inkCtrl.value.manufacturer}}</p>
+        <p class="text-neutral-500 mt-1">{{inkCtrl.value.color}}</p>
+      </div>
+      <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+        (click)="handleInkDelete(i)">Delete</button>
+
+    </div>
+    }
+  </div>
+
+</div>

@@ -92,78 +92,149 @@
 
 
 <ion-modal [isOpen]="showUpdateModal" (didDismiss)="toggleUpdateModal(false)">
-  <ng-template>
-    <ng-toast></ng-toast>
+  <ion-content [fullscreen]="true">
+    <ng-template>
+      <ng-toast></ng-toast>
 
-    <h2 class="text-xl text-slate-50 font-bold text-center">
-      You're updating entry {{chosenEntry.entry_id}}
-    </h2>
-    <p>Please note that you can only update comments, date, time and inks that you have used.</p>
-
-    <label for="date" class="block mb-1 text-lg font-lato text-neutral-50 mx-1">Date</label>
-    <!--MUUTETAAN HIENOSÄÄTÖVAIHEESSA ANGULAR DATEPICKER-->
-    <input id="date" type="datetime-local"
-      class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
-      value="2017-06-01T08:30" [(ngModel)]="chosenEntry!.entry_date" />
-    <p>Current value: {{chosenEntry!.entry_date | date:'MMM d, y, h:mm' }}</p>
-
-    <label for="comments" class="block mb-1 text-lg font-lato text-neutral-50 mx-1">Comments</label>
-    <input id="comments" type="text" value="Select a date"
-      class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
-      [(ngModel)]="chosenEntry!.comments" />
-
-    <h2>Add or delete inks</h2>
-    <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchInk" />
-
-    <div class="scrollable">
-
-      @for (ink of filteredInks(); track ink.user_ink_id) {
-      <!--Tätä voi muokata-->
-      <div class="flex bg-slate-900 my-2 p-1 mx-2">
-        <img src="{{ink.image_url}}" width="20%" />
-
-        {{ink.product_name}} - {{ink.manufacturer}} - {{ink.color}} - UserInk ID:{{ink.user_ink_id}}
-
-        <input class="bg-slate-800 bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl" type="button"
-          value="Select" (click)="chooseInk(ink)">
-      </div>
-      }
-
-    </div>
-
-    <h3>Chosen inks:</h3>
-    <div class="scrollable">
-      @for (inkCtrl of chosenInks.controls; let i = $index; track inkCtrl.value.user_ink_id) {
-
-
-      <div class="flex bg-slate-900 my-2 p-1 mx-2">
-        <img src="{{inkCtrl.value.image_url}}" width="25%" />
-        <p>{{inkCtrl.value.product_name}} - {{inkCtrl.value.manufacturer}} - {{inkCtrl.value.color}} - UserInk
-          ID:{{inkCtrl.value.user_ink_id}}</p>
-
-        <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
-          (click)="handleInkDelete(i)">Delete</button>
+      <div class="text-center mx-4">
+        <h2>
+          You're updating entry {{chosenEntry.entry_id}}
+        </h2>
+        <p>Please note that you can only update comments, date, time and inks that you have used.</p>
       </div>
 
-      }
-    </div>
+      <div class="mx-4">
+        <h3 class="my-1">Date</h3>
 
-    <div class="justify-center text-center py-2">
-      <p class="my-2">Please check before confirming.</p>
-      <button type="button"
-        class="text-neutral-50 bg-slate-400 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 text-center"
-        (click)="toggleUpdateModal(false)">
-        Cancel
-      </button>
-      <button (click)="submit(chosenEntry)" type="button"
-        class="text-neutral-50 bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-sm px-4 py-2 mx-4 my-2 ext-center">
-        Confirm
-      </button>
-    </div>
+        <input id="date" type="datetime-local"
+          class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
+          value="2017-06-01T08:30" [(ngModel)]="chosenEntry!.entry_date" />
+        <p>Current value: {{chosenEntry!.entry_date | date:'MMM d, y, h:mm' }}</p>
+      </div>
 
-
+      <div class="mx-4">
+        <h3 class="my-1">Comments</h3>
+        <input id="comments" type="text" value="Select a date"
+          class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
+          [(ngModel)]="chosenEntry!.comments" />
+      </div>
 
 
+      <div class="mx-4">
+        <h3 class="mx-2 my-2">Chosen inks:</h3>
+        <div class="border border-slate-600 border-gray-600 rounded-lg p-2 
+                  space-y-2 h-80 overflow-y-auto">
+          @for (inkCtrl of chosenInks.controls; let i = $index; track inkCtrl.value.user_ink_id) {
 
-  </ng-template>
+          <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4">
+
+            <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
+              <img src="{{inkCtrl.value.image_url}}" class="w-full h-full object-cover"
+                alt="{{inkCtrl.value.product_name}}" />
+            </div>
+
+            <div class="flex-1 min-w-0">
+              <p class="text-neutral-50 truncate">{{inkCtrl.value.product_name}}</p>
+              <p class="text-neutral-400 truncate">{{inkCtrl.value.manufacturer}}</p>
+              <p class="text-neutral-500 mt-1">{{inkCtrl.value.color}}</p>
+            </div>
+            <button class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
+              (click)="handleInkDelete(i)">Delete</button>
+
+          </div>
+          }
+        </div>
+
+      </div>
+      <button
+        class="pcustom py-3 mx-6 bg-slate-600 hover:bg-slate-500 focus:ring-4 focus:outline-none focus:ring-slate-400 rounded-lg text-sm px-4 py-2 mx-4 my-2 text-center"
+        (click)="toggleInkModal(true)">Add inks</button>
+
+      <div class="justify-center text-center py-2">
+        <p class="">Please check before confirming.</p>
+
+      </div>
+
+      <div class="bottom-0 py-6 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">
+
+        <div class="flex gap-3">
+          <button
+            class="flex-1 bg-slate-400 active:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
+            (click)="toggleUpdateModal(false)">
+            Cancel
+          </button>
+          <button
+            class="flex-1 bg-green-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
+            (click)="submit(chosenEntry)">
+            Confirm
+          </button>
+        </div>
+      </div>
+
+
+      <!--ADD INKS MODAL-->
+      <ion-modal [isOpen]="inkModal">
+        <ng-template>
+          <ng-toast></ng-toast>
+
+          <div class="mx-4">
+
+            <div class="text-center mx-4 my-4">
+              <h2>Add inks from your library</h2>
+            </div>
+
+            <div class="px-4 pb-4">
+              <ion-searchbar class="custom" animated="true" placeholder="Search" [(ngModel)]="searchInk" />
+            </div>
+
+
+            <div class="border border-slate-600 border-gray-600 rounded-lg p-2 
+                  space-y-2 h-[60%] overflow-y-auto">
+
+              @for (ink of filteredInks(); track ink.user_ink_id) {
+              <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4">
+
+                <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
+                  <img src="{{ink.image_url}}" class="w-full h-full object-cover" alt="{{ink.product_name}}" />
+                </div>
+
+                <div class="flex-1 min-w-0">
+                  <p class="text-neutral-50 truncate">{{ink.product_name}}</p>
+                  <p class="text-neutral-400 truncate">{{ink.manufacturer}}</p>
+                  <p class="text-neutral-500 mt-1">{{ink.color}}</p>
+                </div>
+                <button
+                  class="bg-slate-800 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl  focus:outline-2 focus:outline-slate-400"
+                  (click)="chooseInk(ink)">Select</button>
+              </div>
+
+              }
+
+            </div>
+          </div>
+
+
+          <div class="absolute bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-700 p-4 rounded-b-2xl">
+
+            <div class="flex gap-3">
+              <button
+                class="flex-1 bg-slate-400 active:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
+                (click)="toggleInkModal(false)">
+                Cancel
+              </button>
+              <button
+                class="flex-1 bg-slate-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
+                (click)="toggleInkModal(false)">
+                Continue
+              </button>
+            </div>
+          </div>
+
+        </ng-template>
+      </ion-modal>
+
+
+
+    </ng-template>
+  </ion-content>
 </ion-modal>

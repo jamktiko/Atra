@@ -32,6 +32,7 @@ import { IonSearchbar } from '@ionic/angular/standalone';
     IonModal,
     IonSearchbar,
     ReactiveFormsModule,
+    IonContent,
   ],
 })
 export class SingleentryPage implements OnInit {
@@ -55,11 +56,17 @@ export class SingleentryPage implements OnInit {
 
   showUpdateModal: boolean = false;
 
+  inkModal: boolean = false;
+
   constructor(
     private apiService: ApiService,
     private toast: NgToastService,
     private router: Router
   ) {}
+
+  toggleInkModal(isOpen: boolean) {
+    this.inkModal = isOpen;
+  }
 
   testHere() {
     console.log('Inks to submit: ', this.chosenInks.value);
@@ -178,6 +185,7 @@ export class SingleentryPage implements OnInit {
           image_url: new FormControl(ink.image_url),
         })
       );
+      this.toast.primary('Ink added');
     } else {
       console.log('Ink already chosen: ', ink.user_ink_id);
       this.toast.danger('Ink already chosen!');
