@@ -37,10 +37,18 @@ export class ModalentryPage implements OnInit {
 
   ngOnInit() {
     this.loopThroughInks();
+    this.getCustomerInfo();
   }
 
-  getCustomerInfo() {}
-
+  getCustomerInfo() {
+    this.apiService
+      .getCustomer(this.reviewEntry.Customer_customer_id)
+      .subscribe({
+        next: (data) => {
+          this.customerInfo = data;
+        },
+      });
+  }
   ionViewWillEnter() {
     this.loopThroughInks();
   }
@@ -52,6 +60,7 @@ export class ModalentryPage implements OnInit {
     const inkArray = this.reviewEntry.inks.map((id) =>
       this.apiService.getOneUserInk(id)
     );
+    console.log(inkArray);
     forkJoin(inkArray).subscribe({
       next: (data) => {
         this.reviewInks = data;

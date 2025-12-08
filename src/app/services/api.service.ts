@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   CustomerCreation,
   EntryCreation,
+  EntryInk,
   ListEntries,
   PublicInk,
   User,
@@ -105,6 +106,10 @@ export class ApiService {
       }
       return of(mockInk);
     }
+  }
+
+  getUserInksForEntry(userInkId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/userInk/${userInkId}`);
   }
 
   /**
