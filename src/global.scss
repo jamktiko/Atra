@@ -115,6 +115,7 @@ ion-toolbar {
 
 ion-list {
 }
+
 ion-title {
   font-size: x-large;
   font-weight: 200;
@@ -136,7 +137,7 @@ ion-item {
 
 @layer components {
   .ng-select.custom .ng-select-container {
-    @apply border border-gray-300 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full p-2.5 focus:ring-slate-500 focus:border-slate-900;
+    @apply border border-slate-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full p-2.5 focus:ring-slate-500 focus:border-slate-900;
   }
 
   .ng-select.custom .ng-dropdown-panel {
@@ -207,12 +208,12 @@ ion-modal.transparent-modal .ion-page {
 }
 
 .scrollable {
-  max-height: 20vh;
+  max-height: 25vh;
   overflow-x: auto;
   padding: 0.5rem;
-  border: 1px solid #ccc;
+  border: 1px solid;
   border-radius: 6px;
-  margin: 0.5em;
+  border-color: oklch(25.5% 0.03 178.524);
 }
 
 .scrollable-wide {

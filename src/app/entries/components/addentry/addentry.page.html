@@ -5,15 +5,13 @@
   } @else {
   <div class="justify-center">
 
-    <h1 class="text-neutral-50 text-center">Adding a new entry</h1>
-    <div class="pcustom text-center">Please ensure that the information is correct.</div>
+    <h2 class="text-neutral-50 text-center my-4">Adding a new entry</h2>
 
-    <div class="mx-3">
+    <div class="mx-4">
 
-      <div>
-        <h3 class="block mb-1 text-xl font-lato text-neutral-50 mx-1 border-gray-600">Customer</h3>
+      <div class="py-2 my-2">
+        <h3 class="block mb-1 text-xl font-lato text-neutral-50 mx-1 border-slate-600">Customer</h3>
 
-        <!--antaa formiin customerId item_customer.id perusteella-->
         <ng-select [items]="customers" [(ngModel)]="selectedCustomerId" bindValue="customer_id"
           [searchFn]="filteredCustomers" class="custom" required #customerCtrl="ngModel">
           <ng-template ng-option-tmp let-item="item" class="custom">
@@ -24,17 +22,19 @@
           </ng-template>
         </ng-select>
 
+
         @if (customerCtrl.invalid && customerCtrl.touched) {
-        <div class="text-red-400 text-sm">
+        <div class="pwarning">
           Please select a customer.
         </div>
         }
+
       </div>
 
-      <div>
+      <div class="py-2 my-2">
         <h3 class="text-neutral-50 mx-1">Date</h3>
         <input id="date" type="datetime-local"
-          class="border border-gray-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
+          class="border border-slate-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
           [(ngModel)]="newEntry.entry_date" name="date" required #dateCtrl="ngModel" />
 
         @if (dateCtrl.invalid && dateCtrl.touched) {
@@ -46,35 +46,43 @@
       </div>
 
       <div>
-        <h3 class="text-neutral-50 mx-1">Inks</h3>
-        <ion-searchbar class="custom" placeholder="Search" [(ngModel)]="searchInk"></ion-searchbar>
+
+        <div class="py-2 my-2">
+          <h3 class="text-neutral-50 mx-1">Inks</h3>
+          <ion-searchbar class="custom" placeholder="Search" [(ngModel)]="searchInk"></ion-searchbar>
+        </div>
+
         <div class="scrollable">
 
-
           @for (ink of filteredInks(); track ink.user_ink_id) {
-          <div class="flex flex-row  justify-center align-center bg-slate-950 my-2 mx-2 p-3">
+          <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4 my-2">
 
-            <div class="basis-1/3"><img src="{{ink.image_url}}" width="75%" /></div>
-
-            <div class="basis-1/3">
-              <p class>{{ink.product_name}} - {{ink.color}} -{{ink.batch_number}}</p>
+            <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
+              <img src="{{ink.image_url}}" class="w-full h-full object-cover" alt="{{ink.product_name}}" />
             </div>
 
-            <div class="basis-1/3"><input class="bg-slate-600 text-neutral-50 font-lato text-l p-5 rounded-2xl mx-2"
+            <div class="flex-1 min-w-0">
+              <p class="text-neutral-50 truncate">{{ink.product_name}}</p>
+              <p class="text-neutral-400 truncate">{{ink.manufacturer}}</p>
+              <p class="text-neutral-500 mt-1">{{ink.color}}</p>
+            </div>
+
+            <div class=""><input
+                class="bg-slate-700 text-neutral-50 px-4 py-2 my-6 rounded-lg transition-colors focus:outline-2 focus:outline-slate-400"
                 type="button" value="Select" (click)="chooseInk(ink)">
             </div>
 
           </div>
-          }
 
+          }
 
         </div>
         @if (getChosenInks().length > 0 ) {
-        <div class="items-center text-center">
-          <ion-badge
-            style="--background: rgb(0, 0, 0); padding: 10px; color: white; border-color: white; border-width: 2px; ">{{getChosenInks().length}}</ion-badge>
-          <span class="text-2xl font-pt-serif"> Inks chosen</span>
-
+        <div class="flex items-center justify-center gap-2 mb-4 my-4">
+          <span class="text-neutral-400">Inks selected:</span>
+          <span class="bg-slate-700 text-neutral-50 px-3 py-1 rounded-full">
+            {{getChosenInks().length}}
+          </span>
         </div>
         } @else {
         <p>
@@ -86,23 +94,27 @@
 
       <div>
         <h3 class="block mb-1 text-xl font-lato text-neutral-50 mx-1">Comments</h3>
-        <textarea id="description" rows="4"
-          class="block p-2.5 w-full max-h-28 text-lg text-neutral-100 rounded-lg border bg-slate-800 border-gray-600 "
+        <textarea id="description" rows="3"
+          class="block p-2 w-full max-h-28 text-lg text-neutral-100 rounded-lg border bg-slate-800 border-slate-600"
           placeholder="Write any additional comments here." [(ngModel)]="newEntry.comments"></textarea>
       </div>
 
-      <div class="flex flex-wrap justify-center gap-3 pt-2">
-        <button type="button" class="text-red-600 inline-flex items-center border bg-slate-800
-                focus:ring-2 focus:outline-none ring-red-800 font-medium 
-               rounded-lg text-lg px-4 py-2 text-center" (click)="back()">
-          Back
-        </button>
-        <button (click)="continue()" type="submit"
-          class="text-neutral-50 bg-slate-600 focus:ring-2 focus:outline-none 
-               focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center disabled:bg-slate-800 disabled:text-gray-400"
-          [disabled]="formNotValid()">
-          Continue
-        </button>
+      <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">
+        <div class="flex gap-3">
+
+          <button type="button"
+            class="flex-1 bg-slate-400 rounded-lg px-3 py-2 inline-flex items-center justify-center gap-2  py-2.5 px-4"
+            (click)="back()">
+            Back
+          </button>
+
+          <button (click)="continue()" type="submit" class="flex-1 bg-slate-600 text-neutral-50 rounded-lg  py-2.5 px-4 inline-flex items-center justify-center gap-2 focus:ring-2 focus:outline-none 
+               focus:ring-slate-400 rounded-lg px-4 py-2 text-center disabled:bg-slate-900 disabled:text-gray-400"
+            [disabled]="formNotValid()">
+            Continue
+          </button>
+
+        </div>
       </div>
 
     </div>

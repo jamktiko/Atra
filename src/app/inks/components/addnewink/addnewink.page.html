@@ -20,7 +20,7 @@
     </div>
 
     <!-- Public inks -->
-    <div class="px-4 space-y-3 pb-4 scrollable">
+    <div class="scrollable space-y-3">
       @for (ink of filteredInks(); track ink.ink_id) {
 
       <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4">
@@ -47,9 +47,6 @@
       }
     </div>
   </div>
-
-  <!--LUODAAN TÄSTÄ VISUAL SCROLLING css sijaan! renders when scrolled-->
-  <!--Käy musteet läpi for-loopissa käyttämällä filteredInks()-funktiota, eli vain hakutulosta vastaavat -->
 
   <div class="fixed bottom-0 left-0 right-0 bg-slate-900 border-t border-slate-800 p-4 z-20">
     <div class="max-w-2xl mx-auto">

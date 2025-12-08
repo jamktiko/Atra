@@ -37,10 +37,8 @@ import { ModalentryPage } from '../modalentry/modalentry.page';
     CommonModule,
     FormsModule,
     IonSearchbar,
-    IonBadge,
     NgSelectComponent,
     NgLabelTemplateDirective,
-
     NgOptionTemplateDirective,
     ModalentryPage,
   ],

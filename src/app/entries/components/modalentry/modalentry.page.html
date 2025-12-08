@@ -1,60 +1,79 @@
-<ng-toast></ng-toast>
+<ion-content></ion-content><ng-toast></ng-toast>
 
-<div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+<div class="flex fixed inset-0 backdrop-blur-sm bg-slate-950 items-center justify-center z-50">
   <div
-    class="relative bg-slate-800 text-neutral-50 rounded-2xl shadow-2xl w-[90%] p-6 border border-white/10 animate-modal-in">
+    class="relative bg-slate-900 text-neutral-50 rounded-2xl shadow-2xl w-[90%] h-[85%] p-6 border border-white/10 animate-modal-in">
 
-    <h1 class="text-center">Entry</h1>
-    <h2 class="text-center">Please check the information.</h2>
-
-    <div>
-      <h3 class="block mb-1 text-3xl font-lato text-neutral-50">Customer</h3>
-      <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-800 border-gray-600 text-white">
-        {{customerInfo}} </p>
+    <div class="text-center py-2">
+      <h2>Entry</h2>
+      <p class="pcustom">Please check the information.</p>
     </div>
 
-    <div>
+    <div class="my-2 py-2">
+      <h3 class="block mb-1 text-3xl font-lato text-neutral-50">Customer</h3>
+      <p class="bg-slate-800 border border-slate-600 text-gray-50 text-sm rounded-lg block w-full p-2.5">
+        {{customerInfo.first_name}} {{customerInfo.last_name}} </p>
+    </div>
+
+    <div class="my-2 py-2">
       <h3 class="text-neutral-50">Date</h3>
-      <p class="text-lg rounded-lg block w-full p-2.5 bg-slate-800 border-gray-600 text-white">
+      <p class="bg-slate-800 border border-slate-600 text-gray-50 text-sm rounded-lg block w-full p-2.5">
         {{reviewEntry.entry_date | date:'short'}}</p>
     </div>
 
-    <div>
-      <h3 class="text-neutral-50">Inks</h3>
-      <div class="bg-gray-50 bg-slate-800 border border-gray-300 border-gray-600 rounded-lg p-3 
-                  space-y-2 max-h-52 overflow-y-auto">
+    <div class="my-2 py-2">
+      <h3>Inks</h3>
 
-        <div class="flex">
-          @for (ink of reviewInks; track ink.user_ink_id) {
+      <div class="scrollable">
 
-          <div class="bg-slate-700 m-2 p-1 basis-auto">
-            <img src="{{ink.image_url}}" width="75%">
+        @for (ink of reviewInks; track ink.user_ink_id) {
+        <div class="bg-slate-800 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4 my-2">
 
-            <p>Image url: {{ink.image_url}}</p>
-            <p> {{ink.product_name}}, {{ink.manufacturer}}, {{ink.batch_number}}</p>
+          <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
+            <img src="https://images.pexels.com/photos/34155037/pexels-photo-34155037.jpeg"
+              class="w-full h-full object-cover" alt="{{ink.product_name}}" />
           </div>
 
-          }
+          <div class="flex-1 min-w-0">
+            <p class="text-neutral-50 truncate">{{ink.product_name}}</p>
+            <p class="text-neutral-400 truncate">{{ink.manufacturer}}</p>
+            <p class="text-neutral-500 mt-1">{{ink.color}}</p>
+          </div>
+
+          <div class=""><input
+              class="bg-slate-700 text-neutral-50 px-4 py-2 my-6 rounded-lg transition-colors focus:outline-2 focus:outline-slate-400"
+              type="button" value="Delete">
+          </div>
+
         </div>
 
+        }
+
       </div>
+
+
     </div>
 
     <div>
       <h3 class="block mb-1 text-3xl font-lato text-neutral-50">Comments</h3>
-      <p>{{reviewEntry.comments}}</p>
+      <p class="block py-2 w-full text-sm text-gray-200 bg-slate-800 rounded-lg border border-slate-600">
+        {{reviewEntry.comments}} </p>
     </div>
 
 
-    <div class="flex flex-wrap justify-center gap-4 pt-2">
-      <button type="button" (click)="sendCancel()"
-        class="text-red-600 inline-flex items-center hover:text-neutral-50 border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-lg px-4 py-2 text-center">
-        Cancel
-      </button>
-      <button type="submit" (click)="sendConfirm()"
-        class="text-neutral-50 bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-400 font-medium rounded-lg text-lg px-4 py-2 text-center">
-        Confirm
-      </button>
+    <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">
+      <div class="flex gap-3">
+
+        <button type="button" (click)="sendCancel()"
+          class="flex-1 bg-slate-600 hover:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors">
+          Cancel
+        </button>
+        <button type="submit" (click)="sendConfirm()"
+          class="flex-1 bg-green-700 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed">
+          Confirm
+        </button>
+
+      </div>
     </div>
+
   </div>
-</div>
