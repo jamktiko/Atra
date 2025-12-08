@@ -31,8 +31,7 @@
   @for (group of (searchItem !== '' ? filteredEntries() : groupedEntries); track group.date) {
   <h2 class="px-2 mx-4">{{ group.date}}</h2>
 
-  <!--Sisäinen silmukka iteroi läpi jokaisen entryn, joka sisältää entry_id, entry_date, comments, User_user_id, Customer_customer_id.
-  -->
+
   @for (entry of group.entries; track entry.entry_id)
   {
   <div class="flex flex-col bg-slate-800 border p-2 border-neutral-50/60 rounded-xl my-2 mx-4"
