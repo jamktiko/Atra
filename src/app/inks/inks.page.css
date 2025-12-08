@@ -25,3 +25,8 @@ ion-modal#update-ink-modal {
 .small-text {
   font-size: 14px;
 }
+
+ion-backdrop {
+  opacity: 0.9;
+  background: black;
+}
