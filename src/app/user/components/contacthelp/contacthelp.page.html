@@ -2,18 +2,13 @@
   <!-- Back-button -->
   <button
     class="absolute top-4 left-4 z-10 w-8 h-8 flex items-center justify-center bg-slate-700 hover:bg-slate-600 text-neutral-300 hover:text-neutral-50 rounded-full transition-colors"
-    (click)="return()"
-  >
-    <span
-      class="w-5 h-5"
-      style="
+    (click)="return()">
+    <span class="w-5 h-5" style="
         display: inline-block;
         background-color: currentColor;
         -webkit-mask: url('assets/icon/return.svg') no-repeat center / contain;
         mask: url('assets/icon/return.svg') no-repeat center / contain;
-      "
-      aria-hidden="true"
-    ></span>
+      " aria-hidden="true"></span>
     <span class="sr-only">Return</span>
   </button>
 
@@ -24,44 +19,23 @@
           <div class="lg:mb-0 mb-10">
             <div class="group w-full h-full">
               <div class="relative h-64 sm:h-full">
-                <img
-                  src="../../../../assets/img/background1.png"
-                  alt="img"
-                  class="w-full h-full lg:rounded-l-2xl rounded-2xl bg-blend-multiply bg-slate-700"
-                />
+                <img src="../../../../assets/img/background1.png" alt="img"
+                  class="w-full h-full lg:rounded-l-2xl rounded-2xl bg-blend-multiply bg-slate-700" />
 
-                <h1
-                  class="text-white text-3xl sm:text-4xl font-bold absolute top-6 left-6 sm:top-11 sm:left-11"
-                >
+                <h1 class="text-neutral-50 text-3xl sm:text-4xl font-bold absolute top-6 left-6 sm:top-11 sm:left-11">
                   Contact us
                 </h1>
                 <div class="absolute bottom-0 w-full lg:p-11 p-5">
                   <div class="bg-neutral-50 rounded-lg p-6 block">
                     <a class="flex items-center mb-6">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30"
-                        height="30"
-                        viewBox="0 0 48 48"
-                      >
-                        <g
-                          fill="none"
-                          stroke="#000"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="4"
-                        >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48">
+                        <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="4">
                           <path d="M44 24V9H24H4V24V39H24" />
-                          <path
-                            fill="#06422f"
-                            d="M35 39L43 32L39 28L31 35V39H35Z"
-                          />
+                          <path fill="#06422f" d="M35 39L43 32L39 28L31 35V39H35Z" />
                           <path d="M4 9L24 24L44 9" />
                         </g>
                       </svg>
-                      <h2
-                        class="text-black text-base font-normal leading-6 ml-5"
-                      >
+                      <h2 class="text-black text-base font-normal leading-6 ml-5">
                         atraproject@outlook.com
                       </h2>
                     </a>
@@ -75,38 +49,26 @@
             <h2 class="text-slate-500 text-4xl font-bold mb-11">
               Send Us A Message
             </h2>
-            <input
-              type="text"
-              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-slate-10 focus:outline-none pl-4 mb-10"
-              placeholder="Name"
-            />
-            <input
-              type="text"
-              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-slate-10 focus:outline-none pl-4 mb-10"
-              placeholder="Email"
-            />
-            <input
-              type="text"
-              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent text-lg font-normal leading-7 rounded-full border border-slate-10 focus:outline-none pl-4 mb-10"
-              placeholder="Phone"
-            />
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent leading-7 rounded-lg border border-slate-10 focus:outline-none pl-4 mb-10"
+              placeholder="Name" />
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent leading-7 rounded-lg border border-slate-10 focus:outline-none pl-4 mb-10"
+              placeholder="Email" />
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400 shadow-sm bg-transparent leading-7 rounded-lg border border-slate-10 focus:outline-none pl-4 mb-10"
+              placeholder="Phone" />
             <div class="mb-10">
-              <h4
-                class="text-slate-800 text-lg font-normal leading-7 mb-4 overscroll-contain"
-              >
+              <h3 class="text-black leading-7 mb-2 overscroll-contain">
                 Please describe your issue. We'll get back to you as soon as
                 possible.
-              </h4>
+              </h3>
             </div>
-            <input
-              type="text"
-              class="w-full h-12 text-slate-600 placeholder-slate-400 bg-transparent text-lg shadow-sm font-normal leading-7 rounded-full border border-slate-300 focus:outline-none pl-4 mb-10"
-              placeholder="Message"
-            />
-            <button
-              class="w-full h-12 text-white text-xl leading-6 rounded-full bg-slate-600"
-            >
-              Send
+            <input type="text"
+              class="w-full h-12 text-slate-600 placeholder-slate-400 bg-transparent shadow-sm font-normal leading-7 rounded-lg border border-slate-300 focus:outline-none pl-4 mb-10"
+              placeholder="Message" />
+            <button class="w-full h-12 text-white text-xl leading-6 rounded-lg bg-slate-600">
+              <p>Send</p>
             </button>
           </div>
         </div>
