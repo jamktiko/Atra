@@ -172,7 +172,7 @@ export class EntriesPage implements OnInit {
       // const testObj = entries[i].entry_date;
       // console.log('testObj: ', testObj);
       // console.log('Dateobjektit: ', dateObj);
-      const date = dateObj.toLocaleDateString('en-FI').split('T')[0];
+      const date = dateObj.toLocaleDateString('en-CA').split('T')[0];
       // const date = testObj;
 
       if (!(date in sorted)) {
