@@ -40,7 +40,7 @@
         <button
           class="flex-shrink-0 bg-slate-700 text-neutral-50 px-4 py-2 rounded-lg transition-colors focus:outline-2 focus:outline-slate-400"
           (click)="chooseInk(ink)">
-          Select
+          <p>Select</p>
         </button>
       </div>
 
@@ -63,12 +63,12 @@
       <!-- Action buttonss -->
       <div class="flex gap-3">
         <button class="flex-1 bg-slate-400 text-neutral-50 py-3 px-4 rounded-lg transition-colors" (click)="back()">
-          Cancel
+          <p>Cancel</p>
         </button>
         <button
           class="flex-1 bg-slate-700 text-neutral-50 py-3 px-4 rounded-lg transition-colors disabled:bg-slate-800 disabled:text-slate-500"
           (click)="review()" [disabled]="getChosenInks().length < 1">
-          Continue
+          <p>Continue</p>
         </button>
       </div>
     </div>
@@ -131,9 +131,9 @@
                 <!-- Batch Number Input -->
                 <div>
                   <label class="block mb-1.5">Batch number</label>
-                  <input type="text"
-                    class="w-full bg-slate-700 border border-slate-600 text-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500"
-                    placeholder="Enter batch number" formControlName="batch_number" required />
+                  <p><input type="text"
+                      class="w-full bg-slate-700 border border-slate-600 text-neutral-50 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                      placeholder="Enter batch number" formControlName="batch_number" required /></p>
 
                   @if (ink.get('batch_number')?.invalid &&
                   ink.get('batch_number')?.touched) {
@@ -152,7 +152,7 @@
               <p class="text-neutral-400 mb-4">No inks selected</p>
               <button class="bg-slate-700 hover:bg-slate-600 text-neutral-50 px-6 py-2 rounded-lg transition-colors"
                 (click)="handleCancel()">
-                Cancel
+                <p>Cancel</p>
               </button>
             </div>
             }
@@ -164,12 +164,12 @@
               <button
                 class="flex-1 bg-slate-600 hover:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
                 (click)="handleCancel()">
-                Cancel
+                <p>Cancel</p>
               </button>
               <button
                 class="flex-1 bg-green-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
                 (click)="handleConfirm()" [disabled]="!isFormValid()">
-                Confirm
+                <p>Confirm</p>
               </button>
             </div>
           </div>

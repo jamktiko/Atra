@@ -105,16 +105,16 @@
       <div class="mx-4">
         <h3 class="my-1">Date</h3>
 
-        <input id="date" type="datetime-local"
-          class="border border-slate-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2"
-          value="2017-06-01T08:30" [(ngModel)]="chosenEntry!.entry_date" />
+        <p><input id="date" type="datetime-local"
+            class="border border-slate-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2"
+            value="2017-06-01T08:30" [(ngModel)]="chosenEntry!.entry_date" /></p>
         <p>Current value: {{chosenEntry!.entry_date | date:'MMM d, y, h:mm' }}</p>
       </div>
 
       <div class="mx-4">
         <h3 class="my-1">Comments</h3>
         <input id="comments" type="text" value="Select a date"
-          class="border border-slate-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2"
+          class="border border-slate-600 text-slate-50 bg-slate-800 rounded-lg block w-full ps-10 p-2"
           [(ngModel)]="chosenEntry!.comments" />
       </div>
 
@@ -124,7 +124,7 @@
         <div class="scrollableentries">
           @for (inkCtrl of chosenInks.controls; let i = $index; track inkCtrl.value.user_ink_id) {
 
-          <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4">
+          <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4 my-1">
 
             <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
               <img src="{{inkCtrl.value.image_url}}" class="w-full h-full object-cover"
@@ -137,7 +137,9 @@
               <p class="text-neutral-500 mt-1">{{inkCtrl.value.color}}</p>
             </div>
             <button class="bg-slate-700 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl"
-              (click)="handleInkDelete(i)">Delete</button>
+              (click)="handleInkDelete(i)">
+              <p>Delete</p>
+            </button>
 
           </div>
           }
@@ -156,12 +158,12 @@
           <button
             class="flex-1 bg-slate-400 active:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
             (click)="toggleUpdateModal(false)">
-            Cancel
+            <p>Cancel</p>
           </button>
           <button
             class="flex-1 bg-green-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
             (click)="submit(chosenEntry)">
-            Confirm
+            <p>Confirm</p>
           </button>
         </div>
       </div>
@@ -193,14 +195,18 @@
                   <img src="{{ink.image_url}}" class="w-full h-full object-cover" alt="{{ink.product_name}}" />
                 </div>
 
-                <div class="flex-1 min-w-0">
+                <div class="flex-1 min-w-0 mx-2">
                   <p class="text-neutral-50 truncate">{{ink.product_name}}</p>
                   <p class="text-neutral-400 truncate">{{ink.manufacturer}}</p>
                   <p class="text-neutral-500 mt-1">{{ink.color}}</p>
                 </div>
+
                 <button
                   class="bg-slate-600 text-neutral-50 font-lato text-l py-2 px-4 rounded-2xl  focus:outline-2 focus:outline-slate-400"
-                  (click)="chooseInk(ink)">Select</button>
+                  (click)="chooseInk(ink)">
+                  <p>Select</p>
+                </button>
+
               </div>
 
               }
@@ -215,12 +221,12 @@
               <button
                 class="flex-1 bg-slate-400 active:bg-slate-500 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors"
                 (click)="toggleInkModal(false)">
-                Cancel
+                <p>Cancel</p>
               </button>
               <button
                 class="flex-1 bg-slate-700 hover:bg-green-600 text-neutral-50 py-2.5 px-4 rounded-lg transition-colors disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed"
                 (click)="toggleInkModal(false)">
-                Continue
+                <p>Continue</p>
               </button>
             </div>
           </div>
