@@ -106,20 +106,13 @@ export class ApiStack extends Stack {
     cognitoClientId: string,
     frontendDomain: string
   ) {
-    const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`; // issuer = user pool's URL
-
-    // JWT authorizer for Cognito User Pool
-    // Authorizer checks that token is valid and from the correct user pool
-    // Audience is Client ID - the app that uses the user pool
+    const issuer = `https://cognito-idp.${this.region}.amazonaws.com/${cognitoUserPool.userPoolId}`;
     const authorizer = new HttpJwtAuthorizer('CognitoAuthorizer', issuer, {
       jwtAudience: [cognitoClientId],
     });
     const api = new apigw2.HttpApi(this, 'AtraApi', {
       apiName: name,
       defaultAuthorizer: authorizer,
-
-      // CORS settings, allowed domains, methods and headers
-      // so that frontend can make requests
       corsPreflight: {
         allowHeaders: ['Content-Type', 'Authorization'],
         allowMethods: [
@@ -129,12 +122,19 @@ export class ApiStack extends Stack {
           apigw2.CorsHttpMethod.DELETE,
           apigw2.CorsHttpMethod.OPTIONS,
         ],
-        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`], // localhost pois kun ei tarvita enää testaukseen
+        allowOrigins: [`https://${frontendDomain}`, `http://localhost:8100`],
       },
     });
     return api;
   }
 
+  /**
+   * Provisions the migrations route.
+   *
+   * @remarks
+   * This Lambda function is intended for mainly development purposes to seed test data.
+   * It should be secured or removed when not needed.
+   */
   private migrationsRoute() {
     const migrationsFn = new LambdaBuilder(this, 'migrations')
       .setDescription('Run DB migrations and seed test data')
@@ -152,6 +152,13 @@ export class ApiStack extends Stack {
     });
   }
 
+  /**
+   * Provisions the drop schema route.
+   *
+   * @remarks
+   * This Lambda function is intended for development purposes to clear all data.
+   * It should be removed when not needed to prevent data loss.
+   */
   private dropSchemaRoute() {
     const dropSchemaFn = new LambdaBuilder(this, 'drop-schema')
       .setDescription('Run DB drop schema to kill all data')
@@ -169,21 +176,26 @@ export class ApiStack extends Stack {
     });
   }
 
-  // Routes for CRUD operations, Lambda functions integrated
-  // functions are built with a separate builder (in helpers file)
+  /**
+   * Provisions the customer management routes.
+   *
+   * @remarks
+   * Handles customer related CRUD operations.
+   * All routes require authentication.
+   * Endpoints: /customer and /customer/{id}
+   * Methods: POST, GET, DELETE, PUT
+   */
   private customerRoute() {
     const fn = new LambdaBuilder(this, 'api-customer-calls')
       .setDescription('CRUD operations for customer management')
       .setEnv({
         RDS_SECRET_NAME: this.rdsSecretName,
         RDS_INSTANCE_HOST: this.rdsInstanceEndpoint,
-        //DEMO_USER_ID: 'demo-user-123', // DEMOA VARTEN !!!!
       })
       .allowSecretsManager()
       .connectVPC(this.vpc, this.lambdaSecurityGroup)
       .build();
 
-    // API GW calls this function when route /customer is called
     const integration = new HttpLambdaIntegration('CustomerCallsFn', fn);
 
     this.api.addRoutes({
@@ -229,17 +241,26 @@ export class ApiStack extends Stack {
       path: '/publicInk',
       methods: [apigw2.HttpMethod.GET],
       integration,
-      authorizer: new HttpNoneAuthorizer(), // tän voisi ottaa prod vaiheessa pois --> fix handlers
+      authorizer: new HttpNoneAuthorizer(),
     });
 
     this.api.addRoutes({
       path: '/publicInk/{id}',
       methods: [apigw2.HttpMethod.GET],
       integration,
-      authorizer: new HttpNoneAuthorizer(), // tän voisi ottaa prod vaiheessa pois --> fix handlers
+      authorizer: new HttpNoneAuthorizer(),
     });
   }
 
+  /**
+   * Provisions the user ink routes.
+   *
+   * @remarks
+   * Handles CRUD operations for user-specific inks.
+   * All routes require authentication.
+   * Endpoints: /userInk and /userInk/{id}
+   * Methods: POST, GET, DELETE, PUT
+   */
   private userInkRoute() {
     const fn = new LambdaBuilder(this, 'api-userInk-calls')
       .setDescription('CRUD operations for managing user ink(s)')
@@ -271,6 +292,15 @@ export class ApiStack extends Stack {
     });
   }
 
+  /**
+   * Provisions the entry management routes.
+   *
+   * @remarks
+   * Handles CRUD operations for entries.
+   * All routes require authentication.
+   * Endpoints: /entry and /entry/{id}
+   * Methods: POST, GET, DELETE, PUT
+   */
   private entryRoute() {
     const fn = new LambdaBuilder(this, 'api-entry-calls')
       .setDescription('CRUD operations for managing entries')
@@ -302,7 +332,15 @@ export class ApiStack extends Stack {
     });
   }
 
-  // mainly for dev (for now)
+  /**
+   * Provisions the user management route.
+   *
+   * @remarks
+   * Handles retrieval of user information.
+   * All routes require authentication.
+   * Endpoint: /user/me
+   * Method: GET
+   */
   private userRoute() {
     const fn = new LambdaBuilder(this, 'api-user-calls')
       .setDescription('CRUD operations for getting user(s)')

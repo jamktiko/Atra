@@ -1,4 +1,16 @@
-// this is the entry point to the CDK application
+/**
+ * This is the entry point for the AWS CDK application.
+ * It initializes and deploys the stacks required for the Atra project.
+ *
+ * @remarks
+ * The stacks include:
+ * - VPC Stack: Creates the VPC and security groups.
+ * - Database Stack: Sets up the RDS database instance.
+ * - Cognito Stack: Configures Cognito user pool, client and lambda triggers.
+ * - API Stack: Deploys the API Gateway and Lambda functions.
+ * - Frontend Stack: Creates the S3 Bucket and CloudFront distribution for the frontend.
+ */
+
 import * as cdk from 'aws-cdk-lib';
 import 'source-map-support/register';
 import { aws_ec2 as ec2 } from 'aws-cdk-lib';
@@ -14,6 +26,7 @@ const env = { region: 'eu-north-1', account: CDK_DEFAULT_ACCOUNT };
 const app = new cdk.App();
 
 const vpc = new VpcStack(app, 'vpc', { env: env });
+
 new CognitoStack(app, 'cognito', {
   env: env,
   vpc: vpc.vpc,

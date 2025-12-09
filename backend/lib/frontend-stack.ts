@@ -1,3 +1,17 @@
+/**
+ * Frontend Stack that creates S3 bucket and CloudFront distribution.
+ *
+ * @remarks
+ * S3 bucket is used to host the frontend application.
+ * Cloudfront distribution serves the frontend with low latency.
+ *
+ * Production considerations:
+ * - Change removalPolicy to RETAIN to prevent accidental data loss.
+ * - Enable versioning on the S3 bucket for better data protection.
+ * - Review CloudFront settings for production workloads.
+ *
+ */
+
 import * as cdk from 'aws-cdk-lib';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
@@ -10,6 +24,14 @@ import { Parameters } from '../helpers';
 export interface FrontendStackProps extends StackProps {}
 
 export class FrontendStack extends Stack {
+  /**
+   * Creates the Frontend Stack.
+   *
+   * @param scope - CDK construction scope
+   * @param id - Unique stack identifier
+   * @param props - Stack properties
+   *
+   */
   public readonly bucket: s3.Bucket;
   public readonly distribution: cloudfront.Distribution;
   public readonly distributionDomainName: string;
@@ -17,24 +39,11 @@ export class FrontendStack extends Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    // S3 bucket for hosting the frontend
     this.bucket = new s3.Bucket(this, 'FrontendBucket', {
       bucketName: 'atra-frontend-bucket',
-      removalPolicy: RemovalPolicy.DESTROY, // tuotantoon ei
+      removalPolicy: RemovalPolicy.DESTROY,
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     });
-
-    // CloudFront distribution to serve the frontend
-    //this.distribution = new cloudfront.Distribution(this, 'Distribution', {
-    //defaultBehavior: {
-    //  origin: origins.S3BucketOrigin.withOriginAccessControl(this.bucket),
-    //  viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-    //  allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
-    //  cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
-    //},
-    //defaultRootObject: 'index.html',
-    //comment: `Frontend distribution for ${id}`,
-    //});
 
     this.distribution = new cloudfront.Distribution(this, 'Distribution', {
       defaultBehavior: {
