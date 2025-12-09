@@ -1,3 +1,15 @@
+/**
+ * API Stack for the Atra application.
+ *
+ * Creates an HTTP API Gateway with JWT authorization via Cognito,
+ * and provisions Lambda functions for database CRUD operations.
+ * All Lambda functions are deployed within a VPC to securely access RDS.
+ *
+ * @remarks
+ * The API enforces authentication on all routes except public ink endpoints,
+ * which allow unauthenticated read access for public sharing features.
+ */
+
 import {
   Stack,
   StackProps,
@@ -13,17 +25,19 @@ import * as cdk from 'aws-cdk-lib';
 import * as secretsmanager from 'aws-cdk-lib/aws-secretsmanager';
 import { HttpNoneAuthorizer } from 'aws-cdk-lib/aws-apigatewayv2';
 
-// Props are relayed to stack's constructor
-// Interface defines the required props
 interface ApiStackProps extends StackProps {
   vpc: ec2.IVpc;
   rdsSecretName: string;
 }
 
-// API Stack that creates API Gateway and Lambda function
-// API GW uses cognito to authenticate users
-// Lambda functions deal with the CRUD operations to the db
 export class ApiStack extends Stack {
+  /**
+   * Creates the API Stack.
+   *
+   * @param scope - CDK construct scope
+   * @param id - Unique stack identifier
+   * @param props - Stack properties including VPC and RDS configuration
+   */
   private api: apigw2.HttpApi;
   private vpc: ec2.IVpc;
   private lambdaSecurityGroup: ec2.ISecurityGroup;
@@ -51,7 +65,6 @@ export class ApiStack extends Stack {
       ssm.cognitoUserPoolId
     );
 
-    // api's create method and routes method are called
     this.api = this.createApi(
       'AtraApi',
       cognitoUserPool,
@@ -59,14 +72,11 @@ export class ApiStack extends Stack {
       frontendDomain
     );
 
-    // TODO: test that this works
-    // API's url as CloudFormation output
     new cdk.CfnOutput(this, 'ApiEndpoint', {
       value: this.api.apiEndpoint,
       exportName: 'ApiEndpoint',
     });
 
-    // routes for the api, each route is its own method
     this.migrationsRoute();
     this.dropSchemaRoute();
 
@@ -77,7 +87,19 @@ export class ApiStack extends Stack {
     this.userRoute();
   }
 
-  // creates the API GW with cognito authorizer, CORS settings etc.
+  /**
+   * Creates the HTTP API Gateway with Cognito JWT authorization.
+   *
+   * @param name - API name for CloudFormation resource
+   * @param cognitoUserPool - User pool for JWT validation
+   * @param cognitoClientId - Client ID used as JWT audience claim
+   * @param frontendDomain - Domain for CORS allow-origin header
+   * @returns Configured HTTP API instance
+   *
+   * @remarks
+   * Localhost is included in CORS origins for local development.
+   * Remove before production deployment.
+   */
   private createApi(
     name: string,
     cognitoUserPool: cognito.IUserPool,
@@ -182,6 +204,14 @@ export class ApiStack extends Stack {
     });
   }
 
+  /**
+   * Provisions the public ink routes.
+   *
+   * @remarks
+   * Uses HttpNoneAuthorizer to allow unauthenticated access.
+   * This enables public sharing of ink galleries without login.
+   * Will be removed if public access is no longer required.
+   */
   private publicInkRoute() {
     const fn = new LambdaBuilder(this, 'api-publicInk-calls')
       .setDescription('CRUD operations for getting public ink(s)')

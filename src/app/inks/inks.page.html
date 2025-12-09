@@ -152,7 +152,8 @@
 <!-- Update Ink Modal -->
 <ion-modal id="update-ink-modal" [isOpen]="showUpdateModal" (didDismiss)="toggleUpdateModal(false)">
   <ng-template>
-    <div class="bg-slate-950/80 backdrop-blur-lg min-h-full flex items-center justify-center p-4 shadow">
+    <div
+      class="bg-slate-950/80 backdrop-blur-lg max-w-md w-full relative flex items-center justify-center p-4 overflow-hidden">
       <div class="max-w-md w-full">
         <div class="pb-6">
           <h2 class="text-neutral-50 text-center">

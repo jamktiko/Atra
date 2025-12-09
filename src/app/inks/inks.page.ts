@@ -9,7 +9,6 @@ import {
   IonTitle,
   IonToolbar,
   IonModal,
-  IonBackdrop,
 } from '@ionic/angular/standalone';
 
 import { User, UserInk } from 'src/interface';
@@ -44,7 +43,6 @@ console.log('Is it prod? ' + isProd); */
     // IonTitle,
     IonSearchbar,
     IonModal,
-    IonBackdrop,
   ],
 })
 export class InksPage implements OnInit {
