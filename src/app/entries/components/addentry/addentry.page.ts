@@ -218,7 +218,10 @@ export class AddentryPage implements OnInit {
   }
 
   handleCancel() {
+    const inkControl = this.inkGroup.get('chosenInks') as FormArray;
+    inkControl.clear();
     this.showModal(false);
+    this.resetForm();
   }
 
   handleConfirm(newEntry: EntryCreation) {
@@ -226,6 +229,11 @@ export class AddentryPage implements OnInit {
     this.toast.success('Entry added successfully');
     this.router.navigate(['/tabs/entries']);
     this.showModal(false);
+  }
+
+  handleDelete(index: number) {
+    const inks = this.getChosenInks();
+    inks.removeAt(index);
   }
 
   addNewEntry(newEntry: EntryCreation) {

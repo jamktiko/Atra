@@ -1,7 +1,8 @@
 <ion-content [fullscreen]="true">
 
   @if (showReview) {
-  <app-modalentry (cancel)="handleCancel()" [reviewEntry]="newEntry" (confirm)="handleConfirm($event)"></app-modalentry>
+  <app-modalentry (cancel)="handleCancel()" [reviewEntry]="newEntry" [reviewInks]="getChosenInks().value"
+    (confirm)="handleConfirm($event)" (delete)="handleDelete($event)"></app-modalentry>
   } @else {
   <div class="justify-center">
 
@@ -9,18 +10,19 @@
 
     <div class="mx-4">
 
-      <div class="py-2 my-2">
+      <div class=" my-2">
         <h3 class="block mb-1 text-xl font-lato text-neutral-50 mx-1 border-slate-600">Customer</h3>
-
-        <ng-select [items]="customers" [(ngModel)]="selectedCustomerId" bindValue="customer_id"
-          [searchFn]="filteredCustomers" class="custom" required #customerCtrl="ngModel">
-          <ng-template ng-option-tmp let-item="item" class="custom">
-            {{item.last_name}}, {{item.first_name}}
-          </ng-template>
-          <ng-template ng-label-tmp let-item="item">
-            {{ item.last_name }} {{ item.first_name }}
-          </ng-template>
-        </ng-select>
+        <p>
+          <ng-select [items]="customers" [(ngModel)]="selectedCustomerId" bindValue="customer_id"
+            [searchFn]="filteredCustomers" class="custom" required #customerCtrl="ngModel">
+            <ng-template ng-option-tmp let-item="item" class="custom">
+              {{item.last_name}}, {{item.first_name}}
+            </ng-template>
+            <ng-template ng-label-tmp let-item="item">
+              {{ item.last_name }} {{ item.first_name }}
+            </ng-template>
+          </ng-select>
+        </p>
 
 
         @if (customerCtrl.invalid && customerCtrl.touched) {
@@ -31,7 +33,7 @@
 
       </div>
 
-      <div class="py-2 my-2">
+      <div class="my-2">
         <h3 class="text-neutral-50 mx-1">Date</h3>
         <input id="date" type="datetime-local"
           class="border border-slate-600 text-slate-50 bg-slate-800 text-lg rounded-lg block w-full ps-10 p-2.5"
@@ -47,7 +49,7 @@
 
       <div>
 
-        <div class="py-2 my-2">
+        <div class=" my-2">
           <h3 class="text-neutral-50 mx-1">Inks</h3>
           <ion-searchbar class="custom" placeholder="Search" [(ngModel)]="searchInk"></ion-searchbar>
         </div>
@@ -85,18 +87,21 @@
           </span>
         </div>
         } @else {
-        <p class="m-1">
-          At least one ink has to be chosen.
-        </p>
+        <div class="flex items-center justify-center gap-2 my-3">
+          <p class="m-1">
+            At least one ink has to be chosen.
+          </p>
+        </div>
+
         }
+
 
       </div>
 
       <div>
-        <h3 class="block mb-1 text-xl font-lato text-neutral-50 mx-1">Comments</h3>
-        <input id="description"
-          class="block w-full p-2.5 text-neutral-100 rounded-lg border bg-slate-800 border-slate-600"
-          placeholder="Write any additional comments here." [(ngModel)]="newEntry.comments" />
+        <h3 class="text-neutral-50 mx-1">Comments</h3>
+        <p><input class="block w-full p-2.5 text-neutral-100 rounded-lg border bg-slate-800 border-slate-600"
+            placeholder="Write any additional comments here." [(ngModel)]="newEntry.comments" /></p>
       </div>
 
       <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">

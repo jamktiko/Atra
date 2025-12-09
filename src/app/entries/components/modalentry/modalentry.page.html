@@ -2,7 +2,7 @@
 
 <div class="flex fixed inset-0 backdrop-blur-sm bg-slate-950 items-center justify-center z-50">
   <div
-    class="relative bg-slate-900 text-neutral-50 rounded-2xl shadow-2xl w-[90%] h-[85%] p-6 border border-white/10 animate-modal-in">
+    class="relative bg-slate-900 text-neutral-50 rounded-2xl shadow-2xl w-[90%] h-[95%] p-6 border border-white/10 animate-modal-in">
 
     <div class="text-center py-2">
       <h2>Entry</h2>
@@ -24,9 +24,9 @@
     <div class="my-2 py-2">
       <h3>Inks</h3>
 
-      <div class="scrollable">
+      <div class="scrollablesingleentries">
 
-        @for (ink of reviewInks; track ink.user_ink_id) {
+        @for (ink of reviewInks; track $index) {
         <div class="bg-slate-800 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4 my-2">
 
           <div class="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-slate-800">
@@ -40,9 +40,10 @@
             <p class="text-neutral-500 mt-1">{{ink.color}}</p>
           </div>
 
-          <div class=""><input
+          <div class="">
+            <input
               class="bg-slate-700 text-neutral-50 px-4 py-2 my-6 rounded-lg transition-colors focus:outline-2 focus:outline-slate-400"
-              type="button" value="Delete">
+              type="button" value="Delete" (click)="sendDelete($index)">
           </div>
 
         </div>

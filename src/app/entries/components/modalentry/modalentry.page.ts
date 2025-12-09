@@ -24,8 +24,9 @@ export class ModalentryPage implements OnInit {
   @Input() reviewEntry!: EntryCreation;
   @Output() cancel = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<EntryCreation>();
+  @Output() delete = new EventEmitter<number>();
 
-  reviewInks: UserInk[] = [];
+  @Input() reviewInks!: UserInk[];
 
   customerInfo!: any;
 
@@ -49,6 +50,7 @@ export class ModalentryPage implements OnInit {
         },
       });
   }
+
   ionViewWillEnter() {
     this.loopThroughInks();
   }
@@ -80,5 +82,10 @@ export class ModalentryPage implements OnInit {
 
   sendConfirm() {
     this.confirm.emit(this.reviewEntry);
+  }
+
+  sendDelete(ink: number) {
+    this.delete.emit(ink);
+    this.reviewInks = this.reviewInks;
   }
 }
