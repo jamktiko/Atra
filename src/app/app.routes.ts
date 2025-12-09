@@ -45,7 +45,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'tabs/entries/singleentry',
+    path: 'entries/singleentry',
     canActivate: [AuthGuard],
     loadComponent: () =>
       import('./entries/components/singleentry/singleentry.page').then(

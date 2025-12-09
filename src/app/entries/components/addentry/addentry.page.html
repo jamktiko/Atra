@@ -52,7 +52,7 @@
           <ion-searchbar class="custom" placeholder="Search" [(ngModel)]="searchInk"></ion-searchbar>
         </div>
 
-        <div class="scrollable">
+        <div class="scrollableentries">
 
           @for (ink of filteredInks(); track ink.user_ink_id) {
           <div class="bg-slate-900 rounded-xl overflow-hidden shadow-sm flex items-center gap-4 p-4 my-2">
@@ -78,14 +78,14 @@
 
         </div>
         @if (getChosenInks().length > 0 ) {
-        <div class="flex items-center justify-center gap-2 mb-4 my-4">
+        <div class="flex items-center justify-center gap-2 my-3">
           <span class="text-neutral-400">Inks selected:</span>
           <span class="bg-slate-700 text-neutral-50 px-3 py-1 rounded-full">
             {{getChosenInks().length}}
           </span>
         </div>
         } @else {
-        <p class="m-2">
+        <p class="m-1">
           At least one ink has to be chosen.
         </p>
         }
@@ -94,9 +94,9 @@
 
       <div>
         <h3 class="block mb-1 text-xl font-lato text-neutral-50 mx-1">Comments</h3>
-        <textarea id="description" rows="2"
-          class="block p-2 w-full max-h-28 text-lg text-neutral-100 rounded-lg border bg-slate-800 border-slate-600"
-          placeholder="Write any additional comments here." [(ngModel)]="newEntry.comments"></textarea>
+        <input id="description"
+          class="block w-full p-2.5 text-neutral-100 rounded-lg border bg-slate-800 border-slate-600"
+          placeholder="Write any additional comments here." [(ngModel)]="newEntry.comments" />
       </div>
 
       <div class="absolute bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 rounded-b-2xl">

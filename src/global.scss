@@ -216,6 +216,24 @@ ion-modal.transparent-modal .ion-page {
   border-color: oklch(25.5% 0.03 178.524);
 }
 
+.scrollableentries {
+  max-height: 18vh;
+  overflow-x: auto;
+  padding: 0.5rem;
+  border: 1px solid;
+  border-radius: 6px;
+  border-color: oklch(25.5% 0.03 178.524);
+}
+
+.scrollablesingleentries {
+  max-height: 14vh;
+  overflow-x: auto;
+  padding: 0.5rem;
+  border: 1px solid;
+  border-radius: 6px;
+  border-color: oklch(25.5% 0.03 178.524);
+}
+
 .scrollable-wide {
   max-height: 90%;
   overflow-y: auto;
